@@ -1,4 +1,4 @@
-/* ===== Custom model sets 1-8: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination, genetics (detailed 3D) =====
+/* ===== Custom model sets 1-9: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination, genetics, cell division (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -1004,4 +1004,98 @@ function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);cons
 Q_("ch8/genetics3d",[["DNA base A always pairs with…","DNA में A सदा किससे जुड़ता है?",["G","T","C","A"],1,"A–T and G–C."],["A gene is…","जीन क्या है?",["A whole chromosome","A segment of DNA coding for a protein","A protein","A cell"],1,"Genes are stretches of DNA."],["F2 phenotypic ratio of a monohybrid cross is…","एकल संकर का F2 लक्षणप्ररूप अनुपात?",["1:1","3:1","9:3:3:1","1:2:1"],1,"3 dominant : 1 recessive."],["F2 ratio of a dihybrid cross is…","द्विसंकर का F2 अनुपात?",["3:1","1:2:1","9:3:3:1","1:1:1:1"],2,"Independent assortment."],["Who determines the sex of a human baby?","शिशु का लिंग कौन तय करता है?",["Mother's egg","Father's sperm (X or Y)","The doctor","Both equally"],1,"All eggs carry X."]]);
 Px["ch8/genetics3d"]=[["If you stretched out the DNA in one human cell it would be about 2 metres long.","एक मानव कोशिका का DNA खींचने पर लगभग 2 मीटर लंबा होगा।"],["Mendel grew and counted about 28,000 pea plants over eight years to find his ratios.","मेंडल ने अनुपात खोजने के लिए आठ वर्षों में लगभग 28,000 मटर के पौधे उगाए और गिने।"]];
 {const Lg=Hi.find(h=>h.no===8).topics,i=Lg.findIndex(x=>x.id==="mendel");Lg.splice(i<0?Lg.length:i+1,0,{id:"genetics3d",title:"DNA, genes & Mendel's laws — detailed 3D",hi:"DNA, जीन व मेंडल के नियम — विस्तृत 3D",build:Mgenetics,ncert:"Ch 8 · heredity"})}
+/* ===================== SET 9: CELL DIVISION — MITOSIS & MEIOSIS ===================== */
+const KIND9={
+ cell9:["Cell (plasma membrane)","कोशिका (झिल्ली)","The dividing cell. In this model the organism has 2 pairs of chromosomes (2n = 4): a long pair and a short pair; red came from the mother, blue from the father.","विभाजित होती कोशिका; इस मॉडल में जीव में 2 जोड़े गुणसूत्र (2n = 4) हैं — एक लंबा, एक छोटा; लाल माँ से, नीला पिता से।"],
+ nuc9:["Nuclear envelope","केंद्रक आवरण","Double membrane around the chromosomes. It breaks down in prophase and re-forms in telophase.","गुणसूत्रों को घेरने वाली दोहरी झिल्ली; पूर्वावस्था में टूटती और अंत्यावस्था में पुनः बनती है।"],
+ chrom9:["Chromosome / chromatid","गुणसूत्र / क्रोमैटिड","Each duplicated chromosome has two identical sister chromatids joined at the centromere. Long thin chromatin condenses into short thick chromosomes so they can be moved without tangling.","प्रत्येक द्विगुणित गुणसूत्र में सेंट्रोमियर पर जुड़ी दो समान सहोदर क्रोमैटिड होती हैं; लंबा पतला क्रोमैटिन छोटे मोटे गुणसूत्र में संघनित होता है ताकि बिना उलझे खिसक सके।"],
+ spindle:["Spindle fibres","तर्कु तंतु","Microtubules from the two centrioles. They attach to the centromeres, line the chromosomes up and pull the chromatids apart.","दो तारककायों से निकली सूक्ष्मनलिकाएँ; सेंट्रोमियर से जुड़कर गुणसूत्रों को पंक्ति में लाती और क्रोमैटिड खींचती हैं।"],
+ cen9:["Centrioles (poles)","तारककाय (ध्रुव)","They organise the spindle. They duplicate in interphase and move to opposite poles in prophase.","तर्कु को व्यवस्थित करती हैं; अंतरावस्था में द्विगुणित होकर पूर्वावस्था में विपरीत ध्रुवों पर जाती हैं।"],
+ chiasma:["Crossing over (chiasma)","जीन विनिमय (किएज़्मा)","In meiosis I, homologous chromosomes pair up and swap pieces. The new combinations (recombination) make every gamete different — a source of variation.","अर्धसूत्री-I में समजात गुणसूत्र जोड़ी बनाकर टुकड़े अदल-बदल करते हैं; नए संयोजन हर युग्मक को अलग बनाते हैं — विविधता का स्रोत।"]};
+const D_ST=[
+["1","Interphase: getting ready","अंतरावस्था: तैयारी","Before dividing the cell grows and copies its DNA (S phase), so every chromosome now has two identical sister chromatids. The chromosomes are long, thin threads (chromatin) inside the nucleus.","विभाजन से पहले कोशिका बढ़ती है और अपना DNA दोहराती है (S-प्रावस्था), इसलिए हर गुणसूत्र में दो समान सहोदर क्रोमैटिड हैं; गुणसूत्र केंद्रक में लंबे पतले धागे (क्रोमैटिन) हैं।","Animated · 2n = 4 model",11],
+["2","Mitosis · Prophase","समसूत्री · पूर्वावस्था","The chromosomes coil up and become short and thick — visible X shapes. The nuclear envelope and nucleolus disappear; the centrioles move to the two poles and spindle fibres start to form.","गुणसूत्र कुंडलित होकर छोटे व मोटे (X आकार) हो जाते हैं; केंद्रक आवरण व केंद्रिका लुप्त होते हैं; तारककाय दोनों ध्रुवों पर जाती हैं और तर्कु तंतु बनने लगते हैं।","Animated",12],
+["3","Mitosis · Metaphase","समसूत्री · मध्यावस्था","Spindle fibres line all the chromosomes up on the equator (metaphase plate), one chromatid facing each pole. This is the best stage to count and photograph chromosomes.","तर्कु तंतु सभी गुणसूत्रों को मध्य रेखा (मध्यावस्था पट्टिका) पर पंक्ति में लाते हैं, प्रत्येक की एक क्रोमैटिड प्रत्येक ध्रुव की ओर; गुणसूत्र गिनने व चित्र लेने का सर्वोत्तम चरण।","Animated",12],
+["4","Mitosis · Anaphase","समसूत्री · पश्चावस्था","The centromeres split and the spindle shortens: the sister chromatids are pulled to opposite poles. Each pole now receives an identical, complete set of chromosomes.","सेंट्रोमियर टूटते हैं और तर्कु छोटा होता है: सहोदर क्रोमैटिड विपरीत ध्रुवों पर खिंच जाते हैं; प्रत्येक ध्रुव को गुणसूत्रों का एक समान, पूरा समूह मिलता है।","Animated",12],
+["5","Telophase and cytokinesis","अंत्यावस्था व कोशिकाद्रव्य-विभाजन","Nuclear envelopes re-form round each set, the chromosomes uncoil, and the cytoplasm pinches in two (cytokinesis). Result: 2 daughter cells, identical to each other and to the parent (2n = 4). Used for growth and repair.","प्रत्येक समूह के चारों ओर केंद्रक आवरण पुनः बनता है, गुणसूत्र खुलते हैं और कोशिकाद्रव्य बीच से दो भागों में बँटता है; परिणाम: 2 संतति कोशिकाएँ, परस्पर व जनक के समान (2n = 4); वृद्धि व मरम्मत हेतु।","Animated",13],
+["6","Meiosis I · Prophase I: pairing and crossing over","अर्धसूत्री-I · पूर्वावस्था-I: जोड़ी व विनिमय","Now a cell that will make gametes. Homologous chromosomes (red + blue) find each other and pair up as a tetrad. They swap pieces at crossing-over points (chiasmata) — new gene combinations.","अब ऐसी कोशिका जो युग्मक बनाएगी: समजात गुणसूत्र (लाल + नीला) एक-दूसरे को पहचानकर चतुष्क (टेट्राड) में जुड़ते हैं और किएज़्मा पर टुकड़े अदल-बदल करते हैं — नए जीन-संयोजन।","Animated · schematic",14],
+["7","Meiosis I: homologues separate","अर्धसूत्री-I: समजात अलग होते हैं","The pairs line up on the equator and then the whole homologous chromosomes (not chromatids) are pulled apart. Two cells form, each with only 2 chromosomes (n = 2): the chromosome number is halved. The reduction division.","जोड़े मध्य रेखा पर आते हैं और फिर पूरे समजात गुणसूत्र (क्रोमैटिड नहीं) अलग खिंचते हैं; दो कोशिकाएँ बनती हैं जिनमें केवल 2 गुणसूत्र (n = 2) हैं: संख्या आधी — न्यूनीकरण विभाजन।","Animated",14],
+["8","Meiosis II: chromatids separate","अर्धसूत्री-II: क्रोमैटिड अलग होते हैं","Each cell divides again like mitosis: the sister chromatids split. Result: 4 genetically different haploid cells (n = 2) — the gametes (sperm or egg).","प्रत्येक कोशिका समसूत्री की तरह फिर बँटती है: सहोदर क्रोमैटिड अलग होते हैं; परिणाम: 4 आनुवंशिक रूप से भिन्न अगुणित कोशिकाएँ (n = 2) — युग्मक (शुक्राणु या अंडाणु)।","Animated",14],
+["9","Mitosis vs meiosis","समसूत्री बनाम अर्धसूत्री","Mitosis: 1 division → 2 identical diploid cells (growth, repair, asexual reproduction). Meiosis: 2 divisions → 4 different haploid cells (gametes). At fertilisation two haploid gametes restore the diploid number.","समसूत्री: 1 विभाजन → 2 समान द्विगुणित कोशिकाएँ (वृद्धि, मरम्मत, अलैंगिक जनन)। अर्धसूत्री: 2 विभाजन → 4 भिन्न अगुणित कोशिकाएँ (युग्मक); निषेचन पर दो अगुणित युग्मक द्विगुणित संख्या लौटाते हैं।","Comparison",14]];
+function Mdivision(){sd=91;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const M=new J,E=new J;M.position.set(-18,0,0);E.position.set(18,0,0);g.add(M);g.add(E);
+ const cmem=(col,op)=>MAT(col,{opacity:op,roughness:.4,clearcoat:.2,envMapIntensity:.4,sheen:0,depthWrite:!1,bumpScale:.05,emissive:0x302020,emissiveIntensity:.15});
+ const cellMat=cmem(0xf3c9b8,.22),envMat=MAT(0x8d92e6,{opacity:.4,roughness:.4,clearcoat:.2,envMapIntensity:.4,sheen:0,depthWrite:!1,emissive:0x1b2160,emissiveIntensity:.25});
+ const mkCell=(par,r,x,y)=>add("cell9",sph(r,.03,1.4,1,1,1,36,48,Math.abs(x*3+y)|0),cellMat,[x,y,0],{parent:par,ns:1});
+ const mkEnv=(par,r,x,y)=>add("nuc9",sph(r,.03,1.5,1,1,1,32,44,2),envMat,[x,y,0],{parent:par,ns:1});
+ /* membranes */
+ const mBig=mkCell(M,5.0,0,0),mA=mkCell(M,3.1,0,3.4),mB=mkCell(M,3.1,0,-3.4),mNuc=mkEnv(M,3.4,0,0),mNA=mkEnv(M,1.9,0,3.5),mNB=mkEnv(M,1.9,0,-3.5);
+ const eBig=mkCell(E,5.0,0,0),eT=mkCell(E,3.0,0,3.3),eBt=mkCell(E,3.0,0,-3.3),eTL=mkCell(E,1.95,-3.1,3.3),eTR=mkCell(E,1.95,3.1,3.3),eBL=mkCell(E,1.95,-3.1,-3.3),eBR=mkCell(E,1.95,3.1,-3.3),eNuc=mkEnv(E,3.4,0,0);
+ /* chromatids */
+ const CL=[0xe0453a,0x3a86e0,0xe0453a,0x3a86e0],LEN=[1.6,1.6,1.0,1.0],HOME=[[-1.5,1.0],[1.4,1.1],[-1.1,-1.2],[1.6,-.9]],RH=[.5,-.4,1.2,-.9];
+ const mkChr=(par)=>{const L=[];for(let k=0;k<8;k++){const i=k>>1;const grp=new J;par.add(grp);const mat=MAT(CL[i],{roughness:.45,clearcoat:.3,envMapIntensity:.4,sheen:0,bumpScale:.2,emissive:CL[i]===0xe0453a?0x3a0a08:0x08203a,emissiveIntensity:.35});
+  const body=add("chrom9",sph(1,0,1,1,1,1,14,18),mat,[0,0,0],{parent:grp,ns:1});const kin=add("chrom9",sph(.2,0,1,1,1,1,10,12),new bt({color:0xffffff}),[0,0,0],{parent:grp,ns:1});
+  const capM=new bt({color:CL[i]===0xe0453a?0x3a86e0:0xe0453a});const cap=add("chiasma",sph(.3,0,1,1,1.1,1,10,14),capM,[0,LEN[i]*.78,0],{parent:grp,ns:1});cap.visible=!1;L.push({grp,body,kin,cap,capM,mat,i,side:k&1?1:-1,L:LEN[i]})}return L};
+ const cM=mkChr(M),cE=mkChr(E);
+ /* centrioles + spindle */
+ const cenM=MAT(0x7ac05a,{roughness:.4,emissive:0x1f3a08,emissiveIntensity:.3,envMapIntensity:.4});const cenMs=[M,E].map(par=>[1,-1].map(sg=>add("cen9",new Xe(.16,.16,.5,10),cenM,[0,sg*4.4,0],{parent:par,ns:1})));
+ const spM=MAT(0x9fd0a8,{roughness:.5,opacity:.7,depthWrite:!1,emissive:0x0f3a22,emissiveIntensity:.25});
+ const mkSp=(par)=>{const L=[];for(let k=0;k<8;k++){const m=add("spindle",new Xe(.028,.028,1,6),spM,[0,0,0],{parent:par,ns:1});m.visible=!1;L.push(m)}return L};
+ const spMs=mkSp(M),spEs=mkSp(E);
+ const up=c(0,1,0);
+ const setSp=(L,cr,show,poles)=>{L.forEach((m,k)=>{m.visible=show;if(!show)return;const t=cr[k],pole=c(0,poles*(k&1?-1:1)*0+(k&1?-4.4:4.4),0);const a=c(t.grp.position.x,t.grp.position.y,0),d=pole.clone().sub(a),len=d.length();m.position.copy(a.clone().add(pole).multiplyScalar(.5));m.scale.set(1,len,1);m.quaternion.setFromUnitVectors(up,d.normalize())})};
+ /* state helpers */
+ const EQ=[[-2.5,0],[-.85,0],[.85,0],[2.5,0]];
+ const lerp2=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t)];
+ const apply=(L,k,x,y,rot,cond,sep,t,thick=1)=>{const o=L[k],side=o.side;const sp=sep*1.1;const px=Math.cos(rot),py=Math.sin(rot);o.grp.position.set(x+px*side*sep*.12,y+py*side*sep*.12,0);o.grp.rotation.z=rot+side*sp*(cond>.5?1:.0)+(1-cond)*Math.sin(t*2.2+k*1.7)*.35;
+  const th=lerp(.1,.3,cond)*thick,ln=o.L*lerp(1.45,1,cond);o.body.scale.set(th,ln,th);o.body.material.opacity=lerp(.8,1,cond);o.body.material.transparent=!0;o.kin.visible=cond>.6;o.kin.scale.setScalar(1)};
+ const mitosis=(s,p,t)=>{const A=s,Pp=p;for(let k=0;k<8;k++){const i=k>>1,h=HOME[i];let x=h[0]*.9,y=h[1]*.9,rot=RH[i],cond=0,sep=0,pole=0;
+   if(s===0){sep=.3*p;cond=0}else if(s===1){x=h[0]*.9+(h[0]*.1)*p;y=h[1]*.9+(h[1]*.1)*p;cond=p;sep=.3+.1*p;rot=RH[i]}
+   else if(s===2){const e=EQ[i],q=cl(p*1.3,0,1);const pq=lerp2(h,e,q);x=pq[0];y=pq[1];rot=lerp(RH[i],0,q);cond=1;sep=.4}
+   else if(s===3){const e=EQ[i];x=e[0];y=e[1];rot=0;cond=1;sep=.4+.0;pole=3.4*p}
+   else{const e=EQ[i];x=e[0]*lerp(1,.6,p);y=e[1];rot=0;cond=lerp(1,.35,p);sep=.4;pole=3.4+.2*p}
+   const side=k&1?1:-1,yy=y+side*pole;apply(cM,k,x,yy,rot,cond,(s>=3?0:sep),t);if(s>=3){cM[k].grp.rotation.z=rot+side*(s===3?-.18*Math.sin(p*PI)*0:0)}}};
+ const meiosis=(s,p,t)=>{const PAIR=[[-1.8,.4],[-1.0,.4],[1.0,-.4],[1.8,-.4]];for(let k=0;k<8;k++){const i=k>>1,h=HOME[i],side=k&1?1:-1;let x,y,rot,cond,sep,fx=0;
+   if(s<=5){cond=s<5?cl(p*0+(s===5?1:0),0,1):cl(p*3,0,1);const pr=cl((p-.25)/.45,0,1),q=lerp2(h,PAIR[i],pr);x=q[0];y=q[1];rot=lerp(RH[i],0,pr);sep=.3+.2*pr;cond=cl(p*3,0,1)}
+   else if(s===6){cond=1;sep=.5;const a=cl(p/.35,0,1),b=cl((p-.35)/.45,0,1),c2=cl((p-.8)/.2,0,1);const eqy=0;x=PAIR[i][0];y=lerp(PAIR[i][1],eqy,a);const dir=(i%2===0)?1:-1;y=y+dir*3.3*b;x=lerp(x,(i%2===0?-.5:-.5)+(i>1?1:0),c2);rot=0}
+   else{cond=1;const a=cl((p-.0)/.3,0,1),b=cl((p-.35)/.4,0,1);const dir=(i%2===0)?1:-1,cy=dir*3.3,cx=(i>1?.5:-.5);x=cx+side*b*2.7;y=cy;rot=0;sep=.5*(1-b)}
+   apply(cE,k,x,y,rot,cond,sep,t,.95);
+   const cross=s===5?cl((p-.7)/.3,0,1):(s>5?1:0);const inner=(i===0&&side===1)||(i===1&&side===-1)||(i===2&&side===1)||(i===3&&side===-1);cE[k].cap.visible=inner&&cross>.5}};
+ /* ---- cell shapes by step ---- */
+ const cellsM=(s,p)=>{const big=s<4?1:(s===4?1-cl((p-.35)/.4,0,1):0),two=s===4?cl((p-.35)/.4,0,1):(s>4?1:0);mBig.visible=big>.02;mBig.scale.set(1,1+(s===3?.35*p:s===4?.45:0),1);mA.visible=mB.visible=two>.02;mA.position.y=3.4*two*1.0;mB.position.y=-3.4*two*1.0;mA.scale.setScalar(.6+.4*two);mB.scale.setScalar(.6+.4*two);
+  const nv=s===0?1:s===1?1-cl((p-.3)/.5,0,1):0;mNuc.visible=nv>.02;envMat.opacity=.4*nv||.4;mNuc.material.opacity=.4*nv;mNA.visible=mNB.visible=s===4&&p>.1||s>4;};
+ const cellsE=(s,p)=>{const big=s<=5?1:(s===6?1-cl((p-.8)/.2,0,1):0);eBig.visible=big>.02;eNuc.visible=s<=5&&!(s===5&&p>.6)&&s===5?p<.35:s<5?false:false;eNuc.visible=s===5&&p<.35;
+  const tb=s===6?cl((p-.8)/.2,0,1):(s===7?1:0);eT.visible=eBt.visible=tb>.02&&(s<7||(s===7&&false));eT.visible=eBt.visible=s===6&&tb>.02||(s===7&&cl((p-.8)/.2,0,1)<.98);eT.scale.setScalar(.6+.4*tb);eBt.scale.setScalar(.6+.4*tb);
+  const four=s===7?cl((p-.8)/.2,0,1):0;[eTL,eTR,eBL,eBR].forEach(m=>{m.visible=four>.02||s>=8});};
+ const cams=[[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.8,19),c(-18,-.8,0)],[c(-18,-1.4,24),c(-18,-1.4,0)],[c(18,-.6,17),c(18,-.6,0)],[c(18,-1.5,24),c(18,-1.5,0)],[c(18,-1.5,25),c(18,-1.5,0)],[c(0,-1.5,40),c(0,-1.5,0)]];
+ const camK=["Interphase","Prophase","Metaphase","Anaphase","Telophase","Meiosis I prophase","Meiosis I","Meiosis II","Compare"];
+ const show={};const ids=["cell9","nuc9","chrom9","spindle","cen9","chiasma"];ids.forEach(i=>show[i]=[1,1,1,1,1,1,1,1,1]);
+ const base={cell9:.22,nuc9:.4,chrom9:1,spindle:.7,cen9:1,chiasma:1};
+ const Lw=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["d-nu","Nucleus (intact)","केंद्रक (साबुत)",Lw(M,[2.6,2.4,0]),[0]],["d-ch","Chromatin: long thin threads","क्रोमैटिन: लंबे पतले धागे",Lw(M,[-2,1.5,0]),[0]],["d-ce","Centrioles duplicated","तारककाय द्विगुणित",Lw(M,[1,4.5,0]),[0,1]],["d-sc","2 sister chromatids","2 सहोदर क्रोमैटिड",Lw(M,[1.4,.4,0]),[0]],
+  ["d-co","Condensed chromosomes (X)","संघनित गुणसूत्र (X)",Lw(M,[-1.4,1.6,0]),[1]],["d-ne","Envelope breaking down","आवरण टूटता हुआ",Lw(M,[2.9,1.8,0]),[1]],["d-po","Centrioles move to poles","तारककाय ध्रुवों पर",Lw(M,[1,-4.5,0]),[1,2]],
+  ["d-eq","Equator: chromosomes line up","मध्य रेखा: गुणसूत्र पंक्ति में",Lw(M,[3.2,0,0]),[2]],["d-sp","Spindle fibres","तर्कु तंतु",Lw(M,[-1.6,2.6,0]),[2,3]],
+  ["d-an","Chromatids pulled apart","क्रोमैटिड अलग खिंचते",Lw(M,[2.8,2.6,0]),[3]],["d-pl","Poles: identical sets","ध्रुव: समान समूह",Lw(M,[-3,-3.2,0]),[3]],
+  ["d-d1","Daughter cell 1 (2n = 4)","संतति कोशिका 1 (2n = 4)",Lw(M,[3.4,3.6,0]),[4]],["d-d2","Daughter cell 2 (2n = 4)","संतति कोशिका 2 (2n = 4)",Lw(M,[3.4,-3.6,0]),[4]],["d-ne2","Nuclei re-form · chromosomes uncoil","केंद्रक पुनः बनते",Lw(M,[-3.4,0,0]),[4]],
+  ["e-ho","Homologous pair (tetrad)","समजात जोड़ी (टेट्राड)",Lw(E,[-1.4,2.4,0]),[5]],["e-ch","Crossing over (chiasma)","जीन विनिमय (किएज़्मा)",Lw(E,[-1.4,1.8,0]),[5]],["e-mo","Maternal (red) · paternal (blue)","मातृक (लाल) · पैतृक (नीला)",Lw(E,[2.6,1.2,0]),[5]],
+  ["f-eq","Pairs on the equator","जोड़े मध्य रेखा पर",Lw(E,[3.4,.2,0]),[6]],["f-se","Whole homologues separate","समजात गुणसूत्र अलग",Lw(E,[2.6,3.4,0]),[6]],["f-n2","Two cells: n = 2 (halved)","दो कोशिकाएँ: n = 2 (आधी)",Lw(E,[-3.6,0,0]),[6]],
+  ["g-m2","Meiosis II: chromatids split","अर्धसूत्री-II: क्रोमैटिड टूटते",Lw(E,[0,5.4,0]),[7]],["g-4","4 different haploid gametes","4 भिन्न अगुणित युग्मक",Lw(E,[0,-5.6,0]),[7]],
+  ["c-mi","MITOSIS → 2 identical (2n)","समसूत्री → 2 समान (2n)",Lw(M,[0,5.8,0]),[8]],["c-me","MEIOSIS → 4 different (n)","अर्धसूत्री → 4 भिन्न (n)",Lw(E,[0,5.8,0]),[8]],["c-pu","Growth · repair","वृद्धि · मरम्मत",Lw(M,[0,-5.8,0]),[8]],["c-ga","Gametes · variation","युग्मक · विविधता",Lw(E,[0,-5.8,0]),[8]]];
+ const r0=run({n,g,org,show,base,ST:D_ST,cams,camK,labels,
+  hud:(s,t)=>s<=4?["2n = 4 · DNA copied (S phase)","2n = 4 · chromosomes condensed","2n = 4 · chromosomes at equator","2n = 4 each pole · 4 chromatids to each side","2 cells · 2n = 4 each"][s]:s===5?"2n = 4 · tetrad · crossing over":s===6?"n = 2 per cell · chromosomes still doubled":s===7?"4 cells · n = 2 · single chromatids":"Mitosis: 2 cells 2n | Meiosis: 4 cells n",
+  frame:(s,t)=>{const p=(t*.07)%1,pM=s<=4?p:1,sM=s<=4?s:4,pE=s>=5&&s<=7?p:(s>7?1:0),sE=s>=5?s:5;
+   M.rotation.y=0;E.rotation.y=0;
+   const ms=s<=4?s:4,mp=s<=4?p:1;mitosis(ms,mp,t);cellsM(ms,mp);
+   const es=s<5?5:(s>7?7:s),ep=s<5?0:(s>7?1:p);meiosis(es,ep,t);cellsE(es,ep);
+   setSp(spMs,cM,ms>=1&&ms<=3&&s<=4||false,4.4);setSp(spEs,cE,false,4.4);
+   cenMs[0].forEach((m,j)=>{const sg=j?-1:1,pe=ms===0?0:ms===1?p:1;m.position.set(sg*0,sg*lerp(1.2,4.4,pe),0);m.rotation.z=0;m.visible=s<=4});
+   cenMs[1].forEach((m,j)=>{const sg=j?-1:1;m.position.set(0,sg*4.4,0);m.visible=s>=5&&s<=6});
+   const showE=s>=5;E.visible=showE||s>=0;M.visible=!0;
+   if(s<5){E.visible=!1}else{E.visible=!0}
+   if(s===8){M.visible=!0;E.visible=!0}},
+  predict:{q:"How many daughter cells and what chromosome number result from meiosis of a diploid (2n = 4) cell?",opts:[["2 cells, 2n = 4",!1,"That is mitosis."],["4 cells, n = 2",!0,"Correct — two divisions halve the chromosome number."],["4 cells, 2n = 4",!1,"Meiosis halves the number."]]}});
+ const ap=r0.apply;r0.apply=(s,k,t)=>{ap(s,k,t);cellMat.opacity=.22;const nv=envMat;};return r0}
+Q_("ix1/division3d",[["During which phase do chromosomes line up at the equator?","किस प्रावस्था में गुणसूत्र मध्य रेखा पर आते हैं?",["Prophase","Metaphase","Anaphase","Telophase"],1,"Metaphase."],["Mitosis produces…","समसूत्री विभाजन से बनती हैं…",["2 identical daughter cells","4 different cells","2 haploid cells","1 cell"],0,"2n → 2 × 2n."],["Crossing over occurs in…","जीन विनिमय होता है…",["Mitosis","Prophase I of meiosis","Anaphase II","Interphase"],1,"Homologous chromosomes swap segments."],["Meiosis results in…","अर्धसूत्री से बनती हैं…",["2 diploid cells","4 haploid cells","4 diploid cells","1 haploid cell"],1,"Two divisions → 4 gametes."],["Which type of division is used for growth and repair?","वृद्धि व मरम्मत के लिए कौन-सा विभाजन?",["Meiosis","Mitosis","Fertilisation","Budding only"],1,"Mitosis keeps the chromosome number."]]);
+Px["ix1/division3d"]=[["Your body makes about 2 million new red blood cells every second by mitosis.","आपका शरीर समसूत्री से प्रति सेकंड लगभग 20 लाख नई लाल रक्त कोशिकाएँ बनाता है।"],["Crossing over means no two sperm — or siblings, except identical twins — carry the same gene combination.","जीन विनिमय के कारण दो शुक्राणु — या (समान जुड़वाँ को छोड़) भाई-बहन — समान जीन-संयोजन नहीं रखते।"]];
+{const Ld=Hj.find(h=>h.kp==="ix1").topics,i=Ld.findIndex(x=>x.id==="division");Ld.splice(i<0?Ld.length:i+1,0,{id:"division3d",title:"Cell division: mitosis & meiosis — detailed 3D",hi:"कोशिका विभाजन: समसूत्री व अर्धसूत्री — विस्तृत 3D",build:Mdivision,ncert:"Class IX/X · cell division"})}
 })();

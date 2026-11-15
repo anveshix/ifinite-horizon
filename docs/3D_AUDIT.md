@@ -30,4 +30,5 @@ Real-mesh topics (BodyParts3D): heart, digestive, eye, elbow joint, lungs.
 5. **Kidney, nephron & dialysis (`ch5/nephron3d`)** — hand-modelled kidney cut-away, one enlarged nephron (glomerulus, Bowman's capsule, PCT, loop, DCT, collecting duct), animated filtration / selective reabsorption / urine formation, urine path, dialysis.
 6. **Human reproduction (`ch7/human3d`)** — male system, sperm cell, female system, ovulation, fertilisation, cleavage to blastocyst and implantation, placenta/foetus, animated 28-day menstrual cycle.
 8. **DNA, genes, Mendel, sex determination (`ch8/genetics3d`)** — chromosome→helix zoom, base pairing, semi-conservative copying, gene→mRNA→protein, P/F1 pea cross, 3:1 Punnett, 9:3:3:1 dihybrid, XX/XY. Known weak spot: step 4 (gene→protein) is small/crowded; chromosome drawn as a coil, not a classic X.
-Next biology sets, in order: → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).
+9. **Cell division — mitosis & meiosis (`ix1/division3d`)** — interphase → prophase → metaphase → anaphase → telophase/cytokinesis, then meiosis I (pairing, crossing over, homologues separate) and meiosis II, then comparison. Weakest part: the meiosis steps (cells are drawn as overlapping translucent spheres).
+Next: → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).
