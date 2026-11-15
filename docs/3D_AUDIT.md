@@ -1,0 +1,24 @@
+# 3D audit — 127 topics (2026-11-15)
+
+Method: every topic was opened in a headless browser (software GL, so speed numbers are not representative), every step was visited and screenshotted, and consecutive steps were compared. Script: `tools/` + scratchpad run; raw JSON per topic was reviewed by hand.
+
+## Findings
+| # | Finding | Count |
+|---|---|---|
+| 1 | Topics with a real guided step sequence (ordered, captioned) | 42 |
+| 2 | **Free-play topics with no step sequence at all** (just a live model + switches) — the "incomplete / not in sequence" complaint | 85 |
+| 3 | Guided topics whose steps look identical to the previous step | 4 (`ch3/ionic`, `ix7/ionic`, `ch7/fission`, `ix3/fission`) — one step each, small visual change |
+| 4 | JS errors during the sweep | 0 |
+| 5 | Models built only from primitives (spheres, tubes) | most of the 120; only heart, digestive, eye, elbow, lungs use real anatomy meshes |
+
+## Fixed in this pass
+Guided, bilingual, ordered steps (each step sets the model's own switches and shows a caption + live values) added to **16 biology topics**:
+`ch5/xylem`, `ix2/xylem`, `ch6/brain`, `ch6/hormones`, `ch6/plants`, `ch13/web`, `ch13/waste`, `ix1/osmosis`, `ix2/tissues`, `ix3/dispersal`, `ix4/acellular`, `ix4/kingdoms`, `ch5/heart`, `ch5/alveoli`, `ix2/joint`, `ix1/cell`.
+Implementation: `tools/guided-module.js` (wrapper; the original models are unchanged).
+
+## Still free-play (no step sequence) — next batches
+`adv1/measure`, `adv10/fermenter`, `adv2/frame`, `adv3/gravity`, `adv3/pseudo`, `adv4/machines`, `adv5/spring`, `adv6/rays`, `adv6/spectrum`, `adv7/bonding`, `adv8/column`, `adv8/fractional`, `adv9/microscope`, `adv9/resolution`, `ch1/balancing`, `ch1/combination`, `ch1/corrosion`, `ch1/displacement`, `ch10/eye`, `ch10/prism`, `ch10/scatter`, `ch11/heating`, `ch11/ohm`, `ch11/resistance`, `ch11/series`, `ch12/domestic`, `ch12/field`, `ch12/flhr`, `ch12/induction`, `ch12/magnet`, `ch12/motor`, `ch12/solenoid`, `ch2/indicators`, `ch2/neutralisation`, `ch2/ph`, `ch2/salts`, `ch3/extraction`, `ch3/physical`, `ch3/prevent`, `ch3/reactivity`, `ch4/allotropes`, `ch4/homologous`, `ch4/molecules`, `ch4/reactions`, `ch5/heart3d`, `ch9/optics`, `ch9/power`, `ch9/reflection`, `ch9/slab`, `ix10/forces`, `ix10/trolley`, `ix11/energy`, `ix11/machines`, `ix12/echo`, `ix12/source`, `ix12/wave`, `ix5/conc`, `ix5/lab`, `ix5/types`, `ix6/atom`, `ix7/conserve`, `ix7/molecules`, `ix8/breeze`, `ix8/cycles`, `ix8/heating`, `ix8/spectrum`, `ix8/spheres`, `ix9/circular`, `ix9/line`
+
+## Still primitive-built biology (need real/custom meshes, not just steps)
+`ch6/neuron`, `ch6/synapse`, `ch6/reflex`, `ch5/nephron`, `ch7/human`, `ch7/flower`, `ch8/*`, `ix1/division`, `ix2/tissues`, `ix3/human`.
+Kidney and brain meshes in the open atlas are not usable (licence: non-commercial / unstated), so these need hand modelling.
