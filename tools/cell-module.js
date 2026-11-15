@@ -391,7 +391,11 @@ function Mneuron(){sd=41;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,40,.08);const 
  add("axon",tube([c(-4.4,0,0),c(0,0,0),c(4,0,0),c(6.7,0,0)],.15,10),axM,[0,0,0],{ns:1});
  /* myelin sheaths (Schwann cells) */
  const myM=MAT(0xfff1c8,{roughness:.22,clearcoat:.9,clearcoatRoughness:.15,sheen:.5,emissive:0x3a2c08,emissiveIntensity:.18,bumpScale:.3,opacity:.97});const XN=[];
- for(let i=0;i<7;i++){const x0=-4.3+i*1.6,L=1.35;add("myelin",param(26,44,(u,v)=>{const x=(u-.5)*L,a=v*TAU,pr=Math.pow(sin(u*PI),.28),k=.38*pr*(1+.04*fbm(u*3+i,v*3,i))+.02;return[x,cos(a)*k,sin(a)*k]}),myM,[x0+L/2,0,0],{ns:1});if(i<6)XN.push(x0+L+.1)}
+ const myM2=MAT(0xf4d58a,{roughness:.3,clearcoat:.8,sheen:.4,emissive:0x4a3408,emissiveIntensity:.15,bumpScale:.4,opacity:.97});
+ for(let i=0;i<7;i++){const x0=-4.3+i*1.6,L=1.35-.04*(i%3),cut=i===3,mat=i%2?myM:myM2;
+  add("myelin",param(30,56,(u,v)=>{const x=(u-.5)*L,a=(cut?(.05+v*.7):v)*TAU,pr=Math.pow(sin(u*PI),.25),ridge=1+.045*sin(u*PI*5+i)+.03*fbm(u*3+i,v*3,i),k=.38*pr*ridge+.02;return[x,cos(a)*k,sin(a)*k]}),mat,[x0+L/2,0,0],{ns:1});
+  if(cut){[-1,1].forEach(sg=>add("myelin",param(6,150,(u,v)=>{const a=v*TAU*3.4,r=.07+.3*v+u*.03;return[sg*L/2*.985+sg*u*.02,cos(a)*r,sin(a)*r]}),MAT(0xfff4cf,{roughness:.4,opacity:1,emissive:0x4a3408,emissiveIntensity:.2,sheen:0}),[x0+L/2,0,0],{ns:1}))}
+  if(i<6)XN.push(x0+L+.1)}
  /* nodes: tiny glowing rings */
  const nodeM=MAT(0x9fd3ff,{roughness:.3,emissive:0x2a6ac0,emissiveIntensity:.5,opacity:.95});XN.forEach(x=>add("node",torus(.17,.045),nodeM,[x,0,0],{rot:[0,0,PI/2],ns:1}));
  /* terminals + boutons */
@@ -418,9 +422,10 @@ function Mneuron(){sd=41;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,40,.08);const 
  const sensM=MAT(0x6fb6ff,{roughness:.4,clearcoat:.6,emissive:0x0a2a6a,emissiveIntensity:.35}),motM=MAT(0xff8a6a,{roughness:.4,clearcoat:.6,emissive:0x6a1a0a,emissiveIntensity:.3}),relM=MAT(0xd6a8ff,{roughness:.4,clearcoat:.6,emissive:0x3a1a6a,emissiveIntensity:.3});
  add("sens",tube(sensP,.1,8),sensM,[0,0,0],{parent:ref,ns:1});add("sens",sph(.35,.05,2,1,1,1,16,20),sensM,[-3.6,.3,.5],{parent:ref,ns:1});
  add("motor",tube(motP,.1,8),motM,[0,0,0],{parent:ref,ns:1});add("motor",sph(.4,.05,2,1,1,1,16,20),motM,[1.9,.3,.3],{parent:ref,ns:1});
- const cordM=MAT(0xf1e9d8,{roughness:.55,clearcoat:.2,opacity:.28,depthWrite:!1,bumpScale:.2}),grayM=MAT(0x7d7a74,{roughness:.6,opacity:.95,bumpScale:.2});
- add("cord",sph(2.2,.03,1.5,1,1.05,.7,40,52,5),cordM,[0,0,0],{parent:ref,ns:1});[[-.5,.55],[.5,.55],[-.5,-.55],[.5,-.55]].forEach(q=>add("cord",sph(.75,.04,2,.9,.9,.7,20,26),grayM,[q[0],q[1],0],{parent:ref,ns:1}));
- add("cord",tube([c(-1.5,.5,0),c(-.4,.4,.2),c(.4,.4,.2),c(1.4,.5,.2)],.09,8),relM,[0,0,0],{parent:ref,ns:1});add("cord",sph(.3,.05,2,1,1,1,14,18),relM,[0,.5,.25],{parent:ref,ns:1});
+ const cordM=MAT(0xf1e9d8,{roughness:.55,clearcoat:.2,opacity:.45,depthWrite:!1,bumpScale:.2}),grayM=MAT(0x6b6860,{roughness:.6,opacity:1,bumpScale:.25});
+ add("cord",sph(2.3,.02,1.5,1,1.02,.22,44,56,5),cordM,[0,0,0],{parent:ref,ns:1});
+ [[-.55,.6],[.55,.6],[-.5,-.6],[.5,-.6]].forEach(q=>add("cord",sph(.8,.04,2,.85,.9,.25,22,30),grayM,[q[0],q[1],.06],{parent:ref,ns:1}));add("cord",sph(.12,0,1,1,1,.4,10,12),MAT(0x9fd3ff,{roughness:.2,emissive:0x1a4a8a,emissiveIntensity:.4}),[0,0,.14],{parent:ref,ns:1});
+ add("cord",tube([c(-1.5,.5,.3),c(-.4,.4,.35),c(.4,.4,.35),c(1.4,.5,.3)],.09,8),relM,[0,0,0],{parent:ref,ns:1});add("cord",sph(.3,.05,2,1,1,1,14,18),relM,[0,.5,.38],{parent:ref,ns:1});
  const musc=add("musc",sph(1,.03,2,1.6,.55,.55,28,36),MAT(0xb23838,{roughness:.4,clearcoat:.5,sheen:.7,sheenC:0xff9a8a,bumpScale:.5}),[8.6,0,0],{parent:ref});
  /* impulse pulses */
  const pulseM=new bt({color:0xfff7a0}),halo=new bt({color:0xffd54f,transparent:!0,opacity:.35});
@@ -437,7 +442,7 @@ function Mneuron(){sd=41;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,40,.08);const 
  const NEU=["soma","nuc4","dend","axon","myelin","node","term"],SYN=["pre","ves4","post","cleft","rec"],REF=["skin","sens","cord","motor","musc"];
  [...NEU,...SYN,...REF].forEach(i=>show[i]=[0,0,0,0,0,0]);
  NEU.forEach(i=>{for(let s=0;s<4;s++)show[i][s]=1});SYN.forEach(i=>show[i][4]=1);REF.forEach(i=>show[i][5]=1);show.soma[4]=0;
- const base={soma:.96,nuc4:.9,dend:.96,axon:1,myelin:.97,node:.95,term:1,pre:.3,ves4:.95,post:.9,cleft:.12,rec:1,skin:.95,sens:1,cord:.28,motor:1,musc:1};
+ const base={soma:.96,nuc4:.9,dend:.96,axon:1,myelin:.97,node:.95,term:1,pre:.3,ves4:.95,post:.9,cleft:.12,rec:1,skin:.95,sens:1,cord:.45,motor:1,musc:1};
  const L=(par,p)=>()=>par.localToWorld(c(...p));
  const labels=[["n-so","Cell body (soma)","कोशिका काय",L(g,[-6,1.2,0]),[0,1]],["n-nu","Nucleus","केंद्रक",L(g,[-6,0,.6]),[0,1]],["n-de","Dendrites (receive)","द्रुमिकाएँ (ग्रहण)",L(g,[-7.6,1.6,.5]),[0,1]],["n-ax","Axon (carries away)","एक्सॉन (दूर ले जाता)",L(g,[0,.2,0]),[0,1,2]],["n-my","Myelin sheath","माइलिन आवरण",L(g,[-.9,.5,0]),[0,2]],["n-no","Node of Ranvier","रैन्वियर पर्व",L(g,[XN[1],.2,0]),[2,3]],["n-te","Axon terminals","एक्सॉन अंत",L(g,[8.2,.9,.4]),[0,4]],["n-dir","Impulse direction →","आवेग की दिशा →",L(g,[-2,1.6,0]),[1,2]],
   ["n-na","Na⁺ in (depolarise)","Na⁺ अंदर (विध्रुवण)",L(g,[nx0-.3,.9,0]),[3]],["n-k","K⁺ out (repolarise)","K⁺ बाहर (पुनर्ध्रुवण)",L(g,[nx0+.3,-.9,0]),[3]],["n-ap","Action potential −70 → +30 mV","क्रिया-विभव −70 → +30 mV",L(g,[nx0,1.5,0]),[3]],
