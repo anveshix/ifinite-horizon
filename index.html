@@ -6571,7 +6571,7 @@ function Mneph(){sd=51;const n=new Ne;Ge(n,{key:1.9});Je(n,-6,60,.08);const g=ne
  for(let k=0;k<7;k++){const pts=[];for(let i=0;i<=16;i++){const q=i/16,a=q*TAU*5+k*.9;pts.push(c(-3.4+1.05*Math.sin(a)+(k%2?.15:-.15),4.7-(2.9)*q+.0,1.05*Math.cos(a)*.95))}add("cap",tube(pts,.05,6),capM,[0,0,0],{parent:NP_,ns:1})}
  const venP=[c(-3.6,1.6,0),c(-5.5,.8,0),c(-8,-.4,0),c(-10,-1.4,0)];add("cap",tube(venP,.2,10),MAT(0x4f63d6,{roughness:.35,clearcoat:.7,emissive:0x101a5a,emissiveIntensity:.25,opacity:.9}),[0,0,0],{parent:NP_,ns:1});
  /* medulla salt gradient backdrop */
- add("medulla",param(2,2,(u,v)=>[-6+u*13,-9+v*11.2,-1.6]),MAT(0xffb88a,{roughness:.6,opacity:.1,depthWrite:!1,sheen:0,envMapIntensity:.2}),[0,0,0],{parent:NP_,ns:1});
+ add("medbg",param(2,2,(u,v)=>[-6+u*13,-9+v*11.2,-1.6]),MAT(0xffb88a,{roughness:.6,opacity:.1,depthWrite:!1,sheen:0,envMapIntensity:.2}),[0,0,0],{parent:NP_,ns:1});
  /* particles */
  const NPT=110,pt=new Wn(new it(.07,8,6),new bt({color:0xffffff}),NPT);pt.frustumCulled=!1;NP_.add(pt);const pc=new we;const PT=[];
  const TYP=[[0x59b4ff,.3,1],[0xffd23f,.2,1.1],[0x8b5a2b,0,1.2],[0xff8a3d,.36,.9],[0x59b4ff,.58,1],[0x8b5a2b,0,1.2]];
@@ -6585,12 +6585,12 @@ function Mneph(){sd=51;const n=new Ne;Ge(n,{key:1.9});Je(n,-6,60,.08);const g=ne
  add("dia",tube([c(-9.5,0,0),c(-7.5,0,0)],.3,10),bloodM,[0,0,0],{parent:DI,ns:1});add("dia",tube([c(7.5,0,0),c(9.5,0,0)],.3,10),MAT(0xe86a5a,{roughness:.35,clearcoat:.7,emissive:0x5a1a08,emissiveIntensity:.25}),[0,0,0],{parent:DI,ns:1});
  const ND=60,dp=new Wn(new it(.07,8,6),new bt({color:0x8b5a2b}),ND);dp.frustumCulled=!1;DI.add(dp);const DD=[];for(let i=0;i<ND;i++)DD.push({o:R(),z:(R()-.5)*2.4,k:i%5});
  const ND2=40,flow=new Wn(new it(.05,6,5),new bt({color:0x59b4ff}),ND2);flow.frustumCulled=!1;DI.add(flow);
- const cams=[[c(0,1.4,19),c(0,-2,0)],[c(0,0,11),c(0,.2,0)],[c(21,-.5,28),c(21,-.5,0)],[c(21,5.6,12),c(21.4,5.6,0)],[c(21,3.2,12),c(20.8,3.2,0)],[c(24.4,-2.4,18),c(24.4,-2.4,0)],[c(0,-1,16),c(0,-3,0)],[c(0,-22,19),c(0,-24,0)]];
+ const cams=[[c(0,1.4,19),c(0,-2,0)],[c(0,0,11),c(0,.2,0)],[c(21,-.5,40),c(21,-.5,0)],[c(21,5.6,12),c(21.4,5.6,0)],[c(21,3.2,12),c(20.8,3.2,0)],[c(24.4,-2.4,18),c(24.4,-2.4,0)],[c(0,-1,16),c(0,-3,0)],[c(0,-22,19),c(0,-24,0)]];
  const camK=["System","Kidney","Nephron","Filtration","Reabsorption","Loop & urine","Urine path","Dialysis"];
- const show={};const rows={kid:[1,0,0,0,0,0,1,0],cortex:[1,1,0,0,0,0,1,0],medulla:[1,1,1,0,0,1,1,0],pelvis:[1,1,0,0,0,0,1,0],ureter:[1,1,0,0,0,0,1,0],bladder:[1,0,0,0,0,0,1,0],renalA:[1,1,0,0,0,0,1,0],renalV:[1,1,0,0,0,0,1,0],
+ const show={};const rows={medbg:[0,0,1,0,0,1,0,0],kid:[1,0,0,0,0,0,1,0],cortex:[1,1,0,0,0,0,1,0],medulla:[1,1,0,0,0,0,1,0],pelvis:[1,1,0,0,0,0,1,0],ureter:[1,1,0,0,0,0,1,0],bladder:[1,0,0,0,0,0,1,0],renalA:[1,1,0,0,0,0,1,0],renalV:[1,1,0,0,0,0,1,0],
   bow:[0,0,1,1,1,1,0,0],glom:[0,0,1,1,1,0,0,0],aff:[0,0,1,1,0,0,0,0],eff:[0,0,1,1,1,0,0,0],pct:[0,0,1,1,1,1,0,0],loop:[0,0,1,0,0,1,0,0],dct:[0,0,1,0,0,1,0,0],duct:[0,0,1,0,0,1,0,0],cap:[0,0,1,0,1,0,0,0],dia:[0,0,0,0,0,0,0,1]};
  Object.assign(show,rows);
- const base={kid:0,cortex:.55,medulla:.95,pelvis:1,ureter:1,bladder:.8,renalA:1,renalV:1,bow:.8,glom:1,aff:1,eff:1,pct:.8,loop:.8,dct:.8,duct:.8,cap:.55,dia:.22};
+ const base={medbg:.12,kid:0,cortex:.55,medulla:.95,pelvis:1,ureter:1,bladder:.8,renalA:1,renalV:1,bow:.8,glom:1,aff:1,eff:1,pct:.8,loop:.8,dct:.8,duct:.8,cap:.55,dia:.22};
  const L=(par,p)=>()=>par.localToWorld(c(...p));
  const labels=[["k-ki","Kidney (×2)","वृक्क (×2)",L(AN,[-3.4,1.2,1.1]),[0]],["k-ur","Ureter","मूत्रवाहिनी",L(AN,[-2.2,-2.2,.1]),[0,6]],["k-bl","Urinary bladder","मूत्राशय",L(AN,[1.2,-6.4,.6]),[0,6]],["k-ra","Renal artery (urea-rich blood)","वृक्क धमनी",L(AN,[-.4,2.8,0]),[0]],["k-rv","Renal vein (clean blood)","वृक्क शिरा",L(AN,[.9,-2,-.2]),[0]],["k-ur2","Urethra → out","मूत्रमार्ग → बाहर",L(AN,[.2,-8.4,0]),[0,6]],
   ["k-co","Cortex (nephrons here)","वल्कुट (नेफ्रॉन यहाँ)",L(AN,[-4.6,1.6,.9]),[1]],["k-me","Medulla (pyramids)","मध्यांश (पिरामिड)",L(AN,[-3.4,-.6,.3]),[1]],["k-pe","Renal pelvis","वृक्क श्रोणि",L(AN,[-2.6,-.1,.1]),[1]],
@@ -6621,6 +6621,7 @@ const KIND6={
  testis:["Testis","वृषण","Makes sperm (in seminiferous tubules) and the hormone testosterone. It hangs in the scrotum where it is about 2–3 °C cooler than the body — needed for sperm formation.","शुक्राणु (शुक्रजनक नलिकाओं में) और टेस्टोस्टेरोन बनाता है; वृषणकोष में लटका रहता है जहाँ तापमान शरीर से 2–3 °C कम होता है — शुक्राणु बनने के लिए आवश्यक।"],
  epid:["Epididymis","अधिवृषण","A tightly coiled tube on the testis where sperm mature and are stored.","वृषण पर कसकर कुंडलित नली जहाँ शुक्राणु परिपक्व होकर संचित रहते हैं।"],
  vas:["Vas deferens","शुक्रवाहिका","Muscular tube that carries sperm from the epididymis up and over the bladder to join the urethra.","पेशीय नली जो शुक्राणुओं को अधिवृषण से मूत्राशय के ऊपर से मूत्रमार्ग तक ले जाती है।"],
+ scrot:["Scrotum","वृषणकोष","Skin sac keeping the testes 2–3 °C below body temperature.","त्वचा की थैली जो वृषणों को शरीर से 2–3 °C ठंडा रखती है।"],
  sv:["Seminal vesicle","शुक्राशय","Gland adding a sugar-rich fluid (fructose) that feeds the sperm and helps them swim.","ग्रंथि जो फ्रक्टोज़-युक्त द्रव मिलाती है; यह शुक्राणुओं को पोषण व तैरने में सहायता देता है।"],
  prost:["Prostate gland","पुरःस्थ ग्रंथि","Adds an alkaline fluid. Sperm + these fluids = semen.","क्षारीय द्रव जोड़ती है; शुक्राणु + ये द्रव = वीर्य।"],
  ureth:["Urethra","मूत्रमार्ग","In males it carries both urine and semen (never at the same time).","पुरुषों में मूत्र व वीर्य दोनों ले जाता है (एक साथ नहीं)।"],
@@ -6658,10 +6659,10 @@ const R_ST=[
 function Mrepro(){sd=61;const n=new Ne;Ge(n,{key:1.9});Je(n,-7,80,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
  const M=new J;M.position.set(-26,0,0);g.add(M);const F=new J;g.add(F);const Z=new J;Z.position.set(26,0,0);g.add(Z);const Dv=new J;Dv.position.set(0,-24,0);g.add(Dv);const E=new J;E.position.set(26,-24,0);g.add(E);
  const pink=MAT(0xe9a2a0,{roughness:.5,clearcoat:.4,sheen:.4,sheenC:0xffd0d0,bumpScale:.3,opacity:.5,depthWrite:!1,emissive:0x3a1010,emissiveIntensity:.1});
- const flesh=MAT(0xe08f86,{roughness:.5,clearcoat:.4,bumpScale:.3,emissive:0x3a1010,emissiveIntensity:.12});const yel=MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2});
+ const flesh=MAT(0xeaa39a,{roughness:.7,clearcoat:.1,bumpScale:.06,sheen:0,emissive:0x6a2a24,emissiveIntensity:.28});const yel=MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2});
  const prof=u=>{const w=u<.12?.24+.2*u:.24+.98*Math.pow(Math.sin(Math.min(1,(u-.08)/.82)*PI/2),1.25);return u>.9?w*Math.sqrt(Math.max(0,1-Math.pow((u-.9)/.1,2))):w};
  /* ---------- male ---------- */
- const sac=add("testis",param(30,44,(u,v)=>{const th=u*PI,ph=v*TAU;return[sin(th)*cos(ph)*2.1,-3.1+cos(th)*1.35,sin(th)*sin(ph)*.95]}),MAT(0xf1c9a5,{roughness:.55,opacity:.22,depthWrite:!1,bumpScale:.3,sheen:0}),[0,0,0],{parent:M,ns:1});
+ const sac=add("scrot",param(30,44,(u,v)=>{const th=u*PI,ph=v*TAU;return[sin(th)*cos(ph)*2.1,-3.1+cos(th)*1.35,sin(th)*sin(ph)*.95]}),MAT(0xf1c9a5,{roughness:.55,opacity:.22,depthWrite:!1,bumpScale:.3,sheen:0}),[0,0,0],{parent:M,ns:1});
  [-1,1].forEach(sx=>{add("testis",sph(.72,.04,2,.8,1.15,.8,28,36,sx),MAT(0xf0d8b8,{roughness:.4,clearcoat:.7,opacity:.95,sheen:.3,emissive:0x3a2a10,emissiveIntensity:.1}),[sx*.95,-3.1,0],{parent:M});
   const pts=[];for(let i=0;i<=40;i++){const q=i/40,a=q*TAU*5;pts.push(c(sx*.95+sx*.35+.18*Math.sin(a),-2.4-q*.0+.45*Math.cos(q*PI)*.0-.45*q+.25*(1-q),-.15+.16*Math.cos(a)))}add("epid",tube(pts,.07,8),yel,[0,0,0],{parent:M,ns:1});
   add("vas",tube([c(sx*1.3,-2.5,-.25),c(sx*1.45,-1,-.3),c(sx*1.1,.6,-.3),c(sx*.5,1.5,-.1),c(sx*.3,.2,.1),c(sx*.12,-.7,.1)],.1,8),yel,[0,0,0],{parent:M,ns:1});
@@ -6675,12 +6676,12 @@ function Mrepro(){sd=61;const n=new Ne;Ge(n,{key:1.9});Je(n,-7,80,.08);const g=n
  const wall=add("uterus",param(36,60,(u,v)=>{const y=-1.6+u*3.2,r=prof(u)*1.0,a=ang(v);return[cos(a)*r*1.15,y,sin(a)*r*.7]}),pink,[0,0,0],{parent:F,ns:1});
  const endoM=MAT(0xc9373a,{roughness:.5,clearcoat:.4,bumpScale:.4,emissive:0x4a0808,emissiveIntensity:.25,sheen:.5,sheenC:0xff9a9a});
  const endo=add("endo",param(34,56,(u,v)=>{const y=-1.1+u*2.5,r=prof(.15+u*.8)*.62,a=ang(v);return[cos(a)*r*1.15,y,sin(a)*r*.7]}),endoM,[0,0,0],{parent:F,ns:1});
- add("cervix",tube([c(0,-1.9,0),c(0,-1.45,0)],.3,12),MAT(0xd98a86,{roughness:.5,bumpScale:.3}),[0,0,0],{parent:F,ns:1});
+ add("cervix",tube([c(0,-1.9,0),c(0,-1.45,0)],.3,12),MAT(0xe29c94,{roughness:.7,bumpScale:.05,sheen:0,emissive:0x6a2a24,emissiveIntensity:.25}),[0,0,0],{parent:F,ns:1});
  add("vagina",tube([c(0,-1.9,0),c(0,-3.6,.2),c(0,-5,.5)],.4,14),flesh,[0,0,0],{parent:F,ns:1});
  const tubeP=sx=>[c(sx*.7,1.05,0),c(sx*1.5,1.65,0),c(sx*2.4,1.55,.05),c(sx*3.1,1.1,.1),c(sx*3.4,.55,.1)];
- [-1,1].forEach(sx=>{add("tube",tube(tubeP(sx),.1,10,u=>1+.9*u),MAT(0xe6968a,{roughness:.45,clearcoat:.5,bumpScale:.3,emissive:0x3a1010,emissiveIntensity:.12}),[0,0,0],{parent:F,ns:1});
+ [-1,1].forEach(sx=>{add("tube",tube(tubeP(sx),.1,10,u=>1+.9*u),MAT(0xf0a89c,{roughness:.6,clearcoat:.2,bumpScale:.05,sheen:0,emissive:0x6a2a24,emissiveIntensity:.25}),[0,0,0],{parent:F,ns:1});
   for(let k=0;k<9;k++){const a=k/9*TAU,e=tubeP(sx)[4];add("fim",tube([c(e.x,e.y,e.z),c(e.x+sx*.15*cos(a),e.y-.15+.25*sin(a),e.z+.3*cos(a)),c(e.x+sx*.3*cos(a),e.y-.4+.45*sin(a),e.z+.55*cos(a))],.04,5),MAT(0xf0a0a0,{roughness:.4,emissive:0x3a1010,emissiveIntensity:.15}),[0,0,0],{parent:F,ns:1})}
-  add("ovary",sph(.62,.05,2,1.25,1,.85,28,36,sx),MAT(0xf0b8a0,{roughness:.8,clearcoat:0,bumpScale:.6,sheen:.3,sheenC:0xffd8c8,envMapIntensity:.5,emissive:0x4a2418,emissiveIntensity:.2}),[sx*3.55,-.35,.1],{parent:F});
+  add("ovary",sph(.62,.05,2,1.25,1,.85,28,36,sx),MAT(0xf6bfae,{roughness:.8,clearcoat:0,bumpScale:.05,sheen:0,envMapIntensity:.5,emissive:0x6a3a2a,emissiveIntensity:.3}),[sx*3.55,-.35,.1],{parent:F});
   for(let k=0;k<6;k++){const a=k*1.9;add("foll",sph(.12,.05,3,1,1,1,12,16),MAT(0xfff2d0,{roughness:.2,clearcoat:1,opacity:.9}),[sx*3.55+cos(a)*.5*sx,-.35+sin(a)*.4,.1+cos(a*2)*.3],{parent:F,ns:1})}});
  const mature=add("foll",sph(.3,.03,2,1,1,1,20,26),MAT(0xfff6d8,{roughness:.15,clearcoat:1,opacity:.85,emissive:0x6a5a20,emissiveIntensity:.3}),[3.95,-.2,.35],{parent:F,ns:1});
  const ovum=add("egg",sph(.13,0,1,1,1,1,16,20),MAT(0xffd7a0,{roughness:.2,clearcoat:1,emissive:0x8a5a10,emissiveIntensity:.5}),[3.95,-.2,.35],{parent:F,ns:1});
@@ -6729,10 +6730,10 @@ function Mrepro(){sd=61;const n=new Ne;Ge(n,{key:1.9});Je(n,-7,80,.08);const g=n
  /* ---------- cameras ---------- */
  const cams=[[c(-26,-1.6,17),c(-26,-1.4,0)],[c(24,0,16),c(22,0,0)],[c(0,-.2,15.5),c(0,-.2,0)],[c(2.6,.5,9),c(3,.3,0)],[c(26,0,17),c(24,0,0)],[c(0,-24,19),c(0,-24,0)],[c(26,-24,16),c(26,-23.6,0)],[c(0,.2,14),c(0,-.2,0)]];
  const camK=["Male","Sperm","Female","Ovulation","Fertilisation","Cleavage","Placenta","Cycle"];
- const show={};const ids=["testis","epid","vas","sv","bladm","prost","ureth","head","mid","tail","uterus","endo","cervix","vagina","tube","fim","ovary","foll","egg","zona","corona","nucz","stage","blast","foet","plac","cord","amn"];
+ const show={};const ids=["scrot","testis","epid","vas","sv","bladm","prost","ureth","head","mid","tail","uterus","endo","cervix","vagina","tube","fim","ovary","foll","egg","zona","corona","nucz","stage","blast","foet","plac","cord","amn"];
  ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
- on("testis",[0]);on("epid",[0]);on("vas",[0]);on("sv",[0]);on("bladm",[0]);on("prost",[0]);on("ureth",[0]);on("head",[1,4]);on("mid",[1,4]);on("tail",[1,4]);on("uterus",[2,3,4,7]);on("endo",[2,3,4,5,7]);on("cervix",[2,7]);on("vagina",[2,7]);on("tube",[2,3,4,7]);on("fim",[2,3,7]);on("ovary",[2,3,7]);on("foll",[2,3,7]);on("egg",[3,4]);on("zona",[4]);on("corona",[4]);on("nucz",[4]);on("stage",[5]);on("blast",[5]);on("foet",[6]);on("plac",[6]);on("cord",[6]);on("amn",[6]);
- const base={testis:.95,epid:1,vas:1,sv:1,bladm:.7,prost:1,ureth:1,head:1,mid:1,tail:1,uterus:.5,endo:1,cervix:1,vagina:1,tube:1,fim:1,ovary:1,foll:.9,egg:1,zona:.28,corona:.85,nucz:1,stage:.92,blast:.9,foet:1,plac:1,cord:1,amn:.16};
+ on("scrot",[0]);on("testis",[0]);on("epid",[0]);on("vas",[0]);on("sv",[0]);on("bladm",[0]);on("prost",[0]);on("ureth",[0]);on("head",[1,4]);on("mid",[1,4]);on("tail",[1,4]);on("uterus",[2,3,4,7]);on("endo",[2,3,4,5,7]);on("cervix",[2,7]);on("vagina",[2,7]);on("tube",[2,3,4,7]);on("fim",[2,3,7]);on("ovary",[2,3,7]);on("foll",[2,3,7]);on("egg",[3,4]);on("zona",[4]);on("corona",[4]);on("nucz",[4]);on("stage",[5]);on("blast",[5]);on("foet",[6]);on("plac",[6]);on("cord",[6]);on("amn",[6]);
+ const base={scrot:.22,testis:.95,epid:1,vas:1,sv:1,bladm:.7,prost:1,ureth:1,head:1,mid:1,tail:1,uterus:.5,endo:1,cervix:1,vagina:1,tube:1,fim:1,ovary:1,foll:.9,egg:1,zona:.28,corona:.85,nucz:1,stage:.92,blast:.9,foet:1,plac:1,cord:1,amn:.16};
  const Lw=(par,p)=>()=>par.localToWorld(c(...p));
  const labels=[["m-te","Testis (sperm + testosterone)","वृषण (शुक्राणु + टेस्टोस्टेरोन)",Lw(M,[.95,-3.1,.8]),[0]],["m-ep","Epididymis (sperm mature)","अधिवृषण (शुक्राणु परिपक्व)",Lw(M,[1.4,-2.2,-.1]),[0]],["m-va","Vas deferens","शुक्रवाहिका",Lw(M,[1.45,-.6,-.3]),[0]],["m-sv","Seminal vesicle","शुक्राशय",Lw(M,[.8,-.1,-.5]),[0]],["m-pr","Prostate gland","पुरःस्थ ग्रंथि",Lw(M,[0,-.9,.5]),[0]],["m-ur","Urethra","मूत्रमार्ग",Lw(M,[0,-3.1,.9]),[0]],["m-sc","Scrotum (cooler: 2–3 °C)","वृषणकोष (2–3 °C ठंडा)",Lw(M,[-2,-3.4,.2]),[0]],["m-bl","Bladder","मूत्राशय",Lw(M,[-.8,1.9,.4]),[0]],
   ["z-he","Head: nucleus (23) + acrosome","शीर्ष: केंद्रक (23) + एक्रोसोम",Lw(Z,[-14,1,-1]),[1]],["z-mi","Mid-piece: mitochondria","मध्य खंड: माइटोकॉन्ड्रिया",Lw(Z,[-14.9,.8,-1]),[1]],["z-ta","Tail: swims","पूँछ: तैरती है",Lw(Z,[-17.2,1,-1]),[1]],
