@@ -27,4 +27,5 @@ Kidney and brain meshes in the open atlas are not usable (licence: non-commercia
 1. Animal cell (`ix1/cell3d`) · 2. Plant cell (`ix1/plant3d`) + bacterium (`ix1/bacterium3d`) · 3. Atomic models (`ix6/atom3d`)
 4. **Neuron, impulse, synapse, reflex arc (`ch6/neuron3d`)** — myelinated axon with saltatory impulse, Na⁺/K⁺ at a node, magnified synapse with vesicles/receptors/neurotransmitter, reflex arc with relay neuron and contracting muscle.
 Real-mesh topics (BodyParts3D): heart, digestive, eye, elbow joint, lungs.
-Next biology sets, in order: nephron/excretion → human reproduction → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).
+5. **Kidney, nephron & dialysis (`ch5/nephron3d`)** — hand-modelled kidney cut-away, one enlarged nephron (glomerulus, Bowman's capsule, PCT, loop, DCT, collecting duct), animated filtration / selective reabsorption / urine formation, urine path, dialysis.
+Next biology sets, in order: human reproduction → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).

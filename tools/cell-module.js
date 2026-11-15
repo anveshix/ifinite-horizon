@@ -1,4 +1,4 @@
-/* ===== Custom model sets 1-4: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex (detailed 3D) =====
+/* ===== Custom model sets 1-5: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -465,4 +465,125 @@ function Mneuron(){sd=41;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,40,.08);const 
 Q_("ch6/neuron3d",[["Which part of a neuron receives information?","तंत्रिका कोशिका का कौन-सा भाग सूचना ग्रहण करता है?",["Axon","Dendrites","Myelin sheath","Axon terminal"],1,"Dendrites receive; the axon sends."],["What is the function of the myelin sheath?","माइलिन आवरण का कार्य?",["Makes proteins","Speeds up the impulse by insulating the axon","Stores neurotransmitter","Receives signals"],1,"Impulses jump between nodes."],["At a synapse the signal crosses the gap as…","सिनैप्स में संकेत दरार पार करता है…",["Electric current","Chemical neurotransmitter","Light","Sound"],1,"A chemical messenger diffuses across."],["Which is the correct reflex arc?","सही प्रतिवर्त चाप कौन-सा है?",["Receptor→sensory→relay→motor→effector","Brain→muscle→skin","Muscle→sensory→skin","Effector→relay→receptor"],0,"The path avoids the brain for speed."],["Which neuron carries the signal from the spinal cord to the muscle?","मेरुरज्जु से पेशी तक संकेत कौन-सी तंत्रिका ले जाती है?",["Sensory","Relay","Motor","None"],2,"Motor neurons carry commands to effectors."]]);
 Px["ch6/neuron3d"]=[["Touching a hot pan: your hand pulls back in about 0.05 s — before the pain reaches your brain.","गर्म बर्तन छूते ही हाथ लगभग 0.05 s में हट जाता है — दर्द मस्तिष्क तक पहुँचने से पहले।"],["Some neurons in your leg are about 1 m long — the longest cells in the body.","पैर की कुछ तंत्रिका कोशिकाएँ लगभग 1 m लंबी होती हैं — शरीर की सबसे लंबी कोशिकाएँ।"]];
 {const Ln=Hi.find(h=>h.no===6).topics,i=Ln.findIndex(x=>x.id==="neuron");Ln.splice(i<0?Ln.length:i+1,0,{id:"neuron3d",title:"Neuron, synapse & reflex arc — detailed 3D",hi:"न्यूरॉन, सिनैप्स व प्रतिवर्त चाप — विस्तृत 3D",build:Mneuron,ncert:"Ch 6 · control and coordination"})}
+/* ===================== SET 5: KIDNEY · NEPHRON · DIALYSIS ===================== */
+const KIND5={
+ kid:["Kidney","वृक्क","Bean-shaped organ (about 11 cm) that filters about 180 litres of blood plasma a day and makes 1–2 litres of urine. We have two. (Hand-modelled; not a medical mesh.)","सेम के आकार का अंग (लगभग 11 cm) जो प्रतिदिन लगभग 180 लीटर रक्त-प्लाज़्मा छानता और 1–2 लीटर मूत्र बनाता है; हमारे दो वृक्क होते हैं।"],
+ cortex:["Cortex","वल्कुट","Outer layer of the kidney where the glomeruli and convoluted tubules sit.","वृक्क की बाहरी परत जहाँ केशिकागुच्छ व कुंडलित नलिकाएँ होती हैं।"],
+ medulla:["Medulla (pyramids)","मध्यांश (पिरामिड)","Inner cone-shaped region with the loops of Henle and collecting ducts; its salty fluid helps save water.","भीतरी शंकु-आकार क्षेत्र जिसमें हेनले-लूप व संग्रह नलिकाएँ हैं; इसका नमकीन द्रव जल बचाने में सहायक है।"],
+ pelvis:["Renal pelvis","वृक्क श्रोणि","Funnel that collects urine and passes it into the ureter.","कीप जो मूत्र एकत्र कर मूत्रवाहिनी में भेजती है।"],
+ ureter:["Ureter","मूत्रवाहिनी","Muscular tube that pushes urine from kidney to bladder by peristalsis.","पेशीय नली जो क्रमाकुंचन से मूत्र को वृक्क से मूत्राशय तक पहुँचाती है।"],
+ bladder:["Urinary bladder","मूत्राशय","Stretchy muscular bag that stores urine until it is passed out through the urethra.","लचीली पेशीय थैली जो मूत्र को मूत्रमार्ग से बाहर निकलने तक जमा रखती है।"],
+ renalA:["Renal artery","वृक्क धमनी","Brings blood (rich in urea) from the aorta to the kidney.","महाधमनी से यूरिया-युक्त रक्त वृक्क तक लाती है।"],
+ renalV:["Renal vein","वृक्क शिरा","Takes the cleaned blood away from the kidney.","साफ़ हुआ रक्त वृक्क से दूर ले जाती है।"],
+ bow:["Bowman's capsule","बोमन संपुट","Cup-shaped end of the nephron that wraps the glomerulus and collects the filtrate.","नेफ्रॉन का प्याले जैसा सिरा जो केशिकागुच्छ को घेरकर निस्यंद एकत्र करता है।"],
+ glom:["Glomerulus","केशिकागुच्छ","A tuft of capillaries. High pressure squeezes water, glucose, salts and urea out of the blood; blood cells and big proteins stay in.","केशिकाओं का गुच्छा; उच्च दाब से जल, ग्लूकोज़, लवण व यूरिया रक्त से बाहर निचुड़ते हैं; रक्त कोशिकाएँ व बड़े प्रोटीन अंदर रहते हैं।"],
+ aff:["Afferent arteriole","अभिवाही धमनिका","Wide vessel bringing blood into the glomerulus (wider than the exit, so pressure builds).","केशिकागुच्छ में रक्त लाने वाली चौड़ी वाहिका (निकास से चौड़ी, इसलिए दाब बनता है)।"],
+ eff:["Efferent arteriole","अपवाही धमनिका","Narrow vessel leaving the glomerulus; it then forms capillaries around the tubule.","केशिकागुच्छ से निकलने वाली संकरी वाहिका; आगे नलिका के चारों ओर केशिकाएँ बनाती है।"],
+ pct:["Proximal convoluted tubule","समीपस्थ कुंडलित नलिका","Where selective reabsorption happens: all glucose and amino acids, most salts and about two-thirds of the water go back to the blood.","चयनात्मक पुनरावशोषण यहीं: सारा ग्लूकोज़ व अमीनो अम्ल, अधिकांश लवण और लगभग दो-तिहाई जल रक्त में लौटता है।"],
+ loop:["Loop of Henle","हेनले का पाश","U-shaped tube dipping into the medulla; it builds a salty gradient so more water can be recovered.","मध्यांश में उतरती U-आकार की नली; नमकीन ढाल बनाकर अधिक जल लौटाने में सहायक।"],
+ dct:["Distal convoluted tubule","दूरस्थ कुंडलित नलिका","Fine-tunes salts and pH; secretes extra ions and waste into the tubule.","लवण व pH का सूक्ष्म नियमन; अतिरिक्त आयन व अपशिष्ट नलिका में स्रावित करती है।"],
+ duct:["Collecting duct","संग्रह नलिका","Many nephrons drain here. Water is recovered under the control of hormone ADH; the remaining fluid is urine.","अनेक नेफ्रॉन यहाँ खाली होते हैं; हार्मोन ADH के नियंत्रण में जल लौटता है; शेष द्रव मूत्र है।"],
+ cap:["Peritubular capillaries","नलिका-परिवेशी केशिकाएँ","Capillary net around the tubule that takes back the reabsorbed substances.","नलिका के चारों ओर केशिका-जाल जो पुनरावशोषित पदार्थ वापस ले लेता है।"],
+ dia:["Dialysis machine (artificial kidney)","डायलिसिस मशीन (कृत्रिम वृक्क)","When kidneys fail, blood flows through tubes made of a semi-permeable membrane in dialysing fluid. Urea and extra salts diffuse out; blood cells and proteins stay in.","वृक्क विफल होने पर रक्त अर्धपारगम्य झिल्ली की नलिकाओं से डायलिसिस द्रव में बहता है; यूरिया व अतिरिक्त लवण बाहर विसरित होते हैं; रक्त कोशिकाएँ व प्रोटीन अंदर रहते हैं।"]};
+const NE_ST=[
+["1","The excretory system","उत्सर्जन तंत्र","Metabolism makes wastes such as urea. Two kidneys filter the blood; urine flows down the ureters to the bladder and leaves through the urethra.","उपापचय से यूरिया जैसे अपशिष्ट बनते हैं; दो वृक्क रक्त छानते हैं; मूत्र मूत्रवाहिनियों से मूत्राशय में आता है और मूत्रमार्ग से निकलता है।","Hand-modelled · not a medical mesh",9],
+["2","Inside a kidney","वृक्क के भीतर","A cut kidney shows the outer cortex and the inner medulla made of pyramids that drain into the pelvis. Each kidney holds about a million tiny filters called nephrons.","कटे वृक्क में बाहरी वल्कुट और पिरामिडों वाला भीतरी मध्यांश दिखता है जो श्रोणि में खुलता है; प्रत्येक वृक्क में लगभग दस लाख सूक्ष्म छन्ने — नेफ्रॉन — होते हैं।","Hand-modelled",10],
+["3","One nephron, enlarged","एक नेफ्रॉन, बड़ा करके","A nephron is the structural and functional unit of the kidney: Bowman's capsule with the glomerulus, proximal tubule, loop of Henle, distal tubule, ending in a collecting duct. (Greatly enlarged and stretched.)","नेफ्रॉन वृक्क की संरचनात्मक व क्रियात्मक इकाई है: केशिकागुच्छ सहित बोमन संपुट, समीपस्थ नलिका, हेनले पाश, दूरस्थ नलिका, और संग्रह नलिका। (बहुत बड़ा व खिंचा हुआ)।","Schematic · greatly enlarged",11],
+["4","Step 1 — Filtration","चरण 1 — निस्यंदन","Blood enters the glomerulus under high pressure. Small molecules — water, glucose, salts, urea — are forced into Bowman's capsule. Blood cells and big proteins stay in the blood.","रक्त उच्च दाब पर केशिकागुच्छ में आता है; छोटे अणु — जल, ग्लूकोज़, लवण, यूरिया — बोमन संपुट में निचुड़ते हैं; रक्त कोशिकाएँ व बड़े प्रोटीन रक्त में रहते हैं।","Animated (particles not to scale)",12],
+["5","Step 2 — Selective reabsorption","चरण 2 — चयनात्मक पुनरावशोषण","Along the proximal tubule the useful substances — all the glucose, amino acids, most salts and much water — are taken back into the capillaries. Urea stays behind.","समीपस्थ नलिका में उपयोगी पदार्थ — सारा ग्लूकोज़, अमीनो अम्ल, अधिकांश लवण व बहुत सा जल — केशिकाओं में लौट जाते हैं; यूरिया पीछे रहता है।","Animated · schematic",13],
+["6","Step 3 — Loop of Henle and urine","चरण 3 — हेनले पाश व मूत्र","The loop recovers more water, the distal tubule fine-tunes salts, and the collecting duct saves still more water. What is left — water, urea, extra salts — is urine.","पाश और जल लौटाता है, दूरस्थ नलिका लवण समायोजित करती है, संग्रह नलिका और जल बचाती है; शेष — जल, यूरिया, अतिरिक्त लवण — मूत्र है।","Animated · schematic",13],
+["7","Urine's journey","मूत्र की यात्रा","Urine collects in the renal pelvis, is pushed down the ureters by peristalsis into the bladder, and is stored. When the bladder is full, sphincters relax and urine is passed out.","मूत्र श्रोणि में एकत्र होता है, क्रमाकुंचन से मूत्रवाहिनियों में नीचे धकेला जाता है, मूत्राशय में जमा होता है; भर जाने पर अवरोधिनी शिथिल होकर मूत्र निकलता है।","Animated · schematic",10],
+["8","When kidneys fail: dialysis","वृक्क विफल हों तो: डायलिसिस","In haemodialysis the patient's blood runs through tubes of semi-permeable membrane bathed in dialysing fluid. Urea and extra salts diffuse out; the cleaned blood returns to the body. A kidney transplant is the permanent cure.","हीमोडायलिसिस में रोगी का रक्त अर्धपारगम्य झिल्ली की नलिकाओं में डायलिसिस द्रव के बीच बहता है; यूरिया व अतिरिक्त लवण बाहर विसरित होते हैं; साफ़ रक्त शरीर में लौटता है। वृक्क प्रत्यारोपण स्थायी उपचार है।","Animated · schematic",13]];
+function Mneph(){sd=51;const n=new Ne;Ge(n,{key:1.9});Je(n,-6,60,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const AN=new J;g.add(AN);const NP_=new J;NP_.position.set(24,0,0);g.add(NP_);const DI=new J;DI.position.set(0,-24,0);g.add(DI);
+ /* ---------- anatomy ---------- */
+ const cortM=MAT(0xc0584a,{roughness:.5,clearcoat:.5,bumpScale:.4,opacity:.55,sheen:.4,sheenC:0xff9a8a,emissive:0x3a0c08,emissiveIntensity:.15,depthWrite:!1});
+ const medM=MAT(0x8a2f2c,{roughness:.55,clearcoat:.3,bumpScale:.35,emissive:0x2a0808,emissiveIntensity:.2});
+ const kid=(sx)=>{const k=new J;k.position.set(sx,.4,0);AN.add(k);
+  const bean=(u,v,cutFront)=>{const th=u*PI,ph=cutFront?(.75+v*1.5)*PI:v*TAU,x=sin(th)*cos(ph),y=cos(th),z=sin(th)*sin(ph),kk=1+.05*(fbm(x*2+sx,y*2,z*2)-.5);let X=x*1.45*kk,Y=y*2.5*kk,Z=z*1.05*kk;X-=sx>0?.0:0;const hil=Math.exp(-((y*2.5)*(y*2.5))/.9)*Math.max(0,-x*(sx>0?-1:1));X+=(sx>0?-1:1)*0;const side=sx>0?-1:1;X+=side*.55*Math.exp(-(Y*Y)/1.1)*Math.max(0,x*side*-1+.2)*.9*-1;return[X,Y,Z]};
+  const c1=add("cortex",param(40,60,(u,v)=>bean(u,v,true)),cortM,[0,0,0],{parent:k,ns:1});
+  add("kid",param(30,40,(u,v)=>{const p=bean(u,v,false);return[p[0]*.92,p[1]*.92,p[2]*.9]}),MAT(0xa94540,{roughness:.5,opacity:.0,depthWrite:!1}),[0,0,0],{parent:k,ns:1});
+  for(let i=0;i<7;i++){const a=(i/7)*TAU*.85+.3,hx=Math.cos(a)*.7*(sx>0?-1:1)*0+Math.cos(a)*.65,hy=Math.sin(a)*1.55;add("medulla",param(14,24,(u,v)=>{const q=v*TAU,r=(1-u)*.34;return[hx+Math.cos(a)*u*.6+Math.cos(q)*r*.9,hy+Math.sin(a)*u*.45*0+Math.sin(q)*r*.9,Math.sin(q)*r*0+u*.0+Math.cos(q)*r*.5-.1]}),medM,[0,0,0],{parent:k,ns:1})}
+  add("pelvis",tube([c(0,.5,0),c(-.5*(sx>0?1:-1)*-1,0,.1),c(-.9*(sx>0?1:-1)*-1,-.7,.1)],.26,10,u=>1-.4*u),MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2}),[0,0,0],{parent:k,ns:1});
+  return k};
+ kid(-3.4);kid(3.4);
+ const urM=MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2});
+ [-1,1].forEach(sx=>add("ureter",tube([c(sx*2.5,-.3,0),c(sx*2.2,-2.2,.1),c(sx*1.6,-4.2,.2),c(sx*.9,-5.6,.1)],.1,8),urM,[0,0,0],{parent:AN,ns:1}));
+ const blad=add("bladder",sph(1.15,.05,2,1.1,.95,.9,32,44,3),MAT(0xe8b04a,{roughness:.45,clearcoat:.5,opacity:.8,bumpScale:.4,emissive:0x4a3008,emissiveIntensity:.15}),[0,-6.4,.1],{parent:AN});
+ add("ureter",tube([c(0,-7.4,0),c(0,-8.6,0)],.12,8),urM,[0,0,0],{parent:AN,ns:1});
+ const artM=MAT(0xd2413f,{roughness:.35,clearcoat:.7,emissive:0x5a0a08,emissiveIntensity:.25}),veinM=MAT(0x4f63d6,{roughness:.35,clearcoat:.7,emissive:0x101a5a,emissiveIntensity:.25});
+ add("renalA",tube([c(0,3.4,0),c(0,2.2,0)],.26,10),artM,[0,0,0],{parent:AN,ns:1});add("renalV",tube([c(.5,-3.5,-.2),c(.5,2.6,-.2)],.2,10),veinM,[0,0,0],{parent:AN,ns:1});
+ [-1,1].forEach(sx=>{add("renalA",tube([c(0,2.6,0),c(sx*1.2,1.5,.1),c(sx*2.2,.8,.2)],.12,8),artM,[0,0,0],{parent:AN,ns:1});add("renalV",tube([c(.5,0,-.2),c(sx*1.2,.3,-.1),c(sx*2.2,.3,0)],.1,8),veinM,[0,0,0],{parent:AN,ns:1})});
+ /* ---------- one nephron ---------- */
+ const tubM=MAT(0xf0b45a,{roughness:.3,clearcoat:.7,opacity:.8,emissive:0x5a3a08,emissiveIntensity:.18,depthWrite:!1,bumpScale:.15}),tubIn=MAT(0xfff1c8,{roughness:.4,opacity:.4,depthWrite:!1,sheen:0});
+ const cur=[];const heli=(y0,y1,x0,r,tn,steps)=>{for(let i=0;i<=steps;i++){const q=i/steps;cur.push(c(x0+r*Math.sin(q*TAU*tn),y0+(y1-y0)*q,r*Math.cos(q*TAU*tn)*.9))}};
+ cur.push(c(-3.9,4.6,0));heli(4.5,1.9,-3.4,.75,3.5,36);const M1=cur.length;                 /* PCT */
+ cur.push(c(-2.6,1.2,0),c(-1.9,-1,0),c(-1.7,-4,0),c(-1.5,-6.4,0),c(-.9,-7.4,0),c(-.1,-6.4,0)); /* descending + turn */
+ cur.push(c(.1,-3,0),c(.1,0,0),c(.1,2,0));const M2=cur.length;                              /* ascending */
+ heli(2.3,3.5,1.2,.6,2.5,22);const M3=cur.length;cur.push(c(3.3,3.4,0),c(3.4,1,0),c(3.4,-3,0),c(3.4,-7,0),c(3.4,-9.2,0)); /* DCT + collecting */
+ const cs=new It(cur),path=cs.getPoints(300);
+ const CAPSULE=c(-4.7,6,0);
+ add("bow",param(30,44,(u,v)=>{const th=u*PI*.82,ph=v*TAU,r=1.25;return[CAPSULE.x+Math.cos(th)*r*.0+Math.cos(ph)*Math.sin(th)*r-.0,CAPSULE.y-Math.cos(th)*r+.0,Math.sin(ph)*Math.sin(th)*r]}),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("pct",tube(cur.slice(0,M1+1),.2,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("loop",tube(cur.slice(M1,M2),.14,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("dct",tube(cur.slice(M2-1,M3+1),.17,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("duct",tube(cur.slice(M3),.26,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ [[-1.2,5,2.6],[1,5.2,-2.6],[-1.1,7.8,-3],[1.1,7.4,3]].forEach(q=>add("duct",tube([c(3.4+q[2]*.0,q[1],q[0]*2),c(3.4,q[1]-1.4,q[0]),c(3.4,q[1]-3,0)],.14,8),tubM,[0,0,0],{parent:NP_,ns:1}));
+ /* glomerulus tuft inside capsule */
+ const gloM=MAT(0xd2413f,{roughness:.35,clearcoat:.8,emissive:0x5a0a08,emissiveIntensity:.35,bumpScale:.2});
+ for(let k=0;k<6;k++){const pts=[];for(let i=0;i<10;i++){const a=i/9*TAU*1.5+k*1.1;pts.push(c(CAPSULE.x+Math.cos(a)*(.45+.12*Math.sin(k+i)),CAPSULE.y+.0+Math.sin(a*1.3+k)*.45,Math.sin(a)*.5))}add("glom",tube(pts,.1,8),gloM,[0,0,0],{parent:NP_,ns:1})}
+ const affP=[c(-9,8.2,0),c(-7.2,7.2,0),c(-5.6,6.5,0),CAPSULE.clone().add(c(.2,.4,0))];
+ add("aff",tube(affP,.3,10,u=>1),gloM,[0,0,0],{parent:NP_,ns:1});
+ const effP=[CAPSULE.clone().add(c(-.2,-.3,0)),c(-5.9,4.6,0),c(-6.4,3.6,0)];
+ add("eff",tube(effP,.13,10),MAT(0xb23a38,{roughness:.35,clearcoat:.7,emissive:0x4a0a08,emissiveIntensity:.25}),[0,0,0],{parent:NP_,ns:1});
+ /* peritubular capillaries wrapping the proximal tubule, then venule */
+ const capM=MAT(0xd2413f,{roughness:.35,clearcoat:.6,opacity:.55,emissive:0x5a0a08,emissiveIntensity:.25,depthWrite:!1});
+ for(let k=0;k<7;k++){const pts=[];for(let i=0;i<=16;i++){const q=i/16,a=q*TAU*5+k*.9;pts.push(c(-3.4+1.05*Math.sin(a)+(k%2?.15:-.15),4.7-(2.9)*q+.0,1.05*Math.cos(a)*.95))}add("cap",tube(pts,.05,6),capM,[0,0,0],{parent:NP_,ns:1})}
+ const venP=[c(-3.6,1.6,0),c(-5.5,.8,0),c(-8,-.4,0),c(-10,-1.4,0)];add("cap",tube(venP,.2,10),MAT(0x4f63d6,{roughness:.35,clearcoat:.7,emissive:0x101a5a,emissiveIntensity:.25,opacity:.9}),[0,0,0],{parent:NP_,ns:1});
+ /* medulla salt gradient backdrop */
+ add("medulla",param(2,2,(u,v)=>[-6+u*13,-9+v*11.2,-1.6]),MAT(0xffb88a,{roughness:.6,opacity:.1,depthWrite:!1,sheen:0,envMapIntensity:.2}),[0,0,0],{parent:NP_,ns:1});
+ /* particles */
+ const NPT=110,pt=new Wn(new it(.07,8,6),new bt({color:0xffffff}),NPT);pt.frustumCulled=!1;NP_.add(pt);const pc=new we;const PT=[];
+ const TYP=[[0x59b4ff,.3,1],[0xffd23f,.2,1.1],[0x8b5a2b,0,1.2],[0xff8a3d,.36,.9],[0x59b4ff,.58,1],[0x8b5a2b,0,1.2]];
+ for(let i=0;i<NPT;i++){const t=TYP[i%6];PT.push({o:R(),leave:t[1],sc:t[2],col:t[0],side:(i%2?1:-1)});pt.setColorAt(i,pc.setHex(t[0]))}
+ const nm4=new gt;const cellsA=[];const cell=new we(0xd2413f);const NC=10,rc=new Wn(new it(.14,10,8),new bt({color:0xb02a2a}),NC);rc.frustumCulled=!1;NP_.add(rc);
+ const bigP=new Wn(new it(.1,8,6),new bt({color:0xfafafa}),6);bigP.frustumCulled=!1;NP_.add(bigP);
+ /* ---------- dialysis ---------- */
+ const tank=add("dia",boxy(5.6,2.5,2.2,.18,.0,2),MAT(0xbfe4ff,{opacity:.22,roughness:.1,clearcoat:.5,depthWrite:!1,sheen:0,envMapIntensity:.4}),[0,0,0],{parent:DI,ns:1});
+ const bloodM=MAT(0xd2413f,{roughness:.35,clearcoat:.7,opacity:.85,emissive:0x5a0a08,emissiveIntensity:.3});
+ for(let k=0;k<5;k++){const z=(k-2)*.6;add("dia",tube([c(-7.5,.2*(k-2),z),c(-5.5,.8*(k%2?1:-1),z),c(-2.5,-.8*(k%2?1:-1),z),c(.5,.8*(k%2?1:-1),z),c(3.5,-.8*(k%2?1:-1),z),c(7.5,.2*(k-2),z)],.16,10),bloodM,[0,0,0],{parent:DI,ns:1})}
+ add("dia",tube([c(-9.5,0,0),c(-7.5,0,0)],.3,10),bloodM,[0,0,0],{parent:DI,ns:1});add("dia",tube([c(7.5,0,0),c(9.5,0,0)],.3,10),MAT(0xe86a5a,{roughness:.35,clearcoat:.7,emissive:0x5a1a08,emissiveIntensity:.25}),[0,0,0],{parent:DI,ns:1});
+ const ND=60,dp=new Wn(new it(.07,8,6),new bt({color:0x8b5a2b}),ND);dp.frustumCulled=!1;DI.add(dp);const DD=[];for(let i=0;i<ND;i++)DD.push({o:R(),z:(R()-.5)*2.4,k:i%5});
+ const ND2=40,flow=new Wn(new it(.05,6,5),new bt({color:0x59b4ff}),ND2);flow.frustumCulled=!1;DI.add(flow);
+ const cams=[[c(0,1.4,19),c(0,-2,0)],[c(0,0,11),c(0,.2,0)],[c(21,-.5,28),c(21,-.5,0)],[c(21,5.6,12),c(21.4,5.6,0)],[c(21,3.2,12),c(20.8,3.2,0)],[c(24.4,-2.4,18),c(24.4,-2.4,0)],[c(0,-1,16),c(0,-3,0)],[c(0,-22,19),c(0,-24,0)]];
+ const camK=["System","Kidney","Nephron","Filtration","Reabsorption","Loop & urine","Urine path","Dialysis"];
+ const show={};const rows={kid:[1,0,0,0,0,0,1,0],cortex:[1,1,0,0,0,0,1,0],medulla:[1,1,1,0,0,1,1,0],pelvis:[1,1,0,0,0,0,1,0],ureter:[1,1,0,0,0,0,1,0],bladder:[1,0,0,0,0,0,1,0],renalA:[1,1,0,0,0,0,1,0],renalV:[1,1,0,0,0,0,1,0],
+  bow:[0,0,1,1,1,1,0,0],glom:[0,0,1,1,1,0,0,0],aff:[0,0,1,1,0,0,0,0],eff:[0,0,1,1,1,0,0,0],pct:[0,0,1,1,1,1,0,0],loop:[0,0,1,0,0,1,0,0],dct:[0,0,1,0,0,1,0,0],duct:[0,0,1,0,0,1,0,0],cap:[0,0,1,0,1,0,0,0],dia:[0,0,0,0,0,0,0,1]};
+ Object.assign(show,rows);
+ const base={kid:0,cortex:.55,medulla:.95,pelvis:1,ureter:1,bladder:.8,renalA:1,renalV:1,bow:.8,glom:1,aff:1,eff:1,pct:.8,loop:.8,dct:.8,duct:.8,cap:.55,dia:.22};
+ const L=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["k-ki","Kidney (×2)","वृक्क (×2)",L(AN,[-3.4,1.2,1.1]),[0]],["k-ur","Ureter","मूत्रवाहिनी",L(AN,[-2.2,-2.2,.1]),[0,6]],["k-bl","Urinary bladder","मूत्राशय",L(AN,[1.2,-6.4,.6]),[0,6]],["k-ra","Renal artery (urea-rich blood)","वृक्क धमनी",L(AN,[-.4,2.8,0]),[0]],["k-rv","Renal vein (clean blood)","वृक्क शिरा",L(AN,[.9,-2,-.2]),[0]],["k-ur2","Urethra → out","मूत्रमार्ग → बाहर",L(AN,[.2,-8.4,0]),[0,6]],
+  ["k-co","Cortex (nephrons here)","वल्कुट (नेफ्रॉन यहाँ)",L(AN,[-4.6,1.6,.9]),[1]],["k-me","Medulla (pyramids)","मध्यांश (पिरामिड)",L(AN,[-3.4,-.6,.3]),[1]],["k-pe","Renal pelvis","वृक्क श्रोणि",L(AN,[-2.6,-.1,.1]),[1]],
+  ["n-bo","Bowman's capsule","बोमन संपुट",L(NP_,[-4.7,6,.9]),[2,3]],["n-gl","Glomerulus","केशिकागुच्छ",L(NP_,[-4.7,6.2,0]),[2,3]],["n-af","Afferent (wide) in","अभिवाही (चौड़ी) अंदर",L(NP_,[-7.6,7.6,0]),[2,3]],["n-ef","Efferent (narrow) out","अपवाही (संकरी) बाहर",L(NP_,[-6.2,4,0]),[2,3]],["n-pc","Proximal tubule","समीपस्थ नलिका",L(NP_,[-2.6,3.2,.9]),[2,4]],["n-lo","Loop of Henle","हेनले पाश",L(NP_,[-.8,-7.6,0]),[2,5]],["n-dc","Distal tubule","दूरस्थ नलिका",L(NP_,[1.8,3.4,.8]),[2,5]],["n-cd","Collecting duct","संग्रह नलिका",L(NP_,[3.4,-4,.6]),[2,5]],["n-ca","Peritubular capillaries","नलिका-परिवेशी केशिकाएँ",L(NP_,[-4.3,3.2,.9]),[2,4]],
+  ["f-fi","Filtrate: water, glucose, salts, urea","निस्यंद: जल, ग्लूकोज़, लवण, यूरिया",L(NP_,[-3,7.2,.4]),[3]],["f-rb","Blood cells & proteins stay","रक्त कोशिकाएँ व प्रोटीन रुकते",L(NP_,[-6.4,6.6,.5]),[3]],["r-gl","Glucose back to blood (100%)","ग्लूकोज़ रक्त में लौटा (100%)",L(NP_,[-4.9,2.5,.9]),[4]],["r-wa","Water & salts back","जल व लवण वापस",L(NP_,[-2.6,2,.9]),[4]],["r-ur","Urea stays in the tubule","यूरिया नलिका में रहता",L(NP_,[-1.8,-2,.6]),[4,5]],["l-sa","Salty medulla (gradient)","नमकीन मध्यांश (ढाल)",L(NP_,[1.6,-5.4,-.8]),[5]],["l-ur","Urine: water + urea + salts","मूत्र: जल + यूरिया + लवण",L(NP_,[3.4,-8.4,.6]),[5]],
+  ["d-bl","Blood in (urea high)","रक्त अंदर (यूरिया अधिक)",L(DI,[-8.6,.8,0]),[7]],["d-me","Semi-permeable membrane","अर्धपारगम्य झिल्ली",L(DI,[-3,1.6,.5]),[7]],["d-fl","Dialysing fluid","डायलिसिस द्रव",L(DI,[2,-2.4,1]),[7]],["d-ur","Urea leaves the blood","यूरिया रक्त से बाहर",L(DI,[.4,.8,1.2]),[7]],["d-cl","Cleaned blood returns","साफ़ रक्त लौटता",L(DI,[8.8,.8,0]),[7]]];
+ return run({n,g,org,show,base,ST:NE_ST,cams,camK,labels,
+  frame:(s,t)=>{const f0=(t*.1)%1;AN.rotation.y=s===0?sin(t*.2)*.18:0;
+   /* nephron particles */
+   for(let i=0;i<NPT;i++){const p=PT[i];let vis=s>=3&&s<=5;if(!vis){nm4.makeScale(0,0,0);pt.setMatrixAt(i,nm4);continue}
+    const lim=s===3?.1:s===4?.5:1;let f=((t*.045+p.o)%1)*lim;let pos;
+    if(s===3){const q=((t*.2+p.o)%1);const a=CAPSULE;pos=c(a.x+(q-.5)*.5,a.y+q*.5+.1,(p.o-.5)*.9);pos.x+=q*.8;if(i%6>2)pos.copy(path[Math.floor(q*20)])}else if(f<p.leave||p.leave===0||s<4){pos=path[Math.min(299,Math.floor(f*299))].clone();pos.z+=(p.o-.5)*.1}
+    else{const g_=cl((f-p.leave)/.12,0,1),a0=path[Math.min(299,Math.floor(p.leave*299))];const tgt=c(a0.x+p.side*.7,a0.y,a0.z+p.side*.5);pos=a0.clone().lerp(tgt,Math.min(1,g_*3));if(g_>.3){const w=venP[1].clone().lerp(venP[2],(g_-.3)/.7);pos.lerp(w,(g_-.3)*1.2)}}
+    const k=p.sc*(s===4&&p.leave>0&&f>p.leave?.8:1);nm4.makeScale(k,k,k);nm4.setPosition(pos.x,pos.y,pos.z);pt.setMatrixAt(i,nm4)}pt.instanceMatrix.needsUpdate=!0;
+   /* blood cells through the glomerulus loop */
+   for(let i=0;i<NC;i++){if(s<2||s>4){nm4.makeScale(0,0,0)}else{const q=((t*.12+i/NC)%1),P=q<.5?affP[0].clone().lerp(affP[3],q/.5):CAPSULE.clone().lerp(effP[2],(q-.5)/.5);nm4.makeScale(1,.6,1);nm4.setPosition(P.x,P.y,P.z)}rc.setMatrixAt(i,nm4)}rc.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<6;i++){if(s!==3){nm4.makeScale(0,0,0)}else{const q=((t*.12+i/6)%1),P=affP[1].clone().lerp(CAPSULE,q);nm4.makeScale(1.2,1.2,1.2);nm4.setPosition(P.x+.1,P.y+.15,P.z+.12)}bigP.setMatrixAt(i,nm4)}bigP.instanceMatrix.needsUpdate=!0;
+   /* bladder fills in step 7 */blad.scale.setScalar(s===6?1+.18*(.5+.5*sin(t*.6)):1);
+   /* dialysis */
+   for(let i=0;i<ND;i++){const d=DD[i];if(s!==7){nm4.makeScale(0,0,0)}else{const q=((t*.12+d.o)%1);nm4.makeScale(1,1,1);const x=-6+q*12,y=Math.sin(q*TAU*1.5)*.7*(d.k%2?1:-1);nm4.setPosition(x,y+(q>.1?(q-.1)*(d.k%2?1.2:-1.2):0)*(.8),d.z*.8)}dp.setMatrixAt(i,nm4)}dp.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<ND2;i++){if(s!==7){nm4.makeScale(0,0,0)}else{const q=((t*.2+i/ND2)%1);nm4.makeScale(1,1,1);nm4.setPosition(5.5-q*11,(i%4-1.5)*.5,((i*.37)%1-.5)*1.6)}flow.setMatrixAt(i,nm4)}flow.instanceMatrix.needsUpdate=!0},
+  predict:{q:"In which part of the nephron is all the glucose reabsorbed?",opts:[["Bowman's capsule",!1,"Glucose is filtered here, not taken back."],["Proximal convoluted tubule",!0,"Correct — selective reabsorption returns all the glucose to the blood."],["Collecting duct",!1,"Mainly water is recovered there."]]}})}
+Q_("ch5/nephron3d",[["The structural and functional unit of the kidney is…","वृक्क की संरचनात्मक व क्रियात्मक इकाई…",["Neuron","Nephron","Alveolus","Villus"],1,"Each kidney has about a million nephrons."],["Filtration takes place in the…","निस्यंदन कहाँ होता है?",["Loop of Henle","Glomerulus and Bowman's capsule","Collecting duct","Ureter"],1,"High pressure forces small molecules out of the blood."],["Which substance is NOT normally present in the filtrate that passes into urine?","इनमें से मूत्र में सामान्यतः क्या नहीं आता?",["Urea","Glucose","Water","Salts"],1,"All glucose is reabsorbed."],["The tube carrying urine from kidney to bladder is the…","मूत्र को वृक्क से मूत्राशय ले जाने वाली नली?",["Urethra","Ureter","Aorta","Trachea"],1,"The urethra carries urine out of the body."],["Dialysis works because the membrane is…","डायलिसिस इसलिए काम करता है क्योंकि झिल्ली…",["Semi-permeable","Impermeable","Fully permeable","Thick"],0,"Small waste molecules pass; blood cells and proteins do not."]]);
+Px["ch5/nephron3d"]=[["Your kidneys filter all your blood about 40 times a day — and send back all the glucose.","आपके वृक्क एक दिन में लगभग 40 बार सारा रक्त छानते हैं — और सारा ग्लूकोज़ लौटा देते हैं।"],["Drinking enough water keeps urine pale; very dark urine means the body is saving water.","पर्याप्त जल पीने से मूत्र हल्का रहता है; बहुत गहरा रंग शरीर में जल की कमी बताता है।"]];
+{const Lq=Hi.find(h=>h.no===5).topics,i=Lq.findIndex(x=>x.id==="nephron");Lq.splice(i<0?Lq.length:i+1,0,{id:"nephron3d",title:"Kidney, nephron & dialysis — detailed 3D",hi:"वृक्क, नेफ्रॉन व डायलिसिस — विस्तृत 3D",build:Mneph,ncert:"Ch 5 · excretion in human beings"})}
 })();
