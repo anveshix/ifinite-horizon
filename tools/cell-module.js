@@ -1,4 +1,4 @@
-/* ===== Custom model sets 1-6: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction (detailed 3D) =====
+/* ===== Custom model sets 1-7: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -731,4 +731,139 @@ function Mrepro(){sd=61;const n=new Ne;Ge(n,{key:1.9});Je(n,-7,80,.08);const g=n
 Q_("ch7/human3d",[["Where are sperm produced?","शुक्राणु कहाँ बनते हैं?",["Epididymis","Testes","Prostate","Vas deferens"],1,"In the seminiferous tubules of the testes."],["Why are the testes outside the body in the scrotum?","वृषण शरीर के बाहर वृषणकोष में क्यों होते हैं?",["For protection","Sperm formation needs a temperature lower than body temperature","To store urine","For hormones only"],1,"About 2–3 °C cooler."],["The release of an egg from the ovary is called…","अंडाशय से अंडाणु निकलना कहलाता है…",["Fertilisation","Ovulation","Implantation","Menstruation"],1,"Near day 14 of the cycle."],["The placenta allows exchange of…","अपरा किसका आदान-प्रदान कराती है?",["Blood of mother and baby","Oxygen, nutrients and wastes (blood does not mix)","Only hormones","Only water"],1,"Materials diffuse across the villi."],["If the egg is not fertilised, what happens to the uterine lining?","यदि अंडाणु निषेचित न हो तो गर्भाशय-परत का क्या होता है?",["It becomes thicker","It is shed as menstruation","It becomes an embryo","It stays"],1,"Menstruation lasts about 2–8 days."]]);
 Px["ch7/human3d"]=[["A human egg is about 0.1 mm — just visible to the naked eye; a sperm is about 0.05 mm long.","मानव अंडाणु लगभग 0.1 mm — नंगी आँख से बस दिखता है; शुक्राणु लगभग 0.05 mm।"],["Identical twins form when one zygote splits in two; fraternal twins come from two separate eggs.","समान जुड़वाँ तब बनते हैं जब एक युग्मनज दो भागों में बँट जाए; असमान जुड़वाँ दो अलग अंडाणुओं से।"]];
 {const Lr=Hi.find(h=>h.no===7).topics,i=Lr.findIndex(x=>x.id==="human");Lr.splice(i<0?Lr.length:i+1,0,{id:"human3d",title:"Human reproduction — detailed 3D",hi:"मानव प्रजनन — विस्तृत 3D",build:Mrepro,ncert:"Ch 7 · reproduction in human beings"})}
+/* ===================== SET 7: FLOWER · POLLINATION · FERTILISATION · FRUIT & SEED ===================== */
+const KIND7={
+ sepal:["Sepals (calyx)","बाह्यदल (कैलिक्स)","Green leaf-like parts that protect the flower bud.","हरे पत्ती-जैसे भाग जो कली की रक्षा करते हैं।"],
+ petal:["Petals (corolla)","दल (कोरोला)","Brightly coloured, often scented parts that attract insects for pollination.","चटक रंग व प्रायः सुगंध वाले भाग जो परागण हेतु कीटों को आकर्षित करते हैं।"],
+ fil:["Filament","पुंतंतु","The stalk that holds the anther up where insects or wind can reach the pollen.","वह डंठल जो परागकोश को ऊपर थामता है ताकि कीट/वायु पराग तक पहुँच सकें।"],
+ anther:["Anther","परागकोश","Makes and holds pollen grains (the male gametophytes). Together anther + filament = stamen, the male part.","पराग कण (नर युग्मकजनक) बनाता व रखता है; परागकोश + पुंतंतु = पुंकेसर, नर भाग।"],
+ pollen:["Pollen grain","पराग कण","Microscopic grain with a hard, sculpted wall. It carries the male gametes.","कठोर, नक्काशीदार भित्ति वाला सूक्ष्म कण; नर युग्मक ले जाता है।"],
+ stigma:["Stigma","वर्तिकाग्र","Sticky top of the pistil that catches pollen and helps it germinate.","स्त्रीकेसर का चिपचिपा शीर्ष जो पराग पकड़ता और अंकुरण में मदद करता है।"],
+ style:["Style","वर्तिका","Tube-like stalk through which the pollen tube grows down to the ovary.","नली जैसा डंठल जिसमें से पराग नलिका नीचे अंडाशय तक बढ़ती है।"],
+ ovary:["Ovary","अंडाशय","Swollen base of the pistil containing ovules. After fertilisation it becomes the fruit.","स्त्रीकेसर का फूला आधार जिसमें बीजांड होते हैं; निषेचन के बाद फल बनता है।"],
+ ovule:["Ovule","बीजांड","Holds the egg cell inside an embryo sac. After fertilisation it becomes the seed.","भ्रूणकोष के भीतर अंड कोशिका रखता है; निषेचन के बाद बीज बनता है।"],
+ recept:["Receptacle","पुष्पासन","The swollen tip of the flower stalk that holds all the floral parts.","पुष्प-डंठल का फूला सिरा जो सभी पुष्प-भाग थामता है।"],
+ bee:["Bee (pollinating agent)","मधुमक्खी (परागण कारक)","Collects nectar and carries pollen on its hairy body from flower to flower — cross-pollination.","मकरंद इकट्ठा करती है और बालों वाले शरीर पर पराग एक फूल से दूसरे तक ले जाती है — पर-परागण।"],
+ tubeP:["Pollen tube","पराग नलिका","Grows from the pollen grain down the style, carrying two male gametes to the ovule.","पराग कण से वर्तिका में नीचे बढ़ती है और दो नर युग्मक बीजांड तक ले जाती है।"],
+ micro:["Micropyle","बीजांडद्वार","The tiny opening of the ovule through which the pollen tube enters.","बीजांड का सूक्ष्म छिद्र जिससे पराग नलिका प्रवेश करती है।"],
+ egg7:["Egg cell","अंड कोशिका","The female gamete in the embryo sac. It fuses with one male gamete to form the zygote.","भ्रूणकोष में मादा युग्मक; एक नर युग्मक से मिलकर युग्मनज बनाती है।"],
+ polar:["Polar nuclei","ध्रुवीय केंद्रक","Two nuclei in the centre of the embryo sac; the second male gamete fuses with them to start the endosperm (food store) — double fertilisation.","भ्रूणकोष के केंद्र के दो केंद्रक; दूसरा नर युग्मक इनसे जुड़कर भ्रूणपोष (खाद्य भंडार) शुरू करता है — द्विनिषेचन।"],
+ male:["Male gamete","नर युग्मक","One of the two sperm cells carried by the pollen tube.","पराग नलिका द्वारा लाई गई दो शुक्राणु कोशिकाओं में से एक।"],
+ zyg:["Zygote","युग्मनज","Formed when the male gamete fuses with the egg; it divides to form the embryo.","नर युग्मक व अंड के मिलने से बनता है; विभाजित होकर भ्रूण बनाता है।"],
+ fruit:["Fruit","फल","The ripened ovary, which protects the seeds and helps to spread them.","परिपक्व अंडाशय जो बीजों की रक्षा करता और उनके प्रसार में मदद करता है।"],
+ seed:["Seed","बीज","The ripened ovule: it holds the embryo and a food store inside a protective seed coat.","परिपक्व बीजांड: बीज-चोल के भीतर भ्रूण व खाद्य भंडार।"],
+ coty:["Cotyledon","बीजपत्र","Seed leaf that stores or absorbs food for the growing seedling.","बीज-पत्ती जो अंकुर के लिए भोजन संचित/अवशोषित करती है।"],
+ radicle:["Radicle","मूलांकुर","The embryonic root: it grows out first and anchors the seedling.","भ्रूणीय जड़: सबसे पहले निकलकर अंकुर को जमाती है।"],
+ plumule:["Plumule","प्रांकुर","The embryonic shoot that grows up into stem and leaves.","भ्रूणीय प्ररोह जो ऊपर बढ़कर तना व पत्तियाँ बनाता है।"]};
+const F_ST=[
+["1","Parts of a flower","पुष्प के भाग","A flower is the reproductive organ of a flowering plant. From outside to inside: sepals, petals, stamens (male) and the pistil (female), all attached to the receptacle. The front half is cut away.","पुष्प आवृतबीजी पौधे का जनन अंग है: बाहर से भीतर — बाह्यदल, दल, पुंकेसर (नर) और स्त्रीकेसर (मादा), सब पुष्पासन पर; आगे का आधा भाग काट दिया है।","Hand-modelled · half cut-away",10],
+["2","The stamen: pollen factory","पुंकेसर: पराग की फ़ैक्टरी","Each stamen has a filament and an anther. The anther splits open (dehisces) and releases pollen grains — each with a tough, patterned wall.","प्रत्येक पुंकेसर में पुंतंतु व परागकोश होता है; परागकोश फटकर पराग कण छोड़ता है — हर कण की कठोर, नक्काशीदार भित्ति होती है।","Animated · pollen not to scale",11],
+["3","The pistil: stigma, style, ovary","स्त्रीकेसर: वर्तिकाग्र, वर्तिका, अंडाशय","The pistil is the female part. The sticky stigma receives pollen, the style is a tube leading down, and the ovary at the base holds the ovules, each with an egg cell.","स्त्रीकेसर मादा भाग है: चिपचिपा वर्तिकाग्र पराग लेता है, वर्तिका नीचे जाने वाली नली है, और आधार का अंडाशय बीजांड रखता है — प्रत्येक में अंड कोशिका।","Hand-modelled · ovary cut open",11],
+["4","Pollination","परागण","Pollen is transferred from an anther to a stigma. Here a bee carries it from another flower. Same flower or same plant = self-pollination; a different plant = cross-pollination. Wind, water and animals are the agents.","पराग का परागकोश से वर्तिकाग्र तक पहुँचना। यहाँ मधुमक्खी दूसरे फूल से पराग लाती है। उसी फूल/पौधे में = स्व-परागण; दूसरे पौधे में = पर-परागण; वायु, जल व जंतु वाहक हैं।","Animated · schematic",13],
+["5","The pollen tube grows","पराग नलिका बढ़ती है","On the stigma the pollen grain germinates. A pollen tube grows down through the style towards the ovule, guided by chemical signals, carrying two male gametes.","वर्तिकाग्र पर पराग कण अंकुरित होता है; पराग नलिका रासायनिक संकेतों के सहारे वर्तिका में नीचे बीजांड की ओर बढ़ती है और दो नर युग्मक ले जाती है।","Animated · tube growth speeded up",13],
+["6","Fertilisation inside the ovule","बीजांड के भीतर निषेचन","The tube enters the ovule through the micropyle. One male gamete fuses with the egg to make the zygote; the other fuses with the two polar nuclei to start the food store (endosperm): double fertilisation.","नलिका बीजांडद्वार से बीजांड में जाती है; एक नर युग्मक अंड से मिलकर युग्मनज बनाता है, दूसरा दो ध्रुवीय केंद्रकों से मिलकर भ्रूणपोष शुरू करता है — द्विनिषेचन।","Animated · magnified ovule",14],
+["7","Ovary becomes fruit, ovule becomes seed","अंडाशय फल, बीजांड बीज","After fertilisation the petals and stamens wither. The zygote grows into the embryo, the ovule into the seed and the ovary into the fruit.","निषेचन के बाद दल व पुंकेसर मुरझा जाते हैं; युग्मनज भ्रूण में, बीजांड बीज में और अंडाशय फल में बदलता है।","Animated · schematic",13],
+["8","Seed to seedling: germination","बीज से अंकुर: अंकुरण","With water, air and warmth the seed germinates: the radicle grows down as the root and the plumule grows up as the shoot, fed by the cotyledons. The life cycle begins again.","जल, वायु व गर्मी मिलने पर बीज अंकुरित होता है: मूलांकुर नीचे जड़ बनता है और प्रांकुर ऊपर प्ररोह, बीजपत्र भोजन देते हैं; जीवन-चक्र फिर शुरू।","Animated · schematic",13]];
+function Mflower(){sd=71;const n=new Ne;Ge(n,{key:1.9});Je(n,-4.6,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const FL=new J;g.add(FL);const OV=new J;OV.position.set(22,0,0);g.add(OV);const GR=new J;GR.position.set(0,-22,0);g.add(GR);const FB=new J;FB.position.set(-14,.6,-2.5);g.add(FB);
+ const petM=MAT(0xe8407c,{roughness:.6,clearcoat:.1,sheen:0,envMapIntensity:.5,bumpScale:.08,opacity:1,side:vt,emissive:0x7a1038,emissiveIntensity:.3});
+ const petal=(par,ang,tilt,L,W,mat,id)=>{const gr=new J;gr.rotation.y=ang;par.add(gr);add(id,param(18,12,(u,v)=>{const w=Math.pow(sin(Math.min(1,u*.97)*PI*.85+.15),.8)*W*(v-.5)*2*(1-.25*u*u),x=u*L,y=u*u*L*.5*(tilt*.5)-Math.abs(v-.5)*.5*W*.5;return[x,y,w]}),mat,[0,0,0],{parent:gr,ns:0});return gr};
+ const flowerAt=(par,sc,ids)=>{const P=new J;P.scale.setScalar(sc);par.add(P);
+  /* sepals */
+  const sepM=MAT(0x6aa84f,{roughness:.55,clearcoat:.2,bumpScale:.15,side:vt,emissive:0x143a0e,emissiveIntensity:.15});
+  for(let i=0;i<5;i++)petal(P,i/5*TAU+.3,1.6,2.1,.45,sepM,ids.sepal).position.y=-.2;
+  /* petals (front two removed in the cut-away flower) */
+  for(let i=0;i<6;i++){const a=i/6*TAU+.1;if(ids.cut&&Math.cos(a-.0)>.55&&Math.sin(a)>-.1&&Math.sin(a)<.9&&i<2&&false)continue;const p=petal(P,a,1.5,3.1,1.0,petM,ids.petal);p.position.y=-.05;p.userData.a=a}
+  add(ids.recept,sph(.55,.05,2,1.1,.55,1.1,22,28),MAT(0x7cb55a,{roughness:.5,bumpScale:.2}),[0,-.35,0],{parent:P});
+  /* stamens */
+  const an=[];for(let i=0;i<6;i++){const a=i/6*TAU+.52,r=.95,fx=Math.cos(a)*r,fz=Math.sin(a)*r;add(ids.fil,tube([c(fx*.3,-.1,fz*.3),c(fx*.8,1,fz*.8),c(fx*1.05,1.9,fz*1.05)],.045,8),MAT(0xf2e6a0,{roughness:.45,bumpScale:.1,emissive:0x4a3a08,emissiveIntensity:.15}),[0,0,0],{parent:P,ns:1});
+   const am=MAT(0xf5c518,{roughness:.55,bumpScale:.5,emissive:0x6a4a00,emissiveIntensity:.25,sheen:0});
+   [[-.07,0],[.07,0]].forEach(q=>add(ids.anther,sph(.12,.15,3,.8,1.7,.8,14,18,i),am,[fx*1.08+q[0]*Math.cos(a+PI/2),2.05,fz*1.08+q[0]*Math.sin(a+PI/2)],{parent:P,ns:1}));an.push(c(fx*1.08,2.05,fz*1.08))}
+  return{P,an}};
+ const A=flowerAt(FL,1,{sepal:"sepal",petal:"petal",recept:"recept",fil:"fil",anther:"anther",cut:!0});
+ /* pistil: stigma, style, ovary (cut open), ovules */
+ const styleM=MAT(0xb8e08a,{roughness:.45,clearcoat:.4,bumpScale:.15,emissive:0x2a4a10,emissiveIntensity:.15});
+ add("style",tube([c(0,.5,0),c(0,1.5,0),c(0,2.7,0)],.1,10,u=>1-.2*u),styleM,[0,0,0],{parent:FL,ns:1});
+ add("stigma",sph(.3,.1,3,1,.7,1,18,24),MAT(0xe8f080,{roughness:.2,clearcoat:.9,bumpScale:.5,emissive:0x4a5a10,emissiveIntensity:.25,sheen:0}),[0,2.82,0],{parent:FL});
+ for(let i=0;i<14;i++){const a=i*2.4,r=.22;add("stigma",tube([c(Math.cos(a)*.14,2.88,Math.sin(a)*.14),c(Math.cos(a)*r,3.05,Math.sin(a)*r)],.025,4),MAT(0xf3f6a0,{roughness:.3}),[0,0,0],{parent:FL,ns:1})}
+ const ovM=MAT(0x9cd06a,{roughness:.4,clearcoat:.5,bumpScale:.2,opacity:.6,depthWrite:!1,emissive:0x2a4a10,emissiveIntensity:.15});
+ const ovMesh=add("ovary",param(30,48,(u,v)=>{const th=u*PI,ph=(.62+v*1.76)*PI,x=Math.sin(th)*Math.cos(ph)*.8,y=Math.cos(th)*.95,z=Math.sin(th)*Math.sin(ph)*.8;return[x,y+.35,z]}),ovM,[0,0,0],{parent:FL,ns:1});
+ const ovuleM=MAT(0xf7e3a0,{roughness:.6,clearcoat:.05,envMapIntensity:.35,bumpScale:.08,sheen:0,emissive:0x8a7a30,emissiveIntensity:.45});
+ [[.28,.1,.18],[-.25,.35,.2],[.05,.7,-.25],[-.25,.6,-.2]].forEach(p=>add("ovule",sph(.19,.05,3,1,1.2,1,16,22),ovuleM,[p[0],p[1]+.05,p[2]],{parent:FL}));
+ /* pollen grains released in step 2 */
+ const NP=60,pol=new Wn(new it(.05,8,6),new bt({color:0xffd23f}),NP);pol.frustumCulled=!1;FL.add(pol);const m4=new gt;const PL=[];for(let i=0;i<NP;i++)PL.push({a:i%6,o:R(),dx:(R()-.5)*.5,dz:(R()-.5)*.5});
+ /* big pollen grain (sculpted) for step 2/5 close-up */
+ const bigPol=add("pollen",param(30,44,(u,v)=>{const th=u*PI,ph=v*TAU,k=1+.12*Math.pow(Math.abs(Math.sin(th*6)*Math.sin(ph*6)),.6);return[sin(th)*cos(ph)*.28*k,cos(th)*.28*k,sin(th)*sin(ph)*.28*k]}),MAT(0xffd23f,{roughness:.6,bumpScale:.8,emissive:0x6a4a00,emissiveIntensity:.3,sheen:0}),[1.7,1.7,1.4],{parent:FL});
+ /* bee + second flower */
+ flowerAt(FB,.55,{sepal:"sepalB",petal:"petalB",recept:"receptB",fil:"filB",anther:"antherB"});
+ const bee=new J;g.add(bee);const stripe=MAT(0x2a2a2a,{roughness:.5}),yw=MAT(0xf5c518,{roughness:.5,bumpScale:.4,emissive:0x5a4000,emissiveIntensity:.2});
+ add("bee",sph(.28,0,1,1.3,.9,.9,16,20),yw,[0,0,0],{parent:bee});add("bee",sph(.22,0,1,.35,1.05,1.05,12,16),stripe,[.1,0,0],{parent:bee,ns:1});add("bee",sph(.2,0,1,.8,.9,.9,12,16),yw,[.34,0,0],{parent:bee});add("bee",sph(.15,0,1,1,1,1,12,16),stripe,[.55,0,0],{parent:bee});
+ const wM=MAT(0xdfefff,{roughness:.1,opacity:.45,depthWrite:!1,sheen:0});const w1=add("bee",sph(.34,0,1,1,.04,.55,12,16),wM,[.05,.2,.25],{parent:bee,ns:1}),w2=add("bee",sph(.34,0,1,1,.04,.55,12,16),wM,[.05,.2,-.25],{parent:bee,ns:1});
+ [-.18,.0,.18].forEach(x=>add("bee",tube([c(x,-.15,.1),c(x,-.35,.2)],.02,4),stripe,[0,0,0],{parent:bee,ns:1}));
+ const beeP=new It([c(-14,2.4,-2.5),c(-10,3.3,-1.5),c(-5.5,4.2,.2),c(-2.2,3.9,.6),c(-.3,3.4,.4),c(.1,3.2,.2)]).getPoints(80);
+ /* pollen tube in the style (grows with progress), pollen on stigma */
+ const tubeCur=new It([c(0,2.9,0),c(.04,2.2,.03),c(-.04,1.4,-.02),c(.02,.9,.05),c(.0,.62,.06)]);const TN=60,tubeG=(()=>{const pts=tubeCur.getPoints(TN);const frames=pts.map(()=>[c(1,0,0),c(0,0,1)]);return param(TN,8,(u,v)=>{const i=Math.round(u*TN),p=pts[i],a=v*TAU,r=.035*(i>TN-3?1.3:1);return[p.x+Math.cos(a)*r,p.y,p.z+Math.sin(a)*r]})})();
+ const tubeM=MAT(0xff8fb0,{roughness:.35,clearcoat:.7,emissive:0x7a1a3a,emissiveIntensity:.35});const tubeMesh=add("tubeP",tubeG,tubeM,[0,0,0],{parent:FL,ns:1});
+ /* ---------- magnified ovule ---------- */
+ const intM=MAT(0xf2d28a,{roughness:.6,clearcoat:.05,envMapIntensity:.3,sheen:0,bumpScale:.1,opacity:.42,depthWrite:!1,emissive:0x5a4a10,emissiveIntensity:.15});
+ add("ovule",param(36,56,(u,v)=>{const th=u*PI,ph=(.6+v*1.8)*PI,x=Math.sin(th)*Math.cos(ph)*3.1,y=Math.cos(th)*4.2,z=Math.sin(th)*Math.sin(ph)*3.1;return[x,y,z+Math.max(0,-y-3.5)*0]}),intM,[0,0,0],{parent:OV,ns:1});
+ add("ovule",param(32,52,(u,v)=>{const th=u*PI,ph=(.6+v*1.8)*PI;return[Math.sin(th)*Math.cos(ph)*2.7,Math.cos(th)*3.8,Math.sin(th)*Math.sin(ph)*2.7]}),MAT(0xf7e6b0,{roughness:.4,opacity:.5,depthWrite:!1,sheen:0,bumpScale:.15}),[0,0,0],{parent:OV,ns:1});
+ add("ovule",sph(1.6,.03,2,.95,1.35,.95,34,48,3),MAT(0xfff0c4,{roughness:.6,clearcoat:.05,envMapIntensity:.3,opacity:.62,depthWrite:!1,sheen:0,bumpScale:.05}),[0,.3,0],{parent:OV,ns:1});
+ add("micro",torus(.45,.1),MAT(0xc9a15a,{roughness:.5}),[0,-4.15,0],{parent:OV,ns:1});
+ const cellM=MAT(0xffd7a0,{roughness:.6,clearcoat:.05,envMapIntensity:.35,sheen:0,emissive:0x8a5a10,emissiveIntensity:.45}),nucM=MAT(0x6f7ad8,{roughness:.5,clearcoat:.1,envMapIntensity:.4,sheen:0,emissive:0x2a3090,emissiveIntensity:.55});
+ const eggG=new J;eggG.position.set(0,-1.55,0);OV.add(eggG);add("egg7",sph(.55,.03,2,1,1.15,1,22,30),cellM,[0,0,0],{parent:eggG});const eggN=add("egg7",sph(.2,0,1,1,1,1,12,16),nucM,[0,.1,0],{parent:eggG,ns:1});
+ [-.55,.55].forEach(x=>add("egg7",sph(.3,.03,2,.8,1.1,.8,16,22),MAT(0xffe6b8,{roughness:.35,emissive:0x6a4a18,emissiveIntensity:.2}),[x,-.1,0],{parent:eggG,ns:1}));
+ const polA=add("polar",sph(.22,0,1,1,1,1,14,18),nucM,[-.25,.5,0],{parent:OV}),polB=add("polar",sph(.22,0,1,1,1,1,14,18),nucM,[.25,.5,0],{parent:OV});
+ for(let i=0;i<3;i++)add("polar",sph(.2,0,1,1,1,1,12,16),MAT(0xc9d0ff,{roughness:.4}),[(i-1)*.4,2.35,0],{parent:OV,ns:1});
+ const OVT=[c(0,-9,0),c(.15,-7,0),c(-.1,-5.4,0),c(0,-4.2,0),c(0,-3.3,0)];const tubeOC=new It(OVT),ON=50;
+ const tubeOG=param(ON,10,(u,v)=>{const p=tubeOC.getPoint(u),a=v*TAU,r=.22;return[p.x+Math.cos(a)*r,p.y,p.z+Math.sin(a)*r]});tubeOG.setDrawRange(0,0);
+ const tubeO=add("tubeP",tubeOG,MAT(0xff8fb0,{roughness:.35,clearcoat:.7,opacity:.8,emissive:0x7a1a3a,emissiveIntensity:.35,depthWrite:!1}),[0,0,0],{parent:OV,ns:1});
+ const mg1=add("male",sph(.2,0,1,1,1,1,12,16),MAT(0xffd23f,{emissive:0x8a6a00,emissiveIntensity:.8}),[0,-9,0],{parent:OV,ns:1}),mg2=add("male",sph(.2,0,1,1,1,1,12,16),MAT(0xffd23f,{emissive:0x8a6a00,emissiveIntensity:.8}),[0,-9,0],{parent:OV,ns:1});
+ const seedCoat=add("seed",param(30,44,(u,v)=>{const th=u*PI,ph=(.6+v*1.8)*PI;return[Math.sin(th)*Math.cos(ph)*3.1,Math.cos(th)*4.2,Math.sin(th)*Math.sin(ph)*3.1]}),MAT(0x8a5a2b,{roughness:.6,bumpScale:.6,opacity:0,depthWrite:!1,sheen:0}),[0,0,0],{parent:OV,ns:1});
+ /* ---------- germination ---------- */
+ const soil=add("soil",new Xe(6.5,6.5,.12,48),new bt({color:0x7a5232,transparent:!0}),[0,-.5,0],{parent:GR,ns:1});const soil2=add("soil",new Xe(6.5,6.5,4.2,48),new bt({color:0x8a5e38,transparent:!0}),[0,-2.7,0],{parent:GR,ns:1});
+ const sdM=MAT(0xb98450,{roughness:.7,clearcoat:.05,envMapIntensity:.35,bumpScale:.3,sheen:0,emissive:0x4a2c10,emissiveIntensity:.35});
+ const sd_=add("seed",sph(1.1,.05,2,1.2,.9,.8,26,34),sdM,[0,-1.6,0],{parent:GR});
+ [-1,1].forEach(sx=>add("coty",sph(.8,.04,2,.55,.9,.8,20,26),MAT(0xf2e6a0,{roughness:.45,emissive:0x4a3a08,emissiveIntensity:.15}),[sx*.55,-1.6,0],{parent:GR}));
+ const rad=new J;rad.position.set(0,-2.3,0);GR.add(rad);const rootC=new It([c(0,0,0),c(.1,-1,0),c(-.1,-2.2,.1),c(.2,-3.4,0)]);add("radicle",tube(rootC.getPoints(10),.12,8,u=>1-.7*u),MAT(0xf3ead0,{roughness:.5,bumpScale:.2}),[0,0,0],{parent:rad});
+ for(let k=0;k<6;k++){const q=rootC.getPoint(.3+k*.12);add("radicle",tube([q,q.clone().add(c((k%2?1:-1)*.5,-.3,0))],.04,5),MAT(0xf3ead0,{roughness:.5}),[0,0,0],{parent:rad,ns:1})}
+ const shoot=new J;shoot.position.set(0,-1.1,0);GR.add(shoot);add("plumule",tube([c(0,0,0),c(0,.8,0),c(.1,1.7,0),c(0,2.6,0)],.1,8,u=>1-.4*u),MAT(0x8cc152,{roughness:.45,clearcoat:.3,bumpScale:.2}),[0,0,0],{parent:shoot});
+ [-1,1].forEach(sx=>add("plumule",sph(.5,.04,2,1.2,.1,.7,18,24),MAT(0x5aa83a,{roughness:.45,clearcoat:.3,side:vt,bumpScale:.25}),[sx*.55,2.7,0],{parent:shoot,rot:[0,0,sx*-.6]}));
+ /* cameras */
+ const cams=[[c(0,3.2,9.5),c(0,1.3,0)],[c(0,3.6,7.4),c(0,2,0)],[c(1.4,1.6,6.8),c(0,1.2,0)],[c(-5,3.4,12),c(-4,2.6,0)],[c(.6,2,6),c(0,1.5,0)],[c(22,-2.2,26),c(22,-2.4,0)],[c(0,2,13),c(0,1,0)],[c(0,-19,16),c(0,-23,0)]];
+ const camK=["Flower","Stamen","Pistil","Pollination","Pollen tube","Ovule","Fruit & seed","Germination"];
+ const show={};const ids=["sepal","petal","recept","fil","anther","pollen","stigma","style","ovary","ovule","bee","sepalB","petalB","receptB","filB","antherB","tubeP","micro","egg7","polar","male","zyg","fruit","seed","coty","radicle","plumule","soil"];ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
+ ["sepal","petal","recept","fil","anther","stigma","style","ovary"].forEach(i=>on(i,[0,1,2,3,4,6]));on("ovule",[0,2,3,4,6]);on("pollen",[1]);on("bee",[3]);["sepalB","petalB","receptB","filB","antherB"].forEach(i=>on(i,[3]));on("tubeP",[4,5]);["micro","egg7","polar","male"].forEach(i=>on(i,[5]));on("ovule",[5]);on("seed",[6,7]);on("soil",[7]);on("coty",[7]);on("radicle",[7]);on("plumule",[7]);
+ show.petal=[1,0,0,1,1,0,1,0].map((v,i)=>v);show.sepal=show.petal.slice();show.ovary=[1,1,1,1,1,0,1,0];
+ const base={sepal:.96,petal:.96,recept:1,fil:1,anther:1,pollen:1,stigma:1,style:1,ovary:.6,ovule:1,bee:1,sepalB:.96,petalB:.96,receptB:1,filB:1,antherB:1,tubeP:1,micro:1,egg7:1,polar:1,male:1,seed:1,soil:.22,coty:1,radicle:1,plumule:1};
+ const Lw=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["f-pe","Petals (corolla)","दल (कोरोला)",Lw(FL,[3.2,.8,1.1]),[0,3]],["f-se","Sepals (calyx)","बाह्यदल",Lw(FL,[2,-.2,-1.1]),[0]],["f-st","Stamen (male)","पुंकेसर (नर)",Lw(FL,[1.3,2.2,.9]),[0,1]],["f-an","Anther","परागकोश",Lw(FL,[.4,2.2,1]),[1]],["f-fi","Filament","पुंतंतु",Lw(FL,[.9,1,.9]),[0,1]],["f-pi","Pistil (female)","स्त्रीकेसर (मादा)",Lw(FL,[0,3.1,.2]),[0,2]],["f-sg","Stigma (sticky)","वर्तिकाग्र (चिपचिपा)",Lw(FL,[.5,3,.3]),[2,3,4]],["f-sy","Style","वर्तिका",Lw(FL,[.15,1.8,0]),[0,2,4]],["f-ov","Ovary","अंडाशय",Lw(FL,[.8,.5,.4]),[0,2]],["f-ovu","Ovules (each has an egg)","बीजांड (प्रत्येक में अंड)",Lw(FL,[-.5,.55,.2]),[2]],["f-re","Receptacle","पुष्पासन",Lw(FL,[-.7,-.5,.2]),[0]],["f-po","Pollen grain (magnified)","पराग कण (बड़ा)",Lw(FL,[1.7,2.1,1.4]),[1]],
+  ["p-be","Bee carries pollen","मधुमक्खी पराग लाती",()=>bee.getWorldPosition(c()),[3]],["p-fb","Pollen donor flower","पराग-दाता फूल",Lw(FB,[0,3,0]),[3]],["p-cr","Cross-pollination (different plant)","पर-परागण (दूसरा पौधा)",Lw(FL,[-3,4.6,0]),[3]],
+  ["t-tu","Pollen tube","पराग नलिका",Lw(FL,[.25,1.9,.15]),[4]],["t-ga","2 male gametes inside","2 नर युग्मक भीतर",Lw(FL,[-.2,1.2,0]),[4]],
+  ["o-mi","Micropyle (entry)","बीजांडद्वार (प्रवेश)",Lw(OV,[1,-4.2,0]),[5]],["o-tu","Pollen tube","पराग नलिका",Lw(OV,[1.1,-6,0]),[5]],["o-eg","Egg cell + 2 synergids","अंड + 2 सहायक कोशिकाएँ",Lw(OV,[1.2,-1.6,0]),[5]],["o-po","2 polar nuclei → endosperm","2 ध्रुवीय केंद्रक → भ्रूणपोष",Lw(OV,[1.2,.6,0]),[5]],["o-ma","Male gametes","नर युग्मक",()=>mg1.getWorldPosition(c()),[5]],["o-zy","Zygote (egg + male gamete)","युग्मनज (अंड + नर युग्मक)",Lw(OV,[1.2,-2.4,0]),[5]],
+  ["r-fr","Ovary → fruit","अंडाशय → फल",Lw(FL,[1.2,.4,.4]),[6]],["r-se","Ovule → seed","बीजांड → बीज",Lw(OV,[3.4,0,0]),[6]],["r-wi","Petals & stamens wither","दल व पुंकेसर मुरझाते",Lw(FL,[3,1.6,1]),[6]],
+  ["g-se","Seed coat","बीज-चोल",Lw(GR,[1.4,-1.6,.4]),[7]],["g-co","Cotyledons","बीजपत्र",Lw(GR,[-.9,-1.6,.5]),[7]],["g-ra","Radicle → root","मूलांकुर → जड़",Lw(GR,[.8,-3.8,.2]),[7]],["g-pl","Plumule → shoot","प्रांकुर → प्ररोह",Lw(GR,[.9,.9,.3]),[7]],["g-so","Soil","मिट्टी",Lw(GR,[-5,-.2,.5]),[7]]];
+ const clk=t=>(t*.08)%1;
+ return run({n,g,org,show,base,ST:F_ST,cams,camK,labels,
+  frame:(s,t)=>{FL.rotation.y=s===0?sin(t*.18)*.25:0;GR.rotation.y=0;
+   /* pollen release */
+   for(let i=0;i<NP;i++){const p=PL[i];if(s!==1){m4.makeScale(0,0,0)}else{const q=((t*.18+p.o)%1),a=A.an[p.a];m4.makeScale(1,1,1);m4.setPosition(a.x+p.dx*q*2,a.y-q*1.3+Math.sin(q*3)*.1,a.z+p.dz*q*2)}pol.setMatrixAt(i,m4)}pol.instanceMatrix.needsUpdate=!0;bigPol.rotation.y=t*.8;
+   /* bee flight and wing beat */
+   bee.visible=s===3;if(bee.visible){const f=clk(t)*1.1,k=Math.min(79,Math.floor(cl(f,0,1)*79)),p=beeP[k],pn=beeP[Math.min(79,k+1)];bee.position.copy(p);bee.lookAt(pn.x+p.x*0,pn.y,pn.z);bee.rotation.y+=PI/2*0;bee.rotation.z=0;w1.rotation.x=w2.rotation.x=sin(t*60)*.6;
+    bee.rotation.set(0,Math.atan2(-(pn.z-p.z),pn.x-p.x),Math.atan2(pn.y-p.y,Math.hypot(pn.x-p.x,pn.z-p.z)))}
+   /* pollen tube grows */
+   const tg=s===4?cl(((t*.07)%1)*1.2,0,1):s===5||s===6?1:0;tubeG.setDrawRange(0,Math.floor(tg*TN)*8*6);tubeMesh.visible=s>=4&&s<=6;
+   const og=s===5?cl(((t*.05)%1)*2,0,1):s>5?1:0;tubeOG.setDrawRange(0,Math.floor(Math.min(1,og*1.3)*ON)*10*6);
+   const fz=s===5?cl(((t*.05)%1)*2-1,0,1):s>5?1:0;mg1.visible=mg2.visible=s===5;const tp=tubeOC.getPoint(cl(og*1.3,0,1));
+   mg1.position.set(tp.x-.08,fz>0?lerp(tp.y,-1.6,fz):tp.y,0);mg2.position.set(tp.x+.08,fz>0?lerp(tp.y,.5,fz):tp.y,0);if(fz>0){mg1.position.x=lerp(mg1.position.x,0,fz);mg2.position.x=lerp(mg2.position.x,0,fz)}
+   eggN.scale.setScalar(1+.5*fz);polA.position.x=-.25+.25*fz;polB.position.x=.25-.25*fz;
+   /* fruit and seed development in step 7 */
+   const dv=s===6?cl(((t*.06)%1)*1.4,0,1):s>6?1:0;org.forEach(o=>{if(o.id==="petal"&&o.m.parent&&o.m.parent.parent===FL)o.m.parent.scale.setScalar(s===6?1-dv:1)});ovMesh.scale.setScalar(1+dv*.9);ovM.color.setHex(dv>.5?0xf2a23a:0x9cd06a);ovM.opacity=s===6?.6+.3*dv:.6;
+   seedCoat.material.opacity=s===6?dv*.9:0;
+   /* germination */
+   const gm=s===7?cl(((t*.05)%1)*1.3,0,1):0;rad.scale.set(1,.2+.8*gm,1);rad.position.y=-2.3;shoot.scale.set(1,.15+.85*gm,1);shoot.position.y=-1.1+gm*.3;sd_.scale.set(1,1,1)},
+  predict:{q:"After fertilisation, what does the ovary develop into?",opts:[["Seed",!1,"The ovule becomes the seed."],["Fruit",!0,"Correct — the ovary becomes the fruit and the ovule becomes the seed."],["Flower",!1,"The flower withers after fertilisation."]]}})}
+Q_("ch7/flower3d",[["The male reproductive part of a flower is the…","पुष्प का नर जनन भाग?",["Pistil","Stamen","Petal","Sepal"],1,"Anther + filament = stamen."],["Transfer of pollen from anther to stigma is called…","पराग का परागकोश से वर्तिकाग्र तक पहुँचना?",["Fertilisation","Pollination","Germination","Dispersal"],1,"Pollination comes before fertilisation."],["Pollen tube enters the ovule through the…","पराग नलिका बीजांड में कहाँ से घुसती है?",["Stigma","Micropyle","Style","Receptacle"],1,"The micropyle is the small opening."],["After fertilisation the ovule develops into a…","निषेचन के बाद बीजांड क्या बनता है?",["Fruit","Seed","Petal","Pollen"],1,"The ovary becomes the fruit."],["Cross-pollination brings pollen from…","पर-परागण में पराग कहाँ से आता है?",["The same flower","A flower on a different plant of the same species","A different species","The stem"],1,"It increases variation."]]);
+Px["ch7/flower3d"]=[["Bees visit about 2 million flowers to make 500 g of honey — and pollinate crops on the way.","500 g शहद के लिए मधुमक्खियाँ लगभग 20 लाख फूलों पर जाती हैं — और रास्ते में फ़सलों का परागण करती हैं।"],["Fruits like mango, tomato and cucumber are ripened ovaries; the seeds inside were ovules.","आम, टमाटर, खीरा परिपक्व अंडाशय हैं; भीतर के बीज पहले बीजांड थे।"]];
+{const Lf=Hi.find(h=>h.no===7).topics,i=Lf.findIndex(x=>x.id==="flower");Lf.splice(i<0?Lf.length:i+1,0,{id:"flower3d",title:"Flower, pollination & fertilisation — detailed 3D",hi:"पुष्प, परागण व निषेचन — विस्तृत 3D",build:Mflower,ncert:"Ch 7 · sexual reproduction in flowering plants"})}
 })();
