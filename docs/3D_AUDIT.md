@@ -28,4 +28,5 @@ Kidney and brain meshes in the open atlas are not usable (licence: non-commercia
 4. **Neuron, impulse, synapse, reflex arc (`ch6/neuron3d`)** — myelinated axon with saltatory impulse, Na⁺/K⁺ at a node, magnified synapse with vesicles/receptors/neurotransmitter, reflex arc with relay neuron and contracting muscle.
 Real-mesh topics (BodyParts3D): heart, digestive, eye, elbow joint, lungs.
 5. **Kidney, nephron & dialysis (`ch5/nephron3d`)** — hand-modelled kidney cut-away, one enlarged nephron (glomerulus, Bowman's capsule, PCT, loop, DCT, collecting duct), animated filtration / selective reabsorption / urine formation, urine path, dialysis.
-Next biology sets, in order: human reproduction → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).
+6. **Human reproduction (`ch7/human3d`)** — male system, sperm cell, female system, ovulation, fertilisation, cleavage to blastocyst and implantation, placenta/foetus, animated 28-day menstrual cycle.
+Next biology sets, in order: → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).

@@ -1,4 +1,4 @@
-/* ===== Custom model sets 1-5: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis (detailed 3D) =====
+/* ===== Custom model sets 1-6: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -172,7 +172,7 @@ function run(C){const {n,g,org,show,base,ST,cams,camK,labels,frame,predict,plane
    if(plane)plane.constant=s===0||!cut?99:cutAt;frame&&frame(s,t,dt);
    for(const o of org){const sh=show[o.id];let a=(base[o.id]??1)*(sh&&sh[s]?1:.07);const q=op&&op(o.id,s,a);if(q!==undefined)a=q;if(iso&&sel&&o.id!==sel)a=min(a,.05);const m=o.mat;if(m.opacity!==undefined){m.opacity=a;m.transparent=a<.999;m.depthWrite=a>.6}
     const on=sh&&sh[s]&&s>0,h=(on?.12+.06*sin(t*3):0)+(hl.has(o.id)?.2:0);if(m.emissive){m.userData.e0=m.userData.e0??m.emissiveIntensity;m.emissiveIntensity=m.userData.e0+h}}
-   const i=ST[s];$e(`<b>${i[0]} · ${i[1]}</b> <span style="color:var(--hi)">/ ${i[2]}</span><br><span style="color:#ffd36b">${i[5]}</span> · ${i[3]}<br><span style="color:#9fb3cf;font-size:.82em">Hand-modelled procedural geometry (no imported mesh). Sizes are not to scale; particles and motion are schematic.</span>`)}}}
+   const i=ST[s],xh=C.hud&&C.hud(s,t);$e(`<b>${i[0]} · ${i[1]}</b> <span style="color:var(--hi)">/ ${i[2]}</span><br><span style="color:#ffd36b">${i[5]}</span> · ${i[3]}${xh?`<br><b style="color:#2b6cb0">${xh}</b>`:""}<br><span style="color:#9fb3cf;font-size:.82em">Hand-modelled procedural geometry (no imported mesh). Sizes are not to scale; particles and motion are schematic.</span>`)}}}
 const mkAdd=(g,org)=>(id,geo,mat,p=[0,0,0],o={})=>{const m=new N(geo,mat);m.position.set(p[0],p[1],p[2]);if(o.rot)m.rotation.set(...o.rot);if(o.scl)m.scale.set(...o.scl);m.userData.part=id;m.castShadow=!o.ns;m.frustumCulled=!1;(o.parent||g).add(m);org.push({m,id,mat});return m};
 const mkParts=(n,add)=>({});
 /* ============================== PLANT CELL ============================== */
@@ -586,4 +586,148 @@ function Mneph(){sd=51;const n=new Ne;Ge(n,{key:1.9});Je(n,-6,60,.08);const g=ne
 Q_("ch5/nephron3d",[["The structural and functional unit of the kidney is…","वृक्क की संरचनात्मक व क्रियात्मक इकाई…",["Neuron","Nephron","Alveolus","Villus"],1,"Each kidney has about a million nephrons."],["Filtration takes place in the…","निस्यंदन कहाँ होता है?",["Loop of Henle","Glomerulus and Bowman's capsule","Collecting duct","Ureter"],1,"High pressure forces small molecules out of the blood."],["Which substance is NOT normally present in the filtrate that passes into urine?","इनमें से मूत्र में सामान्यतः क्या नहीं आता?",["Urea","Glucose","Water","Salts"],1,"All glucose is reabsorbed."],["The tube carrying urine from kidney to bladder is the…","मूत्र को वृक्क से मूत्राशय ले जाने वाली नली?",["Urethra","Ureter","Aorta","Trachea"],1,"The urethra carries urine out of the body."],["Dialysis works because the membrane is…","डायलिसिस इसलिए काम करता है क्योंकि झिल्ली…",["Semi-permeable","Impermeable","Fully permeable","Thick"],0,"Small waste molecules pass; blood cells and proteins do not."]]);
 Px["ch5/nephron3d"]=[["Your kidneys filter all your blood about 40 times a day — and send back all the glucose.","आपके वृक्क एक दिन में लगभग 40 बार सारा रक्त छानते हैं — और सारा ग्लूकोज़ लौटा देते हैं।"],["Drinking enough water keeps urine pale; very dark urine means the body is saving water.","पर्याप्त जल पीने से मूत्र हल्का रहता है; बहुत गहरा रंग शरीर में जल की कमी बताता है।"]];
 {const Lq=Hi.find(h=>h.no===5).topics,i=Lq.findIndex(x=>x.id==="nephron");Lq.splice(i<0?Lq.length:i+1,0,{id:"nephron3d",title:"Kidney, nephron & dialysis — detailed 3D",hi:"वृक्क, नेफ्रॉन व डायलिसिस — विस्तृत 3D",build:Mneph,ncert:"Ch 5 · excretion in human beings"})}
+/* ===================== SET 6: HUMAN REPRODUCTION ===================== */
+const KIND6={
+ testis:["Testis","वृषण","Makes sperm (in seminiferous tubules) and the hormone testosterone. It hangs in the scrotum where it is about 2–3 °C cooler than the body — needed for sperm formation.","शुक्राणु (शुक्रजनक नलिकाओं में) और टेस्टोस्टेरोन बनाता है; वृषणकोष में लटका रहता है जहाँ तापमान शरीर से 2–3 °C कम होता है — शुक्राणु बनने के लिए आवश्यक।"],
+ epid:["Epididymis","अधिवृषण","A tightly coiled tube on the testis where sperm mature and are stored.","वृषण पर कसकर कुंडलित नली जहाँ शुक्राणु परिपक्व होकर संचित रहते हैं।"],
+ vas:["Vas deferens","शुक्रवाहिका","Muscular tube that carries sperm from the epididymis up and over the bladder to join the urethra.","पेशीय नली जो शुक्राणुओं को अधिवृषण से मूत्राशय के ऊपर से मूत्रमार्ग तक ले जाती है।"],
+ sv:["Seminal vesicle","शुक्राशय","Gland adding a sugar-rich fluid (fructose) that feeds the sperm and helps them swim.","ग्रंथि जो फ्रक्टोज़-युक्त द्रव मिलाती है; यह शुक्राणुओं को पोषण व तैरने में सहायता देता है।"],
+ prost:["Prostate gland","पुरःस्थ ग्रंथि","Adds an alkaline fluid. Sperm + these fluids = semen.","क्षारीय द्रव जोड़ती है; शुक्राणु + ये द्रव = वीर्य।"],
+ ureth:["Urethra","मूत्रमार्ग","In males it carries both urine and semen (never at the same time).","पुरुषों में मूत्र व वीर्य दोनों ले जाता है (एक साथ नहीं)।"],
+ bladm:["Urinary bladder","मूत्राशय","Part of the urinary system, shown for position.","मूत्र-तंत्र का भाग, स्थिति दिखाने हेतु।"],
+ head:["Sperm head","शुक्राणु का शीर्ष","Contains the nucleus with 23 chromosomes. The acrosome cap holds enzymes that dissolve the egg's coat.","23 गुणसूत्रों वाला केंद्रक; एक्रोसोम टोपी में एंज़ाइम होते हैं जो अंडे की परत घोलते हैं।"],
+ mid:["Mid-piece","मध्य खंड","Packed with mitochondria that release the energy (ATP) for swimming.","माइटोकॉन्ड्रिया से भरा; तैरने के लिए ऊर्जा (ATP) देता है।"],
+ tail:["Tail (flagellum)","पूँछ (कशाभिका)","Whip-like tail that propels the sperm forward at about 3 mm per minute.","कोड़े जैसी पूँछ जो शुक्राणु को लगभग 3 mm प्रति मिनट आगे धकेलती है।"],
+ uterus:["Uterus (womb)","गर्भाशय","A pear-shaped muscular organ where the embryo implants and grows. Its inner lining (endometrium) thickens every month.","नाशपाती के आकार का पेशीय अंग जहाँ भ्रूण रोपित होकर बढ़ता है; इसकी भीतरी परत (एंडोमेट्रियम) हर माह मोटी होती है।"],
+ endo:["Endometrium","एंडोमेट्रियम","Soft, blood-rich lining that prepares for the embryo each month; shed as menstruation if there is no pregnancy.","कोमल, रक्त-समृद्ध परत जो हर माह भ्रूण के लिए तैयार होती है; गर्भ न ठहरे तो माहवारी में निकल जाती है।"],
+ cervix:["Cervix","ग्रीवा","Narrow lower end of the uterus opening into the vagina.","गर्भाशय का संकरा निचला सिरा जो योनि में खुलता है।"],
+ vagina:["Vagina","योनि","Muscular canal that receives sperm and serves as the birth canal.","पेशीय नली जो शुक्राणु ग्रहण करती है और जन्म-मार्ग भी है।"],
+ tube:["Fallopian tube (oviduct)","अंडवाहिनी","Carries the egg from the ovary towards the uterus. Fertilisation normally happens in its upper part.","अंडे को अंडाशय से गर्भाशय की ओर ले जाती है; निषेचन सामान्यतः इसके ऊपरी भाग में होता है।"],
+ fim:["Fimbriae","झालर","Finger-like fringes that sweep the released egg into the tube.","उँगली जैसी झालरें जो निकले अंडे को नली में बुहार लेती हैं।"],
+ ovary:["Ovary","अंडाशय","Makes eggs (ova) and the hormones oestrogen and progesterone. One egg is released about every 28 days.","अंडाणु तथा हार्मोन एस्ट्रोजन व प्रोजेस्टेरोन बनाता है; लगभग हर 28 दिन में एक अंडाणु निकलता है।"],
+ foll:["Follicle","पुटक","A fluid-filled bubble in which an egg ripens. The mature follicle bursts at ovulation.","तरल से भरा बुलबुला जिसमें अंडाणु परिपक्व होता है; अंडोत्सर्ग पर परिपक्व पुटक फटता है।"],
+ egg:["Egg cell (ovum)","अंडाणु","The largest human cell (~0.1 mm). It carries 23 chromosomes and a store of food in its cytoplasm.","मानव की सबसे बड़ी कोशिका (~0.1 mm); 23 गुणसूत्र व कोशिकाद्रव्य में भोजन भंडार।"],
+ zona:["Zona pellucida","ज़ोना पेल्यूसिडा","Clear protective coat. Once one sperm gets through, it hardens so no other sperm can enter.","पारदर्शी सुरक्षा-परत; एक शुक्राणु के प्रवेश के बाद सख्त हो जाती है ताकि दूसरा न घुसे।"],
+ corona:["Corona radiata","कोरोना रेडिएटा","Ring of follicle cells that surround the egg.","अंडे को घेरे हुए पुटक कोशिकाओं का घेरा।"],
+ nucz:["Nucleus","केंद्रक","Holds the mother's 23 chromosomes; after fertilisation it fuses with the father's 23 to make the zygote's 46.","माँ के 23 गुणसूत्र; निषेचन के बाद पिता के 23 से मिलकर युग्मनज के 46 बनाता है।"],
+ stage:["Early embryo","प्रारंभिक भ्रूण","The zygote divides again and again (cleavage) without growing: 2 → 4 → 8 → morula → blastocyst.","युग्मनज बिना बढ़े बार-बार विभाजित होता है (विदलन): 2 → 4 → 8 → मोरुला → ब्लास्टोसिस्ट।"],
+ blast:["Blastocyst","ब्लास्टोसिस्ट","A hollow ball: the outer cells will form the placenta, the inner cell mass will become the baby. It implants in the uterus wall about 6–7 days after fertilisation.","खोखली गेंद: बाहरी कोशिकाएँ अपरा बनाएँगी, भीतरी कोशिका समूह शिशु; निषेचन के लगभग 6–7 दिन बाद गर्भाशय की भित्ति में रोपित होता है।"],
+ foet:["Embryo / foetus","भ्रूण / गर्भस्थ शिशु","Grows in a fluid-filled amniotic sac that cushions it. Human pregnancy lasts about 9 months (≈ 40 weeks).","तरल से भरी उल्ब-थैली में बढ़ता है जो इसे आघात से बचाती है; मानव गर्भकाल लगभग 9 माह (≈ 40 सप्ताह)।"],
+ plac:["Placenta","अपरा (प्लेसेंटा)","Disc-shaped organ with villi embedded in the uterus wall. Oxygen and nutrients pass from mother to baby; CO₂ and wastes pass back. Mother's and baby's blood never mix.","गर्भाशय-भित्ति में धँसी तश्तरीनुमा संरचना (दीर्घरोम सहित); ऑक्सीजन व पोषण माँ से शिशु को, CO₂ व अपशिष्ट वापस; दोनों का रक्त आपस में नहीं मिलता।"],
+ cord:["Umbilical cord","नाभि-रज्जु","Links the baby to the placenta: two arteries and one vein.","शिशु को अपरा से जोड़ती है: दो धमनियाँ व एक शिरा।"],
+ amn:["Amniotic fluid","उल्बीय द्रव","Protects the foetus from shocks and keeps temperature steady.","भ्रूण को आघात से बचाता और तापमान स्थिर रखता है।"]};
+const R_ST=[
+["1","Male reproductive system","पुरुष जनन तंत्र","Testes make sperm and testosterone. Sperm mature in the epididymis, travel through the vas deferens, mix with fluids from the seminal vesicles and prostate (semen) and leave through the urethra.","वृषण शुक्राणु व टेस्टोस्टेरोन बनाते हैं; शुक्राणु अधिवृषण में परिपक्व होते, शुक्रवाहिका से जाते, शुक्राशय व पुरःस्थ ग्रंथि के द्रवों से मिलकर (वीर्य) मूत्रमार्ग से निकलते हैं।","Hand-modelled · schematic",11],
+["2","The sperm cell","शुक्राणु कोशिका","A sperm is a tiny swimmer (about 0.05 mm) with a head carrying 23 chromosomes and an acrosome, a mid-piece full of mitochondria and a long tail.","शुक्राणु लगभग 0.05 mm का सूक्ष्म तैराक है: 23 गुणसूत्रों व एक्रोसोम वाला शीर्ष, माइटोकॉन्ड्रिया से भरा मध्य खंड और लंबी पूँछ।","Animated · greatly enlarged",11],
+["3","Female reproductive system","महिला जनन तंत्र","Two ovaries make eggs and hormones. Fallopian tubes carry the egg to the pear-shaped uterus. The cervix and vagina lead outside.","दो अंडाशय अंडाणु व हार्मोन बनाते हैं; अंडवाहिनियाँ अंडे को नाशपाती-आकार के गर्भाशय तक पहुँचाती हैं; ग्रीवा व योनि बाहर की ओर खुलते हैं।","Hand-modelled · cut-away",11],
+["4","The egg and ovulation","अंडाणु व अंडोत्सर्ग","Every month a follicle ripens, bursts and releases an egg (ovulation, about day 14). The fimbriae sweep it into the fallopian tube.","हर माह एक पुटक परिपक्व होकर फटता है और अंडाणु निकलता है (अंडोत्सर्ग, लगभग 14वाँ दिन); झालरें उसे अंडवाहिनी में बुहार लेती हैं।","Animated · schematic",12],
+["5","Fertilisation","निषेचन","Millions of sperm swim up; they must pass the corona and zona. The first to enter fuses with the egg: the nuclei merge (23 + 23 = 46 chromosomes) and the zygote is formed.","लाखों शुक्राणु तैरते हैं; कोरोना व ज़ोना पार करनी होती है; पहला प्रवेश करने वाला अंडे से जुड़ता है, केंद्रक मिलते हैं (23 + 23 = 46 गुणसूत्र) और युग्मनज बनता है।","Animated · greatly enlarged",14],
+["6","Cleavage and implantation","विदलन व रोपण","The zygote divides repeatedly as it moves to the uterus: 2, 4, 8 cells, morula, then a hollow blastocyst, which burrows into the endometrium (implantation).","युग्मनज गर्भाशय की ओर जाते हुए बार-बार विभाजित होता है: 2, 4, 8 कोशिकाएँ, मोरुला, फिर खोखला ब्लास्टोसिस्ट, जो एंडोमेट्रियम में धँस जाता है (रोपण)।","Schematic row · not to scale",12],
+["7","Placenta and the growing baby","अपरा व बढ़ता शिशु","The embryo floats in amniotic fluid and is nourished through the placenta and umbilical cord: oxygen and food go in, carbon dioxide and wastes come out.","भ्रूण उल्बीय द्रव में तैरता है और अपरा व नाभि-रज्जु से पोषण पाता है: ऑक्सीजन व भोजन अंदर, CO₂ व अपशिष्ट बाहर।","Animated · schematic",13],
+["8","The monthly (menstrual) cycle","मासिक (आर्तव) चक्र","Over about 28 days a follicle ripens, ovulation occurs near day 14 and the uterine lining thickens. If no embryo implants, the lining is shed (menstruation, days 1–5) and the cycle repeats.","लगभग 28 दिन में पुटक परिपक्व होता है, 14वें दिन के आसपास अंडोत्सर्ग होता है, गर्भाशय-परत मोटी होती है; भ्रूण न रुके तो परत निकल जाती है (माहवारी, दिन 1–5) और चक्र दोहराता है।","Animated · 28-day loop",16]];
+function Mrepro(){sd=61;const n=new Ne;Ge(n,{key:1.9});Je(n,-7,80,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const M=new J;M.position.set(-26,0,0);g.add(M);const F=new J;g.add(F);const Z=new J;Z.position.set(26,0,0);g.add(Z);const Dv=new J;Dv.position.set(0,-24,0);g.add(Dv);const E=new J;E.position.set(26,-24,0);g.add(E);
+ const pink=MAT(0xe9a2a0,{roughness:.5,clearcoat:.4,sheen:.4,sheenC:0xffd0d0,bumpScale:.3,opacity:.5,depthWrite:!1,emissive:0x3a1010,emissiveIntensity:.1});
+ const flesh=MAT(0xe08f86,{roughness:.5,clearcoat:.4,bumpScale:.3,emissive:0x3a1010,emissiveIntensity:.12});const yel=MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2});
+ const prof=u=>{const w=u<.12?.24+.2*u:.24+.98*Math.pow(Math.sin(Math.min(1,(u-.08)/.82)*PI/2),1.25);return u>.9?w*Math.sqrt(Math.max(0,1-Math.pow((u-.9)/.1,2))):w};
+ /* ---------- male ---------- */
+ const sac=add("testis",param(30,44,(u,v)=>{const th=u*PI,ph=v*TAU;return[sin(th)*cos(ph)*2.1,-3.1+cos(th)*1.35,sin(th)*sin(ph)*.95]}),MAT(0xf1c9a5,{roughness:.55,opacity:.22,depthWrite:!1,bumpScale:.3,sheen:0}),[0,0,0],{parent:M,ns:1});
+ [-1,1].forEach(sx=>{add("testis",sph(.72,.04,2,.8,1.15,.8,28,36,sx),MAT(0xf0d8b8,{roughness:.4,clearcoat:.7,opacity:.95,sheen:.3,emissive:0x3a2a10,emissiveIntensity:.1}),[sx*.95,-3.1,0],{parent:M});
+  const pts=[];for(let i=0;i<=40;i++){const q=i/40,a=q*TAU*5;pts.push(c(sx*.95+sx*.35+.18*Math.sin(a),-2.4-q*.0+.45*Math.cos(q*PI)*.0-.45*q+.25*(1-q),-.15+.16*Math.cos(a)))}add("epid",tube(pts,.07,8),yel,[0,0,0],{parent:M,ns:1});
+  add("vas",tube([c(sx*1.3,-2.5,-.25),c(sx*1.45,-1,-.3),c(sx*1.1,.6,-.3),c(sx*.5,1.5,-.1),c(sx*.3,.2,.1),c(sx*.12,-.7,.1)],.1,8),yel,[0,0,0],{parent:M,ns:1});
+  add("sv",sph(.36,.15,3,.8,1.6,.8,18,24,sx),MAT(0xe4b86a,{roughness:.5,bumpScale:.4}),[sx*.65,-.2,-.55],{parent:M,rot:[0,0,sx*.5]})});
+ add("bladm",sph(.95,.05,2,1,.9,.9,28,36),MAT(0xe8b04a,{roughness:.45,clearcoat:.5,opacity:.7,bumpScale:.3,depthWrite:!1}),[0,1.5,.3],{parent:M});
+ add("prost",sph(.5,.05,2,1.1,.9,.9,20,28),MAT(0xd98a6a,{roughness:.5,bumpScale:.3}),[0,-.9,.1],{parent:M});
+ add("ureth",tube([c(0,1.0,.3),c(0,-.6,.15),c(0,-1.5,.3),c(0,-3.4,.85)],.12,8),MAT(0xfff1a8,{roughness:.4,emissive:0x4a3a08,emissiveIntensity:.25}),[0,0,0],{parent:M,ns:1});
+ add("ureth",tube([c(0,-1.4,.3),c(0,-3.2,.8),c(0,-4.2,1.0)],.3,12,u=>1-.15*u),MAT(0xf1c9a5,{roughness:.55,opacity:.55,depthWrite:!1,bumpScale:.2}),[0,0,0],{parent:M,ns:1});
+ /* ---------- female ---------- */
+ const ang=v=>(.75+v*1.5)*PI;
+ const wall=add("uterus",param(36,60,(u,v)=>{const y=-1.6+u*3.2,r=prof(u)*1.0,a=ang(v);return[cos(a)*r*1.15,y,sin(a)*r*.7]}),pink,[0,0,0],{parent:F,ns:1});
+ const endoM=MAT(0xc9373a,{roughness:.5,clearcoat:.4,bumpScale:.4,emissive:0x4a0808,emissiveIntensity:.25,sheen:.5,sheenC:0xff9a9a});
+ const endo=add("endo",param(34,56,(u,v)=>{const y=-1.1+u*2.5,r=prof(.15+u*.8)*.62,a=ang(v);return[cos(a)*r*1.15,y,sin(a)*r*.7]}),endoM,[0,0,0],{parent:F,ns:1});
+ add("cervix",tube([c(0,-1.9,0),c(0,-1.45,0)],.3,12),MAT(0xd98a86,{roughness:.5,bumpScale:.3}),[0,0,0],{parent:F,ns:1});
+ add("vagina",tube([c(0,-1.9,0),c(0,-3.6,.2),c(0,-5,.5)],.4,14),flesh,[0,0,0],{parent:F,ns:1});
+ const tubeP=sx=>[c(sx*.7,1.05,0),c(sx*1.5,1.65,0),c(sx*2.4,1.55,.05),c(sx*3.1,1.1,.1),c(sx*3.4,.55,.1)];
+ [-1,1].forEach(sx=>{add("tube",tube(tubeP(sx),.1,10,u=>1+.9*u),MAT(0xe6968a,{roughness:.45,clearcoat:.5,bumpScale:.3,emissive:0x3a1010,emissiveIntensity:.12}),[0,0,0],{parent:F,ns:1});
+  for(let k=0;k<9;k++){const a=k/9*TAU,e=tubeP(sx)[4];add("fim",tube([c(e.x,e.y,e.z),c(e.x+sx*.15*cos(a),e.y-.15+.25*sin(a),e.z+.3*cos(a)),c(e.x+sx*.3*cos(a),e.y-.4+.45*sin(a),e.z+.55*cos(a))],.04,5),MAT(0xf0a0a0,{roughness:.4,emissive:0x3a1010,emissiveIntensity:.15}),[0,0,0],{parent:F,ns:1})}
+  add("ovary",sph(.62,.05,2,1.25,1,.85,28,36,sx),MAT(0xf0b8a0,{roughness:.8,clearcoat:0,bumpScale:.6,sheen:.3,sheenC:0xffd8c8,envMapIntensity:.5,emissive:0x4a2418,emissiveIntensity:.2}),[sx*3.55,-.35,.1],{parent:F});
+  for(let k=0;k<6;k++){const a=k*1.9;add("foll",sph(.12,.05,3,1,1,1,12,16),MAT(0xfff2d0,{roughness:.2,clearcoat:1,opacity:.9}),[sx*3.55+cos(a)*.5*sx,-.35+sin(a)*.4,.1+cos(a*2)*.3],{parent:F,ns:1})}});
+ const mature=add("foll",sph(.3,.03,2,1,1,1,20,26),MAT(0xfff6d8,{roughness:.15,clearcoat:1,opacity:.85,emissive:0x6a5a20,emissiveIntensity:.3}),[3.95,-.2,.35],{parent:F,ns:1});
+ const ovum=add("egg",sph(.13,0,1,1,1,1,16,20),MAT(0xffd7a0,{roughness:.2,clearcoat:1,emissive:0x8a5a10,emissiveIntensity:.5}),[3.95,-.2,.35],{parent:F,ns:1});
+ const eggPath=new It([c(3.95,-.2,.35),c(4.2,.2,.45),c(3.5,.5,.35),c(3.25,.75,.2),c(2.8,1.3,.08),c(2.1,1.6,.05)]).getPoints(60);
+ /* ---------- sperm + egg ---------- */
+ const mkSperm=(par,x,y,z)=>{const sg=new J;sg.position.set(x,y,z);par.add(sg);const hm=MAT(0x7b8fe0,{roughness:.35,clearcoat:.8,emissive:0x1a2a7a,emissiveIntensity:.3}),am=MAT(0xd6e0ff,{roughness:.25,clearcoat:1,opacity:.9}),mm=MAT(0xf2a63a,{roughness:.4,emissive:0x5a3408,emissiveIntensity:.3}),tm=MAT(0x9fb0f0,{roughness:.4,clearcoat:.6});
+  const part=(id,geo,mat,p)=>{const m=add(id,geo,mat,p,{parent:sg,ns:1});return m};
+  part("head",sph(.5,0,1,1.05,.78,.42,24,32),hm,[0,0,0]);part("head",sph(.33,0,1,.7,.95,.5,16,22),am,[.42,0,0]);
+  for(let i=0;i<8;i++)part("mid",torus(.16,.045),mm,[-.55-i*.14,0,0]).rotation.z=PI/2;
+  part("mid",tube([c(-.5,0,0),c(-1.75,0,0)],.12,8),mm,[0,0,0]);
+  const tp=[];for(let i=0;i<=24;i++){const q=i/24;tp.push(c(-1.75-q*4.2,Math.sin(q*TAU*2.2)*.22*q,0))}part("tail",tube(tp,.07,6,u=>1-.7*u),tm,[0,0,0]);return sg};
+ const sperms=[[-14,.8,-1,.6],[-12,-2.2,1.2,.5],[-16,2.4,.4,.8],[-11,-.6,-1.8,.4],[-13,1.6,1.8,.7]].map((p,i)=>({g:mkSperm(Z,p[0],p[1],p[2]),i,v:p[3]}));
+ const eggG=new J;eggG.position.set(2.5,0,0);Z.add(eggG);
+ add("zona",sph(2.0,.03,2,1,1,1,36,48,2),MAT(0xcfe8ff,{roughness:.2,clearcoat:.8,opacity:.28,depthWrite:!1,bumpScale:.4,sheen:0}),[0,0,0],{parent:eggG,ns:1});
+ add("egg",sph(1.65,.02,2,1,1,1,36,48,3),MAT(0xffd9a8,{roughness:.45,clearcoat:.6,opacity:.95,bumpScale:.3,emissive:0x6a4a18,emissiveIntensity:.15}),[0,0,0],{parent:eggG});
+ const nzM=MAT(0x6f7ad8,{roughness:.35,clearcoat:.8,emissive:0x1a2060,emissiveIntensity:.35});const nuc1=add("nucz",sph(.5,.04,2,1,1,1,20,26),nzM,[-.2,0,.1],{parent:eggG,ns:1});const nuc2=add("nucz",sph(.35,.04,2,1,1,1,16,22),MAT(0x9aa4f2,{roughness:.35,emissive:0x2a3080,emissiveIntensity:.35}),[.9,.2,0],{parent:eggG,ns:1});nuc2.visible=!1;
+ for(let i=0;i<34;i++){const y=1-(i+.5)/34*2,r=Math.sqrt(1-y*y),a=i*2.399963;add("corona",sph(.24,.1,3,1,1,1,10,14,i),MAT(0xffe6d0,{roughness:.45,opacity:.85}),[cos(a)*r*2.2,y*2.2,sin(a)*r*2.2],{parent:eggG,ns:1})}
+ /* ---------- cleavage row ---------- */
+ const cm=MAT(0xffd9a8,{roughness:.4,clearcoat:.6,opacity:.92,bumpScale:.25,emissive:0x6a4a18,emissiveIntensity:.15}),shell=MAT(0xcfe8ff,{roughness:.2,opacity:.25,depthWrite:!1,sheen:0});
+ const X0=-10.5,DX=3.5;
+ add("stage",sph(1.0,.03,2,1,1,1,24,32),cm,[X0,0,0],{parent:Dv});add("stage",sph(1.25,0,1,1,1,1,24,32),shell,[X0,0,0],{parent:Dv,ns:1});
+ [[-.55,0],[.55,0]].forEach(q=>add("stage",sph(.62,.03,2,1,1,1,20,26),cm,[X0+DX+q[0],q[1],0],{parent:Dv}));
+ [[-.5,.5],[.5,.5],[-.5,-.5],[.5,-.5]].forEach(q=>add("stage",sph(.46,.03,2,1,1,1,18,24),cm,[X0+DX*2+q[0],q[1],0],{parent:Dv}));
+ for(let i=0;i<8;i++){const a=i/8*TAU,z=i<4?.3:-.3;add("stage",sph(.36,.03,2,1,1,1,16,20),cm,[X0+DX*3+cos(a)*.5,sin(a)*.5,(i%2?.35:-.35)],{parent:Dv})}
+ for(let i=0;i<20;i++){const y=1-(i+.5)/20*2,r=Math.sqrt(1-y*y),a=i*2.399963;add("stage",sph(.3,.03,2,1,1,1,14,18),cm,[X0+DX*4+cos(a)*r*.7,y*.7,sin(a)*r*.7],{parent:Dv})}
+ add("blast",sph(1.15,.02,2,1,1,1,36,48),MAT(0xffe0b8,{roughness:.3,clearcoat:.7,opacity:.4,depthWrite:!1,sheen:0}),[X0+DX*5,0,0],{parent:Dv,ns:1});
+ for(let i=0;i<7;i++){const a=i*.9+.4;add("blast",sph(.3,.03,2,1,1,1,14,18),MAT(0x6f7ad8,{roughness:.35,emissive:0x1a2060,emissiveIntensity:.3}),[X0+DX*5-.55+cos(a)*.35,sin(a)*.35,sin(a*2)*.3],{parent:Dv,ns:1})}
+ add("endo",param(20,20,(u,v)=>[X0+DX*6.1+Math.sin(v*PI)*0+(.9-.4*Math.cos(u*PI)*Math.cos(v*PI)*0),(u-.5)*5.2,(v-.5)*5]),endoM,[0,0,0],{parent:Dv,ns:1}).position.x=0;
+ add("blast",sph(.9,.02,2,.8,1,1,28,36),MAT(0xffe0b8,{roughness:.3,clearcoat:.7,opacity:.7,sheen:0}),[X0+DX*6.1-.2,0,0],{parent:Dv});
+ /* ---------- placenta & foetus ---------- */
+ const sacM=MAT(0xffd0d0,{roughness:.3,opacity:.16,depthWrite:!1,sheen:0,bumpScale:.1,clearcoat:.5});
+ add("uterus",param(34,50,(u,v)=>{const y=-3+u*6.2,r=prof(u)*2.6,a=ang(v);return[cos(a)*r*1.1,y,sin(a)*r*.8]}),pink,[0,0,0],{parent:E,ns:1});
+ add("amn",sph(2.5,.03,1.5,1,1.15,.9,36,48,1),sacM,[0,.3,.2],{parent:E,ns:1});
+ const fM=MAT(0xf2b9a0,{roughness:.45,clearcoat:.5,bumpScale:.3,sheen:.4,sheenC:0xffd8c8,emissive:0x4a2010,emissiveIntensity:.12});const fet=new J;fet.position.set(0,.3,.2);E.add(fet);
+ add("foet",sph(.8,.03,2,1,1.05,.95,28,36),fM,[0,.9,0],{parent:fet});add("foet",tube([c(0,.2,0),c(-.1,-.5,.1),c(.15,-1.1,.15),c(.5,-1.5,.0)],.55,12,u=>1-.4*u),fM,[0,0,0],{parent:fet});
+ [-1,1].forEach(sx=>{add("foet",tube([c(sx*.35,.1,.2),c(sx*.7,-.2,.5),c(sx*.45,-.6,.7)],.14,8),fM,[0,0,0],{parent:fet,ns:1});add("foet",tube([c(sx*.2,-1,.1),c(sx*.5,-1.4,.4),c(sx*.3,-1.9,.3)],.17,8),fM,[0,0,0],{parent:fet,ns:1})});
+ const plM=MAT(0xa23a3a,{roughness:.55,bumpScale:.5,emissive:0x3a0808,emissiveIntensity:.25,sheen:.4});
+ add("plac",sph(1.15,.12,3,.5,1,1,28,36,4),plM,[-2.3,1.2,-.6],{parent:E});
+ for(let i=0;i<14;i++){const q=i/14;add("plac",tube([c(-2.4,.5+q*1.5,-.6),c(-2.7,.3+q*1.6,-.7),c(-3,.4+q*1.5,-.9)],.05,5),plM,[0,0,0],{parent:E,ns:1})}
+ const cordA=[c(-.2,1,.1),c(-1,1.3,-.1),c(-1.8,1.5,-.4),c(-2.3,1.4,-.5)];
+ add("cord",tube(cordA,.17,10),MAT(0xe8d8b0,{roughness:.4,clearcoat:.6,bumpScale:.3}),[0,0,0],{parent:E});
+ add("cord",tube(cordA.map((p,i)=>p.clone().add(c(0,.08*sin(i*2),.08))),.06,6),artM6(),[0,0,0],{parent:E,ns:1});add("cord",tube(cordA.map((p,i)=>p.clone().add(c(0,-.08,.06*cos(i*2)))),.06,6),vM6(),[0,0,0],{parent:E,ns:1});
+ function artM6(){return MAT(0x4f63d6,{roughness:.35,emissive:0x101a5a,emissiveIntensity:.3})}function vM6(){return MAT(0xd2413f,{roughness:.35,emissive:0x5a0a08,emissiveIntensity:.3})}
+ const NF=36,fl=new Wn(new it(.06,8,6),new bt({color:0xffffff}),NF);fl.frustumCulled=!1;E.add(fl);const fc=new we;for(let i=0;i<NF;i++)fl.setColorAt(i,fc.setHex(i%2?0xd2413f:0x4f63d6));
+ const m4=new gt,cordB=cordA.map(p=>p.clone().add(c(0,0,.02)));const cordCur=new It(cordA).getPoints(40);
+ /* ---------- cameras ---------- */
+ const cams=[[c(-26,-1.6,17),c(-26,-1.4,0)],[c(24,0,16),c(22,0,0)],[c(0,-.2,15.5),c(0,-.2,0)],[c(2.6,.5,9),c(3,.3,0)],[c(26,0,17),c(24,0,0)],[c(0,-24,19),c(0,-24,0)],[c(26,-24,16),c(26,-23.6,0)],[c(0,.2,14),c(0,-.2,0)]];
+ const camK=["Male","Sperm","Female","Ovulation","Fertilisation","Cleavage","Placenta","Cycle"];
+ const show={};const ids=["testis","epid","vas","sv","bladm","prost","ureth","head","mid","tail","uterus","endo","cervix","vagina","tube","fim","ovary","foll","egg","zona","corona","nucz","stage","blast","foet","plac","cord","amn"];
+ ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
+ on("testis",[0]);on("epid",[0]);on("vas",[0]);on("sv",[0]);on("bladm",[0]);on("prost",[0]);on("ureth",[0]);on("head",[1,4]);on("mid",[1,4]);on("tail",[1,4]);on("uterus",[2,3,4,7]);on("endo",[2,3,4,5,7]);on("cervix",[2,7]);on("vagina",[2,7]);on("tube",[2,3,4,7]);on("fim",[2,3,7]);on("ovary",[2,3,7]);on("foll",[2,3,7]);on("egg",[3,4]);on("zona",[4]);on("corona",[4]);on("nucz",[4]);on("stage",[5]);on("blast",[5]);on("foet",[6]);on("plac",[6]);on("cord",[6]);on("amn",[6]);
+ const base={testis:.95,epid:1,vas:1,sv:1,bladm:.7,prost:1,ureth:1,head:1,mid:1,tail:1,uterus:.5,endo:1,cervix:1,vagina:1,tube:1,fim:1,ovary:1,foll:.9,egg:1,zona:.28,corona:.85,nucz:1,stage:.92,blast:.9,foet:1,plac:1,cord:1,amn:.16};
+ const Lw=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["m-te","Testis (sperm + testosterone)","वृषण (शुक्राणु + टेस्टोस्टेरोन)",Lw(M,[.95,-3.1,.8]),[0]],["m-ep","Epididymis (sperm mature)","अधिवृषण (शुक्राणु परिपक्व)",Lw(M,[1.4,-2.2,-.1]),[0]],["m-va","Vas deferens","शुक्रवाहिका",Lw(M,[1.45,-.6,-.3]),[0]],["m-sv","Seminal vesicle","शुक्राशय",Lw(M,[.8,-.1,-.5]),[0]],["m-pr","Prostate gland","पुरःस्थ ग्रंथि",Lw(M,[0,-.9,.5]),[0]],["m-ur","Urethra","मूत्रमार्ग",Lw(M,[0,-3.1,.9]),[0]],["m-sc","Scrotum (cooler: 2–3 °C)","वृषणकोष (2–3 °C ठंडा)",Lw(M,[-2,-3.4,.2]),[0]],["m-bl","Bladder","मूत्राशय",Lw(M,[-.8,1.9,.4]),[0]],
+  ["z-he","Head: nucleus (23) + acrosome","शीर्ष: केंद्रक (23) + एक्रोसोम",Lw(Z,[-14,1,-1]),[1]],["z-mi","Mid-piece: mitochondria","मध्य खंड: माइटोकॉन्ड्रिया",Lw(Z,[-14.9,.8,-1]),[1]],["z-ta","Tail: swims","पूँछ: तैरती है",Lw(Z,[-17.2,1,-1]),[1]],
+  ["f-ut","Uterus (womb)","गर्भाशय",Lw(F,[0,1.5,.6]),[2,7]],["f-en","Endometrium (lining)","एंडोमेट्रियम (परत)",Lw(F,[0,.2,.5]),[2,7]],["f-ce","Cervix","ग्रीवा",Lw(F,[0,-1.7,.4]),[2]],["f-va","Vagina","योनि",Lw(F,[0,-3.4,.6]),[2]],["f-tu","Fallopian tube","अंडवाहिनी",Lw(F,[2.2,1.7,.2]),[2,3]],["f-fi","Fimbriae","झालर",Lw(F,[3.5,.5,.5]),[2,3]],["f-ov","Ovary","अंडाशय",Lw(F,[-3.5,-.3,.5]),[2,3]],["f-fo","Mature follicle","परिपक्व पुटक",Lw(F,[3.95,-.2,.6]),[3]],["f-eg","Egg released (ovulation)","अंडाणु निकला (अंडोत्सर्ग)",()=>ovum.getWorldPosition(c()),[3]],
+  ["e-eg","Egg cell (largest human cell)","अंडाणु (सबसे बड़ी कोशिका)",Lw(Z,[2.5,-1.3,1.6]),[4]],["e-zo","Zona pellucida","ज़ोना पेल्यूसिडा",Lw(Z,[2.5,1.9,.5]),[4]],["e-co","Corona radiata","कोरोना रेडिएटा",Lw(Z,[2.5,-2.2,.6]),[4]],["e-nu","Nucleus (23 + 23 = 46)","केंद्रक (23 + 23 = 46)",Lw(Z,[2.3,.2,.6]),[4]],["e-sp","Sperm entering","शुक्राणु प्रवेश",Lw(Z,[-1,.2,0]),[4]],
+  ["c-z","Zygote (1 cell)","युग्मनज (1 कोशिका)",Lw(Dv,[X0,1.5,0]),[5]],["c-2","2 cells","2 कोशिकाएँ",Lw(Dv,[X0+DX,1.2,0]),[5]],["c-4","4 cells","4 कोशिकाएँ",Lw(Dv,[X0+DX*2,1.4,0]),[5]],["c-8","8 cells","8 कोशिकाएँ",Lw(Dv,[X0+DX*3,1.2,0]),[5]],["c-mo","Morula","मोरुला",Lw(Dv,[X0+DX*4,1.2,0]),[5]],["c-bl","Blastocyst","ब्लास्टोसिस्ट",Lw(Dv,[X0+DX*5,1.6,0]),[5]],["c-im","Implantation in endometrium","एंडोमेट्रियम में रोपण",Lw(Dv,[X0+DX*6.1,2.2,0]),[5]],
+  ["p-fo","Foetus","गर्भस्थ शिशु",()=>fet.getWorldPosition(c()),[6]],["p-pl","Placenta","अपरा",Lw(E,[-2.6,2.5,-.6]),[6]],["p-co","Umbilical cord","नाभि-रज्जु",Lw(E,[-1.2,1.7,-.2]),[6]],["p-am","Amniotic fluid","उल्बीय द्रव",Lw(E,[2.2,1.4,.5]),[6]],["p-ox","O₂ + food → baby","O₂ + भोजन → शिशु",Lw(E,[-1.8,.7,0]),[6]],["p-wa","CO₂ + waste → mother","CO₂ + अपशिष्ट → माँ",Lw(E,[-1.2,2,0]),[6]],
+  ["y-fo","Follicle grows","पुटक बढ़ता",Lw(F,[3.95,.2,.6]),[7]],["y-en","Lining thickens / is shed","परत मोटी / निष्कासित",Lw(F,[0,.2,.5]),[7]]];
+ const phase=t=>((t*.07)%1)*28;
+ return run({n,g,org,show,base,ST:R_ST,cams,camK,labels,
+  hud:(s,t)=>s===7?`Day ${Math.floor(phase(t))+1} of 28 · `+(phase(t)<5?"menstruation (lining shed)":phase(t)<13?"follicle ripens · lining rebuilds":phase(t)<15?"OVULATION":phase(t)<24?"corpus luteum · lining thick":"lining breaks down"):"",
+  frame:(s,t)=>{F.rotation.y=s===2?sin(t*.2)*.25:0;M.rotation.y=s===0?sin(t*.2)*.3:0;
+   const pd=s===7?phase(t):13,thick=s===7?(pd<5?.35+.0:pd<14?.45+.55*(pd-5)/9:pd<24?1:1-.65*(pd-24)/4):1;endo.scale.set(thick*.8+.2,1,thick*.8+.2);endoM.emissiveIntensity=s===7&&pd<5?.8:.25;
+   mature.scale.setScalar(s===7?.4+.9*cl(pd/13,0,1)*(pd>14?0:1):1);mature.visible=s!==7||pd<14||pd>14.5;
+   /* ovulation: egg leaves follicle and moves along the tube */
+   const q=s===3?((t*.07)%1):s===7?cl((pd-13.5)/3,0,1):0;ovum.visible=s===3||(s===7&&pd>13.4&&pd<17);const k=Math.min(59,Math.floor(q*59));ovum.position.copy(eggPath[s===3||s===7?k:0]);
+   /* sperm swim toward the egg */
+   sperms.forEach((p,i)=>{const sw=s===4?(1-Math.exp(-t*.15)):0,tx=s===1?0:(i===0&&s===4?7.6+.0:6.4+i*.0),x0=-14+i*-.4;const base0=s===1?-6+i*1.6:x0;const tt=s===4?lerp(x0,tx-2.2,cl(((t*.06)%1)*1.6,0,1)):base0;p.g.position.set(s===1?-3.4+i*.0:tt,s===1?(i-2)*1.0:p.g.position.y,s===1?(i%2?-1:1)*(i*.6):p.g.position.z);p.g.rotation.z=sin(t*6+i)*.08;p.g.rotation.y=s===1?0:0;p.g.children.forEach(c_=>{if(c_.userData.part==="tail")c_.rotation.y=sin(t*9+i)*.12})});
+   sperms.forEach((p,i)=>{p.g.visible=s===1||s===4;if(s===1){p.g.position.set(-3.5,(i-2)*1.15,(i%2?-1:1)*(i*.5-.5));p.g.scale.setScalar(i===0?1:.7)}else if(s===4){const ff=cl(((t*.07)%1)*1.4,0,1);p.g.position.set(lerp(-16+i*-1.5,i===0?-.2:-1.4,ff*(i===0?1:.9)),(i-2)*.9*(1-ff*.8),(i%2?-1:1)*(1-ff)*i*.5);p.g.scale.setScalar(.8)}});
+   const fz=s===4?cl(((t*.07)%1)*1.4-.9,0,1):0;nuc2.visible=s===4&&fz>.2;nuc1.position.x=-.2+fz*.5;nuc2.position.x=.9-fz*.8;nuc1.scale.setScalar(1+fz*.3);
+   /* placenta flow */
+   for(let i=0;i<NF;i++){if(s!==6){m4.makeScale(0,0,0)}else{const f=((t*.2+i/NF*2)%1),to=i%2===0,P=cordCur[Math.floor((to?f:1-f)*39)];m4.makeScale(1,1,1);m4.setPosition(P.x+(i%3-1)*.05,P.y+(to?.1:-.1),P.z+(i%2)*.06)}fl.setMatrixAt(i,m4)}fl.instanceMatrix.needsUpdate=!0;
+   fet.scale.setScalar(1+.02*sin(t*2))},
+  predict:{q:"Where does fertilisation normally take place?",opts:[["In the uterus",!1,"The embryo implants in the uterus a few days later."],["In the fallopian tube (oviduct)",!0,"Correct — in the upper part of the tube."],["In the vagina",!1,"Sperm are deposited in the vagina but must swim on."]]}})}
+Q_("ch7/human3d",[["Where are sperm produced?","शुक्राणु कहाँ बनते हैं?",["Epididymis","Testes","Prostate","Vas deferens"],1,"In the seminiferous tubules of the testes."],["Why are the testes outside the body in the scrotum?","वृषण शरीर के बाहर वृषणकोष में क्यों होते हैं?",["For protection","Sperm formation needs a temperature lower than body temperature","To store urine","For hormones only"],1,"About 2–3 °C cooler."],["The release of an egg from the ovary is called…","अंडाशय से अंडाणु निकलना कहलाता है…",["Fertilisation","Ovulation","Implantation","Menstruation"],1,"Near day 14 of the cycle."],["The placenta allows exchange of…","अपरा किसका आदान-प्रदान कराती है?",["Blood of mother and baby","Oxygen, nutrients and wastes (blood does not mix)","Only hormones","Only water"],1,"Materials diffuse across the villi."],["If the egg is not fertilised, what happens to the uterine lining?","यदि अंडाणु निषेचित न हो तो गर्भाशय-परत का क्या होता है?",["It becomes thicker","It is shed as menstruation","It becomes an embryo","It stays"],1,"Menstruation lasts about 2–8 days."]]);
+Px["ch7/human3d"]=[["A human egg is about 0.1 mm — just visible to the naked eye; a sperm is about 0.05 mm long.","मानव अंडाणु लगभग 0.1 mm — नंगी आँख से बस दिखता है; शुक्राणु लगभग 0.05 mm।"],["Identical twins form when one zygote splits in two; fraternal twins come from two separate eggs.","समान जुड़वाँ तब बनते हैं जब एक युग्मनज दो भागों में बँट जाए; असमान जुड़वाँ दो अलग अंडाणुओं से।"]];
+{const Lr=Hi.find(h=>h.no===7).topics,i=Lr.findIndex(x=>x.id==="human");Lr.splice(i<0?Lr.length:i+1,0,{id:"human3d",title:"Human reproduction — detailed 3D",hi:"मानव प्रजनन — विस्तृत 3D",build:Mrepro,ncert:"Ch 7 · reproduction in human beings"})}
 })();
