@@ -22,3 +22,9 @@ Implementation: `tools/guided-module.js` (wrapper; the original models are uncha
 ## Still primitive-built biology (need real/custom meshes, not just steps)
 `ch6/neuron`, `ch6/synapse`, `ch6/reflex`, `ch5/nephron`, `ch7/human`, `ch7/flower`, `ch8/*`, `ix1/division`, `ix2/tissues`, `ix3/human`.
 Kidney and brain meshes in the open atlas are not usable (licence: non-commercial / unstated), so these need hand modelling.
+
+## Custom model sets built so far (hand-modelled, procedural, bilingual, stepwise)
+1. Animal cell (`ix1/cell3d`) · 2. Plant cell (`ix1/plant3d`) + bacterium (`ix1/bacterium3d`) · 3. Atomic models (`ix6/atom3d`)
+4. **Neuron, impulse, synapse, reflex arc (`ch6/neuron3d`)** — myelinated axon with saltatory impulse, Na⁺/K⁺ at a node, magnified synapse with vesicles/receptors/neurotransmitter, reflex arc with relay neuron and contracting muscle.
+Real-mesh topics (BodyParts3D): heart, digestive, eye, elbow joint, lungs.
+Next biology sets, in order: nephron/excretion → human reproduction → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).

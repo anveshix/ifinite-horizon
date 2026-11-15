@@ -1,4 +1,4 @@
-/* ===== Custom model sets 1-3: animal cell, plant cell, bacterium, atomic models (detailed 3D) =====
+/* ===== Custom model sets 1-4: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -344,4 +344,120 @@ function Matom(){sd=31;const n=new Ne;Ge(n,{key:1.8});Je(n,-4.2,13,.1);const g=n
 Q_("ix6/atom3d",[["Who discovered the electron?","इलेक्ट्रॉन की खोज किसने की?",["Rutherford","J. J. Thomson","Bohr","Chadwick"],1,"Thomson, in 1897."],["The nucleus was discovered by…","नाभिक की खोज किसने की?",["Dalton","Rutherford","Bohr","Thomson"],1,"Using the gold-foil experiment."],["Maximum electrons in the L shell:","L कक्षा में अधिकतम इलेक्ट्रॉन:",["2","8","18","32"],1,"K:2, L:8, M:18."],["Sodium has atomic number 11. Its shell arrangement is…","सोडियम का परमाणु क्रमांक 11 है; कक्षा-व्यवस्था:",["2,8,1","2,8,2","2,9","1,8,2"],0,"2 + 8 + 1 = 11."],["Neutrons were discovered by…","न्यूट्रॉन की खोज किसने की?",["Chadwick","Goldstein","Thomson","Bohr"],0,"In 1932."]]);
 Px["ix6/atom3d"]=[["The atom is ~99.999% empty space — if the nucleus were a marble, the electrons would be ~1 km away.","परमाणु लगभग पूरा खाली है — यदि नाभिक कंचा हो तो इलेक्ट्रॉन लगभग 1 किमी दूर होंगे।"],["The colours of fireworks and neon signs are photons from electrons falling to lower shells.","आतिशबाज़ी व नियॉन बोर्ड के रंग निचली कक्षा में गिरते इलेक्ट्रॉनों के फ़ोटॉन हैं।"]];
 {const La=Hj.find(h=>h.kp==="ix6").topics,i=La.findIndex(x=>x.id==="models");La.splice(i<0?La.length:i+1,0,{id:"atom3d",title:"Structure of the atom — detailed 3D",hi:"परमाणु की संरचना — विस्तृत 3D",build:Matom,ncert:"Class IX · structure of the atom"})}
+/* ===================== SET 4: NEURON · IMPULSE · SYNAPSE · REFLEX ARC ===================== */
+const KIND4={
+ soma:["Cell body (soma)","कोशिका काय","The neuron's control centre: it holds the nucleus and makes the proteins the cell needs. Dendrites bring signals to it.","तंत्रिका कोशिका का नियंत्रण केंद्र: केंद्रक व आवश्यक प्रोटीन यहीं; द्रुमिकाएँ संकेत यहाँ लाती हैं।"],
+ nuc4:["Nucleus","केंद्रक","Holds the DNA that directs the neuron's activities.","DNA रखता है जो तंत्रिका कोशिका की क्रियाओं को निर्देशित करता है।"],
+ dend:["Dendrites","द्रुमिकाएँ","Branched, short fibres that receive information from other neurons or from receptors. Tiny spines increase the area for contacts.","छोटी, शाखित तंतुएँ जो अन्य तंत्रिकाओं या ग्राही से सूचना लेती हैं; सूक्ष्म काँटे संपर्क-क्षेत्र बढ़ाते हैं।"],
+ axon:["Axon","तंत्रिकाक्ष (एक्सॉन)","A single long fibre that carries the impulse away from the cell body — up to a metre in the leg.","एक लंबा तंतु जो आवेग को कोशिका काय से दूर ले जाता है — पैर में लगभग एक मीटर तक।"],
+ myelin:["Myelin sheath","माइलिन आवरण","Fatty insulating layer made by Schwann cells. It makes the impulse jump from gap to gap and travel up to 100 m/s.","श्वान कोशिकाओं की वसीय अवरोधी परत; आवेग को अंतराल से अंतराल तक कुदाती है और गति 100 m/s तक पहुँचती है।"],
+ node:["Node of Ranvier","रैन्वियर पर्व","A small uncovered gap between myelin segments where ion channels sit and the impulse is renewed.","माइलिन खंडों के बीच का खुला अंतराल जहाँ आयन-चैनल होते हैं और आवेग नवीकृत होता है।"],
+ term:["Axon terminals","तंत्रिकाक्ष अंत","Branched ends of the axon with swollen knobs (boutons) that contain vesicles of neurotransmitter.","एक्सॉन के शाखित सिरे, फूले बटन (बूटॉन) जिनमें न्यूरोट्रांसमीटर की पुटिकाएँ होती हैं।"],
+ pre:["Pre-synaptic knob","पूर्व-सिनैप्टिक बटन","The end of the sending neuron. An arriving impulse makes vesicles fuse with the membrane and release neurotransmitter.","भेजने वाली तंत्रिका का सिरा; आवेग आने पर पुटिकाएँ झिल्ली से जुड़कर न्यूरोट्रांसमीटर छोड़ती हैं।"],
+ ves4:["Vesicle","पुटिका","A bubble packed with neurotransmitter molecules.","न्यूरोट्रांसमीटर अणुओं से भरी बुलबुले जैसी थैली।"],
+ cleft:["Synaptic cleft","सिनैप्टिक दरार","A gap of about 20 nm. The chemical signal must cross it by diffusion — electricity cannot jump here.","लगभग 20 nm की दरार; रासायनिक संकेत को विसरण से पार करना पड़ता है — यहाँ विद्युत नहीं कूद सकती।"],
+ post:["Post-synaptic membrane","पश्च-सिनैप्टिक झिल्ली","The receiving cell's membrane, with receptor proteins that fit the neurotransmitter like a key in a lock.","ग्राही कोशिका की झिल्ली; ग्राही प्रोटीन न्यूरोट्रांसमीटर को ताले-चाबी की तरह पकड़ते हैं।"],
+ nt:["Neurotransmitter","न्यूरोट्रांसमीटर","Chemical messenger (e.g. acetylcholine) that carries the signal across the cleft.","रासायनिक संदेशवाहक (जैसे ऐसीटिलकोलीन) जो दरार पार संकेत ले जाता है।"],
+ rec:["Receptor protein","ग्राही प्रोटीन","Binds the neurotransmitter and opens a channel, starting a new impulse in the next cell.","न्यूरोट्रांसमीटर को बाँधकर चैनल खोलता है और अगली कोशिका में नया आवेग शुरू करता है।"],
+ skin:["Receptor (skin)","ग्राही (त्वचा)","Sense organ that detects the stimulus (heat, touch, pain) and starts a nerve impulse.","संवेदी अंग जो उद्दीपन (ऊष्मा, स्पर्श, पीड़ा) पहचानकर तंत्रिका आवेग शुरू करता है।"],
+ sens:["Sensory neuron","संवेदी तंत्रिका","Carries the impulse from the receptor to the spinal cord.","आवेग को ग्राही से मेरुरज्जु तक ले जाती है।"],
+ cord:["Spinal cord (relay)","मेरुरज्जु (रिले)","Grey matter where the relay neuron connects the sensory neuron to the motor neuron — the reflex is decided here, without waiting for the brain.","धूसर पदार्थ जहाँ रिले तंत्रिका संवेदी को प्रेरक से जोड़ती है — प्रतिवर्त यहीं तय होता है, मस्तिष्क की प्रतीक्षा किए बिना।"],
+ motor:["Motor neuron","प्रेरक तंत्रिका","Carries the command from the spinal cord to the muscle.","आदेश को मेरुरज्जु से पेशी तक ले जाती है।"],
+ musc:["Effector (muscle)","प्रभावक (पेशी)","The muscle contracts and pulls the hand away.","पेशी सिकुड़ती है और हाथ को खींच लेती है।"]};
+const N_ST=[
+["1","The neuron: the cell of the nervous system","न्यूरॉन: तंत्रिका तंत्र की कोशिका","A neuron has a cell body, many short dendrites and one long axon ending in terminals. Nothing else in the body is so specialised for carrying messages.","न्यूरॉन में कोशिका काय, अनेक छोटी द्रुमिकाएँ और एक लंबा एक्सॉन होता है जो अंत-शाखाओं में समाप्त होता है; संदेश ढोने के लिए इतनी विशिष्ट कोई और कोशिका नहीं।","Artistic model",9],
+["2","Dendrites receive, the axon sends","द्रुमिकाएँ लेती हैं, एक्सॉन भेजता है","Information enters through the dendrites, passes through the cell body and leaves along the axon: dendrite → cell body → axon → terminal. The impulse is electrical here.","सूचना द्रुमिकाओं से आती है, कोशिका काय से गुज़रती है और एक्सॉन से बाहर जाती है: द्रुमिका → कोशिका काय → एक्सॉन → अंत। यहाँ आवेग विद्युत है।","Animated (schematic)",10],
+["3","Myelin and the jumping impulse","माइलिन व कूदता आवेग","Myelin insulates the axon. The impulse jumps from one node of Ranvier to the next (saltatory conduction), which is much faster than creeping along a bare fibre.","माइलिन एक्सॉन को ढकता है; आवेग एक रैन्वियर पर्व से अगले पर कूदता है (लवणीय चालन), जो नंगे तंतु पर रेंगने से कहीं तेज़ है।","Animated · speed exaggerated",11],
+["4","What happens at a node","पर्व पर क्या होता है","At a node, sodium ions rush IN and the membrane flips from −70 mV to about +30 mV; then potassium ions flow OUT and it resets. This wave of change is the action potential.","पर्व पर Na⁺ आयन तेज़ी से अंदर आते हैं और झिल्ली −70 mV से लगभग +30 mV हो जाती है; फिर K⁺ बाहर बहते हैं और पुनः स्थापित होती है — यही क्रिया-विभव है।","Animated · schematic (ions not to scale)",11],
+["5","The synapse: a chemical bridge","सिनैप्स: रासायनिक पुल","The impulse reaches the knob; vesicles release neurotransmitter into the 20 nm gap; it binds receptors on the next cell and starts a new impulse. The signal goes one way only.","आवेग बटन तक पहुँचता है; पुटिकाएँ 20 nm दरार में न्यूरोट्रांसमीटर छोड़ती हैं; वह अगली कोशिका के ग्राहियों से जुड़कर नया आवेग शुरू करता है; संकेत केवल एक दिशा में जाता है।","Animated · magnified (not to scale)",13],
+["6","Reflex arc: the fast shortcut","प्रतिवर्त चाप: तेज़ छोटा रास्ता","Touch something hot: receptor → sensory neuron → spinal cord (relay) → motor neuron → muscle. The hand moves away before the brain even feels the pain.","गर्म वस्तु छूते ही: ग्राही → संवेदी तंत्रिका → मेरुरज्जु (रिले) → प्रेरक तंत्रिका → पेशी; मस्तिष्क को दर्द महसूस होने से पहले ही हाथ हट जाता है।","Animated · schematic",13]];
+function Mneuron(){sd=41;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,40,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const SY=[18,0,0],RF=[0,-13,0];
+ const syn=new J;syn.position.set(...SY);g.add(syn);const ref=new J;ref.position.set(...RF);g.add(ref);
+ const warm=MAT(0xe8844f,{roughness:.5,clearcoat:.4,bumpScale:.3,opacity:.97,sheen:.2,sheenC:0xffd0b0,emissive:0x5a2008,emissiveIntensity:.18});
+ /* soma */
+ add("soma",sph(1.15,.09,1.6,1.05,1,1,48,64,2),warm,[-6,0,0]);
+ add("nuc4",sph(.58,.04,2,1,1,1,32,40,4),MAT(0x7a83d6,{roughness:.35,clearcoat:.7,opacity:.9,emissive:0x1b2160,emissiveIntensity:.25}),[-6.05,0,0]);
+ add("nuc4",sph(.2,.1,3,1,1,1,16,20,6),MAT(0x40206b,{roughness:.6,emissive:0x1d0a33,emissiveIntensity:.3}),[-5.9,.1,.2],{ns:1});
+ /* dendritic trees with spines */
+ const segs=[];const dend=(base,dir,len,r,depth)=>{const pts=[base.clone()];let p=base.clone(),d=dir.clone();for(let i=0;i<4;i++){d.add(c(R()-.5,R()-.5,R()-.5).multiplyScalar(.55)).normalize();p=p.clone().add(d.clone().multiplyScalar(len/4));pts.push(p)}segs.push({pts,r});
+  if(depth>0)for(let k=0;k<2;k++)dend(p,d.clone().add(c(R()-.5,R()-.5,R()-.5).multiplyScalar(1.3)).normalize(),len*.72,r*.7,depth-1)};
+ [[-1,.7,.4],[-1,-.6,.7],[-.7,1,-.3],[-.8,-1,-.2],[-.5,.2,1],[-.4,-.1,-1],[-1,.1,-.9]].forEach(d=>dend(c(-6+d[0]*.9,d[1]*.8,d[2]*.8),c(d[0],d[1],d[2]).normalize(),1.9,.2,2));
+ const spM=MAT(0xf7b894,{roughness:.5,opacity:1});
+ segs.forEach(s=>{add("dend",tube(s.pts,s.r,8,u=>1-.55*u),warm,[0,0,0],{ns:1});if(s.r<.12)for(let k=0;k<5;k++){const q=s.pts[1+(k%3)].clone().lerp(s.pts[2+(k%2)],R());add("dend",sph(.05,0,1,1,1,1,8,10),spM,[q.x+(R()-.5)*.18,q.y+(R()-.5)*.18,q.z+(R()-.5)*.18],{ns:1})}});
+ /* axon hillock + axon */
+ const axM=MAT(0xf3df9a,{roughness:.4,clearcoat:.6,emissive:0x4a3a08,emissiveIntensity:.2,bumpScale:.15});
+ add("axon",tube([c(-5,0,0),c(-4.6,0,0),c(-3.8,0,0)],.5,12,u=>1-.7*u),warm,[0,0,0],{ns:1});
+ add("axon",tube([c(-4.4,0,0),c(0,0,0),c(4,0,0),c(6.7,0,0)],.15,10),axM,[0,0,0],{ns:1});
+ /* myelin sheaths (Schwann cells) */
+ const myM=MAT(0xfff1c8,{roughness:.22,clearcoat:.9,clearcoatRoughness:.15,sheen:.5,emissive:0x3a2c08,emissiveIntensity:.18,bumpScale:.3,opacity:.97});const XN=[];
+ for(let i=0;i<7;i++){const x0=-4.3+i*1.6,L=1.35;add("myelin",param(26,44,(u,v)=>{const x=(u-.5)*L,a=v*TAU,pr=Math.pow(sin(u*PI),.28),k=.38*pr*(1+.04*fbm(u*3+i,v*3,i))+.02;return[x,cos(a)*k,sin(a)*k]}),myM,[x0+L/2,0,0],{ns:1});if(i<6)XN.push(x0+L+.1)}
+ /* nodes: tiny glowing rings */
+ const nodeM=MAT(0x9fd3ff,{roughness:.3,emissive:0x2a6ac0,emissiveIntensity:.5,opacity:.95});XN.forEach(x=>add("node",torus(.17,.045),nodeM,[x,0,0],{rot:[0,0,PI/2],ns:1}));
+ /* terminals + boutons */
+ const boM=MAT(0xf5c26b,{roughness:.35,clearcoat:.7,emissive:0x5a3a08,emissiveIntensity:.25});
+ [[1.2,.9,.4],[1.5,.2,1],[1.4,-.6,.6],[1.6,-.9,-.3],[1.3,.4,-.9]].forEach((e,i)=>{add("term",tube([c(6.7,0,0),c(7.2,e[1]*.4,e[2]*.4),c(7.7+e[0]*.15,e[1]*.9,e[2]*.9)],.09,8),axM,[0,0,0],{ns:1});add("term",sph(.3,.06,2,1,1,1,16,20,i),boM,[7.8+e[0]*.15,e[1]*.9,e[2]*.9])});
+ /* ---- synapse (magnified) ---- */
+ const preM=MAT(0xf0a63a,{roughness:.3,clearcoat:.7,opacity:.3,sheen:0,emissive:0x5a3a08,emissiveIntensity:.15,depthWrite:!1});
+ add("pre",sph(2.4,.04,1.2,1,.95,1,44,60,3),preM,[-3,0,0],{parent:syn,ns:1});
+ const vesM=MAT(0x3fb6a8,{roughness:.25,clearcoat:1,opacity:.95,emissive:0x0a4a44,emissiveIntensity:.35});const vs=[];
+ for(let i=0;i<14;i++){const a=i*2.399963,y=(i%5-2)*.55,z=Math.sin(a)*1.4,x=-1.6-(i%3)*.55+(i<4?.35:0);const m=add("ves4",sph(.27,.04,2,1,1,1,16,20,i),vesM,[x,y,z],{parent:syn,ns:1});vs.push({m,x,y,z,dock:i<5})}
+ add("ves4",sph(.5,0,1,1.6,.7,.7,18,24),MAT(0xd9732b,{roughness:.5,opacity:.8,emissive:0x5a2200,emissiveIntensity:.2}),[-3.6,-1.2,.4],{parent:syn,ns:1}); /* mitochondrion */
+ const postM=MAT(0xe08a8a,{roughness:.5,clearcoat:.5,opacity:.9,sheen:.3,emissive:0x4a1010,emissiveIntensity:.15,bumpScale:.25});
+ add("post",param(36,36,(u,v)=>{const y=(u-.5)*7,z=(v-.5)*7,x=1.1+.5*Math.cos(Math.hypot(y,z)*.45)+.18*fbm(y*.4,z*.4,2);return[x,y,z]}),postM,[0,0,0],{parent:syn,ns:1});
+ add("cleft",param(2,2,(u,v)=>[.55,(u-.5)*5.4,(v-.5)*5.4]),MAT(0xbfe4ff,{opacity:.12,roughness:.1,depthWrite:!1,sheen:0}),[0,0,0],{parent:syn,ns:1});
+ const recM=MAT(0x3b6fd6,{roughness:.35,clearcoat:.7,emissive:0x0a2a7a,emissiveIntensity:.35});const recs=[];
+ for(let i=0;i<12;i++){const a=i*2.399963,rr=.5+2.3*Math.sqrt(i/12),y=Math.cos(a)*rr,z=Math.sin(a)*rr,x=1.1+.5*Math.cos(Math.hypot(y,z)*.45)-.05;
+  add("rec",tube([c(x+.05,y,z),c(x-.2,y,z)],.07,6),recM,[0,0,0],{parent:syn,ns:1});add("rec",sph(.16,0,1,.8,1,1,12,14),recM,[x-.3,y,z],{parent:syn,ns:1});recs.push([x-.3,y,z])}
+ const NN=48,nt=new Wn(new it(.065,8,6),new bt({color:0xffe45e}),NN);nt.frustumCulled=!1;syn.add(nt);const m4=new gt;const nts=[];for(let i=0;i<NN;i++)nts.push({o:R(),v:recs[i%recs.length],v0:vs[i%vs.length]});
+ /* ---- reflex arc ---- */
+ const skinM=MAT(0xf1c9a5,{roughness:.55,clearcoat:.2,bumpScale:.3,opacity:.95});
+ add("skin",param(24,24,(u,v)=>[-9.5+u*3,-.5+.12*Math.sin(u*14)+.1*fbm(u*6,v*4,1),(v-.5)*2.4]),skinM,[0,0,0],{parent:ref,ns:1});
+ add("skin",sph(.2,.05,3,1,.6,1,14,18),MAT(0xff7a6a,{emissive:0x7a1a10,emissiveIntensity:.4,roughness:.4}),[-8,-.3,0],{parent:ref,ns:1});
+ const sensP=[c(-8,-.2,0),c(-6.5,.2,.1),c(-4.5,.1,.5),c(-2.6,.3,.4),c(-1.6,.5,.2)],motP=[c(1.4,.5,.2),c(2.8,.2,.5),c(4.6,.4,.3),c(6.2,.2,0),c(7.4,0,0)];
+ const sensM=MAT(0x6fb6ff,{roughness:.4,clearcoat:.6,emissive:0x0a2a6a,emissiveIntensity:.35}),motM=MAT(0xff8a6a,{roughness:.4,clearcoat:.6,emissive:0x6a1a0a,emissiveIntensity:.3}),relM=MAT(0xd6a8ff,{roughness:.4,clearcoat:.6,emissive:0x3a1a6a,emissiveIntensity:.3});
+ add("sens",tube(sensP,.1,8),sensM,[0,0,0],{parent:ref,ns:1});add("sens",sph(.35,.05,2,1,1,1,16,20),sensM,[-3.6,.3,.5],{parent:ref,ns:1});
+ add("motor",tube(motP,.1,8),motM,[0,0,0],{parent:ref,ns:1});add("motor",sph(.4,.05,2,1,1,1,16,20),motM,[1.9,.3,.3],{parent:ref,ns:1});
+ const cordM=MAT(0xf1e9d8,{roughness:.55,clearcoat:.2,opacity:.28,depthWrite:!1,bumpScale:.2}),grayM=MAT(0x7d7a74,{roughness:.6,opacity:.95,bumpScale:.2});
+ add("cord",sph(2.2,.03,1.5,1,1.05,.7,40,52,5),cordM,[0,0,0],{parent:ref,ns:1});[[-.5,.55],[.5,.55],[-.5,-.55],[.5,-.55]].forEach(q=>add("cord",sph(.75,.04,2,.9,.9,.7,20,26),grayM,[q[0],q[1],0],{parent:ref,ns:1}));
+ add("cord",tube([c(-1.5,.5,0),c(-.4,.4,.2),c(.4,.4,.2),c(1.4,.5,.2)],.09,8),relM,[0,0,0],{parent:ref,ns:1});add("cord",sph(.3,.05,2,1,1,1,14,18),relM,[0,.5,.25],{parent:ref,ns:1});
+ const musc=add("musc",sph(1,.03,2,1.6,.55,.55,28,36),MAT(0xb23838,{roughness:.4,clearcoat:.5,sheen:.7,sheenC:0xff9a8a,bumpScale:.5}),[8.6,0,0],{parent:ref});
+ /* impulse pulses */
+ const pulseM=new bt({color:0xfff7a0}),halo=new bt({color:0xffd54f,transparent:!0,opacity:.35});
+ const mkPulse=(par)=>{const a=new N(new it(.2,14,12),pulseM),b=new N(new it(.42,14,12),halo);a.add(b);par.add(a);a.visible=!1;return a};
+ const pAx=mkPulse(g),pRef=mkPulse(ref);
+ const refPath=new It([...sensP,c(-.8,.5,.2),c(0,.5,.25),c(.8,.5,.2),...motP]).getPoints(90);
+ /* ions at a node */
+ const NI=32,ions=new Wn(new it(.045,8,6),new bt({color:0xffffff}),NI);ions.frustumCulled=!1;g.add(ions);const ic=new we;for(let i=0;i<NI;i++)ions.setColorAt(i,ic.setHex(i%2?0xff9f43:0xb36bff));
+ const nx0=XN[1];
+ const cams=[[c(.8,1.6,21),c(.8,-1.4,0)],[c(-6.4,2.2,9.2),c(-6,0,0)],[c(0,2.2,11),c(0,0,0)],[c(nx0+.2,1.4,4.8),c(nx0,0,0)],[c(SY[0]-.5,2.4,11),c(SY[0],0,0)],[c(0,RF[1]+2,20),c(0,RF[1],0)]];
+ const camK=["Neuron","Dendrites","Axon","Node","Synapse","Reflex arc"];
+ const mine={soma:0,nuc4:0,dend:0,axon:0,myelin:0,node:0,term:0},S4=[...Object.keys(mine)];
+ const show={};const fr=(ids,on)=>ids.forEach(i=>show[i]=on);
+ const NEU=["soma","nuc4","dend","axon","myelin","node","term"],SYN=["pre","ves4","post","cleft","rec"],REF=["skin","sens","cord","motor","musc"];
+ [...NEU,...SYN,...REF].forEach(i=>show[i]=[0,0,0,0,0,0]);
+ NEU.forEach(i=>{for(let s=0;s<4;s++)show[i][s]=1});SYN.forEach(i=>show[i][4]=1);REF.forEach(i=>show[i][5]=1);show.soma[4]=0;
+ const base={soma:.96,nuc4:.9,dend:.96,axon:1,myelin:.97,node:.95,term:1,pre:.3,ves4:.95,post:.9,cleft:.12,rec:1,skin:.95,sens:1,cord:.28,motor:1,musc:1};
+ const L=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["n-so","Cell body (soma)","कोशिका काय",L(g,[-6,1.2,0]),[0,1]],["n-nu","Nucleus","केंद्रक",L(g,[-6,0,.6]),[0,1]],["n-de","Dendrites (receive)","द्रुमिकाएँ (ग्रहण)",L(g,[-7.6,1.6,.5]),[0,1]],["n-ax","Axon (carries away)","एक्सॉन (दूर ले जाता)",L(g,[0,.2,0]),[0,1,2]],["n-my","Myelin sheath","माइलिन आवरण",L(g,[-.9,.5,0]),[0,2]],["n-no","Node of Ranvier","रैन्वियर पर्व",L(g,[XN[1],.2,0]),[2,3]],["n-te","Axon terminals","एक्सॉन अंत",L(g,[8.2,.9,.4]),[0,4]],["n-dir","Impulse direction →","आवेग की दिशा →",L(g,[-2,1.6,0]),[1,2]],
+  ["n-na","Na⁺ in (depolarise)","Na⁺ अंदर (विध्रुवण)",L(g,[nx0-.3,.9,0]),[3]],["n-k","K⁺ out (repolarise)","K⁺ बाहर (पुनर्ध्रुवण)",L(g,[nx0+.3,-.9,0]),[3]],["n-ap","Action potential −70 → +30 mV","क्रिया-विभव −70 → +30 mV",L(g,[nx0,1.5,0]),[3]],
+  ["s-pr","Pre-synaptic knob","पूर्व-सिनैप्टिक बटन",L(syn,[-3,2.4,0]),[4]],["s-ve","Vesicles with neurotransmitter","पुटिकाएँ (न्यूरोट्रांसमीटर)",L(syn,[-1.8,.55,1.4]),[4]],["s-cl","Synaptic cleft (~20 nm)","सिनैप्टिक दरार",L(syn,[.55,2.4,0]),[4]],["s-po","Post-synaptic membrane","पश्च-सिनैप्टिक झिल्ली",L(syn,[1.3,-2.5,1]),[4]],["s-re","Receptors","ग्राही",L(syn,[.8,.9,.6]),[4]],["s-nt","Neurotransmitter crossing","न्यूरोट्रांसमीटर पार जाता",L(syn,[.5,-.5,.5]),[4]],
+  ["r-sk","Receptor (skin) — hot!","ग्राही (त्वचा) — गर्म!",L(ref,[-8,.7,0]),[5]],["r-se","Sensory neuron →","संवेदी तंत्रिका →",L(ref,[-4.6,.9,.5]),[5]],["r-sp","Spinal cord (relay neuron)","मेरुरज्जु (रिले तंत्रिका)",L(ref,[0,1.7,.2]),[5]],["r-mo","→ Motor neuron","→ प्रेरक तंत्रिका",L(ref,[4.5,.9,.3]),[5]],["r-mu","Effector: muscle contracts","प्रभावक: पेशी सिकुड़ती",L(ref,[8.6,1.1,0]),[5]]];
+ return run({n,g,org,show,base,ST:N_ST,cams,camK,labels,
+  frame:(s,t)=>{g.rotation.y=0;const f=(t*.13)%1;
+   /* axon pulse: hops node to node */
+   pAx.visible=s===1||s===2||s===3;if(pAx.visible){const pts=[-5.2,...XN,6.7],k=Math.floor(f*(pts.length-1)),q=f*(pts.length-1)-k,e=q<.35?q/.35:1,x=pts[k]+(pts[k+1]-pts[k])*(s===1?q:e*e*(3-2*e));pAx.position.set(x,0,0);pAx.scale.setScalar(1+.3*sin(t*14))}
+   /* nodes flash as the pulse passes */
+   org.forEach(o=>{if(o.id==="node"){const nx=o.m.position.x,near=pAx.visible&&Math.abs(pAx.position.x-nx)<.7;o.mat.emissiveIntensity=near?1.6:.5}});
+   /* ions */
+   for(let i=0;i<NI;i++){if(s!==3){m4.makeScale(0,0,0);ions.setMatrixAt(i,m4);continue}const na=i%2===0,q=((t*.5+i*.137)%1),side=(i>>1)%2?1:-1;const inn=na?q:1-q;const y=.2+(1-inn)*.9,z=((i*.31)%1-.5)*.5;m4.makeScale(1,1,1);m4.setPosition(nx0+(i%7-3)*.1+side*.05,na?y*(1):-.2-(1-q)*.0-(q*.9)+(q<.5?0:0),z);ions.setMatrixAt(i,m4)}ions.instanceMatrix.needsUpdate=!0;
+   /* synapse vesicles dock/burst + transmitter */
+   vs.forEach((v,i)=>{const rel=s===4?((t*.35+i*.07)%1):0;v.m.position.x=v.dock?v.x+(rel>.5?.6*(rel-.5)*2:0):v.x+.05*sin(t+i);v.m.scale.setScalar(v.dock&&rel>.55?Math.max(.3,1-(rel-.55)*2):1)});
+   for(let i=0;i<NN;i++){const a=nts[i];if(s!==4){m4.makeScale(0,0,0);nt.setMatrixAt(i,m4);continue}const q=((t*.3+a.o)%1),st=q<.15?0:(q-.15)/.85,p0=a.v0,p1=a.v;const x=lerp(p0.x+.3,p1[0]-.2,Math.min(1,st*1.2)),y=lerp(p0.y,p1[1],st)+.08*sin(t*5+i),z=lerp(p0.z,p1[2],st);m4.makeScale(st>.02?1:0,st>.02?1:0,st>.02?1:0);m4.setPosition(x,y,z);nt.setMatrixAt(i,m4)}nt.instanceMatrix.needsUpdate=!0;
+   /* reflex pulse + muscle */
+   pRef.visible=s===5;if(pRef.visible){const k=Math.min(refPath.length-1,Math.floor(f*1.15*refPath.length)),p=refPath[k];pRef.position.copy(p);pRef.scale.setScalar(1+.3*sin(t*14));musc.scale.set(f*1.15>.92?.82:1,f*1.15>.92?1.35:1,f*1.15>.92?1.35:1)}else musc.scale.set(1,1,1)},
+  predict:{q:"Why can the impulse travel faster along a myelinated axon?",opts:[["It jumps between the nodes of Ranvier",!0,"Correct — saltatory conduction skips the insulated parts."],["The axon is thicker",!1,"Thickness helps a little, but myelin is the main reason."],["Myelin makes electrons move",!1,"The impulse is a wave of ion movement, not a flow of electrons."]]}})}
+Q_("ch6/neuron3d",[["Which part of a neuron receives information?","तंत्रिका कोशिका का कौन-सा भाग सूचना ग्रहण करता है?",["Axon","Dendrites","Myelin sheath","Axon terminal"],1,"Dendrites receive; the axon sends."],["What is the function of the myelin sheath?","माइलिन आवरण का कार्य?",["Makes proteins","Speeds up the impulse by insulating the axon","Stores neurotransmitter","Receives signals"],1,"Impulses jump between nodes."],["At a synapse the signal crosses the gap as…","सिनैप्स में संकेत दरार पार करता है…",["Electric current","Chemical neurotransmitter","Light","Sound"],1,"A chemical messenger diffuses across."],["Which is the correct reflex arc?","सही प्रतिवर्त चाप कौन-सा है?",["Receptor→sensory→relay→motor→effector","Brain→muscle→skin","Muscle→sensory→skin","Effector→relay→receptor"],0,"The path avoids the brain for speed."],["Which neuron carries the signal from the spinal cord to the muscle?","मेरुरज्जु से पेशी तक संकेत कौन-सी तंत्रिका ले जाती है?",["Sensory","Relay","Motor","None"],2,"Motor neurons carry commands to effectors."]]);
+Px["ch6/neuron3d"]=[["Touching a hot pan: your hand pulls back in about 0.05 s — before the pain reaches your brain.","गर्म बर्तन छूते ही हाथ लगभग 0.05 s में हट जाता है — दर्द मस्तिष्क तक पहुँचने से पहले।"],["Some neurons in your leg are about 1 m long — the longest cells in the body.","पैर की कुछ तंत्रिका कोशिकाएँ लगभग 1 m लंबी होती हैं — शरीर की सबसे लंबी कोशिकाएँ।"]];
+{const Ln=Hi.find(h=>h.no===6).topics,i=Ln.findIndex(x=>x.id==="neuron");Ln.splice(i<0?Ln.length:i+1,0,{id:"neuron3d",title:"Neuron, synapse & reflex arc — detailed 3D",hi:"न्यूरॉन, सिनैप्स व प्रतिवर्त चाप — विस्तृत 3D",build:Mneuron,ncert:"Ch 6 · control and coordination"})}
 })();
