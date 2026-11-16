@@ -25,10 +25,10 @@ G("ch1/displacement",[
 ["Particle view","कण-दृश्य","Iron atoms lose electrons and go into solution as Fe²⁺; copper ions gain electrons and deposit as atoms — one atom swaps for another.","लोहे के परमाणु इलेक्ट्रॉन खोकर Fe²⁺ बनते हैं; ताँबे के आयन इलेक्ट्रॉन पाकर परमाणु बनते हैं — एक परमाणु दूसरे का स्थान लेता है।",{},10]]);
 G("ch2/indicators",[
 ["What is an indicator?","सूचक क्या है?","An indicator is a substance that changes colour in acid or base. Natural ones: litmus, turmeric; synthetic: phenolphthalein, methyl orange.","सूचक वह पदार्थ है जो अम्ल या क्षार में रंग बदलता है; प्राकृतिक: लिटमस, हल्दी; संश्लेषित: फ़िनॉल्फ़थैलीन, मेथिल ऑरेंज।",{},9],
-["Litmus paper","लिटमस पत्र","Blue litmus turns red in acid; red litmus turns blue in base. Choose a litmus and tap acid and base.","नीला लिटमस अम्ल में लाल, लाल लिटमस क्षार में नीला होता है; लिटमस चुनकर अम्ल व क्षार पर टैप कीजिए।",{click:["Blue litmus paper"]},11],
-["Turmeric","हल्दी","Turmeric stays yellow in acid and turns red-brown in base — which is why soap stains on a yellow dress turn reddish.","हल्दी अम्ल में पीली रहती और क्षार में लाल-भूरी हो जाती है — इसीलिए पीले कपड़े पर साबुन का दाग लाल दिखता है।",{click:["Turmeric paper"]},11],
-["Phenolphthalein","फ़िनॉल्फ़थैलीन","Colourless in acid, pink in base.","अम्ल में रंगहीन, क्षार में गुलाबी।",{click:["Phenolphthalein"]},10],
-["Methyl orange","मेथिल ऑरेंज","Red in acid, yellow in base.","अम्ल में लाल, क्षार में पीला।",{click:["Methyl orange"]},10],
+["Litmus paper","लिटमस पत्र","Blue litmus turns red in acid; red litmus turns blue in base. The test below is done for you: watch both beakers.","नीला लिटमस अम्ल में लाल, लाल लिटमस क्षार में नीला होता है; लिटमस चुनकर अम्ल व क्षार पर टैप कीजिए।",{click:["Blue litmus paper","Test both"]},11],
+["Turmeric","हल्दी","Turmeric stays yellow in acid and turns red-brown in base — which is why soap stains on a yellow dress turn reddish.","हल्दी अम्ल में पीली रहती और क्षार में लाल-भूरी हो जाती है — इसीलिए पीले कपड़े पर साबुन का दाग लाल दिखता है।",{click:["Turmeric paper","Test both"]},11],
+["Phenolphthalein","फ़िनॉल्फ़थैलीन","Colourless in acid, pink in base.","अम्ल में रंगहीन, क्षार में गुलाबी।",{click:["Phenolphthalein","Test both"]},10],
+["Methyl orange","मेथिल ऑरेंज","Red in acid, yellow in base.","अम्ल में लाल, क्षार में पीला।",{click:["Methyl orange","Test both"]},10],
 ["Test them all","सबको परखिए","Compare all indicators on both beakers and complete the table.","सभी सूचकों को दोनों बीकरों पर आज़माकर तालिका पूरी कीजिए।",{click:["Test both"]},10]]);
 G("ch2/neutralisation",[
 ["Acid + base → salt + water","अम्ल + क्षार → लवण + जल","NaOH + HCl → NaCl + H₂O. Here a base with phenolphthalein is pink. We add HCl drop by drop.","NaOH + HCl → NaCl + H₂O; फ़िनॉल्फ़थैलीन वाला क्षार गुलाबी है; HCl बूँद-बूँद मिलाएँगे।",{click:["Reset"]},9],
