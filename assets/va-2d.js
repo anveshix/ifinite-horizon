@@ -106,7 +106,7 @@ stage.appendChild(ov);
 const T=$("#v2dTitle"),chips=$("#v2dChips"),note=$("#v2dNote"),wrap=$("#v2dWrap"),img=$("#v2dImg"),empty=$("#v2dEmpty"),loadEl=$("#v2dLoad"),desc=$("#v2dDesc"),all=$("#v2dAll"),labBtn=$("#v2dLab"),body=$("#v2dBody"),call=$("#v2dCall"),legend=$("#v2dLegend"),lines=$("#v2dLines");
 all.innerHTML=`<option value="">🖼 All 2D images (${Object.values(DATA).reduce((n,g)=>n+Object.keys(g).length,0)})…</option>`+GROUPS.map(([g,n])=>`<optgroup label="${esc(n)}">${Object.entries(DATA[g]).map(([k,v])=>`<option value="${g}/${k}">${esc(v.title)}</option>`).join("")}</optgroup>`).join("");
 
-let view="3d",cur=null,list=[],lastKey=null,preferId=null,inited=false,showAll=LS.get("va.2dlabels2")!=="tap";
+let view="3d",cur=null,list=[],lastKey=null,preferId=null,inited=false,showAll=LS.get("va.2dlabels2")==="all";
 const get=id=>{const i=id.lastIndexOf("/"),g=id.slice(0,i),v=DATA[g]&&DATA[g][id.slice(i+1)];return v?{id,g,...v}:null};
 function forKey(k){if(!k)return{ids:[],rel:false};if(MAP[k])return{ids:MAP[k],rel:false};
  const ch=k.split("/")[0]+"/",ids=[...new Set(Object.keys(MAP).filter(x=>x.startsWith(ch)).flatMap(x=>MAP[x]))];return{ids,rel:true}}
