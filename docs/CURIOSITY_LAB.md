@@ -1,6 +1,6 @@
 # Curiosity Lab — 3D Simulator & Visual Knowledge Check
 
-Status: **Phase 1 (scaffold) and Phase 2 (four 3D labs + question generators) done.** Phases 3–4 add the quiz UI / effects and the wiring (see plan below).
+Status: **Phases 1–3 done** (scaffold, four 3D labs + question generators, Knowledge check with the gamification layer). Phase 4 = final wiring into the atlas's own progress and an end-to-end pass (see plan below).
 
 ## Phase 1 scan — what the codebase is
 | Finding | Consequence for the Curiosity Lab |
@@ -24,9 +24,11 @@ assets/curiosity/
   labs/models.js                pure physics (lens, circuit, F = ma, pendulum) — one source of truth for 3D, 2D and marking
   labs/kit.js                   Three.js stage + orbit camera, sliders, facts panel, sprites, 2D drawing, question helpers
   labs/lens.js ohm.js force.js energy.js   the four simulators
-  quiz/                         (Phase 3)  visual questions + dopamine effects
+  quiz/quiz.js                  round builder + Knowledge-check UI (XP, streaks, 50:50, results, review → simulator)
+  quiz/fx.js                    effects: canvas confetti / fireworks / rain, glowing floating text, CSS shake, flash, vibration, optional sounds
 tests/curiosity.js              Playwright: launcher, shell, core.js
 tests/curiosity-labs.js         Playwright: all four labs (render, sliders, physics values, run/pause, dispose, phone layout)
+tests/curiosity-quiz.js         Playwright: shake / vibrate / confetti pixels / XP / streak banner / level-up / 50:50 / keyboard / summary maths / reduced motion / phone
 tests/curiosity-physics.mjs     node: physics models vs NCERT results (180 checks)
 tests/curiosity-questions.mjs   node: every question generator vs an independent re-derivation (≈42 000 checks)
 ```
@@ -59,7 +61,13 @@ A **question** is `{ id, kind: "name"|"predict", prompt, image: {vars, focus?}|n
 
 **Correctness guard:** `tests/curiosity-questions.mjs` re-derives every answer without the lab's own code (ray-geometry intersection instead of the lens formula, F·t for momentum, V/R series/parallel by hand…). It caught a real bug while the labs were being written — "predict" questions about changing one resistor in a series/parallel circuit marked "stays the same" as correct — which is why those questions now change *all* resistors together or the voltage.
 
+## Knowledge check (Phase 3)
+* A **round** = up to 8 questions from the lab's generators, built from the values the student explored; first one is always a "perfect name" question; options are shuffled; duplicates removed.
+* **Rewards** — right: green glow + pulse, confetti from the chosen option (bigger with the streak), floating `+XP`, ⚡ speed bonus (+5 ≤ 6 s, +2 ≤ 12 s), streak flame that glows from 3, full-screen banners at streaks 3 / 5 / 7 / 10 (and every 5 after) with fireworks, **LEVEL UP** screen, perfect-round confetti rain. Wrong: CSS haptic **shake**, red vignette flash, `navigator.vibrate`, the right answer revealed with a bilingual explanation, streak-lost notice. 50 : 50 lifeline (once per round, forfeits the speed bonus).
+* **Learning loop** — every answer offers *Show me in the simulator* (puts the lab in exactly the state the question was about); the results screen lists the missed questions with the same button.
+* **Respect** — `prefers-reduced-motion` turns off shake / confetti / banners (colour + glow feedback stays); sounds are **off by default** (toggle persists); keyboard: `1–5` answer, `Enter` next; radiogroup semantics, `aria-live` feedback, focus moves to *Next*.
+
 ## Plan
 * **Phase 2 ✓** — the four Three.js labs above, NCERT-only maths.
-* **Phase 3** — visual MCQ engine + effects: canvas confetti, glowing text, streak flames, CSS haptic shake + `navigator.vibrate`, sound-free by default (respects reduced-motion).
+* **Phase 3 ✓** — Knowledge check + effects (above).
 * **Phase 4** — questions generated from the student's own explored values; wiring to `store`, XP and the atlas progress; integration test over every lab.

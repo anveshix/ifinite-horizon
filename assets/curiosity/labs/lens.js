@@ -19,7 +19,7 @@ const view = v => lens({ u: v.u, f: v.f, type: v.type });
 /* ---------------------------------------------------------------- 2D ray diagram (used for the quiz) */
 function snapshot(canvas, vars, focus) {
   const L = view(vars), W = 720, H = 340, g = C2.prep(canvas, W, H, "#0b1424");
-  const xr = Math.min(95, Math.max(45, L.u * 1.15, L.f * 2.5)), sx = (W - 36) / (2 * xr), sy = sx * 1.7, ox = W / 2, oy = H / 2 + 6;
+  const xr = Math.min(95, Math.max(45, L.u * 1.15, L.f * 2.5)), sx = (W - 36) / (2 * xr), tall = Math.min(Math.abs(L.hImg), L.h * 3), sy = Math.min(sx * 1.7, (H / 2 - 30) / (Math.max(tall, L.h) * 1.12)), ox = W / 2, oy = H / 2 + 6;   // vertical scale: keep the image arrow on the canvas
   const X = x => ox + x * sx, Y = y => oy - y * sy, cl = y => Math.max(8, Math.min(H - 8, y));
   C2.line(g, [[10, oy], [W - 10, oy]], "#8da2c4", 1.5);                                   // principal axis
   [[-1, "F"], [1, "F"]].forEach(([s, n]) => { C2.line(g, [[X(s * L.f), oy - 6], [X(s * L.f), oy + 6]], "#cfe0ff", 2); C2.text(g, n, X(s * L.f), oy + 20, { size: 14, color: "#cfe0ff" }); });

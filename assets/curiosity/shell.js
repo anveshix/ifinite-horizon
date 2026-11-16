@@ -2,6 +2,7 @@
    Full-screen overlay: HUD (XP, level, streak), tabs (Simulator | Knowledge check), lab picker, and the lifecycle that mounts / disposes a lab.
    Labs and the quiz plug in through core.js; the shell never knows what a lens or a resistor is. */
 import { labs, getLab, store, bus, levelInfo, defaults, snap, SYLLABUS } from "./core.js";
+import * as fx from "./quiz/fx.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -37,14 +38,19 @@ function build() {
   document.body.appendChild(root);
   root.addEventListener("click", onClick);
   root.addEventListener("keydown", onKey);
+  fx.mount($("#clFx", root));
   unsub.push(store.subscribe(paintHud));
 }
 
 /* ---------- HUD ---------- */
+const hudPrev = { xp: null, streak: null };
+const pulse = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
 function paintHud() {
   if (!root) return;
   const s = store.get(), li = levelInfo(s.xp);
-  $("#clXp b", root).textContent = s.xp;
+  if (hudPrev.xp !== null && s.xp > hudPrev.xp) { fx.countUp($("#clXp b", root), s.xp, 700); pulse($("#clXp", root), "bump"); } else $("#clXp b", root).textContent = s.xp;
+  if (hudPrev.streak !== null && s.streak !== hudPrev.streak) pulse($("#clStreak", root), s.streak > hudPrev.streak ? "bump" : "lost");
+  hudPrev.xp = s.xp; hudPrev.streak = s.streak;
   $("#clStreak b", root).textContent = s.streak;
   $("#clStreak", root).classList.toggle("hot", s.streak >= 3);
   $(".cl-lvn", root).textContent = "Lv " + li.level;
@@ -134,7 +140,14 @@ function paintQuiz() {
   host.replaceChildren();
   if (!cur) { host.innerHTML = `<p class="cl-empty">Pick an experiment first. · पहले कोई प्रयोग चुनें।</p>`; return; }
   if (!hooks.quiz) { host.innerHTML = `<p class="cl-empty">The knowledge check for this experiment is not available yet.</p>`; return; }
-  quizDispose = hooks.quiz(host, { lab: cur.lab, vars: { ...cur.vars }, store, bus, back: () => setTab("sim") }) || null;
+  quizDispose = hooks.quiz(host, { lab: cur.lab, vars: { ...cur.vars }, store, bus, back: () => setTab("sim"), apply: applyVars }) || null;
+}
+
+/** "Show me in the simulator": puts the lab into the state a question was about, then switches to the simulator tab. */
+function applyVars(vars, goSim = true) {
+  if (!cur) return;
+  cur.lab.vars.forEach(v => { if (vars && Number.isFinite(vars[v.id])) cur.ctx.set(v.id, vars[v.id]); });
+  if (goSim) setTab("sim");
 }
 
 /* ---------- events ---------- */
