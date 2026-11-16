@@ -229,14 +229,16 @@ phl.innerHTML=`<div class="box"><h3>📽 Presentation keys · प्रस्त
 const PS=(()=>{try{return JSON.parse(LS.get("va.pres")||"{}")||{}}catch{return{}}})();
 let pOn=false,pMode=PS.mode|0,pZoom=false,pLaser=false,pLang=PS.lang|0,pLight=!!PS.light,pFs=+PS.fs||1,pPrevAll=false,pIdle=0,pWL=null,pFsOn=false,pDeck=null,pTo=0;
 const savePS=()=>LS.set("va.pres",JSON.stringify({mode:pMode,lang:pLang,light:pLight,fs:pFs}));
-function deck(){if(pDeck)return pDeck;const k0=(A()&&A().keys&&A().keys())||[],ks=k0.length?k0:Object.keys(MAP),seen=new Set(),o=[];ks.forEach(k=>(MAP[k]||[]).forEach(id=>{if(!seen.has(id)&&get(id)){seen.add(id);o.push({id,key:k})}}));return pDeck=o}
+function deck(){if(pDeck)return pDeck;const k0=(A()&&A().keys&&A().keys())||[],ks=k0.length?k0:Object.keys(MAP),seen=new Set(),o=[];ks.forEach(k=>(MAP[k]||[]).forEach(id=>{if(!seen.has(id)&&get(id)){seen.add(id);o.push({id,key:k})}}));
+ /* images that no topic links to (e.g. plant respiration, balanced diet) still belong in the deck: nothing is left out */
+ GROUPS.forEach(([g])=>Object.keys(DATA[g]||{}).forEach(k=>{const id=g+"/"+k;if(!seen.has(id)){seen.add(id);o.push({id,key:null})}}));return pDeck=o}
 function toast(s){pto.textContent=s;pto.hidden=false;clearTimeout(pTo);pTo=setTimeout(()=>{pto.hidden=true},1800)}
 function posTxt(){const dk=deck(),i=dk.findIndex(d=>d.id===cur);return `🖼 ${i<0?"–":i+1}/${dk.length}  ·  🏷 ${sel<0?"–":sel+1}/${marks.length}`}
 function zoomApply(){const m=marks[sel],z=pOn&&pZoom&&m;if(z){zl.style.transformOrigin=m.x+"% "+m.y+"%";zl.style.transform="scale(2.4)";zl.style.setProperty("--zs","2.4")}else{zl.style.transform="";zl.style.setProperty("--zs","1")}const t0=performance.now();(function f(){place();if(performance.now()-t0<520)requestAnimationFrame(f)})()}
 function presPaint(){if(!pOn)return;$("#vpPos").textContent=posTxt();$("#vpZoom").classList.toggle("on",pZoom);$("#vpLas").classList.toggle("on",pLaser);zoomApply()}
 function presSync(){ov.classList.toggle("pl",pLight);ov.classList.toggle("pen",pLang===1);ov.classList.toggle("phi",pLang===2);ov.classList.toggle("mq",pMode===1);ov.classList.toggle("laser",pLaser);ov.style.setProperty("--vpfs",pFs);
  showAll=pMode===2;paintLab();$("#vpMode").textContent=["👁 Reveal","🙈 Quiz","📋 All"][pMode];$("#vpLang").textContent=["EN+हिं","EN","हिं"][pLang];presPaint()}
-function gotoImg(i,as){const dk=deck();if(i<0||i>=dk.length){toast(i<0?"First image · पहला चित्र":"End of images · चित्र समाप्त");return}const d=dk[i];after=as==null?null:as;preferId=d.id;const a=A();if(a&&a.go&&a.key&&d.key!==a.key())a.go(d.key);show(d.id)}
+function gotoImg(i,as){const dk=deck();if(i<0||i>=dk.length){toast(i<0?"First image · पहला चित्र":"End of images · चित्र समाप्त");return}const d=dk[i];after=as==null?null:as;preferId=d.id;const a=A();if(d.key&&a&&a.go&&a.key&&d.key!==a.key())a.go(d.key);show(d.id)}
 function nImg(dir,as){const dk=deck();let i=dk.findIndex(d=>d.id===cur);if(i<0){const l=list.indexOf(cur);i=dir>0?-1:dk.length;if(l>=0){const j=dk.findIndex(d=>list.slice(l+dir).includes(d.id));if(j>=0)i=j-dir}}gotoImg(i+dir,as)}
 function step(d){const n=marks.length;if(d>0){if(sel<n-1)pick(sel+1);else nImg(1,null)}else{if(sel>0)pick(sel-1);else if(sel===0)pick(0);else nImg(-1,"last")}}
 function bump(){ov.classList.remove("vidle");clearTimeout(pIdle);pIdle=setTimeout(()=>{if(pOn&&pbl.hidden&&phl.hidden)ov.classList.add("vidle")},2600)}
@@ -282,5 +284,5 @@ ov.addEventListener("touchend",e=>{if(!pOn||!sw)return;const t=e.changedTouches[
 document.addEventListener("fullscreenchange",()=>{if(pOn&&pFsOn&&!fsNow()){pFsOn=false;presExit()}});
 document.addEventListener("visibilitychange",()=>{if(pOn&&document.visibilityState==="visible")wl(true)});
 
-window.__va2d={present:presEnter,exitPresent:presExit,isPresenting:()=>pOn,set:setView,get:()=>view,show,current:()=>cur,images:()=>list.slice(),map:MAP,info:()=>{const d=cur&&get(cur);return d?{title:d.title,desc:d.desc||"",marks:curMarks.map(m=>({en:m.en,hi:m.hi}))}:null},select:i=>{if(sel!==i&&marks[i])pick(i)},clear:()=>{if(sel>=0)pick(sel)}};
+window.__va2d={deck:()=>deck().map(d=>d.id),presentGoto:i=>gotoImg(i,null),present:presEnter,exitPresent:presExit,isPresenting:()=>pOn,set:setView,get:()=>view,show,current:()=>cur,images:()=>list.slice(),map:MAP,info:()=>{const d=cur&&get(cur);return d?{title:d.title,desc:d.desc||"",marks:curMarks.map(m=>({en:m.en,hi:m.hi}))}:null},select:i=>{if(sel!==i&&marks[i])pick(i)},clear:()=>{if(sel>=0)pick(sel)}};
 })();
