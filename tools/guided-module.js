@@ -7,7 +7,7 @@ const keyOf=(c,t)=>(c.kp?c.kp:"ch"+c.no)+"/"+t.id;
 const find=k=>{for(const c of [...Hi,...Hj])for(const t of c.topics)if(keyOf(c,t)===k)return t;return null};
 const btn=l=>[...document.querySelectorAll("#tools .btn")].find(b=>b.textContent.includes(l));
 setInterval(()=>{const e=document.getElementById("vaStepCap");if(e&&!e.hidden&&performance.now()-(e.__ts||0)>1200)e.hidden=true},500);
-function guide(keys,steps){for(const k of [].concat(keys)){const T=find(k);if(!T||!T.build||T.__guided)continue;T.__guided=1;const orig=T.build;
+function guide(keys,steps){for(const k of [].concat(keys)){(window.__vaSpecs=window.__vaSpecs||{})[k]=steps;const T=find(k);if(!T||!T.build||T.__guided)continue;T.__guided=1;const orig=T.build;
  T.build=function(){const r=orig();if(!r||r.steps)return r;let lastS=-1,lastT=0,pend=-1,tries=0;
   const out=Object.assign({},r,{steps:steps.map(s=>({dur:s[5]||10,en:`${s[0]} — ${s[2]}`,hi:`${s[1]} — ${s[3]}`})),
    apply(s,kk,t){const dt=Math.min(.1,Math.max(0,t-lastT));lastT=t;if(s!==lastS){lastS=s;pend=s;tries=0}
@@ -20,6 +20,7 @@ function guide(keys,steps){for(const k of [].concat(keys)){const T=find(k);if(!T
     document.body.classList.add("va-guided")}});
   (r.labels||[]).forEach(l=>{if(!l.steps)l.steps={includes:()=>!l.when||l.when(),length:1,find:()=>0}});
   delete out.intro;return out}}}
+window.__vaGuide=guide;
 /* ---- Biology ---- */
 const XYLEM=[
 ["Two pipelines in a plant","पौधे की दो नलिकाएँ","A plant moves materials through two kinds of tubes that run from the roots to the leaves: xylem and phloem. Here they are switched off — we will turn them on one by one.","पौधे में जड़ से पत्तियों तक दो प्रकार की नलिकाएँ पदार्थ ढोती हैं: जाइलम और फ्लोएम। अभी दोनों बंद हैं — हम एक-एक करके चालू करेंगे।",{set:{"☀ Day":true,"Xylem":false,"Phloem":false}},8],

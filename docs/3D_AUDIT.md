@@ -32,3 +32,7 @@ Real-mesh topics (BodyParts3D): heart, digestive, eye, elbow joint, lungs.
 8. **DNA, genes, Mendel, sex determination (`ch8/genetics3d`)** — chromosome→helix zoom, base pairing, semi-conservative copying, gene→mRNA→protein, P/F1 pea cross, 3:1 Punnett, 9:3:3:1 dihybrid, XX/XY. Fixed 2026-11-16: mRNA draw-range bug (was drawing ~12% of the strand), real X chromosome with histone coil, larger gene→protein scene.
 9. **Cell division — mitosis & meiosis (`ix1/division3d`)** — interphase → prophase → metaphase → anaphase → telophase/cytokinesis, then meiosis I (pairing, crossing over, homologues separate) and meiosis II, then comparison. Fixed 2026-11-16: meiosis cells no longer overlap (one cell per stage). Flower: cut-away soil block, curved petals.
 Next: → flower & pollination → heredity (DNA, Mendel) → cell division (mitosis/meiosis).
+
+## Guided sequences added to the remaining free-play topics (2026-11-16)
+`tools/guided-chem.js` (27 chemistry / matter topics) and `tools/guided-phys.js` (40 physics / light / electricity / Earth-system topics) wrap every free-play topic from the audit so it now has an ordered, bilingual step list that presses the model's own buttons. Validated automatically: all 83 guided topics load, every referenced button exists, and the step counter appears (script in the session scratchpad; check = button labels vs `window.__vaSpecs`).
+Not verified: the visual result of each individual step (spot-checked: reactivity series, human eye). The model quality of the underlying primitive scenes is unchanged.
