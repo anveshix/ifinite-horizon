@@ -1,6 +1,6 @@
 # Curiosity Lab — 3D Simulator & Visual Knowledge Check
 
-Status: **Phase 1 (scaffold) done.** Phases 2–4 add the labs, the quiz and the wiring (see plan below).
+Status: **Phase 1 (scaffold) and Phase 2 (four 3D labs + question generators) done.** Phases 3–4 add the quiz UI / effects and the wiring (see plan below).
 
 ## Phase 1 scan — what the codebase is
 | Finding | Consequence for the Curiosity Lab |
@@ -21,9 +21,14 @@ assets/curiosity/
                                 persistent store (va.cl.v1) · sim→quiz event bus
   shell.js                      overlay: HUD (XP, streak, level), tabs, picker, lab lifecycle, quiz host
   curiosity.css                 tokens-based styles
-  labs/                         (Phase 2)  lens.js  ohm.js  force.js  energy.js
+  labs/models.js                pure physics (lens, circuit, F = ma, pendulum) — one source of truth for 3D, 2D and marking
+  labs/kit.js                   Three.js stage + orbit camera, sliders, facts panel, sprites, 2D drawing, question helpers
+  labs/lens.js ohm.js force.js energy.js   the four simulators
   quiz/                         (Phase 3)  visual questions + dopamine effects
-tests/curiosity.js              Playwright + in-page unit checks
+tests/curiosity.js              Playwright: launcher, shell, core.js
+tests/curiosity-labs.js         Playwright: all four labs (render, sliders, physics values, run/pause, dispose, phone layout)
+tests/curiosity-physics.mjs     node: physics models vs NCERT results (180 checks)
+tests/curiosity-questions.mjs   node: every question generator vs an independent re-derivation (≈42 000 checks)
 ```
 
 ## Lab contract (enforced by `registerLab`, violations throw a readable error)
@@ -36,12 +41,25 @@ export default {
                         call ctx.set(varId, value) when a control moves, ctx.run() when a run completes */
                      return { dispose(){}, resize(){} }; },
   facts(vars) { return [{ id, en, hi, value }]; },        // what the physics says right now (drives questions)
-  questions(ctx) { return [/* visual MCQs built from what the student explored */]; }
+  snapshot(canvas, vars, focus) { /* draws the 2D picture a question shows */ },
+  questions({ vars, explored, rnd, seed }) { return [/* visual MCQs, built with ask() from the values the student explored */]; }
 };
 ```
 Rules that keep it honest: `ctx.set` snaps to `min/max/step`, records the value the student actually saw (`store.explored`), and emits `sim:change` with the derived `facts`; the **Knowledge check tab stays locked until the student has changed at least one variable** — you answer after you experiment.
 
+## Labs (Phase 2)
+| Lab | NCERT unit | Student changes | 3D scene | Questions (kind) |
+|---|---|---|---|---|
+| Lens Lab | Class X ch 9 | object distance u, focal length f, convex / concave | optical bench, lens, object & image arrows, 3 principal rays, screen, virtual-image dashes | nature of image, position, name the lens, everyday use, *predict* object moved closer, power |
+| Circuit Lab | Class X ch 11 | battery voltage, R₁, R₂, single / series / parallel | board, battery cells, ammeter + voltmeter with moving needles, glowing resistors, drifting electrons, live V–I graph | name the component, *predict* V or R changed, name the wiring, equivalent resistance, name the law (V–I graph), heating effect |
+| Force Lab | Class IX ch 10 | force F, mass m (even while it runs) | trolley with mass blocks, force arrow, moving track, live v–t graph | acceleration, *predict* F or m changed, name the law, momentum, name the v–t graph, inertia |
+| Energy Lab | Class IX ch 11 | bob mass m, release height h (even while it swings) | pendulum with height ruler, live PE / KE / total bars | PE at top, KE at bottom, PE = mgh, *predict* mass doubled (speed unchanged), *predict* height changed, conservation of energy |
+
+A **question** is `{ id, kind: "name"|"predict", prompt, image: {vars, focus?}|null, options[2–5], answer, why, meta? }` (`validateQuestion` in `core.js` enforces it). Its picture is drawn on demand by the lab's own `snapshot(canvas, vars, focus)` from the same physics model as the simulator, and the values come from what the student actually explored (`store.explored`).
+
+**Correctness guard:** `tests/curiosity-questions.mjs` re-derives every answer without the lab's own code (ray-geometry intersection instead of the lens formula, F·t for momentum, V/R series/parallel by hand…). It caught a real bug while the labs were being written — "predict" questions about changing one resistor in a series/parallel circuit marked "stays the same" as correct — which is why those questions now change *all* resistors together or the voltage.
+
 ## Plan
-* **Phase 2** — Three.js labs: Lens (u, f → image position, size, nature; lens formula & sign convention), Ohm's law (V, R → I, bulb brightness), Force & motion (F, m → a), Energy (height, mass → PE/KE, speed; free fall independent of mass). NCERT-only maths, no out-of-syllabus physics.
+* **Phase 2 ✓** — the four Three.js labs above, NCERT-only maths.
 * **Phase 3** — visual MCQ engine + effects: canvas confetti, glowing text, streak flames, CSS haptic shake + `navigator.vibrate`, sound-free by default (respects reduced-motion).
 * **Phase 4** — questions generated from the student's own explored values; wiring to `store`, XP and the atlas progress; integration test over every lab.

@@ -3,7 +3,7 @@
 import { registerLab, labs } from "./core.js";
 import * as shell from "./shell.js";
 
-const LAB_FILES = [];                       // Phase 2 adds: "./labs/lens.js", "./labs/ohm.js", "./labs/force.js", "./labs/energy.js"
+const LAB_FILES = ["./labs/lens.js", "./labs/ohm.js", "./labs/force.js", "./labs/energy.js"];
 
 let booted = null;
 async function boot() {

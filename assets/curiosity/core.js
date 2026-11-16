@@ -32,16 +32,29 @@ export function registerLab(lab) {
   if (!Array.isArray(lab.vars) || !lab.vars.length) throw new Error(`Curiosity Lab: ${id}.vars must list at least one variable`);
   const seen = new Set();
   lab.vars.forEach(v => {
-    if (!/^[a-z][a-zA-Z0-9]*$/.test(v.id || "")) throw new Error(`Curiosity Lab: ${id} bad variable id "${v.id}"`);
+    if (!/^[A-Za-z][A-Za-z0-9]*$/.test(v.id || "")) throw new Error(`Curiosity Lab: ${id} bad variable id "${v.id}"`);
     if (seen.has(v.id)) throw new Error(`Curiosity Lab: ${id} duplicate variable "${v.id}"`);
     seen.add(v.id); bi(v.label, `${id}.${v.id}.label`);
     if (typeof v.unit !== "string") throw new Error(`Curiosity Lab: ${id}.${v.id}.unit must be a string ("" if unitless)`);
     if (![v.min, v.max, v.step, v.value].every(Number.isFinite) || !(v.min < v.max) || !(v.step > 0) || v.value < v.min || v.value > v.max)
       throw new Error(`Curiosity Lab: ${id}.${v.id} needs finite min < max, step > 0 and min ≤ value ≤ max`);
   });
-  ["mount", "facts", "questions"].forEach(fn => { if (typeof lab[fn] !== "function") throw new Error(`Curiosity Lab: ${id}.${fn} must be a function`); });
+  ["mount", "facts", "questions", "snapshot"].forEach(fn => { if (typeof lab[fn] !== "function") throw new Error(`Curiosity Lab: ${id}.${fn} must be a function`); });
   LABS.set(id, Object.freeze(lab));
   return lab;
+}
+/** A visual question as the quiz engine expects it. Throws a readable Error if anything is wrong (used by the tests and by the quiz before it shows a question). */
+export function validateQuestion(q) {
+  const w = m => { throw new Error(`question ${q && q.id}: ${m}`); };
+  if (!isObj(q) || !q.id) throw new Error("question needs an id");
+  if (q.kind !== "name" && q.kind !== "predict") w(`kind must be "name" or "predict"`);
+  bi(q.prompt, `${q.id}.prompt`); bi(q.why, `${q.id}.why`);
+  if (q.image !== null && !(isObj(q.image) && isObj(q.image.vars))) w("image must be null or {vars, focus?}");
+  if (!Array.isArray(q.options) || q.options.length < 2 || q.options.length > 5) w("2–5 options required");
+  const ids = new Set(), texts = new Set();
+  q.options.forEach(o => { bi(o, `${q.id}.option`); if (!o.id || ids.has(o.id)) w("option ids must be unique"); ids.add(o.id); if (texts.has(o.en)) w(`duplicate option text "${o.en}"`); texts.add(o.en); });
+  if (!ids.has(q.answer)) w("answer must be one of the option ids");
+  return q;
 }
 export const labs = () => [...LABS.values()];
 export const getLab = id => LABS.get(id) || null;
