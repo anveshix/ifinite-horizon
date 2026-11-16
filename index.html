@@ -6797,7 +6797,7 @@ const F_ST=[
 function Mflower(){sd=71;const n=new Ne;Ge(n,{key:1.9});Je(n,-4.6,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
  const FL=new J;g.add(FL);const OV=new J;OV.position.set(22,0,0);g.add(OV);const GR=new J;GR.position.set(0,-22,0);g.add(GR);const FB=new J;FB.position.set(-14,.6,-2.5);g.add(FB);
  const petM=MAT(0xe8407c,{roughness:.6,clearcoat:.1,sheen:0,envMapIntensity:.5,bumpScale:.08,opacity:1,side:vt,emissive:0x7a1038,emissiveIntensity:.3});
- const petal=(par,ang,tilt,L,W,mat,id)=>{const gr=new J;gr.rotation.y=ang;par.add(gr);add(id,param(18,12,(u,v)=>{const w=Math.pow(sin(Math.min(1,u*.97)*PI*.85+.15),.8)*W*(v-.5)*2*(1-.25*u*u),x=u*L,y=u*u*L*.5*(tilt*.5)-Math.abs(v-.5)*.5*W*.5;return[x,y,w]}),mat,[0,0,0],{parent:gr,ns:0});return gr};
+ const petal=(par,ang,tilt,L,W,mat,id)=>{const gr=new J;gr.rotation.y=ang;par.add(gr);add(id,param(18,12,(u,v)=>{const w=Math.pow(sin(Math.min(1,u*.97)*PI*.85+.15),.8)*W*(v-.5)*2*(1-.25*u*u),x=u*L,y=u*u*L*.55*(tilt*.5)-Math.pow(Math.abs(v-.5)*2,2)*.5*W*.55*(.4+u);return[x,y,w]}),mat,[0,0,0],{parent:gr,ns:0});return gr};
  const flowerAt=(par,sc,ids)=>{const P=new J;P.scale.setScalar(sc);par.add(P);
   /* sepals */
   const sepM=MAT(0x6aa84f,{roughness:.55,clearcoat:.2,bumpScale:.15,side:vt,emissive:0x143a0e,emissiveIntensity:.15});
@@ -6851,7 +6851,7 @@ function Mflower(){sd=71;const n=new Ne;Ge(n,{key:1.9});Je(n,-4.6,90,.08);const 
  const mg1=add("male",sph(.2,0,1,1,1,1,12,16),MAT(0xffd23f,{emissive:0x8a6a00,emissiveIntensity:.8}),[0,-9,0],{parent:OV,ns:1}),mg2=add("male",sph(.2,0,1,1,1,1,12,16),MAT(0xffd23f,{emissive:0x8a6a00,emissiveIntensity:.8}),[0,-9,0],{parent:OV,ns:1});
  const seedCoat=add("seed",param(30,44,(u,v)=>{const th=u*PI,ph=(.6+v*1.8)*PI;return[Math.sin(th)*Math.cos(ph)*3.1,Math.cos(th)*4.2,Math.sin(th)*Math.sin(ph)*3.1]}),MAT(0x8a5a2b,{roughness:.6,bumpScale:.6,opacity:0,depthWrite:!1,sheen:0}),[0,0,0],{parent:OV,ns:1});
  /* ---------- germination ---------- */
- const soil=add("soil",new Xe(6.5,6.5,.12,48),new bt({color:0x7a5232,transparent:!0}),[0,-.5,0],{parent:GR,ns:1});const soil2=add("soil",new Xe(6.5,6.5,4.2,48),new bt({color:0x8a5e38,transparent:!0}),[0,-2.7,0],{parent:GR,ns:1});
+ const soil=add("soil",new Xe(6.5,6.5,4.4,48,1,!1,PI*.5,PI),new bt({color:0x6b4a2e,side:vt}),[0,-2.7,0],{parent:GR,ns:1});const soil2=add("soil",new Xe(6.5,6.5,.14,48,1,!1,PI*.5,PI),new bt({color:0x8a5e38,side:vt}),[0,-.5,0],{parent:GR,ns:1});const cutFace=add("soil",new Xe(6.5,6.5,.2,4),new bt({color:0x7d5535}),[0,-2.7,-.15],{parent:GR,ns:1,rot:[PI/2,PI/4,0],scl:[1,1,.68]});
  const sdM=MAT(0xb98450,{roughness:.7,clearcoat:.05,envMapIntensity:.35,bumpScale:.3,sheen:0,emissive:0x4a2c10,emissiveIntensity:.35});
  const sd_=add("seed",sph(1.1,.05,2,1.2,.9,.8,26,34),sdM,[0,-1.6,0],{parent:GR});
  [-1,1].forEach(sx=>add("coty",sph(.8,.04,2,.55,.9,.8,20,26),MAT(0xf2e6a0,{roughness:.45,emissive:0x4a3a08,emissiveIntensity:.15}),[sx*.55,-1.6,0],{parent:GR}));
@@ -6865,7 +6865,7 @@ function Mflower(){sd=71;const n=new Ne;Ge(n,{key:1.9});Je(n,-4.6,90,.08);const 
  const show={};const ids=["sepal","petal","recept","fil","anther","pollen","stigma","style","ovary","ovule","bee","sepalB","petalB","receptB","filB","antherB","tubeP","micro","egg7","polar","male","zyg","fruit","seed","coty","radicle","plumule","soil"];ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
  ["sepal","petal","recept","fil","anther","stigma","style","ovary"].forEach(i=>on(i,[0,1,2,3,4,6]));on("ovule",[0,2,3,4,6]);on("pollen",[1]);on("bee",[3]);["sepalB","petalB","receptB","filB","antherB"].forEach(i=>on(i,[3]));on("tubeP",[4,5]);["micro","egg7","polar","male"].forEach(i=>on(i,[5]));on("ovule",[5]);on("seed",[6,7]);on("soil",[7]);on("coty",[7]);on("radicle",[7]);on("plumule",[7]);
  show.petal=[1,0,0,1,1,0,1,0].map((v,i)=>v);show.sepal=show.petal.slice();show.ovary=[1,1,1,1,1,0,1,0];
- const base={sepal:.96,petal:.96,recept:1,fil:1,anther:1,pollen:1,stigma:1,style:1,ovary:.6,ovule:1,bee:1,sepalB:.96,petalB:.96,receptB:1,filB:1,antherB:1,tubeP:1,micro:1,egg7:1,polar:1,male:1,seed:1,soil:.22,coty:1,radicle:1,plumule:1};
+ const base={sepal:.96,petal:.96,recept:1,fil:1,anther:1,pollen:1,stigma:1,style:1,ovary:.6,ovule:1,bee:1,sepalB:.96,petalB:.96,receptB:1,filB:1,antherB:1,tubeP:1,micro:1,egg7:1,polar:1,male:1,seed:1,soil:1,coty:1,radicle:1,plumule:1};
  const Lw=(par,p)=>()=>par.localToWorld(c(...p));
  const labels=[["f-pe","Petals (corolla)","दल (कोरोला)",Lw(FL,[3.2,.8,1.1]),[0,3]],["f-se","Sepals (calyx)","बाह्यदल",Lw(FL,[2,-.2,-1.1]),[0]],["f-st","Stamen (male)","पुंकेसर (नर)",Lw(FL,[1.3,2.2,.9]),[0,1]],["f-an","Anther","परागकोश",Lw(FL,[.4,2.2,1]),[1]],["f-fi","Filament","पुंतंतु",Lw(FL,[.9,1,.9]),[0,1]],["f-pi","Pistil (female)","स्त्रीकेसर (मादा)",Lw(FL,[0,3.1,.2]),[0,2]],["f-sg","Stigma (sticky)","वर्तिकाग्र (चिपचिपा)",Lw(FL,[.5,3,.3]),[2,3,4]],["f-sy","Style","वर्तिका",Lw(FL,[.15,1.8,0]),[0,2,4]],["f-ov","Ovary","अंडाशय",Lw(FL,[.8,.5,.4]),[0,2]],["f-ovu","Ovules (each has an egg)","बीजांड (प्रत्येक में अंड)",Lw(FL,[-.5,.55,.2]),[2]],["f-re","Receptacle","पुष्पासन",Lw(FL,[-.7,-.5,.2]),[0]],["f-po","Pollen grain (magnified)","पराग कण (बड़ा)",Lw(FL,[1.7,2.1,1.4]),[1]],
   ["p-be","Bee carries pollen","मधुमक्खी पराग लाती",()=>bee.getWorldPosition(c()),[3]],["p-fb","Pollen donor flower","पराग-दाता फूल",Lw(FB,[0,3,0]),[3]],["p-cr","Cross-pollination (different plant)","पर-परागण (दूसरा पौधा)",Lw(FL,[-3,4.6,0]),[3]],
@@ -6929,7 +6929,7 @@ const G_ST=[
 ["8","Sex determination","लिंग निर्धारण","Humans have 22 pairs of autosomes and one pair of sex chromosomes: XX in females, XY in males. All eggs carry X; a sperm carries X or Y — so the father's sperm decides the baby's sex, 50 : 50.","मनुष्य में 22 जोड़े अलिंग-सूत्र और एक जोड़ा लिंग-गुणसूत्र: महिला XX, पुरुष XY; सभी अंडाणुओं में X; शुक्राणु में X या Y — अतः पिता का शुक्राणु शिशु का लिंग तय करता है, 50 : 50।","Animated · Punnett square",13]];
 function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
  const ZM=new J,HX=new J,CP=new J,PR=new J,MD=new J,PN=new J,SX=new J;[ZM,HX,CP,PR,MD,PN,SX].forEach(x=>g.add(x));
- HX.position.set(0,0,0);ZM.position.set(-13,0,0);CP.position.set(0,-24,0);PR.position.set(34,0,0);MD.position.set(-30,-24,0);PN.position.set(30,-24,0);SX.position.set(0,-48,0);
+ HX.position.set(0,0,0);ZM.position.set(-13,0,0);CP.position.set(0,-24,0);CP.scale.setScalar(1.5);PR.position.set(34,0,0);MD.position.set(-30,-24,0);PN.position.set(30,-24,0);SX.position.set(0,-48,0);
  /* ---------- zoom stack: nucleus -> chromosome -> nucleosomes ---------- */
  const nucM=MAT(0x8d92e6,{opacity:.4,roughness:.4,clearcoat:.2,envMapIntensity:.4,sheen:0,depthWrite:!1,emissive:0x1b2160,emissiveIntensity:.25,bumpScale:.1});
  add("nuc8",sph(4.2,.05,1.5,1,1,1,40,56,2),nucM,[0,0,0],{parent:ZM,ns:1});
@@ -6938,10 +6938,11 @@ function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);cons
  for(let i=0;i<10;i++){const a=i*2.399963,y=1-(i+.5)/10*2,r=Math.sqrt(1-y*y);chr(ZM,"chrom",1.2+.5*(i%3),.2,chM[i%6],cos(a)*r*2.3,y*2.3,sin(a)*r*2.3,i*.9)}
  /* big chromosome for zoom 2 */
  const BC=new J;BC.position.set(0,0,0);HX.add(BC);
- const bcM=MAT(0xe0453a,{roughness:.5,clearcoat:.3,bumpScale:.3,envMapIntensity:.4,sheen:0});
- [-1,1].forEach(sd_=>{const pts=[];for(let i=0;i<=24;i++){const q=i/24;pts.push(c(sd_*(.45+.12*sin(q*PI)),(q-.5)*8,0))}const geo=tube(pts,.5,14,u=>.55+.55*Math.sin(Math.min(1,u*1.0)*PI)*.0+.5*Math.pow(sin(u*PI),.3));add("chrom",geo,bcM,[0,0,0],{parent:BC});
-  const hel=[];for(let i=0;i<=120;i++){const q=i/120;hel.push(c(sd_*(.45+.12*sin(q*PI))+Math.cos(q*TAU*14)*.5,(q-.5)*7.4,Math.sin(q*TAU*14)*.5))}add("histone",tube(hel,.12,6),MAT(0xff9a8a,{roughness:.4,emissive:0x5a1a10,emissiveIntensity:.25}),[0,0,0],{parent:BC,ns:1})});
- add("chrom",sph(.3,0,1,1.8,.7,1,14,18),MAT(0xffffff,{roughness:.4,emissive:0x444444,emissiveIntensity:.3}),[0,0,0],{parent:BC});
+ const bcM=MAT(0xe0453a,{roughness:.5,clearcoat:.3,bumpScale:.3,envMapIntensity:.4,sheen:0,emissive:0x3a0a08,emissiveIntensity:.3}),hsM=MAT(0xffb0a0,{roughness:.4,emissive:0x5a1a10,emissiveIntensity:.3,envMapIntensity:.4,sheen:0});
+ [-1,1].forEach(sd_=>{const a0=c(-sd_*1.9,-4.6,0),a1=c(sd_*1.9,4.6,0),d=a1.clone().sub(a0),Ld=d.length(),dn=d.clone().normalize(),u=c(dn.y,-dn.x,0).normalize(),v=c(0,0,1);
+  const pts=[0,.25,.5,.75,1].map(q=>a0.clone().lerp(a1,q));add("chrom",tube(pts,.62,14,u_=>.55+.45*Math.pow(sin(u_*PI),.35)),bcM,[0,0,0],{parent:BC});
+  const hel=[];for(let i=0;i<=150;i++){const q=i/150,ang=q*TAU*18,r=.95*(.6+.4*Math.pow(sin(q*PI),.35));const pp=a0.clone().lerp(a1,q);hel.push(pp.add(u.clone().multiplyScalar(Math.cos(ang)*r)).add(v.clone().multiplyScalar(Math.sin(ang)*r)))}add("histone",tube(hel,.13,6),hsM,[0,0,0],{parent:BC,ns:1})});
+ add("chrom",sph(.55,0,1,1,1,1,16,20),MAT(0xffffff,{roughness:.4,emissive:0x555555,emissiveIntensity:.4,sheen:0}),[0,0,0],{parent:BC});
  /* nucleosomes + DNA, helix */
  const NUCL=new J;NUCL.position.set(0,0,0);HX.add(NUCL);
  const bm={A:MAT(0x3fb0ff,{roughness:.35,clearcoat:.6,emissive:0x0a3a6a,emissiveIntensity:.4,envMapIntensity:.5}),T:MAT(0xffd23f,{roughness:.35,clearcoat:.6,emissive:0x6a5000,emissiveIntensity:.4,envMapIntensity:.5}),G:MAT(0x4fd17a,{roughness:.35,clearcoat:.6,emissive:0x0a5a24,emissiveIntensity:.4,envMapIntensity:.5}),C:MAT(0xff6a6a,{roughness:.35,clearcoat:.6,emissive:0x6a1010,emissiveIntensity:.4,envMapIntensity:.5})};
@@ -6960,11 +6961,11 @@ function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);cons
  const dnaPts=[];for(let i=0;i<=80;i++){const q=i/80;dnaPts.push(c(-9+q*18,-3+Math.sin(q*TAU*4)*.5,Math.cos(q*TAU*4)*.5))}add("back",tube(dnaPts,.11,6),bkM,[0,0,0],{parent:CP,ns:1});const dnaPts2=dnaPts.map((p,i)=>c(p.x,-3-Math.sin(i/80*TAU*4)*.5,-Math.cos(i/80*TAU*4)*.5));add("back",tube(dnaPts2,.11,6),bkM,[0,0,0],{parent:CP,ns:1});
  add("gene",tube(dnaPts.filter((p,i)=>i>=18&&i<=50),.17,6),gnM,[0,0,0],{parent:CP,ns:1});add("gene",tube(dnaPts2.filter((p,i)=>i>=18&&i<=50),.17,6),gnM,[0,0,0],{parent:CP,ns:1});
  const mr=[];for(let i=0;i<=40;i++){const q=i/40;mr.push(c(-3+q*6-q*q*2,-.6+q*2.4+Math.sin(q*TAU*3)*.2,Math.cos(q*TAU*3)*.3))}const mrM=MAT(0xff8fb0,{roughness:.35,clearcoat:.6,emissive:0x7a1a3a,emissiveIntensity:.35});
- const mrG=tube(mr,.09,6);mrG.setDrawRange(0,0);const mrMesh=add("mrna",mrG,mrM,[0,0,0],{parent:CP,ns:1});
+ const mrG=tube(mr,.17,8);mrG.setDrawRange(0,0);const mrMesh=add("mrna",mrG,mrM,[0,0,0],{parent:CP,ns:1});
  const rb1=add("ribo",sph(1.0,.03,2,1.3,.75,.9,20,26),MAT(0x2e9ab0,{roughness:.45,clearcoat:.4,emissive:0x0a3a48,emissiveIntensity:.3}),[5.5,2.8,0],{parent:CP}),rb2=add("ribo",sph(.7,.03,2,1.3,.7,.9,16,22),MAT(0x2e9ab0,{roughness:.45,emissive:0x0a3a48,emissiveIntensity:.3}),[5.5,3.55,0],{parent:CP,ns:1});
- const NA=14,aa=new Wn(new it(.32,12,10),new bt({color:0xffffff}),NA);aa.frustumCulled=!1;CP.add(aa);const ac=new we;const ACOL=[0xff6a6a,0x3fb0ff,0x4fd17a,0xffd23f,0xa05ad6,0xf2a63a,0xe86aa0];for(let i=0;i<NA;i++)aa.setColorAt(i,ac.setHex(ACOL[i%7]));
+ const NA=14,aa=new Wn(new it(.5,14,12),new bt({color:0xffffff}),NA);aa.frustumCulled=!1;CP.add(aa);const ac=new we;const ACOL=[0xff6a6a,0x3fb0ff,0x4fd17a,0xffd23f,0xa05ad6,0xf2a63a,0xe86aa0];for(let i=0;i<NA;i++)aa.setColorAt(i,ac.setHex(ACOL[i%7]));
  const protP=[];for(let i=0;i<NA;i++){const q=i/NA;protP.push(c(6.8+Math.cos(q*TAU*1.2)*1.4+q*1.6,3.1+q*1.4+Math.sin(q*TAU*1.2)*1.4,Math.sin(q*TAU*2)*.4))}
- const protM=MAT(0xff9a3d,{roughness:.4,clearcoat:.7,emissive:0x6a3000,emissiveIntensity:.35,bumpScale:.15});const protG=add("prot",sph(1.3,.12,3,1.2,1,1,28,36,3),protM,[10.3,5,0],{parent:CP});
+ const protM=MAT(0xff9a3d,{roughness:.4,clearcoat:.7,emissive:0x6a3000,emissiveIntensity:.35,bumpScale:.15});const protG=add("prot",sph(1.8,.14,3,1.2,1,1,32,40,3),protM,[11.5,5.6,0],{parent:CP});
  /* ---------- Mendel: pea plants ---------- */
  const stem=(par,x,h,mat,leafM)=>{add("pea",tube([c(x,0,0),c(x+.05,h*.5,0),c(x,h,0)],.1,8,u=>1-.4*u),mat,[0,0,0],{parent:par});for(let k=1;k<=Math.max(2,Math.round(h/1.3));k++){[-1,1].forEach(sg=>add("pea",sph(.42,.03,2,1,.12,.6,14,18),leafM,[x+sg*.4,k*h/(Math.max(2,Math.round(h/1.3))+1),0],{parent:par,ns:1}))}add("pea",sph(.28,.04,2,1,1,1,12,16),MAT(0xffffff,{roughness:.5,emissive:0x444444,emissiveIntensity:.3}),[x,h+.1,0],{parent:par,ns:1})};
  const stM=MAT(0x6aa84f,{roughness:.5,bumpScale:.2,emissive:0x143a0e,emissiveIntensity:.2}),lfM=MAT(0x4a9a3a,{roughness:.5,side:vt,emissive:0x143a0e,emissiveIntensity:.2});
@@ -7001,7 +7002,7 @@ function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);cons
  [[-1.6,1.6,"XX",0],[1.6,1.6,"XY",1],[-1.6,-1.6,"XX",0],[1.6,-1.6,"XY",1]].forEach((p,i)=>{const mm=i%2;add("punn",new Xe(1.98,1.98,.15,4),new bt({color:mm?0xdbe9ff:0xffe0ec,transparent:!0}),[p[0],p[1]-3.2,0],{parent:SX,rot:[PI/2,PI/4,0],ns:1});xl(SX,p[0]-.5,p[1]-3.2,"X",xM).scale.setScalar(.5);xl(SX,p[0]+.5,p[1]-3.2,mm?"Y":"X",mm?yM:xM).scale.setScalar(.5)});
  xl(SX,-1.6,-.2,"X",xM).scale.setScalar(.5);xl(SX,1.6,-.2,"X",xM).scale.setScalar(.5);xl(SX,-3.8,-2.7,"X",xM).scale.setScalar(.5);xl(SX,-3.8,-6.2,"X",xM).scale.setScalar(.5);
  /* cameras */
- const cams=[[c(-1,0,33),c(-1,0,0)],[c(0,0,22),c(0,0,0)],[c(0,0,22),c(0,0,0)],[c(3,-23.5,27),c(3,-24.6,0)],[c(32,-3,17),c(32,-3.6,0)],[c(-30,-24.4,21),c(-30,-24.4,0)],[c(30,-24.4,23),c(30,-24.4,0)],[c(0,-50,31),c(0,-50.5,0)]];
+ const cams=[[c(-1,0,33),c(-1,0,0)],[c(0,0,22),c(0,0,0)],[c(0,0,22),c(0,0,0)],[c(7,-22,31),c(7,-22,0)],[c(32,-3,17),c(32,-3.6,0)],[c(-30,-24.4,21),c(-30,-24.4,0)],[c(30,-24.4,23),c(30,-24.4,0)],[c(0,-50,31),c(0,-50.5,0)]];
  const camK=["Cell→DNA","Helix","Copying","Gene","Mendel","3:1","9:3:3:1","Sex"];
  const show={};const ids=["nuc8","chrom","histone","back","A","T","G","C","gene","mrna","ribo","prot","pea","allT","allt","gam","punn","off","X","Y"];ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
  on("nuc8",[0]);on("chrom",[0]);on("histone",[0]);["back","A","T","G","C"].forEach(i=>on(i,[0,1,2,3]));on("gene",[3]);on("mrna",[3]);on("ribo",[3]);on("prot",[3]);on("pea",[4]);on("allT",[4,5,6]);on("allt",[4,5,6]);on("gam",[4]);on("punn",[5,6,7]);on("off",[5,6]);on("X",[7]);on("Y",[7]);
@@ -7027,7 +7028,7 @@ function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);cons
    const un=s===2?cl(ph*1.3,0,1):0;rungs.forEach((r,i)=>{const k=cl(un*1.6-i/HN*.6,0,1),off=k*1.2;[r.h1,r.h2].forEach(h=>h.visible=k<.98);if(s===2){r.h1.position.set(0,0,0)}});
    for(let i=0;i<NL;i++){if(s!==2){m4.makeScale(0,0,0);fl.setMatrixAt(i,m4);continue}const r=rungs[i>>1],side=i%2,k=cl(un*1.6-(i>>1)/HN*.6,0,1),home=side?r.p2:r.p1,away=c(home.x*(side?-1:1)*0+home.x*2.3,home.y+((i*13)%7-3)*.1,home.z*2.3);const p=away.clone().lerp(home,k);const nm=side?r.p2:r.p1;m4.makeScale(1,1,1);const q=home.clone().multiplyScalar(1).add(home.clone().setY(0).normalize().multiplyScalar(.9+(1-k)*1.8));m4.setPosition(q.x,home.y,q.z);fl.setMatrixAt(i,m4)}fl.instanceMatrix.needsUpdate=!0;
    /* gene -> protein */
-   const gp_=s===3?ph:0;mrG.setDrawRange(0,Math.floor(cl(gp_*2.2,0,1)*40)*6*6);mrMesh.visible=s===3;
+   const gp_=s===3?ph:0;mrG.setDrawRange(0,Math.floor(cl(gp_*2.2,0,1)*(mrG.index.count/3))*3);mrMesh.visible=s===3;
    for(let i=0;i<NA;i++){if(s!==3){m4.makeScale(0,0,0)}else{const f=cl((gp_-.45)*3.2-i/NA*1.2,0,1),p=protP[i],from=c(5.5,2.2,0);const q=from.clone().lerp(p,f);m4.makeScale(f>0?1:0,f>0?1:0,f>0?1:0);m4.setPosition(q.x,q.y,q.z)}aa.setMatrixAt(i,m4)}aa.instanceMatrix.needsUpdate=!0;
    protG.visible=s===3&&gp_>.8;rb1.position.x=5.5+cl((gp_-.2)*3,0,1)*.3},
   predict:{q:"In a cross between two heterozygous tall pea plants (Tt × Tt), what fraction of the offspring will be dwarf?",opts:[["1/4",!0,"Correct — only tt is dwarf: 3 tall : 1 dwarf."],["1/2",!1,"That is the ratio for a test cross (Tt × tt)."],["3/4",!1,"3/4 are tall."]]}})}
@@ -7094,9 +7095,10 @@ function Mdivision(){sd=91;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);cons
  /* ---- cell shapes by step ---- */
  const cellsM=(s,p)=>{const big=s<4?1:(s===4?1-cl((p-.35)/.4,0,1):0),two=s===4?cl((p-.35)/.4,0,1):(s>4?1:0);mBig.visible=big>.02;mBig.scale.set(1,1+(s===3?.35*p:s===4?.45:0),1);mA.visible=mB.visible=two>.02;mA.position.y=3.4*two*1.0;mB.position.y=-3.4*two*1.0;mA.scale.setScalar(.6+.4*two);mB.scale.setScalar(.6+.4*two);
   const nv=s===0?1:s===1?1-cl((p-.3)/.5,0,1):0;mNuc.visible=nv>.02;envMat.opacity=.4*nv||.4;mNuc.material.opacity=.4*nv;mNA.visible=mNB.visible=s===4&&p>.1||s>4;};
- const cellsE=(s,p)=>{const big=s<=5?1:(s===6?1-cl((p-.8)/.2,0,1):0);eBig.visible=big>.02;eNuc.visible=s<=5&&!(s===5&&p>.6)&&s===5?p<.35:s<5?false:false;eNuc.visible=s===5&&p<.35;
-  const tb=s===6?cl((p-.8)/.2,0,1):(s===7?1:0);eT.visible=eBt.visible=tb>.02&&(s<7||(s===7&&false));eT.visible=eBt.visible=s===6&&tb>.02||(s===7&&cl((p-.8)/.2,0,1)<.98);eT.scale.setScalar(.6+.4*tb);eBt.scale.setScalar(.6+.4*tb);
-  const four=s===7?cl((p-.8)/.2,0,1):0;[eTL,eTR,eBL,eBR].forEach(m=>{m.visible=four>.02||s>=8});};
+ const cellsE=(s,p)=>{const k1=cl((p-.35)/.35,0,1),k2=cl((p-.7)/.2,0,1);
+  eBig.visible=s<=5||(s===6&&p<.7);eBig.scale.set(1,s===6?1+.35*k1:1,1);eNuc.visible=s===5&&p<.35;
+  const two=(s===6&&p>=.7)||(s===7&&p<.7);eT.visible=eBt.visible=two;const g2=s===6?.6+.4*k2:1;eT.scale.setScalar(g2);eBt.scale.setScalar(g2);
+  const four=(s===7&&p>=.7)||s>=8;[eTL,eTR,eBL,eBR].forEach(m=>{m.visible=four;m.scale.setScalar(s===7?.6+.4*k2:1)})};
  const cams=[[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.8,19),c(-18,-.8,0)],[c(-18,-1.4,24),c(-18,-1.4,0)],[c(18,-.6,17),c(18,-.6,0)],[c(18,-1.5,24),c(18,-1.5,0)],[c(18,-1.5,25),c(18,-1.5,0)],[c(0,-1.5,40),c(0,-1.5,0)]];
  const camK=["Interphase","Prophase","Metaphase","Anaphase","Telophase","Meiosis I prophase","Meiosis I","Meiosis II","Compare"];
  const show={};const ids=["cell9","nuc9","chrom9","spindle","cen9","chiasma"];ids.forEach(i=>show[i]=[1,1,1,1,1,1,1,1,1]);
