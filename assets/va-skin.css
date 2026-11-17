@@ -84,3 +84,6 @@ body.light ::-webkit-scrollbar{width:10px;height:10px}body.light ::-webkit-scrol
 
 /* 3D contrast boost: deeper colours, crisper edges against the bright sky */
 body.light #stage>canvas,body.light #stage canvas:not(#hud canvas){filter:contrast(1.28) saturate(1.3) brightness(.96)}
+
+/* guided-explore caption + live graph size guard */
+#hud canvas{max-width:260px!important;max-height:110px!important;height:auto}
