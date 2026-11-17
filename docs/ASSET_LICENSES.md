@@ -201,3 +201,10 @@ How to add a row:
 
 Source: the same `nqwrc/3d-anatomy` Draco GLB layers as the digestive/heart packs (visceral, skeletal, muscular, nervous, joints). Excluded on purpose: kidney (CC BY-NC), inner ear (CC BY-NC-SA), the "Brainder"/"White matter" brain models (no licence stated), so there is still no realistic brain scene.
 Built with `tools/build-pack.mjs` + `tools/packs/*.mjs`; scene code is `tools/anatomy-module.js` (injected into `index.html` by `tools/inject-anatomy.py`). Meshes were simplified and re-encoded (modified). Same share-alike and attribution terms as above apply.
+
+## Added 2026-11-17 — haemodialysis model and condition pictures (no third-party assets)
+
+| Files | What | Licence |
+|---|---|---|
+| `tools/cell-module.js` SET 10 (`Mdialysis`) | Haemodialysis scene, 100 % procedural geometry written for this project (no imported mesh, no texture file) | Project code |
+| `public/2d/conditions/*.webp`, `public/2d/class10/biology/images/dialysis.webp` | Renders of the atlas's own 3D scenes produced by `tools/conditions/render.mjs` (see `docs/CONDITIONS.md`). Where a scene uses a third-party anatomy pack (heart, eye, lungs, elbow joint, digestive) the render is a derivative of that pack and carries the same attribution as the pack's row above. | Project renders; pack-derived renders inherit the pack licence |
