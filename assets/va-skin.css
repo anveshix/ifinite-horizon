@@ -86,3 +86,10 @@ body.light #stage>canvas,body.light #stage canvas:not(#hud canvas){filter:contra
 
 /* guided-explore caption + live graph size guard */
 #hud canvas{max-width:260px!important;max-height:110px!important;height:auto}
+
+
+/* Model's own bottom-right info panel (#hud): compact, scrollable, collapsible so it never swallows the model */
+body.va-guided #hud{max-width:min(440px,46vw);max-height:30%;overflow:auto;font-size:calc(12px*var(--fs));line-height:1.35;padding:6px 9px;scrollbar-width:thin}
+body.va-guided #hud.vaMin{max-height:26px;overflow:hidden;opacity:.85}
+#hud .vaHb{position:sticky;top:0;float:right;margin:-2px -4px 0 6px;border:1px solid var(--bd);background:var(--glass);color:var(--ink);border-radius:6px;font:700 12px system-ui;line-height:1;padding:2px 7px;cursor:pointer;z-index:2}
+@media (max-width:760px){body.va-guided #hud{max-width:58vw;max-height:26%;font-size:calc(11px*var(--fs))}}

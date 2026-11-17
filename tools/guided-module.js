@@ -7,17 +7,27 @@ const keyOf=(c,t)=>(c.kp?c.kp:"ch"+c.no)+"/"+t.id;
 const find=k=>{for(const c of [...Hi,...Hj])for(const t of c.topics)if(keyOf(c,t)===k)return t;return null};
 const btn=l=>[...document.querySelectorAll("#tools .btn")].find(b=>b.textContent.includes(l));
 setInterval(()=>{const e=document.getElementById("vaStepCap");if(e&&!e.hidden&&performance.now()-(e.__ts||0)>1200)e.hidden=true},500);
+
+/* per-step camera: explicit spec.cam = {yaw:deg,zoom:f,lift:f} or a preset; otherwise a gentle default tour (wide → left → right → close …) around the model's own start view */
+const PRE={wide:{yaw:0,zoom:1,lift:0},left:{yaw:-20,zoom:.96,lift:.05},right:{yaw:20,zoom:.96,lift:.05},near:{yaw:0,zoom:.88,lift:.02},nearL:{yaw:-12,zoom:.9,lift:.03},nearR:{yaw:12,zoom:.9,lift:.03},top:{yaw:0,zoom:.95,lift:.3}};
+const TOUR=["wide","nearL","nearR","left","right","near"];
+function stepCam(r,s,steps){const v=r.view;if(!v||!v.pos||!v.target||!window.__atlas||!window.__atlas.fly)return;
+ const sp=(steps[s]&&steps[s][4])||{};let cfg=sp.cam;if(typeof cfg==="string")cfg=PRE[cfg];
+ if(!cfg)cfg=s===0||s===steps.length-1?PRE.wide:PRE[TOUR[s%TOUR.length]];
+ const tx=v.target.x,ty=v.target.y,tz=v.target.z,dx=v.pos.x-tx,dy=v.pos.y-ty,dz=v.pos.z-tz,a=(cfg.yaw||0)*Math.PI/180,c0=Math.cos(a),s0=Math.sin(a),z=cfg.zoom||1;
+ const nx=(dx*c0+dz*s0)*z,nz=(-dx*s0+dz*c0)*z,len=Math.hypot(dx,dy,dz),ny=dy*z+len*(cfg.lift||0);
+ const sh=len*.1;window.__atlas.fly([tx+nx,ty+ny-sh,tz+nz],[tx,ty-sh,tz],1.3)}
 function guide(keys,steps){for(const k of [].concat(keys)){(window.__vaSpecs=window.__vaSpecs||{})[k]=steps;const T=find(k);if(!T||!T.build||T.__guided)continue;T.__guided=1;const orig=T.build;
  T.build=function(){const r=orig();if(!r||r.steps)return r;let lastS=-1,lastT=0,pend=-1,tries=0;
   const out=Object.assign({},r,{steps:steps.map(s=>({dur:s[5]||10,en:`${s[0]} — ${s[2]}`,hi:`${s[1]} — ${s[3]}`})),
-   apply(s,kk,t){const dt=Math.min(.1,Math.max(0,t-lastT));lastT=t;if(s!==lastS){lastS=s;pend=s;tries=0}
+   apply(s,kk,t){const dt=Math.min(.1,Math.max(0,t-lastT));lastT=t;if(s!==lastS){lastS=s;pend=s;tries=0;try{stepCam(r,s,steps)}catch(e){}}
     if(pend>=0){const sp=steps[pend][4]||{};let ok=true;const want=Object.keys(sp.set||{}).concat(sp.click||[]);if(want.length&&!btn(want[0]))ok=false;
      if(ok||++tries>180){for(const l in (sp.set||{})){const b=btn(l);if(b&&b.classList.contains("on")!==sp.set[l])b.click()}for(const l of (sp.click||[])){const b=btn(l);b&&b.click()}pend=-1}}
     r.apply(t,dt);
     let el=document.getElementById("vaStepCap");if(!el){el=document.createElement("div");el.id="vaStepCap";el.style.cssText="position:absolute;left:10px;right:10px;z-index:4;pointer-events:none;background:var(--glass,rgba(255,255,255,.96));color:var(--ink,#0b1b3a);border:1px solid var(--bd,#c3cfdf);border-radius:12px;padding:7px 12px;font-size:calc(12.5px*var(--fs,1.15));line-height:1.35;box-shadow:0 6px 24px rgba(0,0,0,.2);max-height:24%;overflow:hidden";document.getElementById("stage").appendChild(el)}
     el.__ts=performance.now();const i=steps[s];const pn=document.getElementById("panel"),pv=pn&&pn.getBoundingClientRect().width>160&&!document.body.classList.contains("panelhide");el.hidden=!!pv;const htm=`<b>${s+1} · ${i[0]}</b> <span style="color:var(--hi)">/ ${i[1]}</span><br>${i[2]}<br><span class="hi" lang="hi" style="color:var(--hi)">${i[3]}</span>`;if(el.__h!==htm){el.innerHTML=htm;el.__h=htm}
     const hud=document.getElementById("hud"),st=document.getElementById("stage").getBoundingClientRect();let b=12;if(hud&&!hud.hidden){const hr=hud.getBoundingClientRect();if(hr.height>0)b=Math.max(12,st.bottom-hr.top+10)}el.style.bottom=b+"px";
-    document.body.classList.add("va-guided")}});
+    document.body.classList.add("va-guided");const hu=document.getElementById("hud");if(hu&&!hu.__vaB){hu.__vaB=1;hu.addEventListener("click",ev=>{if(ev.target.classList.contains("vaHb")){hu.classList.toggle("vaMin");ev.target.textContent=hu.classList.contains("vaMin")?"▴":"▾"}})}if(hu&&!hu.querySelector(".vaHb")&&!hu.hidden){const b=document.createElement("button");b.type="button";b.className="vaHb";b.title="Shrink / expand";b.textContent=hu.classList.contains("vaMin")?"▴":"▾";hu.insertBefore(b,hu.firstChild)}}});
   (r.labels||[]).forEach(l=>{if(!l.steps)l.steps={includes:i=>{const f=(steps[i]&&steps[i][4]||{}).labels;if(f&&!new RegExp(f,'i').test(l.en))return!1;return!l.when||l.when()},length:1,find:()=>0}});
   out.__noAll=1;delete out.intro;return out}}}
 window.__vaGuide=guide;
