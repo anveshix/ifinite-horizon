@@ -44,3 +44,6 @@ Still weak: unrelated-mode labels still show in a few legacy scenes (ix8/cycles 
 ## Custom model set 10: ionic bond NaCl (`ix7/ionic3d`, 7 steps)
 Na and Cl atoms with shells, electron transfer, ion formation (Na⁺ smaller, Cl⁻ larger), attraction, 4×4×4 crystal lattice, conductivity (solid vs molten bulb), MgCl₂ / CaO. Verified by screenshots of steps 3, 4, 7 after fixes. Weak: step 4 'attraction' only brings the two ions together visually; electron/ion glows are plain; step 7 is a static schematic.
 Planned next: electric circuit (ch11/circuit3d), ray diagrams (ch9/rays3d).
+
+## Custom model set 11: electric circuit (`ch11/circuit3d`, 7 steps)
+Cell, plug key (open/closed), bulbs, resistor, ammeter (series), voltmeter (parallel), drifting electrons + conventional-current arrows, V–I graph line, series and parallel layouts, heating glow. Viewed all 7 steps after a camera fix. Honest quality note: this is the weakest of the custom sets so far — the layout is a flat board seen from above, meters partly overlap bulbs, the V–I graph is a single line (no plotted points), series/parallel are drawn by swapping bulbs rather than rewiring. Needs a redesign pass.
