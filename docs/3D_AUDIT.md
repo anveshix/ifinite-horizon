@@ -40,3 +40,7 @@ Not verified: the visual result of each individual step (spot-checked: reactivit
 ## Per-step visual review of the 67 chemistry/physics guided topics (2026-11-17)
 All 67 sheets were opened. Fixed: fuse replace (restores 1 A), Fleming-rule steps (current on), combination summary reset, engine "all labels on last step" piling labels (disabled for guided topics), toggle buttons that were clicked blindly (Earth spheres, circular-motion vectors, bar-magnet / wire field lines, microscope ray path → now set to explicit on/off), indicator tests.
 Still weak: unrelated-mode labels still show in a few legacy scenes (ix8/cycles last step is crowded), ix10/trolley data table fills only after Release, adv6/spectrum lower panel overlaps. Underlying primitive models are unchanged.
+
+## Custom model set 10: ionic bond NaCl (`ix7/ionic3d`, 7 steps)
+Na and Cl atoms with shells, electron transfer, ion formation (Na⁺ smaller, Cl⁻ larger), attraction, 4×4×4 crystal lattice, conductivity (solid vs molten bulb), MgCl₂ / CaO. Verified by screenshots of steps 3, 4, 7 after fixes. Weak: step 4 'attraction' only brings the two ions together visually; electron/ion glows are plain; step 7 is a static schematic.
+Planned next: electric circuit (ch11/circuit3d), ray diagrams (ch9/rays3d).
