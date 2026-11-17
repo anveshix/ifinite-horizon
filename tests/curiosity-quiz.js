@@ -68,7 +68,7 @@ const fails=[];const ok=(c,m)=>{if(!c)fails.push(m)};
   /* finish the round, then check the summary maths */
   let guard=0;while(!(await round()).done&&guard++<12){const r=await round();if(r.i>=r.n)break;const anyAnswered=await p.evaluate(()=>!!document.getElementById('cqNext'));if(!anyAnswered){if(guard%3===0)await answerWrong();else await answerRight()}
     if(await p.evaluate(()=>!!document.getElementById('cqNext')))await next()}
-  await p.waitForSelector('.cq-sum',{timeout:5000});await p.waitForTimeout(1200);
+  await p.waitForSelector('.cq-sum',{timeout:5000});await p.waitForFunction(()=>{const f=document.querySelector('.cq-ring .fg');return f&&f.style.strokeDashoffset===f.dataset.to+'px'||f&&Math.abs(parseFloat(f.style.strokeDashoffset)-parseFloat(f.dataset.to))<0.01},null,{timeout:5000}).catch(()=>{});await p.waitForTimeout(1200);
   const R=await round(),tally=R.results.filter(Boolean).length,sum=await p.evaluate(()=>({stats:[...document.querySelectorAll('.cq-stats b')].map(x=>x.textContent),pct:document.getElementById('cqPct').textContent,off:document.querySelector('.cq-ring .fg').style.strokeDashoffset,C:+document.querySelector('.cq-ring .fg').style.strokeDasharray,review:document.querySelectorAll('.cq-rv').length}));
   ok(sum.stats[0]===`${tally} / ${R.results.length}`,`summary score ${sum.stats[0]} vs tally ${tally}/${R.results.length}`);
   ok(+sum.pct===Math.round(tally/R.results.length*100),`summary percent ${sum.pct}`);ok(Math.abs(+sum.off-sum.C*(1-tally/R.results.length))<0.5,'ring does not match the score');

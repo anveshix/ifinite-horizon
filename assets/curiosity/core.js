@@ -94,7 +94,7 @@ const write = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch
 
 let state = read();
 const listeners = new Set();
-const commit = () => { write(state); listeners.forEach(fn => { try { fn(state); } catch (e) { console.error("[curiosity] store listener failed", e); } }); };
+const commit = () => { write(state); try { window.dispatchEvent(new Event("va-cl-progress")); } catch { /* not in a page */ } listeners.forEach(fn => { try { fn(state); } catch (e) { console.error("[curiosity] store listener failed", e); } }); };
 
 export const store = {
   get: () => state,

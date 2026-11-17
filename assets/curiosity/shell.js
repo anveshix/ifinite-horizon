@@ -70,9 +70,13 @@ function setTab(t) {
   paintTabs();
 }
 const quizUnlocked = () => !!cur && store.explored(cur.lab.id) > 0;
+/** How many different settings the student has actually tried in this lab (drives the "ready for the check?" nudge). */
+const tried = id => Object.values(store.lab(id).explored).reduce((n, l) => n + l.length, 0);
+const NUDGE_AT = 4;
 function paintTabs() {
   const b = $("#clTabQuiz", root), ok = quizUnlocked();
   b.disabled = !ok; b.classList.toggle("locked", !ok);
+  b.classList.toggle("ready", ok && tab !== "quiz" && tried(cur.lab.id) >= NUDGE_AT);
   b.title = ok ? "Answer questions about what you just saw" : "Do an experiment first — change a slider in the simulator, then your results become the questions";
 }
 
@@ -93,6 +97,7 @@ function paintPicker() {
 /* ---------- lab lifecycle ---------- */
 function disposeLab() {
   if (!cur) return;
+  root.querySelectorAll(".cl-nudge").forEach(n => n.remove());
   try { cur.handle.dispose && cur.handle.dispose(); } catch (e) { console.error("[curiosity] dispose failed", e); }
   $("#clStage", root).replaceChildren(); $("#clSide", root).replaceChildren();
   cur = null;
@@ -101,6 +106,7 @@ export async function openLab(id) {
   const lab = getLab(id); if (!lab) return;
   disposeLab();
   const vars = defaults(lab);
+  let nudged = false;
   const ctx = {
     lab, vars, stage: $("#clStage", root), side: $("#clSide", root),
     /** Labs call this when the student moves a control: snaps, stores, tells the quiz. */
@@ -108,6 +114,7 @@ export async function openLab(id) {
       const v = lab.vars.find(x => x.id === varId); if (!v) throw new Error(`unknown variable ${varId}`);
       const val = snap(v, raw); if (val === vars[varId]) return val;
       vars[varId] = val; store.recordTweak(lab.id, varId, val); paintTabs();
+      if (!nudged && tried(lab.id) >= NUDGE_AT) { nudged = true; nudge(); }
       bus.emit("sim:change", { labId: lab.id, varId, value: val, vars: { ...vars }, facts: lab.facts({ ...vars }) });
       return val;
     },
@@ -141,6 +148,16 @@ function paintQuiz() {
   if (!cur) { host.innerHTML = `<p class="cl-empty">Pick an experiment first. · पहले कोई प्रयोग चुनें।</p>`; return; }
   if (!hooks.quiz) { host.innerHTML = `<p class="cl-empty">The knowledge check for this experiment is not available yet.</p>`; return; }
   quizDispose = hooks.quiz(host, { lab: cur.lab, vars: { ...cur.vars }, store, bus, back: () => setTab("sim"), apply: applyVars }) || null;
+}
+
+/** After a few different settings the simulator suggests the check (once per visit to a lab). */
+function nudge() {
+  const stage = $("#clLab", root); if (!stage || $(".cl-nudge", root)) return;
+  const n = document.createElement("div"); n.className = "cl-nudge"; n.setAttribute("role", "status");
+  n.innerHTML = `<span>🎯 You have tried ${NUDGE_AT} settings — ready to test what you saw? <span class="hi" lang="hi">अब जाँचो कि क्या समझे!</span></span><button type="button" class="cl-act">Take the check →</button><button type="button" class="cl-x2" aria-label="Dismiss">✕</button>`;
+  n.querySelector(".cl-act").onclick = () => { n.remove(); setTab("quiz"); };
+  n.querySelector(".cl-x2").onclick = () => n.remove();
+  stage.appendChild(n); fx.sound.play("tick"); setTimeout(() => n.remove(), 12000);
 }
 
 /** "Show me in the simulator": puts the lab into the state a question was about, then switches to the simulator tab. */

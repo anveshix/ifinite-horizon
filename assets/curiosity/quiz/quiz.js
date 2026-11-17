@@ -13,13 +13,14 @@ const LETTERS = ["1", "2", "3", "4", "5"];
 /* ---------------------------------------------------------------- round construction */
 export function buildRound(lab, store, vars, seed) {
   const explored = (store.lab(lab.id).explored) || {}, all = [], seen = new Set();
-  for (let k = 0; k < 4; k++) {
+  for (let k = 0; k < 12 && all.length < ROUND * 2; k++) {           // a student who tried few settings repeats questions: draw more until there is enough variety
     let qs = [];
     try { qs = lab.questions({ vars, explored, rnd: rng(seed * 131 + k * 977 + 1), seed: seed + k }); } catch (e) { console.error("[curiosity] questions failed", lab.id, e); }
     qs.forEach(q => { try { validateQuestion(q); } catch (e) { console.warn("[curiosity]", e.message); return; } const key = q.id + "|" + q.prompt.en; if (!seen.has(key)) { seen.add(key); all.push(q); } });
   }
-  const rnd = rng(seed * 7 + 3), mixed = shuffle(all, rnd), firstName = mixed.findIndex(q => q.kind === "name");
-  if (firstName > 0) [mixed[0], mixed[firstName]] = [mixed[firstName], mixed[0]];       // start with a "name it" question: easiest way in
+  const rec = store.lab(lab.id), acc = rec.answered >= 6 ? rec.correct / rec.answered : null, hard = acc !== null && acc >= 0.85;   // a student who is cruising gets the harder "predict" questions first
+  const rnd = rng(seed * 7 + 3), mixed = shuffle(all, rnd), lead = mixed.findIndex(q => q.kind === (hard ? "predict" : "name"));
+  if (lead > 0) [mixed[0], mixed[lead]] = [mixed[lead], mixed[0]];                       // otherwise start with a "name it" question: the easiest way in
   const qs = mixed.slice(0, ROUND).map(q => ({ ...q, opts: shuffle(q.options, rnd) }));
   return { labId: lab.id, seed, qs, i: 0, results: [], usedFifty: false, startXp: store.get().xp, answered: false, t0: 0, bestStreak: 0 };
 }
@@ -51,6 +52,7 @@ export function renderQuiz(host, ctx) {
         <button type="button" class="cq-tool" id="cqFifty" title="Remove wrong options (once per round)" ${R.usedFifty || q.opts.length < 3 ? "disabled" : ""}>✂ 50 : 50</button>
         <button type="button" class="cq-tool" id="cqSnd" aria-pressed="${snd()}" title="Sounds on / off">${snd() ? "🔊" : "🔇"}</button>
       </div>
+      ${basedOn()}
       <article class="cq-card" id="cqCard" aria-live="polite">
         <span class="cq-badge ${q.kind}">${q.kind === "predict" ? "🔮 Predict · अनुमान लगाओ" : "🏷️ Perfect name · सही नाम"}</span>
         <h2 class="cq-prompt">${esc(q.prompt.en)}<span class="hi" lang="hi">${esc(q.prompt.hi)}</span></h2>
@@ -65,6 +67,11 @@ export function renderQuiz(host, ctx) {
     R.answered = false; R.t0 = performance.now(); q.fifty = false;
   }
   const $ = s => box.querySelector(s);
+  /** The proof that the questions come from the simulator: the settings the student actually tried. */
+  function basedOn() {
+    const ex = store.lab(lab.id).explored || {}, parts = lab.vars.filter(v => (ex[v.id] || []).length).map(v => `${esc(v.label.en.split(" (")[0])}: <b>${ex[v.id].slice(-6).map(x => +x.toFixed(2)).join(", ")}</b>${v.unit ? " " + esc(v.unit) : ""}`);
+    return parts.length ? `<p class="cq-based">🧪 Built from your experiments · <span class="hi" lang="hi">तुम्हारे प्रयोगों से बना</span> — ${parts.join(" · ")}</p>` : "";
+  }
   const flames = s => s >= 10 ? "🔥🔥🔥" : s >= 5 ? "🔥🔥" : "🔥";
 
   /* ---------- answering ---------- */
@@ -129,7 +136,7 @@ export function renderQuiz(host, ctx) {
     const wrong = R.results.filter(r => !r.correct), C = 2 * Math.PI * 54;
     box.innerHTML = `
       <section class="cq-sum">
-        <div class="cq-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="54" class="bg"/><circle cx="60" cy="60" r="54" class="fg" style="stroke-dasharray:${C};stroke-dashoffset:${C}" data-to="${C * (1 - pct / 100)}"/></svg><div><b id="cqPct">0</b><small>%</small></div></div>
+        <div class="cq-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="54" class="bg"/><circle cx="60" cy="60" r="54" class="fg" style="stroke-dasharray:${C};stroke-dashoffset:${C}" data-to="${C * (1 - (n ? ok / n : 0))}"/></svg><div><b id="cqPct">0</b><small>%</small></div></div>
         <h2 class="glow">${em} ${esc(title)} <span class="hi" lang="hi">${esc(hi)}</span></h2>
         <ul class="cq-stats"><li><b>${ok} / ${n}</b><span>correct · सही</span></li><li><b>+${xp}</b><span>XP earned · अंक</span></li><li><b>${R.bestStreak}</b><span>best streak · सबसे लंबी श्रृंखला</span></li><li><b>${avg.toFixed(1)} s</b><span>avg time · औसत समय</span></li></ul>
         ${wrong.length ? `<div class="cq-review"><h3>Look again · दोबारा देखो</h3>${wrong.map((r, k) => `<div class="cq-rv"><div><b>${esc(r.q.prompt.en)}</b><span class="hi" lang="hi">${esc(r.q.prompt.hi)}</span><em>✔ ${esc(r.q.options.find(o => o.id === r.q.answer).en)}</em></div>${r.q.image ? `<button type="button" class="cl-chipb" data-show="${k}">🧪 Show me</button>` : ""}</div>`).join("")}</div>` : `<p class="cq-allgood">No mistakes to review — every answer was right! · कोई गलती नहीं!</p>`}

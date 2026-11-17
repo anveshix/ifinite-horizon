@@ -1,6 +1,6 @@
 # Curiosity Lab — 3D Simulator & Visual Knowledge Check
 
-Status: **Phases 1–3 done** (scaffold, four 3D labs + question generators, Knowledge check with the gamification layer). Phase 4 = final wiring into the atlas's own progress and an end-to-end pass (see plan below).
+Status: **All four phases done** — scaffold, four 3D labs + verified question generators, Knowledge check with the gamification layer, and the wiring into the atlas (lesson links, student report, teacher dashboard, Home) with an end-to-end test.
 
 ## Phase 1 scan — what the codebase is
 | Finding | Consequence for the Curiosity Lab |
@@ -28,6 +28,7 @@ assets/curiosity/
   quiz/fx.js                    effects: canvas confetti / fireworks / rain, glowing floating text, CSS shake, flash, vibration, optional sounds
 tests/curiosity.js              Playwright: launcher, shell, core.js
 tests/curiosity-labs.js         Playwright: all four labs (render, sliders, physics values, run/pause, dispose, phone layout)
+tests/curiosity-e2e.js          Playwright: topic card → lab → nudge → check → My report → report code → teacher table / CSV, old + hostile codes, adaptive difficulty, Home badge
 tests/curiosity-quiz.js         Playwright: shake / vibrate / confetti pixels / XP / streak banner / level-up / 50:50 / keyboard / summary maths / reduced motion / phone
 tests/curiosity-physics.mjs     node: physics models vs NCERT results (180 checks)
 tests/curiosity-questions.mjs   node: every question generator vs an independent re-derivation (≈42 000 checks)
@@ -67,7 +68,18 @@ A **question** is `{ id, kind: "name"|"predict", prompt, image: {vars, focus?}|n
 * **Learning loop** — every answer offers *Show me in the simulator* (puts the lab in exactly the state the question was about); the results screen lists the missed questions with the same button.
 * **Respect** — `prefers-reduced-motion` turns off shake / confetti / banners (colour + glow feedback stays); sounds are **off by default** (toggle persists); keyboard: `1–5` answer, `Enter` next; radiogroup semantics, `aria-live` feedback, focus moves to *Next*.
 
+## Wiring into the atlas (Phase 4)
+| Where | What |
+|---|---|
+| **Lesson panel** | On the nine topics a lab belongs to (`ch9/optics`, `ch9/power`, `ch11/ohm|resistance|series|heating`, `ix10/forces|trolley`, `ix11/energy`) a card "Try it yourself in the … Lab" opens that lab directly (`LINKS` in `assets/va-curiosity.js`; the test checks every key exists). |
+| **Simulator → check** | After 4 different settings the simulator offers the check (toast + pulsing tab). The check says which settings the questions were built from ("Built from your experiments — u: 35, 20, 12, 8 cm") and "Show me in the simulator" puts the lab back into the state a question was about. A student answering ≥ 85 % in a lab starts rounds with the harder *predict* questions. |
+| **My report** | Chips: Curiosity XP · level, % of lab questions right. |
+| **Report code (VA1…)** | New optional field `cl` = `xp.answered.correct.bestStreak~lab:answered:correct,…`. Old codes still import (lab columns show —); a teacher on an old version simply ignores the field; the checksum still protects it; the parser clamps absurd numbers and ignores anything that is not that exact shape (no HTML ever reaches the page). |
+| **Teacher dashboard** | Columns 🧪 XP and 🧪 %, summary chips "avg Curiosity XP" / "% right", CSV columns `CuriosityXP`, `CuriosityLabAccuracyPct`. |
+| **Home** | The Curiosity Lab button shows "Lv N · XP" once the student has any. |
+| **Fixed on the way** | The numbers inside the report / teacher chips were white on white in the light skin (pre-existing). |
+
 ## Plan
 * **Phase 2 ✓** — the four Three.js labs above, NCERT-only maths.
 * **Phase 3 ✓** — Knowledge check + effects (above).
-* **Phase 4** — questions generated from the student's own explored values; wiring to `store`, XP and the atlas progress; integration test over every lab.
+* **Phase 4 ✓** — wiring above, end-to-end test.
