@@ -18,8 +18,8 @@ function guide(keys,steps){for(const k of [].concat(keys)){(window.__vaSpecs=win
     el.__ts=performance.now();const i=steps[s];const pn=document.getElementById("panel"),pv=pn&&pn.getBoundingClientRect().width>160&&!document.body.classList.contains("panelhide");el.hidden=!!pv;const htm=`<b>${s+1} · ${i[0]}</b> <span style="color:var(--hi)">/ ${i[1]}</span><br>${i[2]}<br><span class="hi" lang="hi" style="color:var(--hi)">${i[3]}</span>`;if(el.__h!==htm){el.innerHTML=htm;el.__h=htm}
     const hud=document.getElementById("hud"),st=document.getElementById("stage").getBoundingClientRect();let b=12;if(hud&&!hud.hidden){const hr=hud.getBoundingClientRect();if(hr.height>0)b=Math.max(12,st.bottom-hr.top+10)}el.style.bottom=b+"px";
     document.body.classList.add("va-guided")}});
-  (r.labels||[]).forEach(l=>{if(!l.steps)l.steps={includes:()=>!l.when||l.when(),length:1,find:()=>0}});
-  delete out.intro;return out}}}
+  (r.labels||[]).forEach(l=>{if(!l.steps)l.steps={includes:i=>{const f=(steps[i]&&steps[i][4]||{}).labels;if(f&&!new RegExp(f,'i').test(l.en))return!1;return!l.when||l.when()},length:1,find:()=>0}});
+  out.__noAll=1;delete out.intro;return out}}}
 window.__vaGuide=guide;
 /* ---- Biology ---- */
 const XYLEM=[
