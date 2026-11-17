@@ -72,7 +72,7 @@ G("ch11/heating",[
 ["Double the current","धारा दोगुनी","Heat depends on I²: doubling the current gives FOUR times the heat.","ऊष्मा I² पर निर्भर: धारा दोगुनी = ऊष्मा चार गुनी।",{click:["2 A"]},12],
 ["Three amperes","3 A","Tripling the current gives nine times the heat.","धारा तीन गुनी = ऊष्मा नौ गुनी।",{click:["3 A"]},11],
 ["Overload and the fuse","अतिभार व फ़्यूज़","At 6 A the fuse wire melts and breaks the circuit — protecting appliances. Replace the fuse.","6 A पर फ़्यूज़-तार पिघलकर परिपथ तोड़ देता है — उपकरण सुरक्षित; फ़्यूज़ बदलिए।",{click:["6 A (overload)"]},12],
-["Replace the fuse","फ़्यूज़ बदलिए","Always replace a fuse with the same rating, never with a thick wire.","फ़्यूज़ सदा समान रेटिंग का बदलें, मोटा तार कभी नहीं।",{click:["🔧 Replace fuse"]},9]]);
+["Replace the fuse","फ़्यूज़ बदलिए","Always replace a fuse with the same rating, never with a thick wire.","फ़्यूज़ सदा समान रेटिंग का बदलें, मोटा तार कभी नहीं।",{click:["1 A","🔧 Replace fuse"]},9]]);
 G("ch12/domestic",[
 ["Live, neutral and earth","लाइव, न्यूट्रल व अर्थ","Red live wire (220 V), black neutral, green earth. All appliances are connected in parallel between live and neutral. Tap an appliance to switch it on.","लाल लाइव (220 V), काला न्यूट्रल, हरा अर्थ; सभी उपकरण लाइव-न्यूट्रल के बीच पार्श्व में; उपकरण पर टैप कर चालू कीजिए।",{click:["↺ Reset MCB"]},12],
 ["Overloading","अतिभार","Too many appliances draw a large total current; the MCB/fuse trips.","बहुत से उपकरण चलाने पर कुल धारा अधिक — MCB/फ़्यूज़ कट जाता है।",{},10],
@@ -96,8 +96,8 @@ G("ch12/solenoid",[
 ["Reverse the current","धारा उलटिए","Poles swap: north and south ends reverse.","ध्रुव बदल जाते हैं — उत्तरी-दक्षिणी सिरे पलटते हैं।",{click:["⇅ Reverse current"]},10],
 ["Soft-iron core: electromagnet","नर्म लोहे की क्रोड: विद्युत चुंबक","A soft-iron core greatly strengthens the field — an electromagnet, magnetic only while current flows (cranes, bells, MRI).","नर्म लोहे की क्रोड क्षेत्र बहुत बढ़ाती है — विद्युत चुंबक, धारा रहने तक ही चुंबक (क्रेन, घंटी, MRI)।",{click:["🔩 Soft-iron core"]},12]]);
 G("ch12/flhr",[
-["A force on a current","धारा पर बल","A current-carrying rod in a magnetic field feels a force (Ampère). Switch the current on: the rod swings.","चुंबकीय क्षेत्र में धारावाही छड़ पर बल लगता है; धारा चालू कीजिए — छड़ हिलती है।",{click:["Current ON/OFF"]},11],
-["Fleming's left-hand rule","फ़्लेमिंग का बायाँ हाथ नियम","Left hand: First finger = Field, seCond finger = Current, thuMb = Motion (force). All mutually perpendicular.","बायाँ हाथ: तर्जनी = क्षेत्र, मध्यमा = धारा, अँगूठा = गति (बल); तीनों परस्पर लंबवत।",{},12],
+["A force on a current","धारा पर बल","A current-carrying rod in a magnetic field feels a force (Ampère). Next we switch the current on and the rod swings.","चुंबकीय क्षेत्र में धारावाही छड़ पर बल लगता है; अगले चरण में धारा चालू होगी और छड़ हिलेगी।",{},11],
+["Fleming's left-hand rule","फ़्लेमिंग का बायाँ हाथ नियम","Left hand: First finger = Field, seCond finger = Current, thuMb = Motion (force). All mutually perpendicular.","बायाँ हाथ: तर्जनी = क्षेत्र, मध्यमा = धारा, अँगूठा = गति (बल); तीनों परस्पर लंबवत।",{click:["⇄ Reverse current"]},12],
 ["Reverse the current","धारा उलटिए","The force reverses: the rod swings the other way.","बल उलटता है — छड़ दूसरी ओर हिलती है।",{click:["⇄ Reverse current"]},11],
 ["Flip the magnet","चुंबक पलटिए","Reversing the field also reverses the force.","क्षेत्र उलटने पर भी बल उलटता है।",{click:["🧲 Flip magnet"]},11],
 ["Double the current","धारा दोगुनी","A stronger current gives a larger force.","अधिक धारा = अधिक बल।",{click:["⚡ Double the current"]},10]]);
