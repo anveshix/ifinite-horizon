@@ -36,3 +36,7 @@ Next: → flower & pollination → heredity (DNA, Mendel) → cell division (mit
 ## Guided sequences added to the remaining free-play topics (2026-11-16)
 `tools/guided-chem.js` (27 chemistry / matter topics) and `tools/guided-phys.js` (40 physics / light / electricity / Earth-system topics) wrap every free-play topic from the audit so it now has an ordered, bilingual step list that presses the model's own buttons. Validated automatically: all 83 guided topics load, every referenced button exists, and the step counter appears (script in the session scratchpad; check = button labels vs `window.__vaSpecs`).
 Not verified: the visual result of each individual step (spot-checked: reactivity series, human eye). The model quality of the underlying primitive scenes is unchanged.
+
+## Per-step visual review of the 67 chemistry/physics guided topics (2026-11-17)
+All 67 sheets were opened. Fixed: fuse replace (restores 1 A), Fleming-rule steps (current on), combination summary reset, engine "all labels on last step" piling labels (disabled for guided topics), toggle buttons that were clicked blindly (Earth spheres, circular-motion vectors, bar-magnet / wire field lines, microscope ray path → now set to explicit on/off), indicator tests.
+Still weak: unrelated-mode labels still show in a few legacy scenes (ix8/cycles last step is crowded), ix10/trolley data table fills only after Release, adv6/spectrum lower panel overlaps. Underlying primitive models are unchanged.
