@@ -9,7 +9,7 @@ const btn=l=>[...document.querySelectorAll("#tools .btn")].find(b=>b.textContent
 setInterval(()=>{const e=document.getElementById("vaStepCap");if(e&&!e.hidden&&performance.now()-(e.__ts||0)>1200)e.hidden=true},500);
 
 /* per-step camera: explicit spec.cam = {yaw:deg,zoom:f,lift:f} or a preset; otherwise a gentle default tour (wide → left → right → close …) around the model's own start view */
-const PRE={wide:{yaw:0,zoom:1,lift:0},left:{yaw:-20,zoom:.96,lift:.05},right:{yaw:20,zoom:.96,lift:.05},near:{yaw:0,zoom:.88,lift:.02},nearL:{yaw:-12,zoom:.9,lift:.03},nearR:{yaw:12,zoom:.9,lift:.03},top:{yaw:0,zoom:.95,lift:.3}};
+const PRE={wide:{yaw:0,zoom:1,lift:0},left:{yaw:-14,zoom:1,lift:.04},right:{yaw:14,zoom:1,lift:.04},near:{yaw:0,zoom:.94,lift:.02},nearL:{yaw:-8,zoom:.96,lift:.03},nearR:{yaw:8,zoom:.96,lift:.03},top:{yaw:0,zoom:1,lift:.3}};
 const TOUR=["wide","nearL","nearR","left","right","near"];
 function stepCam(r,s,steps){const v=r.view;if(!v||!v.pos||!v.target||!window.__atlas||!window.__atlas.fly)return;
  const sp=(steps[s]&&steps[s][4])||{};let cfg=sp.cam;if(typeof cfg==="string")cfg=PRE[cfg];
