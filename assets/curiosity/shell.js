@@ -3,12 +3,13 @@
    Labs and the quiz plug in through core.js; the shell never knows what a lens or a resistor is. */
 import { labs, getLab, store, bus, levelInfo, defaults, snap, SYLLABUS } from "./core.js";
 import * as fx from "./quiz/fx.js";
+import { sliders, factsView } from "./labs/kit.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const LS = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } } };
 
-let root = null, tab = "sim", cur = null /* {lab, handle, vars} */, filter = LS.get("va.cl.cls") || "all", prevFocus = null, unsub = [], prevPause;
+let root = null, tab = "sim", cur = null /* {lab, handle, vars} */, filter = LS.get("va.cl.cls") || "all", prevFocus = null, unsub = [], prevPause, mountToken = 0;
 const hooks = { quiz: null };            // Phase 3 registers the quiz renderer here: (host, ctx) => dispose
 export const setQuizRenderer = fn => { hooks.quiz = fn; if (root && tab === "quiz") paintQuiz(); };
 
@@ -96,19 +97,64 @@ function paintPicker() {
 
 /* ---------- lab lifecycle ---------- */
 function disposeLab() {
+  ++mountToken;                          // invalidate any mount that is still awaiting Three.js
   if (!cur) return;
   root.querySelectorAll(".cl-nudge").forEach(n => n.remove());
-  try { cur.handle.dispose && cur.handle.dispose(); } catch (e) { console.error("[curiosity] dispose failed", e); }
-  $("#clStage", root).replaceChildren(); $("#clSide", root).replaceChildren();
+  const handle = cur.handle, stageHandle = cur.stageHandle;
+  try { handle && handle.dispose && handle.dispose(); } catch (e) { console.warn("[curiosity] dispose failed", e); }
+  if (stageHandle && stageHandle !== handle) try { stageHandle.dispose && stageHandle.dispose(); } catch (e) { console.warn("[curiosity] stage cleanup failed", e); }
   cur = null;
+  $("#clStage", root).replaceChildren(); $("#clSide", root).replaceChildren();
+}
+function mountFallback(ctx, error, token) {
+  if (!root || !cur || cur.ctx !== ctx || token !== mountToken) return;
+  console.warn(`[curiosity] ${ctx.lab.id} switched to the 2D compatibility simulator`, error);
+  const old = cur.handle, stageHandle = cur.stageHandle;
+  try { old && old.dispose && old.dispose(); } catch (e) { console.warn("[curiosity] failed 3D cleanup", e); }
+  if (stageHandle && stageHandle !== old) try { stageHandle.dispose && stageHandle.dispose(); } catch (e) { console.warn("[curiosity] failed stage cleanup", e); }
+  cur.stageHandle = null;
+
+  const stage = ctx.stage, side = ctx.side;
+  stage.replaceChildren(); side.replaceChildren(); stage.classList.add("cl-fallback-mode");
+  const view = document.createElement("div"); view.className = "cl-fallback";
+  view.innerHTML = `<div class="cl-fallback-message" role="status"><span class="cl-fallback-mark" aria-hidden="true">2D</span><span><b>Interactive 2D mode</b><small>3D could not start, so this experiment is running as a responsive diagram instead. · 3D शुरू नहीं हुआ, इसलिए प्रयोग अब 2D आरेख में चल रहा है।</small></span></div><div class="cl-fallback-art"></div>`;
+  const art = $(".cl-fallback-art", view), canvas = document.createElement("canvas");
+  canvas.width = 720; canvas.height = 340; canvas.setAttribute("role", "img"); canvas.setAttribute("aria-label", `${ctx.lab.title.en} interactive 2D diagram`); art.appendChild(canvas);
+  stage.appendChild(view);
+  const sl = sliders(ctx, side, { title: "Adjust the experiment · प्रयोग बदलें" });
+  const facts = factsView(ctx, side, "What the physics says · विज्ञान क्या बताता है");
+  const note = document.createElement("p"); note.className = "cl-note"; note.textContent = "Change a control to update the diagram and the measured results. · नियंत्रण बदलें — आरेख और परिणाम साथ-साथ बदलेंगे।"; side.appendChild(note);
+  let diagramBroken = false;
+  const update = () => {
+    if (!canvas.isConnected) return;
+    sl.sync(); facts.update();
+    if (diagramBroken) return;
+    try { ctx.lab.snapshot(canvas, { ...ctx.vars }); canvas.hidden = false; }
+    catch (e) {
+      diagramBroken = true;
+      console.warn(`[curiosity] ${ctx.lab.id} 2D diagram unavailable`, e);
+      canvas.hidden = true;
+      $(".cl-fallback-message small", view).textContent = "This browser cannot draw the diagram, but the controls and calculated results remain available. · इस ब्राउज़र में आरेख नहीं बन सकता, लेकिन नियंत्रण और गणना के परिणाम उपलब्ध हैं।";
+      let fallback = $(".cl-fallback-facts", view);
+      if (!fallback) { fallback = document.createElement("p"); fallback.className = "cl-fallback-facts"; art.appendChild(fallback); }
+      fallback.textContent = ctx.facts.map(f => `${f.en}: ${f.value}`).join(" · ");
+    }
+  };
+  const off = bus.on("sim:change", e => { if (e.labId === ctx.lab.id) update(); });
+  cur.handle = { resize: update, dispose() { off(); stage.classList.remove("cl-fallback-mode"); } };
+  update();
+  setTab("sim");
 }
 export async function openLab(id) {
   const lab = getLab(id); if (!lab) return;
   disposeLab();
-  const vars = defaults(lab);
+  const token = ++mountToken, vars = defaults(lab);
   let nudged = false;
+  const active = () => !!root && !!cur && cur.ctx === ctx && token === mountToken;
   const ctx = {
     lab, vars, stage: $("#clStage", root), side: $("#clSide", root),
+    registerStage(handle) { if (active()) cur.stageHandle = handle; else handle && handle.dispose && handle.dispose(); },
+    fail(error) { if (active()) mountFallback(ctx, error, token); },
     /** Labs call this when the student moves a control: snaps, stores, tells the quiz. */
     set(varId, raw) {
       const v = lab.vars.find(x => x.id === varId); if (!v) throw new Error(`unknown variable ${varId}`);
@@ -121,18 +167,20 @@ export async function openLab(id) {
     run() { store.recordRun(lab.id); bus.emit("sim:run", { labId: lab.id, vars: { ...vars } }); },
     get facts() { return lab.facts({ ...vars }); }
   };
-  cur = { lab, vars, ctx, handle: { dispose() {} } };
+  cur = { lab, vars, ctx, handle: { dispose() {} }, stageHandle: null };
   const u = SYLLABUS[lab.unit];
   $("#clLabT", root).innerHTML = `${esc(lab.icon)} ${esc(lab.title.en)} <span class="hi" lang="hi">${esc(lab.title.hi)}</span>`;
   $("#clLabU", root).textContent = `Class ${lab.cls === 9 ? "IX" : "X"} · NCERT Ch ${u.no} · ${u.title.en}`;
   setTab("sim");
   try {
     const h = await lab.mount(ctx);
-    if (cur && cur.lab === lab) cur.handle = h || cur.handle;
+    if (!active()) { if (h && h.dispose) h.dispose(); return; }
+    cur.handle = h || cur.handle; cur.stageHandle = null;
   } catch (e) {
-    console.error("[curiosity] lab failed to start", lab.id, e);
-    $("#clStage", root).innerHTML = `<p class="cl-empty">This experiment could not start on this device. · यह प्रयोग इस डिवाइस पर शुरू नहीं हो सका।</p>`;
+    if (!active()) return;
+    mountFallback(ctx, e, token);
   }
+  if (!active()) return;
   setTab("sim");
   const f = $("#clStage", root); f.focus({ preventScroll: true });
 }
