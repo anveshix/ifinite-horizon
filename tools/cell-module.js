@@ -1,4 +1,4 @@
-/* ===== Custom model sets 1-11: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination, genetics, cell division, ionic bond, electric circuit (detailed 3D) =====
+/* ===== Custom model sets 1-12: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination, genetics, cell division, ionic bond, electric circuit, ray diagrams (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -767,7 +767,7 @@ const F_ST=[
 function Mflower(){sd=71;const n=new Ne;Ge(n,{key:1.9});Je(n,-4.6,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
  const FL=new J;g.add(FL);const OV=new J;OV.position.set(22,0,0);g.add(OV);const GR=new J;GR.position.set(0,-22,0);g.add(GR);const FB=new J;FB.position.set(-14,.6,-2.5);g.add(FB);
  const petM=MAT(0xe8407c,{roughness:.6,clearcoat:.1,sheen:0,envMapIntensity:.5,bumpScale:.08,opacity:1,side:vt,emissive:0x7a1038,emissiveIntensity:.3});
- const petal=(par,ang,tilt,L,W,mat,id)=>{const gr=new J;gr.rotation.y=ang;par.add(gr);add(id,param(18,12,(u,v)=>{const w=Math.pow(sin(Math.min(1,u*.97)*PI*.85+.15),.8)*W*(v-.5)*2*(1-.25*u*u),x=u*L,y=u*u*L*.55*(tilt*.5)-Math.pow(Math.abs(v-.5)*2,2)*.5*W*.55*(.4+u);return[x,y,w]}),mat,[0,0,0],{parent:gr,ns:0});return gr};
+ const petal=(par,ang,tilt,L,W,mat,id)=>{const gr=new J;gr.rotation.y=ang;par.add(gr);add(id,param(18,12,(u,v)=>{const w=Math.pow(sin(Math.min(1,u*.97)*PI*.85+.15),.8)*W*(v-.5)*2*(1-.25*u*u),x=u*L,y=u*u*L*.55*(tilt*.5)-Math.pow(Math.abs(v-.5)*2,2)*.5*W*.55*(.4+u)+.07*L*Math.sin(v*PI*5)*u*u*(1-u*.3);return[x,y,w]}),mat,[0,0,0],{parent:gr,ns:0});return gr};
  const flowerAt=(par,sc,ids)=>{const P=new J;P.scale.setScalar(sc);par.add(P);
   /* sepals */
   const sepM=MAT(0x6aa84f,{roughness:.55,clearcoat:.2,bumpScale:.15,side:vt,emissive:0x143a0e,emissiveIntensity:.15});
@@ -980,7 +980,7 @@ function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);cons
  const Lw=(par,p)=>()=>par.localToWorld(c(...p));
  const labels=[["z-nu","Nucleus (46 chromosomes)","केंद्रक (46 गुणसूत्र)",Lw(ZM,[0,4.4,0]),[0]],["z-ch","Chromosomes","गुणसूत्र",Lw(ZM,[2.2,1.2,.6]),[0]],["z-ze","Chromosome (DNA on histones)","गुणसूत्र (हिस्टोन पर DNA)",Lw(HX,[2,4.4,0]),[0]],["z-dn","DNA double helix","DNA दोहरी कुंडली",Lw(HX,[11,5,0]),[0]],
   ["h-ba","Sugar–phosphate backbone","शर्करा–फ़ॉस्फ़ेट आधार-रज्जु",Lw(DNA,[1.1,5,.2]),[1,2]],["h-A","A–T (2 H-bonds)","A–T (2 H-बंध)",Lw(DNA,[0,-2,0]),[1]],["h-G","G–C (3 H-bonds)","G–C (3 H-बंध)",Lw(DNA,[0,-4.3,0]),[1]],["h-tu","One turn = 10 base pairs (3.4 nm)","एक घुमाव = 10 क्षार-युग्म (3.4 nm)",Lw(DNA,[-1.3,6,0]),[1]],["h-co","A=T · G≡C (Chargaff)","A=T · G≡C (शारगाफ़)",Lw(DNA,[1.3,2,0]),[1]],["h-re","Free letters build new strands","मुक्त अक्षर नई रज्जु बनाते",Lw(DNA,[2.6,.4,0]),[2]],["h-se","Each copy: 1 old + 1 new strand","प्रत्येक: 1 पुरानी + 1 नई रज्जु",Lw(DNA,[-2.6,5,0]),[2]],
-  ["g-ge","Gene (stretch of DNA)","जीन (DNA का खंड)",Lw(CP,[-1.5,-2.2,0]),[3]],["g-mr","mRNA copy leaves the nucleus","mRNA प्रतिलिपि केंद्रक से बाहर",Lw(CP,[1,1.5,.4]),[3]],["g-ri","Ribosome reads mRNA","राइबोसोम mRNA पढ़ता",Lw(CP,[5.5,2.8,0]),[3]],["g-aa","Amino acids join in order","अमीनो अम्ल क्रम से जुड़ते",Lw(CP,[8,4.2,0]),[3]],["g-pr","Protein → trait","प्रोटीन → लक्षण",Lw(CP,[10.3,6.6,0]),[3]],
+  ["g-ge","Gene (stretch of DNA)","जीन (DNA का खंड)",Lw(CP,[-1.5,-2.2,0]),[3]],["g-mr","mRNA copy leaves the nucleus","mRNA प्रतिलिपि केंद्रक से बाहर",Lw(CP,[1,1.5,.4]),[3]],["g-ri","Ribosome reads mRNA","राइबोसोम mRNA पढ़ता",Lw(CP,[5.5,2.8,0]),[3]],["g-pr","Protein → trait","प्रोटीन → लक्षण",Lw(CP,[10.3,6.6,0]),[3]],
   ["m-tt","TT tall (P)","TT लंबा (P)",Lw(PR,[-5.6,2,0]),[4]],["m-dd","tt dwarf (P)","tt बौना (P)",Lw(PR,[-1.4,-.2,0]),[4]],["m-f1","F1: all Tt, tall","F1: सभी Tt, लंबे",Lw(PR,[5.6,2.2,0]),[4]],["m-ga","Gametes: T and t","युग्मक: T व t",Lw(PR,[2,-1.8,0]),[4]],["m-do","T dominant · t recessive","T प्रभावी · t अप्रभावी",Lw(PR,[5.6,-4.4,0]),[4]],
   ["u-gt","Gametes T / t","युग्मक T / t",Lw(MD,[0,3.8,0]),[5]],["u-pu","Punnett square","पुनेट वर्ग",Lw(MD,[0,-3.4,0]),[5]],["u-tt","TT","TT",Lw(MD,[-1.6,.6,0]),[5]],["u-dw","tt (dwarf)","tt (बौना)",Lw(MD,[1.6,-2.6,0]),[5]],["u-ra","3 tall : 1 dwarf","3 लंबे : 1 बौना",Lw(MD,[3.8,0,0]),[5]],["u-ge","Genotype 1 TT : 2 Tt : 1 tt","जीनप्ररूप 1 : 2 : 1",Lw(MD,[-3.6,-3.2,0]),[5]],
   ["d-rr","9 round-yellow","9 गोल-पीले",Lw(PN,[-2.0,2.0,0]),[6]],["d-rg","3 round-green","3 गोल-हरे",Lw(PN,[2.0,-.2,0]),[6]],["d-wy","3 wrinkled-yellow","3 झुर्रीदार-पीले",Lw(PN,[-2.0,-2.2,0]),[6]],["d-wg","1 wrinkled-green","1 झुर्रीदार-हरा",Lw(PN,[3.0,-3.1,0]),[6]],["d-ga","16 gamete combinations","16 युग्मक-संयोजन",Lw(PN,[0,4.8,0]),[6]],["d-pu","Independent assortment","स्वतंत्र छँटाव",Lw(PN,[-5.8,0,0]),[6]],
@@ -1132,7 +1132,7 @@ function Mionic(){sd=101;const n=new Ne;Ge(n,{key:1.9});Je(n,-6,90,.08);const g=
  const inc=add("e",sph(.2,0,1,1,1,1,12,16),MAT(0xffd23f,{roughness:.25,clearcoat:.9,emissive:0xaa7a00,emissiveIntensity:.9,sheen:0}),[0,0,0],{parent:g,ns:1});
  /* charge tags */
  const tag=(par,x,y,txt,col)=>{const m=add("bond",sph(.01,0,1,1,1,1,4,4),new bt({color:col,transparent:!0,opacity:0}),[x,y,0],{parent:par,ns:1});m.visible=!1;return m};
- const nap=add("Nap",sph(1.1,.02,2,1,1,1,24,30),MAT(0xf2a63a,{roughness:.3,clearcoat:.8,emissive:0x5a3a00,emissiveIntensity:.5,opacity:.0,depthWrite:!1,sheen:0}),[0,0,0],{parent:NA,ns:1});nap.visible=!1;
+ const bondL=add("bond",new Xe(.09,.09,1,8),new bt({color:0xff5a5a,transparent:!0,opacity:.7}),[0,0,0],{parent:g,ns:1});bondL.visible=!1;const nap=add("Nap",sph(1.1,.02,2,1,1,1,24,30),MAT(0xf2a63a,{roughness:.3,clearcoat:.8,emissive:0x5a3a00,emissiveIntensity:.5,opacity:.0,depthWrite:!1,sheen:0}),[0,0,0],{parent:NA,ns:1});nap.visible=!1;
  /* ---------- lattice ---------- */
  const NL=4,SP=2.3,nM=MAT(0xf2a63a,{roughness:.3,clearcoat:.7,emissive:0x4a3000,emissiveIntensity:.35,envMapIntensity:.5,sheen:0}),cM=MAT(0x58c46a,{roughness:.3,clearcoat:.7,emissive:0x0a3a14,emissiveIntensity:.35,envMapIntensity:.5,sheen:0});const ions=[];
  for(let x=0;x<NL;x++)for(let y=0;y<NL;y++)for(let z=0;z<NL;z++){const na=(x+y+z)%2===0,p=[(x-1.5)*SP,(y-1.5)*SP,(z-1.5)*SP];const m=add(na?"Nap":"Clm",sph(na?.55:.8,0,1,1,1,1,16,20),na?nM:cM,p,{parent:LT,ns:1});ions.push({m,na,p})}
@@ -1170,7 +1170,7 @@ function Mionic(){sd=101;const n=new Ne;Ge(n,{key:1.9});Je(n,-6,90,.08);const g=
    clE.forEach(o=>spot(o,t));inc.visible=!1;
    if(s>=2&&s<=3){jump.m.parent!==CL&&CL.add(jump.m);jump.m.position.set(Math.cos(t*.5)*(clE[0].R_+1.3*1+0)*1,Math.sin(t*.5)*(clE[0].R_+1.3),0);jump.m.parent===CL||0}else if(jump.m.parent!==NA){NA.add(jump.m)}
    /* ion size and glow */
-   nap.visible=!1;
+   nap.visible=!1;bondL.visible=s===3;if(s===3){const a_=NA.position,b_=CL.position,dd_=b_.clone().sub(a_),L_=Math.max(.2,dd_.length()-4.6);bondL.position.copy(a_.clone().add(b_).multiplyScalar(.5));bondL.scale.set(.7+.4*Math.sin(t*6),L_,.7+.4*Math.sin(t*6));bondL.quaternion.setFromUnitVectors(c(0,1,0),dd_.normalize())}
    /* lattice: gentle vibration */
    ions.forEach((o,i)=>{o.m.position.set(o.p[0]+.05*Math.sin(t*3+i),o.p[1]+.05*Math.cos(t*2.7+i),o.p[2]+.05*Math.sin(t*2.2+i*2))});LT.rotation.y=s===4?t*.25:.4;LT.rotation.x=s===4?.35:.25;
    /* conductivity */
@@ -1199,72 +1199,163 @@ const C_ST=[
 ["5","Two resistors in series","श्रेणी में दो प्रतिरोधक","One path only. The SAME current flows through both; the voltage divides: V = V₁ + V₂ and R = R₁ + R₂. If one bulb fails, the whole circuit stops.","केवल एक मार्ग; दोनों में समान धारा; वोल्टता बँटती है: V = V₁ + V₂ और R = R₁ + R₂; एक बल्ब ख़राब हो तो पूरा परिपथ बंद।","Animated",13],
 ["6","Two resistors in parallel","समांतर में दो प्रतिरोधक","Two paths. The SAME voltage across each; the current divides: I = I₁ + I₂ and 1/R = 1/R₁ + 1/R₂ (total R is smaller). If one bulb fails the other keeps glowing — this is how houses are wired.","दो मार्ग; दोनों पर समान वोल्टता; धारा बँटती है: I = I₁ + I₂ और 1/R = 1/R₁ + 1/R₂ (कुल R कम); एक बल्ब ख़राब होने पर दूसरा जलता रहता है — घरों में यही जोड़।","Animated",13],
 ["7","Heating effect","ऊष्मीय प्रभाव","Current in a resistor produces heat: H = I²Rt. Doubling the current gives FOUR times the heat — this is why overloaded wires get hot and why a fuse is used.","प्रतिरोधक में धारा से ऊष्मा बनती है: H = I²Rt; धारा दोगुनी होने पर ऊष्मा चार गुनी — इसीलिए अतिभारित तार गरम होते हैं और फ़्यूज़ लगाया जाता है।","Animated",12]];
-function Mcircuit(){sd=111;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,60,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
- const Bd=new J;g.add(Bd);Bd.position.set(0,0,0);
- const wd=MAT(0xb8743a,{roughness:.35,clearcoat:.6,metal:.7,envMapIntensity:.7,sheen:0,emissive:0x2a1408,emissiveIntensity:.25});
- add("wire",new Xe(15,15,.5,4),MAT(0xdfe3ec,{roughness:.8,sheen:0,envMapIntensity:.3,emissive:0x303640,emissiveIntensity:.15}),[0,-.4,0],{parent:Bd,ns:1,rot:[0,PI/4,0],scl:[1.2,1,.7]});
- /* layout: rectangular loop; x -8..8, z -3.2..3.2 ; series elements on top edge, parallel branch in lower part */
- const Wire=(pts)=>add("wire",tube(pts.map(p=>c(p[0],.12,p[1])),.09,8),wd,[0,0,0],{parent:Bd,ns:1});
- const P=(x,z)=>[x,z];
- /* base loop path (used by electron animation): battery at left, key top-left, bulb top-right ... */
- const loop=[c(-7,.12,2.6),c(-3,.12,2.6),c(0,.12,2.6),c(3.4,.12,2.6),c(7,.12,2.6),c(7,.12,-2.6),c(3.4,.12,-2.6),c(0,.12,-2.6),c(-3.4,.12,-2.6),c(-7,.12,-2.6),c(-7,.12,2.6)];
- const loopC=new It(loop,!0,"catmullrom",0);
- /* wires between components */
- Wire([P(-5.6,2.6),P(-3.4,2.6)]);Wire([P(-2.2,2.6),P(-1.2,2.6)]);Wire([P(1.2,2.6),P(2.2,2.6)]);Wire([P(4.6,2.6),P(7,2.6),P(7,-2.6),P(5.4,-2.6)]);Wire([P(2.6,-2.6),P(-2.6,-2.6)]);Wire([P(-4.2,-2.6),P(-7,-2.6),P(-7,-1.6)]);Wire([P(-7,1.6),P(-7,2.6),P(-5.6,2.6)]);
+function Mcircuit(){sd=111;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,70,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const Bd=new J;g.add(Bd);
+ const wd=MAT(0xb8743a,{roughness:.35,clearcoat:.6,metal:.7,envMapIntensity:.7,sheen:0,emissive:0x2a1408,emissiveIntensity:.25}),steel=MAT(0xd8dce6,{roughness:.2,metal:.9,clearcoat:.5,sheen:0});
+ add("wire",new Xe(19,19,.5,4),MAT(0xdfe3ec,{roughness:.8,sheen:0,envMapIntensity:.3,emissive:0x303640,emissiveIntensity:.15}),[0,-.4,1.5],{parent:Bd,ns:1,rot:[0,PI/4,0],scl:[1.18,1,.82]});
+ const Wire=(pts,grp)=>add("wire",tube(pts.map(p=>c(p[0],.12,p[1])),.09,8),wd,[0,0,0],{parent:grp||Bd,ns:1});
+ const par2=new J;Bd.add(par2);const ser=new J,lp=new J;Bd.add(ser);Bd.add(lp);
+ /* shared rails: top z=-4, bottom z=4, battery on the left */
+ Wire([[-9,-1.7],[-9,-4],[9,-4],[9,4],[-9,4],[-9,1.7]]);
+ /* parallel branch (shown in step 6): nodes at x=-1 and x=6 */
+ Wire([[-1,-4],[-1,-.4],[6,-.4],[6,-4]],par2);
+ /* voltmeter leads (loop mode) */
+ const vlead=new J;Bd.add(vlead);Wire([[.1,-4],[.1,-7.2],[0.6,-7.2]],vlead);Wire([[1.9,-4],[1.9,-7.2],[1.4,-7.2]],vlead);
  /* cell */
- const cellG=new J;cellG.position.set(-7,0,0);Bd.add(cellG);const cb=MAT(0x2a3a8a,{roughness:.35,clearcoat:.8,envMapIntensity:.6,sheen:0}),cp=MAT(0xd8dce6,{roughness:.2,metal:.9,clearcoat:.5,sheen:0});
- add("cell",new Xe(.9,.9,3.0,24),cb,[0,.9,0],{parent:cellG,rot:[0,0,0]});add("cell",new Xe(.35,.35,.35,16),cp,[0,2.55,0],{parent:cellG,ns:1});
- const plus=add("cell",sph(.01,0,1,1,1,1,4,4),new bt({color:0xff4a4a}),[0,3.4,0],{parent:cellG,ns:1});
+ const cellG=new J;cellG.position.set(-9,0,0);Bd.add(cellG);const cb=MAT(0x2a3a8a,{roughness:.35,clearcoat:.8,envMapIntensity:.6,sheen:0});
+ add("cell",new Xe(.9,.9,3.2,24),cb,[0,.9,0],{parent:cellG,rot:[PI/2,0,0]});add("cell",new Xe(.35,.35,.4,16),steel,[0,.9,-1.8],{parent:cellG,rot:[PI/2,0,0],ns:1});
+ add("cell",sph(.01,0,1,1,1,1,4,4),new bt({color:0xff4a4a}),[0,1.8,-1.9],{parent:cellG,ns:1});
  /* key */
- const keyG=new J;keyG.position.set(-2.4+.5,.2,2.6);Bd.add(keyG);add("key",new Xe(.55,.55,.35,16),MAT(0x333a44,{roughness:.4,clearcoat:.5,sheen:0}),[-.8,.2,0],{parent:keyG,ns:1});add("key",new Xe(.55,.55,.35,16),MAT(0x333a44,{roughness:.4,clearcoat:.5,sheen:0}),[1.1,.2,0],{parent:keyG,ns:1});
- const blade=new J;blade.position.set(-.8,.35,0);keyG.add(blade);add("key",new Xe(.12,.12,1.9,10),cp,[.95,0,0],{parent:blade,rot:[0,0,PI/2]});
- /* bulb(s) and resistors */
- const bulbG=(par,x,z,id)=>{const gr=new J;gr.position.set(x,0,z);par.add(gr);add(id,new Xe(.7,.9,.9,20),MAT(0x777d88,{roughness:.4,metal:.7,sheen:0}),[0,.5,0],{parent:gr,ns:1});const gm=MAT(0xfff6d0,{roughness:.15,clearcoat:1,transmission:0,opacity:.85,emissive:0x000000,emissiveIntensity:0,sheen:0,envMapIntensity:.8});const gl_=add(id,sph(.95,0,1,1,1.1,1,24,32),gm,[0,1.75,0],{parent:gr});add(id,tube([c(-.3,1.05,0),c(-.3,1.8,0),c(.3,1.8,0),c(.3,1.05,0)],.03,6),MAT(0xffd770,{emissive:0xaa7a00,emissiveIntensity:.8,sheen:0}),[0,0,0],{parent:gr,ns:1});return{gr,gl:gl_,mat:gm}};
- const B1=bulbG(Bd,3.4,2.6,"bulb");
- /* second bulb (series) and parallel branch bulbs */
- const B2=bulbG(Bd,-3.4,-2.6,"bulb");const B3=bulbG(Bd,4.0,-2.6,"bulb");B3.gr.visible=!1;
- /* resistor on bottom (R) */
- const resG=new J;resG.position.set(0,.2,-2.6);Bd.add(resG);const rm=MAT(0xd9c28a,{roughness:.5,sheen:0,envMapIntensity:.4});add("res",new Xe(.5,.5,2.6,16),rm,[0,.3,0],{parent:resG,rot:[0,0,PI/2]});[[-.5,0xc0392b],[0,0x6a3a1a],[.5,0xf1c40f]].forEach(q=>add("res",new Xe(.53,.53,.18,16),new bt({color:q[1]}),[q[0],.3,0],{parent:resG,ns:1,rot:[0,0,PI/2]}));
- /* meters */
- const meter=(x,z,id,col)=>{const gr=new J;gr.position.set(x,0,z);Bd.add(gr);add(id,new Xe(1.1,1.1,.9,28),MAT(0x2a2e38,{roughness:.4,clearcoat:.5,sheen:0}),[0,.5,0],{parent:gr});const face=add(id,new Xe(.9,.9,.05,28),new bt({color:0xf7f7ef}),[0,1.0,0],{parent:gr,ns:1});const needle=new J;needle.position.set(0,1.06,0);gr.add(needle);add(id,tube([c(0,0,0),c(.0,0,-.8)],.03,6),new bt({color:col}),[0,0,0],{parent:needle,ns:1});return{gr,needle}};
- const AM=meter(.0,2.6,"amm",0xd62828),VM=meter(6,0,"volt",0x1d4ed8);
- /* V-I graph panel (steps 3) */
- const GR=new J;GR.position.set(1.5,.02,5.6);Bd.add(GR);const gpl=add("wire",new Xe(3.2,3.2,.05,4),new bt({color:0xffffff,transparent:!0,opacity:.9}),[0,0,0],{parent:GR,ns:1,rot:[PI/2,PI/4,0]});
- add("wire",tube([c(-1.6,.05,1.1),c(-1.6,.05,-1.1)],.03,5),new bt({color:0x333333}),[0,0,0],{parent:GR,ns:1});add("wire",tube([c(-1.6,.05,1.1),c(1.5,.05,1.1)],.03,5),new bt({color:0x333333}),[0,0,0],{parent:GR,ns:1});
- const pDots=[1,2,3,4].map(k=>{const d=add("wire",sph(.11,0,1,1,1,1,10,12),new bt({color:0xd62828}),[-1.6+k*.72,.1,1.1-k*.55],{parent:GR,ns:1});d.visible=!1;return d});const gline=add("wire",new Xe(.04,.04,1,6),new bt({color:0x1d4ed8}),[0,.07,0],{parent:GR,ns:1});
- const NE=40,el=new Wn(new it(.12,10,8),new bt({color:0x3b82f6}),NE);el.frustumCulled=!1;g.add(el);const m4=new gt;
- const NA_=24,arr=new Wn(new it(.1,8,6),new bt({color:0xffd23f}),NA_);arr.frustumCulled=!1;g.add(arr);
- const cams=[[c(0,17,9.5),c(0,0,.6)],[c(0,17,9.5),c(0,0,.6)],[c(2,14,8),c(2,0,0)],[c(0,17,12),c(0,0,3)],[c(0,17,9.5),c(0,0,.6)],[c(0,17,9.5),c(0,0,.6)],[c(0,17,9.5),c(0,0,.6)]];
+ const keyG=new J;keyG.position.set(-5,.2,-4);Bd.add(keyG);const dk=MAT(0x333a44,{roughness:.4,clearcoat:.5,sheen:0});add("key",new Xe(.5,.5,.35,16),dk,[-1,.2,0],{parent:keyG,ns:1});add("key",new Xe(.5,.5,.35,16),dk,[1,.2,0],{parent:keyG,ns:1});
+ const blade=new J;blade.position.set(-1,.4,0);keyG.add(blade);add("key",new Xe(.12,.12,2.0,10),steel,[1,0,0],{parent:blade,rot:[0,0,PI/2]});
+ /* bulb / resistor / meter builders */
+ const bulbG=(x,z,grp)=>{const gr=new J;gr.position.set(x,0,z);(grp||Bd).add(gr);add("bulb",new Xe(.7,.9,.9,20),MAT(0x777d88,{roughness:.4,metal:.7,sheen:0}),[0,.5,0],{parent:gr,ns:1});const gm=MAT(0xfff6d0,{roughness:.15,clearcoat:1,opacity:.9,emissive:0x000000,emissiveIntensity:0,sheen:0,envMapIntensity:.8});const gl_=add("bulb",sph(.95,0,1,1,1.1,1,24,32),gm,[0,1.75,0],{parent:gr});add("bulb",tube([c(-.3,1.05,0),c(-.3,1.8,0),c(.3,1.8,0),c(.3,1.05,0)],.03,6),MAT(0xffd770,{emissive:0xaa7a00,emissiveIntensity:.8,sheen:0}),[0,0,0],{parent:gr,ns:1});return{gr,gm}};
+ const meter=(x,z,id,col,grp)=>{const gr=new J;gr.position.set(x,0,z);(grp||Bd).add(gr);add(id,new Xe(1.15,1.15,.9,28),MAT(0x2a2e38,{roughness:.4,clearcoat:.5,sheen:0}),[0,.5,0],{parent:gr});add(id,new Xe(.95,.95,.05,28),new bt({color:0xf7f7ef}),[0,1.0,0],{parent:gr,ns:1});for(let k=0;k<7;k++){const a=-.8+k*.27;add(id,tube([c(Math.sin(a)*.85,1.03,-Math.cos(a)*.85),c(Math.sin(a)*.7,1.03,-Math.cos(a)*.7)],.015,4),new bt({color:0x333333}),[0,0,0],{parent:gr,ns:1})}const needle=new J;needle.position.set(0,1.06,0);gr.add(needle);add(id,tube([c(0,0,0),c(0,0,-.8)],.035,6),new bt({color:col}),[0,0,0],{parent:needle,ns:1});return{gr,needle}};
+ const B1=bulbG(1,-4,lp),SB1=bulbG(-1.5,-4,ser),SB2=bulbG(4.5,-4,ser),PB1=bulbG(2.5,-4,par2),PB2=bulbG(2.5,-.4,par2);
+ const resG=new J;resG.position.set(2.8,.2,4);lp.add(resG);const rm=MAT(0xd9c28a,{roughness:.5,sheen:0,envMapIntensity:.4,emissive:0xff3a10,emissiveIntensity:0});add("res",new Xe(.5,.5,2.8,16),rm,[0,.3,0],{parent:resG,rot:[0,0,PI/2]});[[-.55,0xc0392b],[0,0x6a3a1a],[.55,0xf1c40f]].forEach(q=>add("res",new Xe(.53,.53,.18,16),new bt({color:q[1]}),[q[0],.3,0],{parent:resG,ns:1,rot:[0,0,PI/2]}));
+ const AM=meter(-3,4,"amm",0xd62828),VM=meter(1,-7.2,"volt",0x1d4ed8,vlead);
+ /* V–I graph */
+ const GR=new J;GR.position.set(0,.02,9.6);Bd.add(GR);add("wire",new Xe(3.6,3.6,.05,4),new bt({color:0xffffff,transparent:!0,opacity:.95}),[0,0,0],{parent:GR,ns:1,rot:[PI/2,PI/4,0]});
+ const ax=new bt({color:0x333333});add("wire",tube([c(-2.2,.06,1.9),c(-2.2,.06,-1.9)],.04,5),ax,[0,0,0],{parent:GR,ns:1});add("wire",tube([c(-2.2,.06,1.9),c(2.2,.06,1.9)],.04,5),ax,[0,0,0],{parent:GR,ns:1});
+ add("wire",sph(.01,0,1,1,1,1,4,4),new bt({color:0x333333}),[2.4,.06,1.9],{parent:GR,ns:1});
+ const gline=add("wire",new Xe(.05,.05,1,6),new bt({color:0x1d4ed8}),[0,.07,0],{parent:GR,ns:1});
+ const pDots=[1,2,3,4].map(k=>{const d=add("wire",sph(.13,0,1,1,1,1,10,12),new bt({color:0xd62828}),[-2.2+k*1.0,.12,1.9-k*.8],{parent:GR,ns:1});d.visible=!1;return d});
+ /* polylines (electron direction: − terminal → bottom rail → right → top rail → + terminal) */
+ const mk=(pts)=>{const P=pts.map(p=>c(p[0],.12,p[1])),cum=[0];for(let i=1;i<P.length;i++)cum.push(cum[i-1]+P[i].distanceTo(P[i-1]));return{P,cum,L:cum[cum.length-1],at(u){u=((u%1)+1)%1*this.L;let k=1;while(k<this.cum.length-1&&this.cum[k]<u)k++;const a=this.P[k-1],b=this.P[k],f=(u-this.cum[k-1])/((this.cum[k]-this.cum[k-1])||1);return a.clone().lerp(b,f)}}};
+ const pathL=mk([[-9,1.7],[-9,4],[9,4],[9,-4],[-9,-4],[-9,-1.7]]);
+ const pathA=mk([[-9,1.7],[-9,4],[9,4],[9,-4],[6,-4],[-1,-4],[-9,-4],[-9,-1.7]]),pathB=mk([[-9,1.7],[-9,4],[9,4],[9,-4],[6,-4],[6,-.4],[-1,-.4],[-1,-4],[-9,-4],[-9,-1.7]]);
+ const NE=64,el=new Wn(new it(.12,10,8),new bt({color:0x3b82f6}),NE);el.frustumCulled=!1;g.add(el);const NA_=28,arr=new Wn(new it(.11,8,6),new bt({color:0xffd23f}),NA_);arr.frustumCulled=!1;g.add(arr);const m4=new gt;
+ const cams=[[c(0,28,12),c(0,0,0)],[c(0,28,12),c(0,0,0)],[c(0,25,13),c(0,0,0)],[c(0,28,13),c(0,0,3.6)],[c(0,26,12),c(0,0,-.5)],[c(0,26,12),c(0,0,-.5)],[c(0,28,12),c(0,0,0)]];
  const camK=["Circuit","Current","Meters","Ohm","Series","Parallel","Heat"];
  const show={};const ids=["cell","key","res","bulb","amm","volt","wire","el"];ids.forEach(i=>show[i]=[1,1,1,1,1,1,1]);const base={cell:1,key:1,res:1,bulb:1,amm:1,volt:1,wire:1,el:1};
  const Lw=(par,p)=>()=>par.localToWorld(c(...p));
- const labels=[["c-ce","Cell (+ long, − short)","सेल (+ लंबी, − छोटी)",Lw(cellG,[0,3.7,0]),[0,1]],["c-ke","Plug key (OPEN → no current)","कुंजी (खुली → धारा नहीं)",Lw(keyG,[.2,1.3,0]),[0]],["c-kc","Plug key (CLOSED)","कुंजी (बंद)",Lw(keyG,[.2,1.3,0]),[1,2,3]],["c-bu","Bulb","बल्ब",Lw(B1.gr,[0,3.2,0]),[0,1,2,3]],["c-am","Ammeter (series)","एमीटर (श्रेणी)",Lw(AM.gr,[0,1.7,0]),[0,2,3]],["c-vo","Voltmeter (parallel)","वोल्टमीटर (समांतर)",Lw(VM.gr,[0,1.7,0]),[0,2,3]],["c-wi","Copper wire","ताँबे का तार",Lw(Bd,[5.2,.5,2.6]),[0]],
-  ["f-el","Electrons drift − → +","इलेक्ट्रॉन − → + बहते",Lw(Bd,[0,.9,2.9]),[1]],["f-co","Conventional current + → −","परंपरागत धारा + → −",Lw(Bd,[0,.9,-2.9]),[1]],
-  ["m-i","I = current (A)","I = धारा (A)",Lw(AM.gr,[1.6,1.7,0]),[2]],["m-v","V = voltage (V)","V = वोल्टता (V)",Lw(VM.gr,[0,1.9,1]),[2]],
-  ["o-v","V = I R","V = I R",Lw(Bd,[0,.8,1.2]),[3]],["o-g","V–I graph: straight line","V–I आलेख: सरल रेखा",Lw(GR,[0,.5,1.6]),[3]],["o-s","slope = R","ढाल = R",Lw(GR,[1.6,.5,-.2]),[3]],
-  ["s-1","R₁ (bulb)","R₁ (बल्ब)",Lw(B1.gr,[0,3.2,0]),[4]],["s-2","R₂ (bulb)","R₂ (बल्ब)",Lw(B2.gr,[0,3.2,0]),[4]],["s-r","Same I · V divides · R = R₁ + R₂","समान I · V बँटता · R = R₁ + R₂",Lw(Bd,[0,.9,4]),[4]],
-  ["p-1","R₁ branch","R₁ शाखा",Lw(B1.gr,[0,3.2,0]),[5]],["p-2","R₂ branch","R₂ शाखा",Lw(B3.gr,[0,3.2,0]),[5]],["p-r","Same V · I divides · 1/R = 1/R₁ + 1/R₂","समान V · I बँटता · 1/R = 1/R₁ + 1/R₂",Lw(Bd,[0,.9,4]),[5]],
-  ["h-r","Resistor gets hot (H = I²Rt)","प्रतिरोधक गरम (H = I²Rt)",Lw(resG,[0,1.5,0]),[6]],["h-f","2× current = 4× heat","2× धारा = 4× ऊष्मा",Lw(Bd,[0,.9,4]),[6]]];
- /* helpers for the electron path along the loop */
- const clampP=(q)=>loopC.getPoint(((q%1)+1)%1);
+ const labels=[["c-ce","Cell (+ top, − bottom)","सेल (+ ऊपर, − नीचे)",Lw(cellG,[0,2.4,-1.9]),[0,1]],["c-ke","Plug key (OPEN → no current)","कुंजी (खुली → धारा नहीं)",Lw(keyG,[0,1.6,0]),[0]],["c-kc","Plug key (CLOSED)","कुंजी (बंद)",Lw(keyG,[0,1.6,0]),[1,2,3,4,5,6]],["c-bu","Bulb","बल्ब",Lw(B1.gr,[0,3.3,0]),[0,1,2,3,6]],["c-am","Ammeter (series)","एमीटर (श्रेणी)",Lw(AM.gr,[0,1.9,0]),[0,2,3,4,5]],["c-vo","Voltmeter (parallel across bulb)","वोल्टमीटर (बल्ब के समांतर)",Lw(VM.gr,[0,1.9,0]),[0,2,3]],["c-wi","Copper wire","ताँबे का तार",Lw(Bd,[6.5,.5,4]),[0]],["c-re","Resistor R","प्रतिरोधक R",Lw(resG,[0,1.4,0]),[0,3,6]],
+  ["f-el","Electrons drift − → +","इलेक्ट्रॉन − → + बहते",Lw(Bd,[-4,.9,4.6]),[1]],["f-co","Conventional current + → −","परंपरागत धारा + → −",Lw(Bd,[4,.9,-4.7]),[1]],
+  ["m-i","I = current (A)","I = धारा (A)",Lw(AM.gr,[-2.2,1.3,0]),[2]],["m-v","V = voltage (V)","V = वोल्टता (V)",Lw(VM.gr,[2.4,1.3,0]),[2]],
+  ["o-v","V = I R","V = I R",Lw(Bd,[-4,.9,6.4]),[3]],["o-g","V–I graph: straight line","V–I आलेख: सरल रेखा",Lw(GR,[0,.5,-2.3]),[3]],["o-s","slope = R","ढाल = R",Lw(GR,[2.4,.5,-1.4]),[3]],
+  ["s-1","R₁ (bulb)","R₁ (बल्ब)",Lw(SB1.gr,[0,3.3,0]),[4]],["s-2","R₂ (bulb)","R₂ (बल्ब)",Lw(SB2.gr,[0,3.3,0]),[4]],["s-r","Same I · V divides · R = R₁ + R₂","समान I · V बँटता · R = R₁ + R₂",Lw(Bd,[0,.9,6.4]),[4]],
+  ["p-1","R₁ branch","R₁ शाखा",Lw(PB1.gr,[0,3.3,0]),[5]],["p-2","R₂ branch","R₂ शाखा",Lw(PB2.gr,[0,3.3,0]),[5]],["p-r","Same V · I divides · 1/R = 1/R₁ + 1/R₂","समान V · I बँटता · 1/R = 1/R₁ + 1/R₂",Lw(Bd,[0,.9,6.4]),[5]],
+  ["h-r","Resistor gets hot (H = I²Rt)","प्रतिरोधक गरम (H = I²Rt)",Lw(resG,[0,1.6,0]),[6]],["h-f","2× current = 4× heat","2× धारा = 4× ऊष्मा",Lw(Bd,[0,.9,6.4]),[6]]];
+ /* step mapping: 0-3,6 single loop ; 4 series ; 5 parallel (own wiring and own electron paths) */
  const phase=t=>(t*.12)%1;
+ const Vof=(s,t)=>s===3?(2+2*(Math.floor(t*.18)%2)):s===4?6:s===5?3:s===6?(Math.floor(t*.2)%2?6:3):3;
+ const Rof=s=>s===4?6:s===5?2:3;
  return run({n,g,org,show,base,ST:C_ST,cams,camK,labels,
-  hud:(s,t)=>{const V=s===3?(2+2*(Math.floor(t*.18)%2)):s===4?6:s===5?3:s===6?(Math.floor(t*.2)%2?6:3):3,R=s===3||s<=2?(s===3?3:3):s===4?6:s===5?2:3,I=V/(s===4?6:s===5?2:3);return s>=2?`V = ${V.toFixed(1)} V · I = ${I.toFixed(2)} A · R = ${(V/I).toFixed(1)} Ω`:s===1?"Circuit CLOSED · current flows":s===0?"Circuit OPEN · I = 0":""},
+  hud:(s,t)=>{const V=Vof(s,t),R=Rof(s),I=V/R;return s>=2?`V = ${V.toFixed(1)} V · I = ${I.toFixed(2)} A · R = ${R.toFixed(1)} Ω`:s===1?"Circuit CLOSED · current flows":"Circuit OPEN · I = 0"},
   frame:(s,t)=>{const closed=s>=1;blade.rotation.z=closed?0:.55;
-   /* parallel / series layout switches */
-   B2.gr.visible=s===4;B3.gr.visible=s===5;resG.visible=s!==5&&s!==4||s===3||s===6;resG.visible=s!==4&&s!==5;
-   const V=s===3?(2+2*(Math.floor(t*.18)%2)):s===4?6:s===5?3:s===6?(Math.floor(t*.2)%2?6:3):3,Rt=s===4?6:s===5?2:3,I=closed?V/Rt:0;
-   const bright=cl(I/1.6,0,1.2);[B1,B2,B3].forEach(b=>{b.mat.emissive.setHex(0xffc933);b.mat.emissiveIntensity=closed?(s===4?bright*1.4:bright*.8+.2):0});
+   lp.visible=s!==4&&s!==5;ser.visible=s===4;par2.visible=s===5;vlead.visible=s!==4&&s!==5;
+   /* show a bulb in loop group, 2 bulbs in series, 2 in parallel */
+   const V=Vof(s,t),R=Rof(s),I=closed?V/R:0,br=cl(I/1.6,0,1.2);
+   [B1,SB1,SB2,PB1,PB2].forEach(b=>{b.gm.emissive.setHex(0xffc933);b.gm.emissiveIntensity=closed?(br*.9+.2):0});
    AM.needle.rotation.y=-.8+cl(I/2,0,1)*1.6;VM.needle.rotation.y=-.8+cl(V/6,0,1)*1.6;
-   /* electrons and conventional arrows along the loop */
-   for(let i=0;i<NE;i++){if(!closed||s===0){m4.makeScale(0,0,0)}else{const q=(i/NE-t*.06*(.5+I*.35))%1;const p=clampP(q);m4.makeScale(1,1,1);m4.setPosition(p.x,p.y,p.z)}el.setMatrixAt(i,m4)}el.instanceMatrix.needsUpdate=!0;
-   for(let i=0;i<NA_;i++){if(s!==1){m4.makeScale(0,0,0)}else{const q=(i/NA_+t*.05)%1;const p=clampP(q);m4.makeScale(1,1,1);m4.setPosition(p.x,p.y+.45,p.z)}arr.setMatrixAt(i,m4)}arr.instanceMatrix.needsUpdate=!0;
-   /* heating step: resistor glows */
-   rm.emissive.setHex(0xff3a10);rm.emissiveIntensity=s===6?cl(I*I/10,0,1)*1.2:0;
-   /* graph line */
-   pDots.forEach((d,i)=>{d.visible=s===3&&((t*.5)%5)>i*.9+.2});const pts=s===3?4:1;gline.visible=s===3;if(s===3){const vmax=4,len=Math.hypot(3.0,2.0*(V/4)*1.0);gline.scale.set(1,len,1);gline.position.set(-1.6+1.5*(V/4)*.0+.0,.07,.0);gline.rotation.set(PI/2,0,-Math.atan2(2.2,2.88)+PI/2);gline.scale.set(1,3.7,1);gline.position.set(-.16,.1,.0)}},
+   const cur=s===5?[pathA,pathB]:[pathL];
+   for(let i=0;i<NE;i++){if(!closed){m4.makeScale(0,0,0)}else{const pt=cur[i%cur.length],u=(i/NE*cur.length*0+Math.floor(i/cur.length)/(NE/cur.length)-t*.03*(.6+I*.4));const p=pt.at(u);m4.makeScale(1,1,1);m4.setPosition(p.x,p.y,p.z)}el.setMatrixAt(i,m4)}el.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<NA_;i++){if(s!==1){m4.makeScale(0,0,0)}else{const u=-(i/NA_+t*.03),p=pathL.at(-u);m4.makeScale(1,1,1);m4.setPosition(p.x,p.y+.5,p.z)}arr.setMatrixAt(i,m4)}arr.instanceMatrix.needsUpdate=!0;
+   rm.emissiveIntensity=s===6?cl(I*I/8,0,1)*1.3:0;
+   gline.visible=s===3;if(s===3){gline.scale.set(1,Math.hypot(3.0,2.4),1);gline.position.set(-.7+.05,.07,.65);gline.rotation.set(PI/2,0,Math.atan2(3.0,2.4)*-1+PI/2*0)}
+   pDots.forEach((d,i)=>{d.visible=s===3&&((t*.5)%5)>i*.9+.2})},
   predict:{q:"Two identical bulbs are connected in PARALLEL. If one bulb burns out, what happens to the other?",opts:[["It also goes out",!1,"That happens in a series circuit."],["It keeps glowing",!0,"Correct — each branch has its own path and the same voltage."],["It glows brighter and burns out",!1,"Its voltage and current stay the same."]]}})}
 Q_("ch11/circuit3d",[["An ammeter is connected in…","एमीटर किसमें जोड़ा जाता है?",["Parallel with the component","Series with the component","Either way","Across the cell only"],1,"Series, with very low resistance."],["A voltmeter is connected in…","वोल्टमीटर किसमें जोड़ा जाता है?",["Series","Parallel across the component","Between the cell and key","Inside the wire"],1,"Parallel, with very high resistance."],["In a series circuit of two resistors the…","श्रेणी परिपथ में दो प्रतिरोधकों में…",["Current is the same","Voltage is the same","Resistance is the smaller one","Each branch has its own current"],0,"Same current; voltage divides."],["Why are home appliances connected in parallel?","घरेलू उपकरण समांतर क्यों जोड़े जाते?",["To increase resistance","Each gets the full voltage and works independently","To save wire","To reduce voltage"],1,"Same 220 V across each."],["If the voltage across a 4 Ω resistor is 12 V, the current is…","4 Ω पर 12 V हो तो धारा?",["0.33 A","3 A","48 A","8 A"],1,"I = V/R = 3 A."]]);
 Px["ch11/circuit3d"]=[["Fairy lights used to be in series: one dead bulb put out the whole string. Modern strings use parallel or bypass paths.","पुरानी झालरें श्रेणी में थीं: एक बल्ब ख़राब तो पूरी बंद; आधुनिक झालरों में समांतर/बाईपास पथ होते हैं।"],["The electrons in a wire drift at only about 0.1 mm/s, yet the bulb lights instantly because the whole wire is already full of electrons.","तार में इलेक्ट्रॉन केवल लगभग 0.1 mm/s से बहते हैं, फिर भी बल्ब तुरंत जलता है क्योंकि पूरा तार पहले से इलेक्ट्रॉनों से भरा है।"]];
 {const Lc=Hi.find(h=>h.no===11).topics,i=Lc.findIndex(x=>x.id==="ohm");Lc.splice(i<0?Lc.length:i+1,0,{id:"circuit3d",title:"Electric circuit: current, Ohm, series & parallel — detailed 3D",hi:"विद्युत परिपथ: धारा, ओम, श्रेणी व समांतर — विस्तृत 3D",build:Mcircuit,ncert:"Ch 11 · electricity"})}
+/* ===================== SET 12: RAY DIAGRAMS — mirrors & lenses ===================== */
+const KIND12={
+ axis:["Principal axis","मुख्य अक्ष","The straight line through the optical centre (lens) or pole (mirror), perpendicular to the surface.","प्रकाशिक केंद्र (लेंस) या ध्रुव (दर्पण) से गुज़रती सरल रेखा, सतह पर लंबवत।"],
+ pole:["Pole / optical centre","ध्रुव / प्रकाशिक केंद्र","The middle point of the mirror or lens: P for a mirror, O for a lens.","दर्पण या लेंस का मध्य बिंदु: दर्पण में P, लेंस में O।"],
+ F:["Principal focus F","मुख्य फ़ोकस F","Parallel rays meet at (or appear to come from) this point. Focal length f = distance from pole to F.","समांतर किरणें यहाँ मिलती (या यहीं से आती प्रतीत होती) हैं; फ़ोकस दूरी f = ध्रुव से F की दूरी।"],
+ C:["Centre of curvature C (= 2F)","वक्रता केंद्र C (= 2F)","The centre of the sphere of which the mirror is a part; C is at 2f. For a lens, 2F marks twice the focal length.","उस गोले का केंद्र जिसका दर्पण एक भाग है; C, 2f पर होता है; लेंस में 2F फ़ोकस दूरी का दोगुना।"],
+ obj:["Object (orange arrow)","वस्तु (नारंगी तीर)","Placed on the principal axis. Its distance u is measured from the pole/optical centre.","मुख्य अक्ष पर रखी; दूरी u ध्रुव/प्रकाशिक केंद्र से मापी जाती है।"],
+ img:["Image","प्रतिबिंब","Real image: rays actually meet — it can be caught on a screen (inverted). Virtual image: rays only appear to meet — it cannot be caught (upright).","वास्तविक प्रतिबिंब: किरणें सचमुच मिलती हैं — परदे पर पकड़ा जा सकता है (उलटा); आभासी: केवल मिलती प्रतीत — परदे पर नहीं (सीधा)।"],
+ r1:["Ray 1: parallel to the axis","किरण 1: अक्ष के समांतर","After reflection/refraction it passes through (or appears to come from) the focus F.","परावर्तन/अपवर्तन के बाद फ़ोकस F से गुज़रती (या वहाँ से आती प्रतीत होती) है।"],
+ r2:["Ray 2: through the pole / centre","किरण 2: ध्रुव / केंद्र से","Through a lens centre it goes straight. At a mirror pole it reflects with ∠i = ∠r.","लेंस के केंद्र से सीधी निकलती है; दर्पण के ध्रुव पर ∠i = ∠r से परावर्तित।"],
+ r3:["Ray 3: through (or towards) F","किरण 3: F से (या F की ओर)","A ray through the focus comes out parallel to the axis.","फ़ोकस से जाती किरण अक्ष के समांतर निकलती है।"],
+ elem:["Mirror / lens","दर्पण / लेंस","Concave mirror and convex lens converge light; convex mirror and concave lens diverge it.","अवतल दर्पण व उत्तल लेंस प्रकाश अभिसारित करते हैं; उत्तल दर्पण व अवतल लेंस अपसारित।"]};
+const RY_ST=[
+["1","The optical bench and the three rays","प्रकाशिक बेंच व तीन किरणें","A concave mirror on a bench with its principal axis, focus F (f = 3) and centre of curvature C = 2f. To find an image we need only 3 rays: parallel to the axis, through the pole, and through F.","बेंच पर अवतल दर्पण: मुख्य अक्ष, फ़ोकस F (f = 3) और वक्रता केंद्र C = 2f; प्रतिबिंब हेतु केवल तीन किरणें चाहिए: अक्ष के समांतर, ध्रुव से, और F से।","Animated · object moves",12],
+["2","Concave mirror: object beyond C","अवतल दर्पण: वस्तु C से पार","Object beyond C (u > 2f): the image forms between F and C — REAL, INVERTED and DIMINISHED. This is how a camera or a telescope objective forms its image.","वस्तु C के पार (u > 2f): प्रतिबिंब F और C के बीच — वास्तविक, उलटा, छोटा; कैमरा/दूरदर्शी का अभिदृश्यक ऐसे ही प्रतिबिंब बनाता है।","Animated",13],
+["3","Concave mirror: between C and F","अवतल दर्पण: C और F के बीच","Object between C and F (f < u < 2f): the image forms BEYOND C — REAL, INVERTED and ENLARGED. A projector uses this.","वस्तु C और F के बीच (f < u < 2f): प्रतिबिंब C के पार — वास्तविक, उलटा, बड़ा; प्रोजेक्टर इसी का उपयोग करता है।","Animated",13],
+["4","Concave mirror: inside F","अवतल दर्पण: F के भीतर","Object inside F (u < f): the reflected rays diverge, so the image is formed BEHIND the mirror — VIRTUAL, UPRIGHT and ENLARGED. A shaving mirror works this way.","वस्तु F के भीतर (u < f): परावर्तित किरणें अपसारित, प्रतिबिंब दर्पण के पीछे — आभासी, सीधा, बड़ा; शेविंग दर्पण ऐसे काम करता है।","Animated",13],
+["5","Convex mirror","उत्तल दर्पण","Always gives a VIRTUAL, UPRIGHT, DIMINISHED image behind the mirror, wherever the object is. It shows a wide field of view — used as a rear-view mirror.","सदा आभासी, सीधा, छोटा प्रतिबिंब दर्पण के पीछे; दृष्टि-क्षेत्र विस्तृत — पश्च-दर्शी दर्पण में प्रयुक्त।","Animated",13],
+["6","Convex lens: every position","उत्तल लेंस: हर स्थिति","Move the object from far to near: beyond 2F real, inverted, smaller; at 2F real, inverted, same size; between F and 2F real, inverted, bigger; inside F virtual, upright, bigger (magnifying glass).","वस्तु को दूर से पास लाइए: 2F के पार वास्तविक, उलटा, छोटा; 2F पर समान आकार; F और 2F के बीच बड़ा; F के भीतर आभासी, सीधा, बड़ा (आवर्धक लेंस)।","Animated · full sweep",18],
+["7","Concave lens","अवतल लेंस","Always a VIRTUAL, UPRIGHT, DIMINISHED image on the same side as the object. Used to correct myopia.","सदा आभासी, सीधा, छोटा प्रतिबिंब वस्तु की ही ओर; निकट-दृष्टि के सुधार में प्रयुक्त।","Animated",13],
+["8","The formula and magnification","सूत्र व आवर्धन","Mirror: 1/v + 1/u = 1/f. Lens: 1/v − 1/u = 1/f. Magnification m = h′/h = −v/u (mirror) or v/u (lens). Negative m: inverted; |m| > 1: enlarged. The numbers update live.","दर्पण: 1/v + 1/u = 1/f; लेंस: 1/v − 1/u = 1/f; आवर्धन m = h′/h = −v/u (दर्पण) या v/u (लेंस); m ऋणात्मक: उलटा; |m| > 1: बड़ा; संख्याएँ सजीव बदलती हैं।","Animated",14]];
+function Mrays(){sd=121;const n=new Ne;Ge(n,{key:1.9});Je(n,-3.6,60,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const O=new J;g.add(O);
+ /* bench */
+ add("axis",new Xe(.07,.07,36,8),new bt({color:0x333a4a}),[0,0,0],{parent:O,ns:1,rot:[0,0,PI/2]});
+ add("elem",new Xe(18.5,18.5,.4,4),MAT(0xcdd3dd,{roughness:.7,sheen:0,envMapIntensity:.3}),[0,-2.4,0],{parent:O,ns:1,rot:[0,PI/4,0],scl:[1.0,1,.12]});
+ for(let x=-16;x<=16;x++)add("axis",new Xe(.025,.025,x%5===0?.7:.35,5),new bt({color:0x556}),[x,-2.0,.9],{parent:O,ns:1});
+ /* optical elements as surfaces of revolution about the x-axis */
+ const rev=(prof,rmax,nu=32,nv=48)=>param(nu,nv,(u,v)=>{const r=u*rmax,x=prof(r),a=v*TAU;return[x,r*Math.cos(a),r*Math.sin(a)]});
+ const H=3.6,glass=MAT(0xbfe4ff,{roughness:.1,clearcoat:1,opacity:.45,depthWrite:!1,sheen:0,envMapIntensity:1.0,transmission:0,emissive:0x2a4a6a,emissiveIntensity:.15});
+ const lensCx=new J,lensCv=new J,mirCc=new J,mirCx=new J;[lensCx,lensCv,mirCc,mirCx].forEach(x=>{O.add(x);x.visible=!1});
+ const w0=.12,ww=.55;
+ [1,-1].forEach(sg=>{add("elem",rev(r=>sg*(w0+ww*(1-(r/H)*(r/H))),H),glass,[0,0,0],{parent:lensCx,ns:1});add("elem",rev(r=>sg*(w0+.9*(r/H)*(r/H)),H),glass,[0,0,0],{parent:lensCv,ns:1})});
+ const R=6,silver=MAT(0xdde3ec,{roughness:.12,metal:1,clearcoat:.6,sheen:0,envMapIntensity:1.4,emissive:0x303844,emissiveIntensity:.2});
+ add("elem",rev(r=>-(R-Math.sqrt(Math.max(0,R*R-r*r))),H),silver,[0,0,0],{parent:mirCc,ns:1});add("elem",rev(r=>-(R-Math.sqrt(Math.max(0,R*R-r*r)))+.35,H),MAT(0x6a7280,{roughness:.6,sheen:0}),[0,0,0],{parent:mirCc,ns:1});
+ add("elem",rev(r=>(R-Math.sqrt(Math.max(0,R*R-r*r))),H),silver,[0,0,0],{parent:mirCx,ns:1});add("elem",rev(r=>(R-Math.sqrt(Math.max(0,R*R-r*r)))+.35,H),MAT(0x6a7280,{roughness:.6,sheen:0}),[0,0,0],{parent:mirCx,ns:1});
+ /* points: F, 2F markers, pole */
+ const pt=(col,r_=.16)=>{const m=add("F",sph(r_,0,1,1,1,1,12,16),new bt({color:col}),[0,0,0],{parent:O,ns:1});return m};
+ const mF1=pt(0x1d4ed8),mF2=pt(0x1d4ed8),mC1=pt(0x7c3aed),mC2=pt(0x7c3aed),mP=pt(0x111111,.12);
+ /* object + image arrows */
+ const arrow=(col,id)=>{const gr=new J;O.add(gr);const mat=new bt({color:col,transparent:!0});add(id,new Xe(.09,.09,1,8),mat,[0,.5,0],{parent:gr,ns:1});const head=add(id,new Xe(0,.28,.5,12),mat,[0,1,0],{parent:gr,ns:1});return{gr,head,mat}};
+ const OBJ=arrow(0xf29a1c,"obj"),IMG=arrow(0xd6249f,"img");
+ /* ray segments pool */
+ const up=c(0,1,0),rc=[0xe53935,0x1e88e5,0x2e7d32];const SEG=[];for(let r=0;r<3;r++)for(let k=0;k<3;k++){const m=add("r"+(r+1),new Xe(.05,.05,1,6),new bt({color:rc[r],transparent:!0,opacity:k===2?.5:1}),[0,0,0],{parent:O,ns:1});m.visible=!1;SEG.push({m,virt:k===2})}
+ const seg=(s_,a,b)=>{const m=s_.m,d=b.clone().sub(a),L=d.length();if(L<.02){m.visible=!1;return}m.visible=!0;m.position.copy(a.clone().add(b).multiplyScalar(.5));const w=s_.virt?.55:1;m.scale.set(w,L,w);m.quaternion.setFromUnitVectors(up,d.normalize())};
+ /* geometry ------------------------------------------------------------- */
+ const CFG={1:["mc",3,12,12],2:["mc",3,10,7.2],3:["mc",3,5.6,3.6],4:["mc",3,2.5,.8],5:["mx",-3,9,2.5],6:["lc",3,10,.8],7:["lv",-3,9,2.5],8:["lc",3,9,1.4]};
+ const ease=x=>x*x*(3-2*x),tri=x=>1-Math.abs(((x%1)*2)-1);
+ const state={d:10,F:3,type:"mc",xi:0,hi:0,real:!1,m:0,v:0};
+ const solve=(type,F,d,h)=>{const mirror=type[0]==="m",di=d*F/(d-F),m=-di/d,hi=m*h,xi=mirror?-di:di,real=di>0;return{di,m,hi,xi,real,mirror}};
+ const rays=(type,F,d,h,S)=>{const mirror=type[0]==="m",tip=c(-d,h,0),out=[];const far=16;
+  /* ray 1 */
+  const p1=c(0,h,0);let d1=mirror?(F>0?c(-F,-h,0):c(F,h,0)):(F>0?c(F,-h,0):c(-F,h,0));d1.normalize();
+  const e1=p1.clone().add(d1.clone().multiplyScalar((mirror?-far-p1.x:far-p1.x)/(d1.x||1e-6)));
+  out.push([[tip,p1],[p1,e1],(!S.real)?[p1,c(S.xi,S.hi,0)]:null]);
+  /* ray 2 */
+  const p2=c(0,0,0);let d2=mirror?c(-d,-h,0).normalize():c(d,-h,0).normalize();
+  const e2=p2.clone().add(d2.clone().multiplyScalar((mirror?-far:far)/(d2.x||1e-6)));
+  out.push([[tip,p2],[p2,e2],(mirror&&!S.real)?[p2,c(S.xi,S.hi,0)]:null]);
+  /* ray 3 */
+  const y3=-h*F/(d-F),p3=c(0,y3,0),e3=c(mirror?-far:far,y3,0);
+  out.push([[tip,p3],[p3,e3],(!S.real)?[p3,c(S.xi,S.hi,0)]:null]);return out};
+ const NM={mc:"Concave mirror",mx:"Convex mirror",lc:"Convex lens",lv:"Concave lens"};
+ const nature=(S,d,F)=>{if(S.mirror&&F<0)return"VIRTUAL · upright · diminished";if(!S.mirror&&F<0)return"VIRTUAL · upright · diminished";const f=Math.abs(F),a=Math.abs(S.m);if(!S.real)return"VIRTUAL · upright · enlarged";if(Math.abs(d-2*f)<.25)return"REAL · inverted · same size";return a>1?"REAL · inverted · enlarged":"REAL · inverted · diminished"};
+ const cams=[[c(0,3,25),c(0,.2,0)],[c(0,3,25),c(0,.2,0)],[c(0,3,25),c(0,.2,0)],[c(0,3,25),c(0,.2,0)],[c(0,3,25),c(0,.2,0)],[c(0,3,26),c(0,.2,0)],[c(0,3,25),c(0,.2,0)],[c(0,3,25),c(0,.2,0)]];
+ const camK=["Bench","Beyond C","C–F","Inside F","Convex mirror","Convex lens","Concave lens","Formula"];
+ const show={};["axis","elem","F","obj","img","r1","r2","r3"].forEach(i=>show[i]=[1,1,1,1,1,1,1,1]);const base={axis:1,elem:1,F:1,obj:1,img:1,r1:1,r2:1,r3:1};
+ const Lw=p=>()=>O.localToWorld(p().clone());
+ const labels=[["a-ax","Principal axis","मुख्य अक्ष",Lw(()=>c(13,.5,0)),[0]],["a-po","Pole P / centre O","ध्रुव P / केंद्र O",Lw(()=>c(.0,-1.2,0)),[0]],["a-f1","F","F",Lw(()=>mF1.position.clone().add(c(0,-.8,0))),[0,1,2,3,4,5,6,7]],["a-c","C = 2F","C = 2F",Lw(()=>mC1.position.clone().add(c(0,-.8,0))),[0,1,2,3,7]],["a-ob","Object","वस्तु",Lw(()=>OBJ.gr.position.clone().add(c(0,2.2,0))),[0,1,2,3,4,5,6,7]],["a-im","Image","प्रतिबिंब",Lw(()=>IMG.gr.position.clone().add(c(0,state.hi>=0?state.hi+1.3:state.hi-1.3,0))),[0,1,2,3,4,5,6,7]],
+  ["a-r1","Ray 1 ∥ axis → F","किरण 1 ∥ अक्ष → F",Lw(()=>c(-state.d*.45,1.9,0)),[0]],["a-r2","Ray 2 → pole","किरण 2 → ध्रुव",Lw(()=>c(-state.d*.45,-1.4,0)),[0]],["a-r3","Ray 3 via F → ∥ axis","किरण 3 F से → ∥ अक्ष",Lw(()=>c(-state.d*.25,-2.4,0)),[0]],
+  ["a-rl","REAL · inverted","वास्तविक · उलटा",Lw(()=>c(state.xi,state.hi-1.6,0)),[1,2,5]],["a-vi","VIRTUAL · upright","आभासी · सीधा",Lw(()=>c(state.xi,state.hi+1.6,0)),[3,4,6]],["a-sc","Screen can catch a real image","परदा वास्तविक प्रतिबिंब पकड़ता",Lw(()=>c(state.xi,-3,0)),[1,2]]];
+ const r0=run({n,g,org,show,base,ST:RY_ST,cams,camK,labels,
+  hud:(s,t)=>{const S=state,f=Math.abs(S.F),u=S.mirror?-S.d:-S.d,vv=S.mirror?-S.xi*-1:S.xi;const sg=S.mirror?"1/v + 1/u = 1/f":"1/v − 1/u = 1/f";const uu=-S.d,v_=S.mirror?S.xi:S.xi,ff=S.mirror?(S.F>0?-f:f):(S.F);return`${NM[S.type]} · f = ${S.F>0?"":"−"}${f.toFixed(0)} · u = ${uu.toFixed(1)} · v = ${v_.toFixed(1)} · m = ${S.m.toFixed(2)} · ${nature({mirror:S.mirror,real:S.real,m:S.m},S.d,S.F)}`},
+  frame:(s,t)=>{const c_=CFG[s+1],type=c_[0],F=c_[1],d0=c_[2],d1=c_[3];
+   const ph=(t*.07)%1,u=s===0?0:ease(tri(ph)),d=lerp(d0,d1,u),dd=Math.abs(d-Math.abs(F))<.12?Math.abs(F)+.12:d;
+   const S=solve(type,F,dd,1.6);S.d=dd;S.F=F;S.type=type;Object.assign(state,{d:dd,F,type,xi:S.xi,hi:S.hi,real:S.real,m:S.m,mirror:S.mirror});
+   lensCx.visible=type==="lc";lensCv.visible=type==="lv";mirCc.visible=type==="mc";mirCx.visible=type==="mx";
+   const f=Math.abs(F);mF1.position.set(S.mirror?(F>0?-f:f):f,0,0);mF2.position.set(S.mirror?(F>0?-f:f)*-1:-f,0,0);mC1.position.set(S.mirror?(F>0?-2*f:2*f):2*f,0,0);mC2.position.set(S.mirror?-mC1.position.x:-2*f,0,0);mP.position.set(0,0,0);
+   mF2.visible=!S.mirror;mC2.visible=!S.mirror;
+   /* object arrow */
+   OBJ.gr.position.set(-dd,0,0);OBJ.gr.scale.set(1,1.6,1);OBJ.head.position.set(0,1,0);OBJ.head.scale.set(1,1/1.6,1);
+   /* image arrow */
+   const ok=Math.abs(S.hi)<9&&Math.abs(S.xi)<22;IMG.gr.visible=ok;IMG.gr.position.set(S.xi,0,0);IMG.gr.scale.set(1,S.hi,1);IMG.head.scale.set(1,1/Math.max(.01,Math.abs(S.hi))*(S.hi>=0?1:-1),1);IMG.head.position.set(0,1,0);
+   IMG.mat.opacity=S.real?1:.5;
+   const R_=rays(type,F,dd,1.6,S);let k=0;R_.forEach(rr=>{seg(SEG[k++],rr[0][0],rr[0][1]);seg(SEG[k++],rr[1][0],rr[1][1]);if(rr[2]&&ok)seg(SEG[k++],rr[2][0],rr[2][1]);else{SEG[k++].m.visible=!1}});},
+  predict:{q:"An object is placed beyond C (u > 2f) of a concave mirror. The image is…",opts:[["Virtual, upright and enlarged",!1,"That is for an object inside F."],["Real, inverted and diminished, between F and C",!0,"Correct — three-ray construction gives this."],["Real, inverted and enlarged, beyond C",!1,"That is for an object between F and C."]]}});
+ return r0}
+Q_("ch9/rays3d",[["Where must an object be placed so that a concave mirror gives a virtual, enlarged image?","अवतल दर्पण से आभासी, बड़ा प्रतिबिंब पाने हेतु वस्तु कहाँ रखें?",["Beyond C","At C","Between F and C","Between P and F"],3,"Inside the focus (u < f)."],["Which mirror always forms a virtual, upright, diminished image?","कौन-सा दर्पण सदा आभासी, सीधा, छोटा प्रतिबिंब बनाता है?",["Concave","Convex","Plane only","Both"],1,"Convex mirror."],["A convex lens forms a real, inverted image of the same size when the object is at…","उत्तल लेंस समान आकार का वास्तविक, उलटा प्रतिबिंब कब बनाता है?",["F","2F","Infinity","Between O and F"],1,"At 2F the image is also at 2F."],["A ray parallel to the principal axis, after reflection from a concave mirror, passes through…","अक्ष के समांतर किरण अवतल दर्पण से परावर्तित होकर कहाँ से गुज़रती है?",["The pole","The focus","The centre of curvature","Infinity"],1,"Through F."],["Magnification m = −2 means the image is…","m = −2 का अर्थ प्रतिबिंब…",["Upright and twice the size","Inverted and twice the size","Inverted and half the size","Upright and half the size"],1,"Negative = inverted, |m| = 2 = enlarged."]]);
+Px["ch9/rays3d"]=[["A magnifying glass is a convex lens used with the object inside its focus — that gives a virtual, upright, enlarged image.","आवर्धक लेंस उत्तल लेंस है जिसे वस्तु फ़ोकस के भीतर रखकर प्रयोग करते हैं — आभासी, सीधा, बड़ा प्रतिबिंब।"],["Car rear-view mirrors are convex: they show a wider area, but objects look smaller and farther than they are.","कार के पश्च-दर्शी दर्पण उत्तल होते हैं: अधिक क्षेत्र दिखता है, पर वस्तुएँ छोटी व दूर दिखती हैं।"]];
+{const Lr=Hi.find(h=>h.no===9).topics,i=Lr.findIndex(x=>x.id==="optics");Lr.splice(i<0?Lr.length:i+1,0,{id:"rays3d",title:"Ray diagrams: mirrors & lenses — detailed 3D",hi:"किरण-आरेख: दर्पण व लेंस — विस्तृत 3D",build:Mrays,ncert:"Ch 9 · light — reflection and refraction"})}
 })();

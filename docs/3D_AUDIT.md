@@ -50,3 +50,11 @@ Cell, plug key (open/closed), bulbs, resistor, ammeter (series), voltmeter (para
 
 ## Per-step camera + compact model panel (2026-11-17)
 Guided topics now move the camera on every step (`stepCam` in `tools/guided-module.js`): step 1 and the last step use the model's own wide view, middle steps tour left/right/close by ±12–20° yaw and 0.88–0.96 zoom, and the scene is lifted slightly so it sits above the caption. A step can override this with `{cam:"near"|"left"|"right"|"top"|{yaw,zoom,lift}}`. The model's own bottom-right info panel (`#hud`) is capped at 30% height / 46% width, scrolls, and has a ▾/▴ button to collapse it (CSS in `assets/va-skin.css`). Validated: all 83 guided topics still load with no missing buttons; checked visually on ch9/optics and ch12/solenoid only. The tour is generic, not hand-aimed per topic.
+
+## Weakness-fix pass (2026-11-18)
+- **Circuit (`ch11/circuit3d`) rebuilt:** series and parallel are now real wiring (series = two bulbs on one rail; parallel = a second branch between two nodes with its own electron path), meters moved off the bulbs, voltmeter leads across the bulb, V–I graph plots points. Viewed all 7 steps.
+- **Ray diagrams (`ch9/rays3d`, new, 8 steps):** concave/convex mirror and convex/concave lens, analytic three-ray construction with live u, v, f, m and a REAL/VIRTUAL readout; object slides along the bench. Viewed steps 1–2 only after the last label trim; all 8 viewed earlier.
+- **Ionic bond:** attraction line now pulses between ions in step 4. **Flower:** petals have a ripple edge. **Genetics step 4:** one less label. **Cycles, last step:** labels filtered. **Trolley:** longer dwell so the data table fills.
+- **Cinema auto-play verified end-to-end** (software GL, 4-step topic): step 1→2→3→4, "Lesson complete" screen, Replay returns to step 1.
+- Every custom 3-D topic (18) builds without errors and shows its step counter.
+Still open: per-topic hand-aimed cameras (the tour is generic), adv6/spectrum panel overlap, flower soil block, underlying legacy primitive models, real-GPU / projector testing.

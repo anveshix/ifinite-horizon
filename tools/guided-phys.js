@@ -131,9 +131,9 @@ G("ix10/forces",[
 ["Inertia","जड़त्व","A body at rest stays at rest, and a moving body keeps moving, unless a net force acts: seat-belts, shaking dust off a carpet.","विराम की वस्तु विराम में और गतिमान गति में रहती है जब तक असंतुलित बल न लगे: सीट-बेल्ट, कालीन झाड़ना।",{click:["Inertia"]},12]]);
 G("ix10/trolley",[
 ["Verify F = ma","F = ma सत्यापित कीजिए","Practical 12: a trolley is pulled by a hanging mass. Total mass stays 1.0 kg; moving mass to the hanger raises the force.","प्रयोग 12: हैंगर का द्रव्यमान गाड़ी को खींचता है; कुल द्रव्यमान 1.0 kg रहता है; हैंगर में द्रव्यमान बढ़ाने पर बल बढ़ता है।",{click:["Clear data"]},10],
-["Release the trolley","गाड़ी छोड़िए","Release and record the acceleration for the first hanger mass.","छोड़कर पहले द्रव्यमान का त्वरण नोट कीजिए।",{click:["▶ Release trolley"]},12],
-["Increase the force","बल बढ़ाइए","Add 50 g to the hanger and release again: the acceleration increases in proportion.","हैंगर में 50 g जोड़कर फिर छोड़िए: त्वरण अनुपात में बढ़ता है।",{click:["Hanger +50 g","▶ Release trolley"]},13],
-["a ∝ F","a ∝ F","Repeat: the data points fall on a straight line — acceleration is proportional to force for constant mass.","दोहराइए: बिंदु सरल रेखा पर आते हैं — स्थिर द्रव्यमान पर त्वरण बल के समानुपाती।",{click:["Hanger +50 g","▶ Release trolley"]},13]]);
+["Release the trolley","गाड़ी छोड़िए","Release and record the acceleration for the first hanger mass.","छोड़कर पहले द्रव्यमान का त्वरण नोट कीजिए।",{click:["▶ Release trolley"]},18],
+["Increase the force","बल बढ़ाइए","Add 50 g to the hanger and release again: the acceleration increases in proportion.","हैंगर में 50 g जोड़कर फिर छोड़िए: त्वरण अनुपात में बढ़ता है।",{click:["Hanger +50 g","▶ Release trolley"]},18],
+["a ∝ F","a ∝ F","Repeat: the data points fall on a straight line — acceleration is proportional to force for constant mass.","दोहराइए: बिंदु सरल रेखा पर आते हैं — स्थिर द्रव्यमान पर त्वरण बल के समानुपाती।",{click:["Hanger +50 g","▶ Release trolley"]},18]]);
 G("ix11/energy",[
 ["Energy changes form","ऊर्जा रूप बदलती है","Free fall: potential energy changes into kinetic energy and the total stays constant. Press Release.","मुक्त पतन: स्थितिज ऊर्जा गतिज में बदलती है, कुल स्थिर; Release दबाइए।",{click:["Free fall","⟲ Reset","▶ Release / push"]},13],
 ["The pendulum","सरल लोलक","At the top all PE, at the bottom all KE: the energy swaps back and forth.","शीर्ष पर पूरी PE, तल पर पूरी KE — ऊर्जा आगे-पीछे बदलती रहती है।",{click:["Simple pendulum","⟲ Reset","▶ Release / push"]},14],
@@ -217,7 +217,7 @@ G("ix8/cycles",[
 ["Carbon cycle","कार्बन चक्र","Plants take CO₂ by photosynthesis; respiration and burning return it.","पौधे प्रकाश-संश्लेषण से CO₂ लेते हैं; श्वसन व दहन लौटाते हैं।",{click:["Carbon cycle"]},12],
 ["Nitrogen cycle","नाइट्रोजन चक्र","Bacteria fix N₂ into nitrates for plants; other bacteria return N₂ to air.","जीवाणु N₂ को पौधों के लिए नाइट्रेट बनाते हैं; अन्य उसे वायु में लौटाते हैं।",{click:["Nitrogen cycle"]},12],
 ["Oxygen cycle","ऑक्सीजन चक्र","Photosynthesis releases O₂; respiration and combustion use it.","प्रकाश-संश्लेषण O₂ देता है; श्वसन व दहन उपयोग करते हैं।",{click:["Oxygen cycle"]},11],
-["Human impact","मानव प्रभाव","Burning fuel and deforestation upset the cycles (more CO₂, climate change).","ईंधन-दहन व वन-कटाई चक्र बिगाड़ते हैं (अधिक CO₂, जलवायु परिवर्तन)।",{click:["🏭 Human impact"]},12]]);
+["Human impact","मानव प्रभाव","Burning fuel and deforestation upset the cycles (more CO₂, climate change).","ईंधन-दहन व वन-कटाई चक्र बिगाड़ते हैं (अधिक CO₂, जलवायु परिवर्तन)।",{click:["🏭 Human impact"],labels:"Atmosphere|Fuel|Plants|Animals|Decomposers"},12]]);
 G("ix8/spectrum",[
 ["Sunlight is an EM wave","सूर्य-प्रकाश EM तरंग है","All EM waves travel at c = 3 × 10⁸ m/s; they differ in frequency and wavelength.","सभी EM तरंगें c = 3 × 10⁸ m/s से चलती हैं; आवृत्ति व तरंगदैर्ध्य भिन्न।",{click:["Reset","Visible"]},10],
 ["Radio to infrared","रेडियो से अवरक्त","Radio (long), microwave (cooking, radar), infrared (heat).","रेडियो (दीर्घ), माइक्रोवेव (भोजन, रडार), अवरक्त (ऊष्मा)।",{click:["Radio","Microwave","Infrared"]},13],
