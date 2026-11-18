@@ -12,7 +12,34 @@ const wrap0=$("#imageWrap");
 wrap0.addEventListener("click",e=>{if(e.target.closest(".mark"))return;wrap0.querySelectorAll(".mark.active").forEach(m=>m.classList.remove("active"))});
 document.addEventListener("click",e=>{const m=e.target.closest(".mark");if(!m)return;wrap0.querySelectorAll(".mark.active").forEach(x=>{if(x!==m)x.classList.remove("active")})});
 
+/* ---- conditions: sub-images of the current picture (public/2d/conditions.js, rendered from the atlas's 3D scenes) ---- */
+const GID=(location.pathname.match(/\/2d\/(class\d+\/[a-z]+)\//)||[])[1]||"",CONDS=window.VA_CONDS||{};
+/* the in-app id of a standalone picture comes from its image file (images/<name>.webp, or ../../<class>/<subject>/images/<name>.webp), so short sidebar keys and aliases never matter */
+const appId=o=>{const m=o&&String(o.img||"").match(/^(?:\.\.\/\.\.\/(class\d+\/[a-z]+)\/)?images\/([^\/]+)\.webp$/);return m?(m[1]||GID)+"/"+m[2]:""};
+const condsFor=k=>{const id=appId(ORIG[k]||DATA[k]);return CONDS[id]||CONDS[(window.VA_COND_ALIAS||{})[id]]||[]};
+const condSrc=c=>"../../"+c.img,ORIG={};let curCI=-1;
+const condView=E=>{const o=ORIG[E.key]||DATA[E.key],c=condsFor(E.key)[E.ci];return{title:o.title+" · "+c.title.en+" — "+c.title.hi,desc:c.desc.en+(c.desc.hi?" · "+c.desc.hi:"")+(c.credit?"  —  "+c.credit:""),img:condSrc(c),marks:c.marks}};
+const restoreCond=()=>{Object.keys(ORIG).forEach(k=>{DATA[k]=ORIG[k]});for(const k in ORIG)delete ORIG[k];curCI=-1};
+const stripEl=document.createElement("div");stripEl.className="bar";stripEl.id="pvStrip";stripEl.hidden=true;
+function paintStrip(){const k=curKey(),cs=k?condsFor(k):[];if(!cs.length){stripEl.hidden=true;stripEl.innerHTML="";return}
+ const o=ORIG[k]||DATA[k],all=[{t:"Main picture",h:"मुख्य चित्र",img:o.img},...cs.map(c=>({t:c.title.en,h:c.title.hi,img:condSrc(c)}))];stripEl.hidden=false;
+ stripEl.innerHTML=`<div class="pvs-l">Conditions · स्थितियाँ <b>${cs.length}</b></div><div class="pvs">`+all.map((x,i)=>`<button type="button" data-ci="${i-1}" aria-pressed="${i-1===curCI}" title="${esc(x.t)}"><img loading="lazy" alt="" src="${x.img}"><span><b>${esc(x.t)}</b><small lang="hi">${esc(x.h)}</small></span></button>`).join("")+`</div>`}
+function applyCond(ci){const k=curKey();if(!k)return;const cs=condsFor(k);if(ci<0||!cs[ci]){if(ORIG[k]){DATA[k]=ORIG[k];delete ORIG[k]}curCI=-1}else{ORIG[k]=ORIG[k]||DATA[k];DATA[k]={...ORIG[k],...condView({key:k,ci})};curCI=ci}
+ try{_selOrig(k)}catch{}paintStrip()}
+const _selOrig=typeof selectSub==="function"?selectSub:()=>{};
+if(typeof selectSub==="function")window.selectSub=function(sub){restoreCond();const r=_selOrig.apply(this,arguments);paintStrip();return r};
+stripEl.addEventListener("click",e=>{const b=e.target.closest("button[data-ci]");if(b)applyCond(+b.dataset.ci)});
+addEventListener("keydown",e=>{if(pOn||(e.key!=="["&&e.key!=="]")||e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|TEXTAREA|SELECT)$/.test((e.target||{}).tagName||""))return;const k=curKey(),cs=k?condsFor(k):[];if(!cs.length)return;e.preventDefault();applyCond(Math.max(-1,Math.min(cs.length-1,curCI+(e.key==="]"?1:-1))))});
+
 const css=document.createElement("style");css.textContent=`
+#pvStrip{flex-direction:column;align-items:flex-start;gap:2px;max-width:min(92vw,900px)}#pvStrip[hidden]{display:none}
+#pvStrip .pvs-l{font-size:11.5px;font-weight:700;color:#cfe0ff}#pvStrip .pvs-l b{color:#ffd54f}
+#pvStrip .pvs{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding-bottom:4px;scrollbar-width:thin}
+#pvStrip button{flex:none;display:flex;gap:7px;align-items:center;text-align:left;border:1px solid rgba(255,255,255,.2);background:rgba(10,16,28,.85);color:#fff;border-radius:9px;padding:3px 9px 3px 3px;cursor:pointer;font:inherit;font-size:11px;max-width:210px}
+#pvStrip button img{width:58px;height:33px;object-fit:cover;border-radius:5px;flex:none;background:#0b1424}
+#pvStrip button span{display:flex;flex-direction:column;min-width:0}#pvStrip button b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.15}
+#pvStrip button small{color:#8ee0a7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pvStrip button[aria-pressed="true"]{border-color:#ffd54f;box-shadow:inset 0 0 0 1px #ffd54f}
 #pvBtn{white-space:nowrap}
 #pv,#pv *{box-sizing:border-box}
 #pv{position:fixed;inset:0;z-index:2147483000;display:none;flex-direction:column;gap:10px;padding:58px 18px 76px;background:#000;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Noto Sans Devanagari",Arial,sans-serif;--ink:#fff;--glass:#0d1626;--bd:rgba(255,255,255,.65);--hi:#9bf0b5;--mk:calc(var(--fs,1) * clamp(34px,3vw,58px))}
@@ -80,12 +107,13 @@ const T=$("#pvT"),body=$("#pvBody"),wrap=$("#pvWrap"),zl=$("#pvZ"),img=$("#pvImg
 /* entry button in the page's top bar */
 const hud=$("#hud");const btn=document.createElement("button");btn.type="button";btn.id="pvBtn";btn.className="btn";btn.textContent="📽 Present";btn.title="Projector / classroom presentation mode (S)";
 const bars=hud?hud.querySelectorAll(".bar"):[];(bars[bars.length-1]||hud||document.body).appendChild(btn);
+if(hud)hud.appendChild(stripEl);
 
 const PS=(()=>{try{return JSON.parse(LS.get("va.pres")||"{}")||{}}catch{return{}}})();
 let pOn=false,pMode=PS.mode|0,pZoom=false,pLaser=false,pLang=PS.lang|0,pLight=!!PS.light,pFs=+PS.fs||1,pIdle=0,pTo=0,pWL=null,pFsOn=false;
 let di=-1,marks=[],sel=-1,wide=true,after=null,tok=0,cur=null;
 const savePS=()=>LS.set("va.pres",JSON.stringify({mode:pMode,lang:pLang,light:pLight,fs:pFs}));
-const deck=()=>{const ks=[...document.querySelectorAll(".sub[data-sub]")].map(e=>e.dataset.sub).filter(k=>DATA[k]);return ks.length?ks:Object.keys(DATA)};
+const deck=()=>{const ks=[...document.querySelectorAll(".sub[data-sub]")].map(e=>e.dataset.sub).filter(k=>DATA[k]),o=[];(ks.length?ks:Object.keys(DATA)).forEach(k=>{o.push({key:k,ci:-1});condsFor(k).forEach((c,i)=>o.push({key:k,ci:i}))});return o};
 const curKey=()=>{try{return typeof state!=="undefined"&&state.sub}catch{return null}};
 
 function toast(s){toastEl.textContent=s;toastEl.hidden=false;clearTimeout(pTo);pTo=setTimeout(()=>{toastEl.hidden=true},1800)}
@@ -116,7 +144,7 @@ function place(){if(!pOn||wrap.hidden||!marks.length){lines.innerHTML="";return}
   if(on){const bx=ex2-ux*12*sc2,by2=ey2-uy*12*sc2;o+=`<polygon points="${ex2.toFixed(1)},${ey2.toFixed(1)} ${(bx-uy*5.5*sc2).toFixed(1)},${(by2+ux*5.5*sc2).toFixed(1)} ${(bx+uy*5.5*sc2).toFixed(1)},${(by2-ux*5.5*sc2).toFixed(1)}" fill="${c}" stroke="#0b1220" stroke-width="1"/>`}});
  lines.setAttribute("viewBox",`0 0 ${O.width} ${O.height}`);lines.innerHTML=o}
 
-function show(i,as){const dk=deck();if(i<0||i>=dk.length)return;di=i;const key=dk[i],d=DATA[key];if(!d)return;cur=key;after=as==null?null:as;const my=++tok;
+function show(i,as){const dk=deck();if(i<0||i>=dk.length)return;di=i;const E=dk[i],key=E.key,d=E.ci>=0?condView(E):(ORIG[key]||DATA[key]);if(!d)return;cur=key+(E.ci>=0?"#"+E.ci:"");after=as==null?null:as;const my=++tok;
  clearMarks();T.innerHTML=esc(d.title||"");desc.textContent=d.desc||"";msg.hidden=true;wrap.hidden=false;wrap.style.opacity=".35";
  const im=new Image();im.onload=()=>{if(my!==tok)return;img.alt=d.title||"";img.src=im.src;
   (d.marks||[]).slice().sort((a,b)=>a.y-b.y||a.x-b.x).forEach((m,k)=>{const n=k+1,dot=document.createElement("button"),lab=document.createElement("button");
@@ -125,7 +153,7 @@ function show(i,as){const dk=deck();if(i<0||i>=dk.length)return;di=i;const key=d
    dot.onclick=lab.onclick=e=>{e.stopPropagation();pick(k)};zl.appendChild(dot);marks.push({x:m.x,y:m.y,dot,lab})});
   wrap.style.opacity="";fit();if(after!=null){const j=after==="last"?marks.length-1:after;after=null;if(j>=0&&j<marks.length)pick(j)}paint()};
  im.onerror=()=>{if(my!==tok)return;wrap.hidden=true;msg.hidden=false;msg.textContent="Image could not be loaded · चित्र लोड नहीं हुआ ("+d.img+")";paint()};
- im.src=d.img;sync(key);paint()}
+ im.src=d.img;if(E.ci<0)sync(key);paint()}
 function sync(key){try{if(typeof selectSub==="function"&&curKey()!==key)selectSub(key)}catch{}}
 function nImg(dir,as){const n=deck().length,i=di+dir;if(i<0||i>=n){toast(i<0?"First image · पहला चित्र":"End of images · चित्र समाप्त");return}show(i,as)}
 function step(d){const n=marks.length;if(d>0){if(sel<n-1)pick(sel+1);else nImg(1,null)}else{if(sel>0)pick(sel-1);else if(sel===0)pick(0);else nImg(-1,"last")}}
@@ -139,7 +167,7 @@ const fsNow=()=>!!(document.fullscreenElement||document.webkitFullscreenElement)
 function fsOn(){const f=pv.requestFullscreen||pv.webkitRequestFullscreen;if(!f)return;try{const r=f.call(pv);if(r&&r.then)r.then(()=>{pFsOn=true},()=>{});else pFsOn=true}catch{}}
 function fsOff(){pFsOn=false;if(fsNow()){try{(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch{}}}
 async function wl(on){try{if(on&&navigator.wakeLock&&!pWL){pWL=await navigator.wakeLock.request("screen");pWL.addEventListener("release",()=>{pWL=null})}else if(!on&&pWL){const w=pWL;pWL=null;await w.release()}}catch{}}
-function enter(){if(pOn)return;pOn=true;pv.classList.add("on");B.classList.add("presenting");const dk=deck(),k=curKey(),i=Math.max(0,dk.indexOf(k));sync2();show(i);bump();fsOn();wl(true);toast("Space / → next · ← back · ? keys")}
+function enter(){if(pOn)return;pOn=true;pv.classList.add("on");B.classList.add("presenting");const dk=deck(),k=curKey(),i=Math.max(0,dk.findIndex(e=>e.key===k&&e.ci===curCI));sync2();show(i);bump();fsOn();wl(true);toast("Space / → next · ← back · ? keys")}
 function exit(){if(!pOn)return;pOn=false;pZoom=false;pLaser=false;tok++;pv.classList.remove("on","pl","pen","phi","mq","pall","vidle","laser");B.classList.remove("presenting");zl.style.transform="";clearMarks();blankEl.hidden=laser.hidden=help.hidden=toastEl.hidden=true;fsOff();wl(false)}
 const blank=c=>{blankEl.style.background=c;blankEl.hidden=false};
 function act(a){switch(a){
@@ -177,5 +205,6 @@ pv.addEventListener("touchend",e=>{if(!pOn||!sw)return;const t=e.changedTouches[
 document.addEventListener("fullscreenchange",()=>{if(pOn&&pFsOn&&!fsNow()){pFsOn=false;exit()}});
 document.addEventListener("visibilitychange",()=>{if(pOn&&document.visibilityState==="visible")wl(true)});
 addEventListener("resize",()=>{if(pOn)fit()});if(window.ResizeObserver)new ResizeObserver(()=>{if(pOn)fit()}).observe(body);
-window.__va2dPresent={enter,exit,isPresenting:()=>pOn,current:()=>cur,deck,marks:()=>marks.length,index:()=>di,mode:()=>pMode};
+paintStrip();
+window.__va2dPresent={enter,exit,isPresenting:()=>pOn,current:()=>cur,deck:()=>deck().map(e=>e.key+(e.ci>=0?"#"+e.ci:"")),conds:()=>{const k=curKey();return k?condsFor(k).length:0},applyCond,curCond:()=>curCI,marks:()=>marks.length,index:()=>di,mode:()=>pMode};
 })();

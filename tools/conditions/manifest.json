@@ -1,0 +1,325 @@
+[
+ {
+  "main": "class10/biology/circulatory_system",
+  "topic": "ch5/heart3d",
+  "steps": [
+   0,
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class9/biology/respiratory_system",
+  "topic": "ch5/lungs3d",
+  "steps": [
+   1,
+   2,
+   4,
+   5
+  ]
+ },
+ {
+  "main": "class10/biology/excretory_system",
+  "conds": [
+   {
+    "topic": "ch5/nephron3d",
+    "step": 3
+   },
+   {
+    "topic": "ch5/nephron3d",
+    "step": 4
+   },
+   {
+    "topic": "ch5/nephron3d",
+    "step": 5
+   },
+   {
+    "topic": "ch5/nephron3d",
+    "step": 6
+   },
+   {
+    "topic": "ch5/dialysis3d",
+    "step": 0
+   }
+  ]
+ },
+ {
+  "main": "class10/biology/dialysis",
+  "topic": "ch5/dialysis3d",
+  "mainStep": 0,
+  "mainAll": true,
+  "steps": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ {
+  "main": "class10/physics/human_eye_anatomy",
+  "conds": [
+   {
+    "topic": "ch10/eye3d",
+    "step": 1
+   },
+   {
+    "topic": "ch10/eye3d",
+    "step": 2
+   },
+   {
+    "topic": "ch10/eye3d",
+    "step": 3
+   },
+   {
+    "topic": "ch10/eye3d",
+    "step": 4
+   },
+   {
+    "topic": "ch10/eye3d",
+    "step": 6
+   },
+   {
+    "topic": "ch10/eye",
+    "step": 1
+   },
+   {
+    "topic": "ch10/eye",
+    "step": 2
+   },
+   {
+    "topic": "ch10/eye",
+    "step": 3
+   },
+   {
+    "topic": "ch10/eye",
+    "step": 4
+   }
+  ]
+ },
+ {
+  "main": "class10/physics/lens",
+  "topic": "ch9/optics",
+  "steps": [
+   3,
+   4
+  ]
+ },
+ {
+  "main": "class10/physics/reflection",
+  "topic": "ch9/optics",
+  "steps": [
+   1,
+   2
+  ]
+ },
+ {
+  "main": "class10/physics/refraction",
+  "topic": "ch9/slab",
+  "steps": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "main": "class10/physics/circuit",
+  "topic": "ch11/series",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class10/physics/magnetic_field_lines",
+  "topic": "ch12/magnet",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class10/physics/electromagnet",
+  "topic": "ch12/solenoid",
+  "steps": [
+   0,
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class10/physics/motor",
+  "topic": "ch12/flhr",
+  "steps": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "main": "class10/chemistry/ph",
+  "topic": "ch2/ph",
+  "steps": [
+   0,
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class10/chemistry/displacement",
+  "topic": "ch1/displacement",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class10/chemistry/neutralisation",
+  "topic": "ch2/neutralisation",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class10/chemistry/reactivity",
+  "topic": "ch3/reactivity",
+  "steps": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "main": "class10/biology/genetics_dna",
+  "topic": "ch8/mendel",
+  "steps": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "main": "class9/biology/cell_membrane",
+  "topic": "ix1/osmosis",
+  "steps": [
+   2,
+   3,
+   4,
+   5
+  ]
+ },
+ {
+  "main": "class10/biology/cell_cycle_division",
+  "topic": "ix1/division3d",
+  "steps": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ {
+  "main": "class9/physics/sea_land_breeze",
+  "topic": "ix8/breeze",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class9/physics/differential_heating",
+  "topic": "ix8/heating",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class9/physics/motion",
+  "topic": "ix9/line",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class9/physics/sound",
+  "topic": "ix12/wave",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class9/chemistry/tyndall",
+  "topic": "ix5/types",
+  "steps": [
+   1,
+   2,
+   3
+  ]
+ },
+ {
+  "main": "class9/physics/newton_laws",
+  "topic": "ix10/forces",
+  "steps": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "main": "class10/physics/scattering_light",
+  "topic": "ch10/scatter",
+  "steps": [
+   0,
+   1,
+   2
+  ]
+ },
+ {
+  "main": "class10/biology/nervous_system",
+  "topic": "ch6/neuron3d",
+  "steps": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ]
+ },
+ {
+  "main": "class9/biology/skeleton_joint",
+  "topic": "ix2/joint3d",
+  "steps": [
+   1,
+   2,
+   3,
+   4
+  ]
+ }
+]
