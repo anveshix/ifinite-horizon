@@ -62,3 +62,5 @@ Still open: per-topic hand-aimed cameras (the tour is generic), adv6/spectrum pa
 ## Primitive → custom conversion (physics/chemistry) — progress
 Batch 1 (LabKit: glass vessels, liquids, ions, flame, metals): **done** `ch1/displacement3d`, `ch2/neutralisation3d`, `ch2/ph3d` (all steps screenshot-reviewed, software GL only). Liquid colours render pastel under the contrast filter; reaction progress is time-based with per-step baselines so manual stepping shows the right state.
 Also done (batch 1): `ch3/reactivity3d`, `ch1/corrosion3d`, `ch1/combination3d` (reviewed; weak spots: rust on the nail is faint, tarnish swatches are flat boxes, deposit on strips is small). Not started: remaining chemistry, mechanics, waves/sound, magnetism, light, Earth systems (~60 topics still legacy-primitive).
+
+Batch 2 (chemistry, acids/bases/salts): done `ch2/indicators3d`, `ch2/salts3d`, `ch2/acidrx3d` (reviewed in software GL). Weak spots: glass/liquids read milky-white in bright light so metals/powders inside are faint; litmus dip and gas bubbles are small; plaster cast is a simple lathe shape; pop-test flame is a cone.

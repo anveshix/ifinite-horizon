@@ -1378,13 +1378,13 @@ LAB.nail=(col)=>{const gr=new J,m=LAB.metal(col);const sh=new N(new Xe(.09,.09,3
 
 /* ---- chemistry batch 1 ---- */
 const specSteps=key=>((window.__vaSpecs&&window.__vaSpecs[key])||[]).map((x,i)=>[""+(i+1),x[0],x[1],x[2],x[3],"Hand-modelled · schematic",x[5]||10]);
-const labRun=o=>run({n:o.n,g:o.g,org:[],show:{},base:{},ST:specSteps(o.key),cams:o.cams,camK:o.camK,labels:o.labels,hud:o.hud,frame:o.frame,predict:o.predict});
+const labRun=o=>run({n:o.n,g:o.g,org:[],show:{},base:{},ST:o.ST||specSteps(o.key),cams:o.cams,camK:o.camK,labels:o.labels,hud:o.hud,frame:o.frame,predict:o.predict});
 const labScene=()=>{sd=131;const n=new Ne;Ge(n,{key:1.9});Je(n,-1,40,.08);const g=new J;n.add(g);LAB.table(g);return{n,g}};
 const Lb=(par,p)=>()=>par.localToWorld(c(...p));
 const mkDT=()=>{let lt=0;return t=>{const d=min(.1,max(0,t-lt));lt=t;return d}};
 const toward=(p,T,dt,r)=>T>=p?min(T,p+dt*r):max(T,p-dt*.6);
 const insAfter=(list,id,t)=>{const i=list.findIndex(x=>x.id===id);list.splice(i<0?list.length:i+1,0,t)};
-const stand=(g,x,h)=>{const m=LAB.metal(0x6a707c);const p=new N(new Xe(.12,.12,h,10),m);p.position.set(x,h/2,0);g.add(p);const b=new N(new Xe(1.4,1.4,.25,24),m);b.position.set(x,.1,0);g.add(b);const a=new N(new Xe(.1,.1,3.2,8),m);a.rotation.z=PI/2;a.position.set(x+1.6,h-.8,0);g.add(a)};
+const stand=(g0,x,h)=>{const g=new J;g0.add(g);const m=LAB.metal(0x6a707c);const p=new N(new Xe(.12,.12,h,10),m);p.position.set(x,h/2,0);g.add(p);const b=new N(new Xe(1.4,1.4,.25,24),m);b.position.set(x,.1,0);g.add(b);const a=new N(new Xe(.1,.1,3.2,8),m);a.rotation.z=PI/2;a.position.set(x+1.6,h-.8,0);g.add(a);return g};
 /* 1 · displacement */
 function Mdisp(){const {n,g}=labScene();
  const V=LAB.vessel(g,0,0,1.9,3.8,"beaker",0x2e6fd6,.72);
@@ -1535,5 +1535,85 @@ function Mcomb(){const {n,g}=labScene();
 Q_("ch1/combination3d",[["CaO + H₂O → Ca(OH)₂ is a…","CaO + H₂O → Ca(OH)₂ है…",["Decomposition","Combination (exothermic)","Displacement","Double displacement"],1,"Two substances join and heat is released."],["Heating green FeSO₄ crystals gives…","हरे FeSO₄ को गर्म करने पर…",["Fe₂O₃ + SO₂ + SO₃","FeO only","Fe + S","No change"],0,"Brown Fe₂O₃ forms."],["At the cathode, electrolysis of water gives…","जल के विद्युत-अपघटन में कैथोड पर…",["O₂","H₂","CO₂","N₂"],1,"Hydrogen, double volume."]]);
 Px["ch1/combination3d"]=[["Whitewashing a wall: quicklime is slaked with water (heat!), then CaCO₃ forms on the wall.","दीवार की पुताई: चूने को जल में बुझाते हैं (ऊष्मा!), फिर दीवार पर CaCO₃ बनता है।"],["Photographic film darkens because silver bromide decomposes in light.","सिल्वर ब्रोमाइड प्रकाश में अपघटित होने से फ़िल्म काली पड़ती है।"]];
 insAfter(Hi.find(h=>h.no===1).topics,"combination",{id:"combination3d",title:"Combination & decomposition — detailed 3D",hi:"संयोजन व अपघटन — विस्तृत 3D",build:Mcomb,ncert:"Ch 1 · types of reactions"});
+
+
+/* ---- chemistry batch 2 ---- */
+const mkST=rows=>rows.map((r,i)=>[""+(i+1),r[0],r[1],r[2],r[3],"Hand-modelled · schematic",r[4]||10]);
+const strip_=(col)=>{const m=MAT(col,{roughness:.9,sheen:0,bumpScale:.3,opacity:1});return new N(new _e(.55,3.2,.06),m)};
+/* 7 · indicators */
+function Mind(){const {n,g}=labScene();
+ const A=LAB.vessel(g,-4.5,0,2,3.6,"beaker",0xe6f2ff,.7),B=LAB.vessel(g,4.5,0,2,3.6,"beaker",0xe6f2ff,.7);
+ const tag=(v,txt,col)=>{};const sl=(x,col)=>{const m=strip_(col);m.position.set(x,7,0);g.add(m);return m};
+ const SA=[sl(-5.2,0x3b4fd6),sl(-3.8,0xd63b3b)],SB=[sl(3.8,0x3b4fd6),sl(5.2,0xd63b3b)];
+ const BT=[["Litmus",0x7a4fd6],["Turmeric",0xf4c21f],["Phenolphthalein",0xf3f6fa],["Methyl orange",0xff9a1f]].map((q,i)=>{const v=LAB.vessel(g,-5.5+i*3.7,-3,.8,3,"beaker",q[1],.8);return v});
+ const SW=[];const sw=[[0x3b4fd6,0xd63b3b],[0xf4c21f,0xb5482a],[0xf3f6fa,0xff2d8a],[0xe53935,0xf4d21f],[0xd63b3b,0x3b4fd6]];
+ for(let r=0;r<5;r++)for(let k=0;k<2;k++){const b=new N(new _e(1.5,.2,1.5),new bt({color:sw[r][k]}));b.position.set(-4+r*2.0,.1,6+k*1.7);g.add(b);SW.push(b)}
+ const dr=new J;g.add(dr);const dt=new N(new Xe(.16,.16,1.4,12),MAT(0x2a2e38,{roughness:.5,sheen:0}));dr.add(dt);
+ let p=0,ls=-1,DT=mkDT();
+ const cams=[[c(0,6,24),c(0,2,-4)],[c(0,6.5,23),c(0,4,0)],[c(0,6.5,23),c(0,4,0)],[c(0,6.5,23),c(0,3.2,0)],[c(0,6.5,23),c(0,3.2,0)],[c(0,10,15),c(0,0,6.8)]];
+ const labels=[["i-a","Acid: dilute HCl","अम्ल: तनु HCl",Lb(A.v,[2.1,3,0]),[1,2,3,4]],["i-b","Base: NaOH","क्षार: NaOH",Lb(B.v,[2.1,3,0]),[1,2,3,4]],["i-bt","Indicators: litmus · turmeric · phenolphthalein · methyl orange","सूचक: लिटमस · हल्दी · फ़िनॉल्फ़थैलीन · मेथिल ऑरेंज",Lb(g,[0,4.4,-3]),[0]],["i-l","Litmus: blue→red in acid, red→blue in base","लिटमस: अम्ल में नीला→लाल, क्षार में लाल→नीला",Lb(g,[0,8.6,0]),[1]],["i-t","Turmeric: yellow in acid, red-brown in base","हल्दी: अम्ल में पीली, क्षार में लाल-भूरी",Lb(g,[0,8.6,0]),[2]],["i-p","Phenolphthalein: colourless in acid, pink in base","फ़िनॉल्फ़थैलीन: अम्ल में रंगहीन, क्षार में गुलाबी",Lb(g,[0,5.6,0]),[3]],["i-m","Methyl orange: red in acid, yellow in base","मेथिल ऑरेंज: अम्ल में लाल, क्षार में पीला",Lb(g,[0,5.6,0]),[4]],["i-tb","Summary chart (top: acid · bottom: base)","सारणी (ऊपर: अम्ल · नीचे: क्षार)",Lb(g,[0,1.2,7]),[5]]];
+ const cfg={1:[[0x3b4fd6,0xd63b3b],[0xd63b3b,0xd63b3b],[0x3b4fd6,0x3b4fd6],[0xd63b3b,0x3b4fd6]],2:[[0xf4c21f,0xf4c21f],[0xf4c21f,0xf4c21f],[0xf4c21f,0xb5482a],[0xf4c21f,0xb5482a]]};
+ return labRun({n,g,key:"ch2/indicators",ST:mkST([["What is an indicator?","सूचक क्या है?","An indicator changes colour in acid or base. Natural: litmus, turmeric. Synthetic: phenolphthalein, methyl orange.","सूचक अम्ल/क्षार में रंग बदलता है; प्राकृतिक: लिटमस, हल्दी; संश्लेषित: फ़िनॉल्फ़थैलीन, मेथिल ऑरेंज।",9],["Litmus paper","लिटमस पत्र","Dip blue and red litmus in acid (left) and base (right): blue turns red in acid; red turns blue in base.","नीला व लाल लिटमस अम्ल (बाएँ) व क्षार (दाएँ) में डुबोइए: अम्ल में नीला→लाल, क्षार में लाल→नीला।",11],["Turmeric","हल्दी","Turmeric stays yellow in acid and turns red-brown in base — why soap stains a yellow cloth reddish.","हल्दी अम्ल में पीली रहती और क्षार में लाल-भूरी हो जाती है — पीले कपड़े पर साबुन का दाग लाल दिखता है।",11],["Phenolphthalein","फ़िनॉल्फ़थैलीन","Add a few drops: colourless in acid, pink in base.","कुछ बूँदें डालिए: अम्ल में रंगहीन, क्षार में गुलाबी।",10],["Methyl orange","मेथिल ऑरेंज","Red in acid, yellow in base.","अम्ल में लाल, क्षार में पीला।",10],["Compare all","सबकी तुलना","Summary of colours: top row in acid, bottom row in base.","रंगों का सार: ऊपर की पंक्ति अम्ल में, नीचे की पंक्ति क्षार में।",10]]),cams,camK:["Indicators","Litmus","Turmeric","Phenolphthalein","Methyl orange","Chart"],labels,
+  hud:s=>s>=1&&s<=4?["","Blue→red in acid · red→blue in base","Yellow in acid · red-brown in base","Colourless in acid · pink in base","Red in acid · yellow in base"][s]:"",
+  frame:(s,t)=>{if(ls!==s){ls=s;p=s>=3?.35:0}p=toward(p,1,DT(t),.12);
+   BT.forEach(b=>b.v.visible=s===0);SW.forEach(b=>b.visible=s===5);SA.concat(SB).forEach(m=>m.visible=s===1||s===2);
+   const base=0xe6f2ff;A.v.visible=B.v.visible=s>=1&&s<=4;
+   LAB.tint(A.liqM,new we(base).lerp(new we(s===4?0xe53935:0xe6f2ff),s===4?p:0));LAB.tint(B.liqM,new we(base).lerp(new we(s===3?0xff2d8a:s===4?0xf4d21f:0xe6f2ff),s>=3?p:0));
+   const C=cfg[s];if(C){const dip=ease(cl(p*2,0,1));const kc=ease(cl(p*2-.4,0,1));[SA[0],SA[1],SB[0],SB[1]].forEach((m,i)=>{m.position.y=lerp(8.2,3.0,dip);const f=s===2?(i<2?C[0][0]:C[2][0]):0;const st=s===1?[0x3b4fd6,0xd63b3b,0x3b4fd6,0xd63b3b][i]:0xf4c21f;const en=s===1?[0xd63b3b,0xd63b3b,0x3b4fd6,0x3b4fd6][i]:(i<2?0xf4c21f:0xb5482a);m.material.color.setHex(st).lerp(new we(en),kc)})}
+   dr.visible=s>=3&&p<.6;if(dr.visible){dr.position.set(s>=3?(Math.floor(t*.7)%2?4.5:-4.5):0,lerp(6.2,3.8,(t*1.2)%1),0)}},
+  predict:{q:"Phenolphthalein turns pink in…",opts:[["Base",!0,"Correct — pink in basic solutions."],["Acid",!1,"It is colourless in acid."],["Water only",!1,"Neutral water leaves it colourless."]]}})}
+Q_("ch2/indicators3d",[["Blue litmus turns red in…","नीला लिटमस किसमें लाल होता है?",["Acid","Base","Salt solution","Water"],0,"Acid turns blue litmus red."],["Turmeric turns red-brown in…","हल्दी किसमें लाल-भूरी होती है?",["Acid","Base","Neutral","Sugar"],1,"Bases."],["Methyl orange in a base is…","क्षार में मेथिल ऑरेंज…",["Red","Yellow","Colourless","Pink"],1,"Yellow."]]);
+Px["ch2/indicators3d"]=[["Red cabbage juice is a natural pH indicator — pink in acids, green in bases.","लाल पत्तागोभी का रस प्राकृतिक सूचक है — अम्ल में गुलाबी, क्षार में हरा।"],["A yellow shirt stained by soap turns reddish because turmeric is an indicator.","साबुन से पीला कपड़ा लाल पड़ता है क्योंकि हल्दी एक सूचक है।"]];
+insAfter(Hi.find(h=>h.no===2).topics,"indicators",{id:"indicators3d",title:"Acid–base indicators — detailed 3D",hi:"अम्ल-क्षार सूचक — विस्तृत 3D",build:Mind,ncert:"Ch 2 · indicators"});
+/* 8 · salts + water of crystallisation */
+function Msalt(){const {n,g}=labScene();
+ const J_=[["NaCl",0xf4f4f0,"Common salt NaCl","खाने का नमक NaCl"],["NaHCO₃",0xf6f6f2,"Baking soda NaHCO₃","बेकिंग सोडा NaHCO₃"],["Na₂CO₃·10H₂O",0xe8f0f4,"Washing soda Na₂CO₃·10H₂O","धावन सोडा Na₂CO₃·10H₂O"],["CaOCl₂",0xf0f2e6,"Bleaching powder CaOCl₂","विरंजक चूर्ण CaOCl₂"],["CaSO₄·½H₂O",0xfafafa,"Plaster of Paris","प्लास्टर ऑफ़ पेरिस"]];
+ const jars=J_.map((q,i)=>{const v=LAB.vessel(g,-9.2+i*4.6,-4,1.3,3.4,"beaker",0xffffff,.001);const pw=new N(new Xe(1.15,1.15,2,28),MAT(q[1],{roughness:.95,sheen:0,bumpScale:.4}));pw.position.set(-9.2+i*4.6,1.1,-4);g.add(pw);const lid=new N(new Xe(1.38,1.38,.35,28),MAT(0x2f5fc4,{roughness:.5,sheen:0}));lid.position.set(-9.2+i*4.6,3.65,-4);g.add(lid);return{v,pw,lid}});
+ const cast=new N(param(20,30,(u,v)=>{const a=v*PI,r=.7+.35*Math.sin(u*PI);return[Math.cos(a)*r*1.3,u*2.6,Math.sin(a)*r]}),MAT(0xfafafa,{roughness:.9,sheen:0}));cast.position.set(8,0,2.5);g.add(cast);const stat=new N(sph(.55,0,1,1,1,1,16,20),MAT(0xfafafa,{roughness:.9,sheen:0}));stat.position.set(8,3.2,2.5);g.add(stat);
+ const T=LAB.vessel(g,0,2,.75,3.6,"beaker",0xffffff,.001);T.v.position.y=3.4;
+ const cr=[];for(let i=0;i<11;i++){const b=new N(new _e(.3+.1*(i%3),.3,.3),new bt({color:0x2f78d6}));b.position.set(-.3+.12*i%.6+.0,3.6+.14*Math.floor(i/4),2+((i*37)%5-2)*.07);b.rotation.set(i,i*.7,i*1.3);g.add(b);cr.push(b)}
+ const stg=stand(g,1.8,6.6);stg.position.z=2;
+ const fl=LAB.flame(g,0,2);const steam=LAB.bubbles(g,16,.09,0xffffff);const wd=new N(new it(.16,12,10),new bt({color:0x66b3ff,transparent:!0,opacity:.9}));g.add(wd);
+ const col=new we();let p=0,ls=-1,DT=mkDT();
+ const cams=[[c(0,6,26),c(0,2.5,-1)],[c(-5,5,15),c(-4.5,2,-4)],[c(6,5,17),c(6,2,-2)],[c(0,6,14),c(0,3.8,2)],[c(0,6,14),c(0,3.8,2)]];
+ const labels=[["s-a","Acid + base → salt + water","अम्ल + क्षार → लवण + जल",Lb(g,[0,5.6,-4]),[0]],["s-nacl","NaCl · chlor-alkali raw material","NaCl · क्लोर-क्षार का कच्चा माल",Lb(jars[0].v.v,[0,4.4,0]),[1]],["s-nahco","NaHCO₃ · antacid, baking powder","NaHCO₃ · एंटैसिड, बेकिंग पाउडर",Lb(jars[1].v.v,[0,4.4,0]),[1]],["s-wash","Na₂CO₃·10H₂O · removes hardness","Na₂CO₃·10H₂O · कठोरता हटाता है",Lb(jars[2].v.v,[0,4.4,0]),[1]],["s-bl","CaOCl₂ · disinfects water","CaOCl₂ · जल को कीटाणुरहित करता है",Lb(jars[3].v.v,[0,4.4,0]),[2]],["s-pop","CaSO₄·½H₂O · sets hard: casts, statues","CaSO₄·½H₂O · जमकर कठोर: प्लास्टर, मूर्तियाँ",Lb(jars[4].v.v,[0,4.4,0]),[2]],["s-cu","CuSO₄·5H₂O (blue) ⇄ CuSO₄ (white)","CuSO₄·5H₂O (नीला) ⇄ CuSO₄ (सफ़ेद)",Lb(T.v,[1.4,4,0]),[3,4]],["s-st","Water of crystallisation leaves as steam","क्रिस्टलन जल भाप बनकर निकलता है",Lb(T.v,[-1.2,5.8,0]),[3]],["s-wt","Add water: blue colour returns","जल डालिए: नीला रंग लौटता है",Lb(T.v,[-1.2,5.2,0]),[4]]];
+ return labRun({n,g,key:"ch2/salts",ST:specSteps("ch2/salts"),cams,camK:["Salts","Sodium salts","Ca salts","Heat crystals","Add water"],labels,
+  hud:s=>s>=3?(s===3?`CuSO₄·5H₂O → CuSO₄ + 5 H₂O · ${Math.round(p*100)} % dehydrated`:`CuSO₄ + 5 H₂O → CuSO₄·5H₂O · ${Math.round(p*100)} % hydrated`):"",
+  frame:(s,t)=>{if(ls!==s){ls=s;p=s===4?0:(s===3?.2:0)}p=toward(p,s>=3?1:0,DT(t),.09);
+   jars.forEach((q,i)=>{if(s>=3)return;const hi=(s===1&&i<3)||(s===2&&i>=3)||s===0;const k=hi?1:.55;q.pw.scale.set(1,1,1);q.pw.visible=!0;q.pw.material.opacity=k;q.lid.material.opacity=1;q.lid.position.y=3.65+(hi&&s>0?.25*Math.sin(t*3)*0:0)});
+   cast.visible=stat.visible=s===2||s===0;jars.forEach(q=>{q.v.v.visible=q.pw.visible=q.lid.visible=s<=2});T.v.visible=s>=3;cr.forEach(b=>b.visible=s>=3);stg.visible=s>=3;
+   const k=s===3?p:s===4?1-p:0;cr.forEach((b,i)=>b.material.color.setHex(i%2?0x2a6fd0:0x3b86e8).lerp(new we(0xf4f4f4),k));
+   fl.visible=s===3;fl.userData.upd(s===3&&p<.98,t);steam.update(t,{x:0,y0:4.2,y1:7.6,z:2,rad:.4},s===3&&p<.98?.9:0);
+   wd.visible=s===4&&p<.5;if(wd.visible)wd.position.set(0,lerp(8,4.4,(t*.8)%1),2)},
+  predict:{q:"Blue copper sulphate crystals turn white on heating because they lose…",opts:[["Water of crystallisation",!0,"Correct — 5 H₂O per formula unit."],["Copper",!1,"Copper stays."],["Sulphur",!1,"Sulphate remains."]]}})}
+Q_("ch2/salts3d",[["Number of water molecules in blue vitriol is…","नीले थोथे में जल अणु…",["2","5","10","½"],1,"CuSO₄·5H₂O."],["Plaster of Paris is…","प्लास्टर ऑफ़ पेरिस है…",["CaSO₄·½H₂O","CaCO₃","CaO","Ca(OH)₂"],0,"Hemihydrate of calcium sulphate."],["Bleaching powder is used to…","विरंजक चूर्ण का उपयोग…",["Disinfect drinking water","Bake cakes","Set bones","Make glass"],0,"Chlorine release disinfects."]]);
+Px["ch2/salts3d"]=[["Doctors set a fractured bone using Plaster of Paris — it hardens within minutes on adding water.","टूटी हड्डी को प्लास्टर ऑफ़ पेरिस से जोड़ते हैं — जल मिलाने पर मिनटों में कठोर।"],["Washing soda removes permanent hardness of water in laundries.","धावन सोडा जल की स्थायी कठोरता हटाता है।"]];
+insAfter(Hi.find(h=>h.no===2).topics,"salts",{id:"salts3d",title:"Important salts & water of crystallisation — detailed 3D",hi:"महत्वपूर्ण लवण व क्रिस्टलन जल — विस्तृत 3D",build:Msalt,ncert:"Ch 2 · salts"});
+/* 9 · acids with metals & carbonates */
+function Macid(){const {n,g}=labScene();
+ const X=[-8,-2.7,2.7,8],NM=[["Zn",0x8a95a5],["Mg",0xe6eaef],["Cu",0xc7733a],["Na₂CO₃",0xf6f6f2]];
+ const T=X.map((x,i)=>{const v=LAB.vessel(g,x,0,1,4.2,"beaker",0xe6f2ff,.6);v.liqM.opacity=.45;return v});
+ const M=NM.map((q,i)=>{const m=i===3?new N(new Xe(.8,.8,.9,16),new bt({color:0xf2f2f2})):new N(new _e(.4,2.6,.12),new bt({color:q[1]}));m.position.set(X[i]+(i===3?0:.15),i===3?.55:1.5,0);if(i!==3)m.rotation.z=.12;g.add(m);return m});
+ const bub=X.map((x,i)=>LAB.bubbles(g,i===1?30:22,.13,0xffffff));
+ const lime=LAB.vessel(g,13,0,1.6,3.2,"beaker",0xe6f2ff,.7);const dtube=new N(tube([c(8,4.4,0),c(8,6.8,0),c(12,6.8,0),c(12.6,2.4,0)],.09,8),LAB.glassM());g.add(dtube);
+ const spl=new J;g.add(spl);const stick=new N(new Xe(.07,.07,2.6,8),MAT(0xb08a55,{roughness:.9,sheen:0}));spl.add(stick);const fl_=new N(new Xe(0,.25,.7,12),new bt({color:0xffa726,transparent:!0,opacity:.9}));fl_.position.y=1.5;spl.add(fl_);
+ const pop=new N(new it(.7,14,12),new bt({color:0xfff3b0,transparent:!0,opacity:.9}));g.add(pop);
+ let p=0,ls=-1,DT=mkDT();
+ const cams=[[c(2.5,6,28),c(2.5,3,0)],[c(0,5,27),c(0,2.6,0)],[c(-8,6,15),c(-8,4,0)],[c(2.5,5.5,22),c(3.5,3,0)],[c(10,5.5,16),c(10,3,0)]];
+ const labels=[["a-hcl","Dilute HCl in every tube","प्रत्येक नली में तनु HCl",Lb(T[2].v,[0,5,0]),[0]],["a-zn","Zn + 2HCl → ZnCl₂ + H₂↑","Zn + 2HCl → ZnCl₂ + H₂↑",Lb(T[0].v,[1.2,4,0]),[1]],["a-mg","Mg: vigorous bubbling","Mg: तेज़ बुलबुले",Lb(T[1].v,[1.2,4,0]),[1]],["a-cu","Cu: no reaction (below H)","Cu: कोई अभिक्रिया नहीं (H से नीचे)",Lb(T[2].v,[1.2,4,0]),[1]],["a-pop","Pop test: H₂ burns with a pop","पॉप परीक्षण: H₂ पॉप के साथ जलती है",Lb(T[0].v,[0,6.8,0]),[2]],["a-co","Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑","Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑",Lb(T[3].v,[1.2,4,0]),[3]],["a-lw","Lime water turns milky: CO₂ + Ca(OH)₂ → CaCO₃↓","चूने का पानी दूधिया: CO₂ + Ca(OH)₂ → CaCO₃↓",Lb(lime.v,[1.7,3,0]),[4]]];
+ const LIM=[0xe6f2ff,0xfafaf5];
+ return labRun({n,g,key:"x",ST:mkST([["Four test tubes","चार परखनलियाँ","Dilute hydrochloric acid in four tubes with Zn, Mg, Cu and sodium carbonate.","चार नलियों में तनु HCl व क्रमशः Zn, Mg, Cu, सोडियम कार्बोनेट।",9],["Acid + metals","अम्ल + धातुएँ","Zn and Mg release hydrogen bubbles (Mg faster); Cu, below hydrogen in the series, does not react.","Zn व Mg से हाइड्रोजन के बुलबुले (Mg तेज़); H से नीचे Cu अभिक्रिया नहीं करता।",12],["Test the gas","गैस की जाँच","A burning splinter at the mouth of the tube: hydrogen burns with a pop sound.","नली के मुँह पर जलती तीली: हाइड्रोजन 'पॉप' ध्वनि के साथ जलती है।",9],["Acid + carbonate","अम्ल + कार्बोनेट","Sodium carbonate and HCl give salt, water and carbon dioxide gas.","सोडियम कार्बोनेट व HCl से लवण, जल और CO₂ गैस मिलती है।",10],["Lime-water test","चूने के पानी की जाँच","Pass the gas into lime water: it turns milky — carbon dioxide is confirmed.","गैस को चूने के पानी में प्रवाहित कीजिए: दूधिया — CO₂ की पुष्टि।",11]]),cams,camK:["Tubes","Metals","Pop test","Carbonate","Lime water"],labels,
+  hud:s=>["","H₂ gas evolved: Mg > Zn > Cu(0)","H₂ + O₂ → pop","CO₂ gas evolved","CO₂ + lime water → CaCO₃ (milky)"][s],
+  frame:(s,t)=>{if(ls!==s){ls=s;p=s===4?.1:0}p=toward(p,1,DT(t),.1);
+   const rx=[s>=1,s>=1,0,s>=3];const rate=[.8,1.4,0,1.1];bub.forEach((b,i)=>b.update(t,{x:X[i],y0:.5,y1:3.2,z:0,rad:.5},rx[i]&&s!==2?rate[i]:0));
+   M[1].scale.y=s>=1?1-.5*p:1;M[0].scale.y=s>=1?1-.15*p:1;
+   spl.visible=s===2;if(s===2){const k=(t*.25)%1;spl.position.set(-8+(1-k)*3,lerp(7.2,5.0,k),0);spl.rotation.z=.5;spl.scale.setScalar(1.8)}
+   pop.visible=s===2&&((t*.25)%1)>.85;pop.position.set(-8,5.2,0);pop.scale.setScalar(.4+((t*.25)%1-.85)*3);
+   dtube.visible=s>=3;LAB.tint(lime.liqM,new we(0xe6f2ff).lerp(new we(0xfafaf0),s===4?p:0));lime.v.visible=s>=3;
+   if(s===4)bub[3].update(t,{x:8,y0:.5,y1:3.2,z:0,rad:.5},1)},
+  predict:{q:"Which test confirms hydrogen gas?",opts:[["A burning splinter gives a pop sound",!0,"Correct."],["It turns lime water milky",!1,"That is CO₂."],["It relights a glowing splinter",!1,"That is oxygen."]]}})}
+Q_("ch2/acidrx3d",[["Metal + dilute acid gives…","धातु + तनु अम्ल से…",["Salt + hydrogen","Salt + water","Oxide","Carbon dioxide"],0,"E.g. Zn + 2HCl → ZnCl₂ + H₂."],["Hydrogen is confirmed by…","हाइड्रोजन की पहचान…",["Pop sound with a flame","Milky lime water","Blue litmus","Smell"],0,"Burning splinter pop test."],["CO₂ turns lime water…","CO₂ चूने के पानी को…",["Milky","Pink","Blue","Green"],0,"Calcium carbonate forms."]]);
+Px["ch2/acidrx3d"]=[["Fizzing when you add vinegar to baking soda is the same acid + carbonate reaction releasing CO₂.","सिरके व बेकिंग सोडा की झाग वही अम्ल + कार्बोनेट अभिक्रिया है, CO₂ निकलती है।"],["Acidic rain slowly dissolves marble statues (CaCO₃).","अम्लीय वर्षा संगमरमर (CaCO₃) की मूर्तियाँ घोलती है।"]];
+insAfter(Hi.find(h=>h.no===2).topics,"acidrx",{id:"acidrx3d",title:"Acids with metals & carbonates — detailed 3D",hi:"अम्ल की धातु व कार्बोनेट से अभिक्रिया — विस्तृत 3D",build:Macid,ncert:"Ch 2 · chemical properties of acids"});
 
 })();
