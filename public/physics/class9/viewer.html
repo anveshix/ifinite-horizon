@@ -194,18 +194,44 @@ function makeArrow(p0,p1,color=0xffd54f) {
 // Labels
 const labelsEl=document.getElementById('labels');
 const labelEls=new Map();
+// Labels are hidden until a part is tapped (or "All labels" is on), and follow the model as the camera moves.
+let allLabels=false,activeLab=null;
 function label(id,text,pos,active,hi){
   let el=labelEls.get(id);
-  if(!el){el=document.createElement('div');el.className='lab'+(hi?' hi':'');el.textContent=text;labelsEl.appendChild(el);labelEls.set(id,el);}
-  if(active){
-    const v=pos.clone().project(camera);
-    const x=(v.x*0.5+0.5)*view.clientWidth;
-    const y=(1-(v.y*0.5+0.5))*view.clientHeight;
-    el.style.left=x+'px';el.style.top=y+'px';el.classList.add('show');
-    if(hi)el.classList.add('hi');else el.classList.remove('hi');
-  }else{el.classList.remove('show');}
+  if(!el){el=document.createElement('div');el.className='lab';el.textContent=text;labelsEl.appendChild(el);labelEls.set(id,el);}
+  el.classList.toggle('hi',!!hi);el._p=pos.clone();el._on=!!active;
 }
-function clearLabels(){labelEls.forEach(e=>e.classList.remove('show'));}
+function clearLabels(){labelEls.forEach(e=>{e._on=false;e.classList.remove('show');});activeLab=null;}
+function updateLabels(){
+  const W=view.clientWidth,H=view.clientHeight;
+  labelEls.forEach(el=>{
+    if(!el._on||!(allLabels||el===activeLab)){el.classList.remove('show');return;}
+    const v=el._p.clone().project(camera);
+    if(v.z>1){el.classList.remove('show');return;}
+    el.style.left=((v.x*0.5+0.5)*W)+'px';el.style.top=((1-(v.y*0.5+0.5))*H)+'px';el.classList.add('show');
+  });
+}
+(function(){
+  const cv=renderer.domElement,ray=new THREE.Raycaster(),m2=new THREE.Vector2();let d=null;
+  cv.addEventListener('pointerdown',e=>{d=[e.clientX,e.clientY];});
+  cv.addEventListener('pointerup',e=>{
+    if(!d)return;const moved=Math.hypot(e.clientX-d[0],e.clientY-d[1])>6;d=null;if(moved)return;
+    const r=cv.getBoundingClientRect(),tx=e.clientX-r.left,ty=e.clientY-r.top;
+    m2.set(tx/r.width*2-1,-(ty/r.height)*2+1);ray.setFromCamera(m2,camera);
+    const root=(typeof currentGroup!=='undefined'&&currentGroup)||scene;
+    const hit=ray.intersectObject(root,true).find(h=>h.object.visible!==false);
+    let best=null,bd=hit?1e9:56;
+    labelEls.forEach(el=>{if(!el._on)return;const v=el._p.clone().project(camera);if(v.z>1)return;
+      const dd=Math.hypot((v.x*0.5+0.5)*r.width-tx,(1-(v.y*0.5+0.5))*r.height-ty);if(dd<bd){bd=dd;best=el;}});
+    
+    activeLab=best;
+  });
+  const b=document.createElement('button');b.className='btn';b.textContent='🏷 All labels';
+  b.title='Show every label (default: tap a part to see its label)';
+  b.style.cssText='position:absolute;bottom:44px;left:12px;z-index:35';
+  b.onclick=()=>{allLabels=!allLabels;b.classList.toggle('active',allLabels);};
+  view.appendChild(b);
+})();
 // ---------- Current model ----------
 let currentGroup=null;
 function clearScene(){
@@ -386,7 +412,6 @@ function buildExp(name){
   clearScene();
   const g=new THREE.Group();
   state.exp=name; state.step=0;
-  updateUI();
   renderStep(g);
 }
 function renderStep(g){
@@ -428,6 +453,7 @@ function animate(){
   const t=performance.now()*0.0015;
   controls.update();
   if(currentGroup){currentGroup.rotation.y=Math.sin(t*0.3)*0.06;currentGroup.rotation.x=Math.sin(t*0.2)*0.04;}
+  updateLabels();
   renderer.render(scene,camera);
 }
 animate();

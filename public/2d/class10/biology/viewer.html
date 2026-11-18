@@ -68,6 +68,7 @@
     <div class="sub" data-sub="circulatory_system" onclick="selectSub('circulatory_system')">Circulatory System — परिसंचरण तंत्र</div>
     <div class="topic" data-topic="excretory" onclick="selectTopic('excretory')">उत्सर्जन तंत्र · Excretory System <span class="hi">उत्सर्जन तंत्र</span></div>
     <div class="sub" data-sub="excretory_system" onclick="selectSub('excretory_system')">Excretory System — उत्सर्जन तंत्र</div>
+    <div class="sub" data-sub="dialysis" onclick="selectSub('dialysis')">Haemodialysis (Artificial Kidney) — हीमोडायलिसिस</div>
     <div class="topic" data-topic="nervous" onclick="selectTopic('nervous')">तंत्रिका तंत्र · Nervous System <span class="hi">तंत्रिका तंत्र</span></div>
     <div class="sub" data-sub="nervous_system" onclick="selectSub('nervous_system')">Nervous System — तंत्रिका तंत्र</div>
     <div class="topic" data-topic="endocrine" onclick="selectTopic('endocrine')">अंतःस्रावी तंत्र · Endocrine System <span class="hi">अंतःस्रावी तंत्र</span></div>
@@ -103,6 +104,11 @@
 <script>
 // Label data: subtopic -> {title, desc, img, marks:[{x,y,en,hi}]}
 const DATA={
+ dialysis:{
+  title:'Haemodialysis (Artificial Kidney) — हीमोडायलिसिस (कृत्रिम वृक्क)', desc:'डायलाइज़र के खोखले तंतु, रक्त-पंप, फिस्टुला, डायलिसिस-द्रव। Hollow-fibre dialyzer, blood pump, AV fistula and dialysing fluid.',
+  img:'images/dialysis.webp',
+  marks:[{"x": 20.3, "y": 52.3, "en": "Patient's forearm", "hi": "रोगी की बाँह"}, {"x": 24.5, "y": 48.8, "en": "AV fistula (artery joined to vein)", "hi": "AV फिस्टुला (धमनी + शिरा)"}, {"x": 28.9, "y": 47.8, "en": "Arterial needle — blood OUT", "hi": "धमनी-सुई — रक्त बाहर"}, {"x": 34.3, "y": 47.8, "en": "Venous needle — cleaned blood IN", "hi": "शिरा-सुई — साफ़ रक्त अंदर"}, {"x": 37.4, "y": 40.2, "en": "Arterial blood line", "hi": "रक्त-नली (निर्गम)"}, {"x": 47.1, "y": 51.2, "en": "Blood pump (rollers)", "hi": "रक्त पंप (रोलर)"}, {"x": 56.4, "y": 49.4, "en": "Heparin pump (anticlotting)", "hi": "हिपेरिन पंप (थक्का-रोधी)"}, {"x": 51.9, "y": 33.2, "en": "Dialysis machine", "hi": "डायलिसिस मशीन"}, {"x": 72.7, "y": 40.2, "en": "Dialyzer (artificial kidney)", "hi": "डायलाइज़र (कृत्रिम वृक्क)"}, {"x": 69.2, "y": 28, "en": "Blood IN (urea-rich)", "hi": "रक्त अंदर (यूरिया अधिक)"}, {"x": 68.7, "y": 67.7, "en": "Blood OUT (cleaned)", "hi": "रक्त बाहर (साफ़)"}, {"x": 69.2, "y": 44.2, "en": "Hollow fibres (semi-permeable)", "hi": "खोखले तंतु (अर्धपारगम्य)"}, {"x": 74.4, "y": 59.7, "en": "Fresh dialysing fluid IN", "hi": "ताज़ा डायलिसिस-द्रव अंदर"}, {"x": 74.7, "y": 36.3, "en": "Used fluid + urea OUT", "hi": "प्रयुक्त द्रव + यूरिया बाहर"}, {"x": 81.5, "y": 52.1, "en": "Dialysate supply", "hi": "डायलिसिस-द्रव आपूर्ति"}, {"x": 87.2, "y": 66.3, "en": "Drain", "hi": "निकास"}, {"x": 62.1, "y": 54.4, "en": "Air trap + bubble detector", "hi": "एयर-ट्रैप + बुलबुला संसूचक"}, {"x": 46.1, "y": 64.9, "en": "Venous blood line", "hi": "रक्त-नली (वापसी)"}]},
+
  cell_cycle_division:{
   title:'Cell Cycle & Division — कोशिका चक्र', desc:'कोशिका चक्र के सभी चरण — अंतरावस्था, पूर्वावस्था, मध्यावस्था, अंतर्वस्था, अंतिमावस्था, साइटोकाइनेसिस। All cell cycle phases.',
   img:'images/cell_cycle_division.webp',
@@ -392,5 +398,7 @@ if(_sub&&DATA[_sub])selectSub(_sub);
 else if(_top&&document.querySelector('[data-topic="'+_top+'"]'))selectTopic(_top);
 else selectSub('cell_cycle_division');
 </script>
+<script src="../../conditions.js"></script>
+<script src="../../present.js"></script>
 </body>
 </html>

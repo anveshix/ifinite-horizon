@@ -1,4 +1,4 @@
-/* ===== Custom model sets 1-3: animal cell, plant cell, bacterium, atomic models (detailed 3D) =====
+/* ===== Custom model sets 1-9: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination, genetics, cell division (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -167,12 +167,12 @@ function run(C){const {n,g,org,show,base,ST,cams,camK,labels,frame,predict,plane
  const tools=[...cams.map((q,i)=>({label:"📷 "+camK[i],group:"cam",on:i===0,act:()=>fly(i)})),...(C.tools2||[]),...(plane?[{label:"✂ Cut-away",on:!0,toggle:()=>(cut=cut?0:1,!!cut)}]:[]),{label:"Isolate selected",toggle:()=>(iso=iso?0:1,!!iso)},{label:"All labels",toggle:()=>(allLab=allLab?0:1,!!allLab)}];
  return{scene:n,view:{pos:cams[0][0],target:cams[0][1]},labels:lab,pickables:org.map(o=>o.m),tools,
   steps:ST.map(s=>({dur:s[6],en:`${s[0]} · ${s[1]} — ${s[3]}`,hi:`${s[2]} — ${s[4]}`})),predict,
-  onPick(o){const id=o.userData.part,i=KIND2[id]||KINDS[id];if(i)note(i[0],i[1],i[2],i[3]);sel=id;hl.clear();hl.add(id)},
+  onPick(o){const id=o.userData.part,i=(C.kinds&&C.kinds[id])||KIND2[id]||KINDS[id];if(i)note(i[0],i[1],i[2],i[3]);sel=id;hl.clear();hl.add(id)},
   apply(s,k,t){const dt=min(.1,max(0,t-lastT));lastT=t;if(s!==lastS){lastS=s;fly(s)}
    if(plane)plane.constant=s===0||!cut?99:cutAt;frame&&frame(s,t,dt);
    for(const o of org){const sh=show[o.id];let a=(base[o.id]??1)*(sh&&sh[s]?1:.07);const q=op&&op(o.id,s,a);if(q!==undefined)a=q;if(iso&&sel&&o.id!==sel)a=min(a,.05);const m=o.mat;if(m.opacity!==undefined){m.opacity=a;m.transparent=a<.999;m.depthWrite=a>.6}
     const on=sh&&sh[s]&&s>0,h=(on?.12+.06*sin(t*3):0)+(hl.has(o.id)?.2:0);if(m.emissive){m.userData.e0=m.userData.e0??m.emissiveIntensity;m.emissiveIntensity=m.userData.e0+h}}
-   const i=ST[s];$e(`<b>${i[0]} · ${i[1]}</b> <span style="color:var(--hi)">/ ${i[2]}</span><br><span style="color:#ffd36b">${i[5]}</span> · ${i[3]}<br><span style="color:#9fb3cf;font-size:.82em">Hand-modelled procedural geometry (no imported mesh). Sizes are not to scale; particles and motion are schematic.</span>`)}}}
+   const i=ST[s],xh=C.hud&&C.hud(s,t);$e(`<b>${i[0]} · ${i[1]}</b> <span style="color:var(--hi)">/ ${i[2]}</span><br><span style="color:#ffd36b">${i[5]}</span> · ${i[3]}${xh?`<br><b style="color:#2b6cb0">${xh}</b>`:""}<br><span style="color:#9fb3cf;font-size:.82em">Hand-modelled procedural geometry (no imported mesh). Sizes are not to scale; particles and motion are schematic.</span>`)}}}
 const mkAdd=(g,org)=>(id,geo,mat,p=[0,0,0],o={})=>{const m=new N(geo,mat);m.position.set(p[0],p[1],p[2]);if(o.rot)m.rotation.set(...o.rot);if(o.scl)m.scale.set(...o.scl);m.userData.part=id;m.castShadow=!o.ns;m.frustumCulled=!1;(o.parent||g).add(m);org.push({m,id,mat});return m};
 const mkParts=(n,add)=>({});
 /* ============================== PLANT CELL ============================== */
@@ -322,7 +322,7 @@ function Matom(){sd=31;const n=new Ne;Ge(n,{key:1.8});Je(n,-4.2,13,.1);const g=n
   ["a-k","K shell (n = 1): max 2","K कक्षा (n = 1): अधिकतम 2",()=>g.localToWorld(c(0,1.9,0)),[4,6]],["a-l","L shell (n = 2): max 8","L कक्षा (n = 2): अधिकतम 8",()=>g.localToWorld(c(0,3.25,0)),[4,6]],["a-ph","Photon (energy emitted)","फ़ोटॉन (ऊर्जा उत्सर्जित)",()=>ph.getWorldPosition(c()),[5]],["a-jump","Electron falls L → K","इलेक्ट्रॉन L → K में गिरा",()=>g.localToWorld(c(0,2.6,0)),[5]],["a-z","Z = protons = electrons","Z = प्रोटॉन = इलेक्ट्रॉन",()=>g.localToWorld(c(0,-.4,0)),[6]]];
  const tools2=ELS.map((e,i)=>({label:e[0]+" · "+e[3],group:"el",on:i===3,act:()=>build(e)}));
  const info=()=>{const e=curEl,sh=shellFill(e[3]);return`${e[1]} (${e[0]}) · Z = ${e[3]} · A = ${e[3]+e[4]} · shells ${sh.join(",")} · valency ${e[5]}`};
- const run0=run({n,g,org,show,base,ST:A_ST,cams,camK,labels,tools2,
+ const run0=run({kinds:KIND3,n,g,org,show,base,ST:A_ST,cams,camK,labels,tools2,
   frame:(s,t,dt)=>{g.rotation.y=s===2?0:sin(t*.12)*.2;gD.visible=s===0;gT.visible=s===1;gR.visible=s===2;gB.visible=s>=3;
    plum.forEach(([m,d,p])=>{m.position.set(d.x+.06*sin(t*3+p),d.y+.06*cos(t*2.6+p),d.z+.06*sin(t*2.2+p*2))});
    /* alpha scattering */
@@ -344,4 +344,967 @@ function Matom(){sd=31;const n=new Ne;Ge(n,{key:1.8});Je(n,-4.2,13,.1);const g=n
 Q_("ix6/atom3d",[["Who discovered the electron?","इलेक्ट्रॉन की खोज किसने की?",["Rutherford","J. J. Thomson","Bohr","Chadwick"],1,"Thomson, in 1897."],["The nucleus was discovered by…","नाभिक की खोज किसने की?",["Dalton","Rutherford","Bohr","Thomson"],1,"Using the gold-foil experiment."],["Maximum electrons in the L shell:","L कक्षा में अधिकतम इलेक्ट्रॉन:",["2","8","18","32"],1,"K:2, L:8, M:18."],["Sodium has atomic number 11. Its shell arrangement is…","सोडियम का परमाणु क्रमांक 11 है; कक्षा-व्यवस्था:",["2,8,1","2,8,2","2,9","1,8,2"],0,"2 + 8 + 1 = 11."],["Neutrons were discovered by…","न्यूट्रॉन की खोज किसने की?",["Chadwick","Goldstein","Thomson","Bohr"],0,"In 1932."]]);
 Px["ix6/atom3d"]=[["The atom is ~99.999% empty space — if the nucleus were a marble, the electrons would be ~1 km away.","परमाणु लगभग पूरा खाली है — यदि नाभिक कंचा हो तो इलेक्ट्रॉन लगभग 1 किमी दूर होंगे।"],["The colours of fireworks and neon signs are photons from electrons falling to lower shells.","आतिशबाज़ी व नियॉन बोर्ड के रंग निचली कक्षा में गिरते इलेक्ट्रॉनों के फ़ोटॉन हैं।"]];
 {const La=Hj.find(h=>h.kp==="ix6").topics,i=La.findIndex(x=>x.id==="models");La.splice(i<0?La.length:i+1,0,{id:"atom3d",title:"Structure of the atom — detailed 3D",hi:"परमाणु की संरचना — विस्तृत 3D",build:Matom,ncert:"Class IX · structure of the atom"})}
+/* ===================== SET 4: NEURON · IMPULSE · SYNAPSE · REFLEX ARC ===================== */
+const KIND4={
+ soma:["Cell body (soma)","कोशिका काय","The neuron's control centre: it holds the nucleus and makes the proteins the cell needs. Dendrites bring signals to it.","तंत्रिका कोशिका का नियंत्रण केंद्र: केंद्रक व आवश्यक प्रोटीन यहीं; द्रुमिकाएँ संकेत यहाँ लाती हैं।"],
+ nuc4:["Nucleus","केंद्रक","Holds the DNA that directs the neuron's activities.","DNA रखता है जो तंत्रिका कोशिका की क्रियाओं को निर्देशित करता है।"],
+ dend:["Dendrites","द्रुमिकाएँ","Branched, short fibres that receive information from other neurons or from receptors. Tiny spines increase the area for contacts.","छोटी, शाखित तंतुएँ जो अन्य तंत्रिकाओं या ग्राही से सूचना लेती हैं; सूक्ष्म काँटे संपर्क-क्षेत्र बढ़ाते हैं।"],
+ axon:["Axon","तंत्रिकाक्ष (एक्सॉन)","A single long fibre that carries the impulse away from the cell body — up to a metre in the leg.","एक लंबा तंतु जो आवेग को कोशिका काय से दूर ले जाता है — पैर में लगभग एक मीटर तक।"],
+ myelin:["Myelin sheath","माइलिन आवरण","Fatty insulating layer made by Schwann cells. It makes the impulse jump from gap to gap and travel up to 100 m/s.","श्वान कोशिकाओं की वसीय अवरोधी परत; आवेग को अंतराल से अंतराल तक कुदाती है और गति 100 m/s तक पहुँचती है।"],
+ node:["Node of Ranvier","रैन्वियर पर्व","A small uncovered gap between myelin segments where ion channels sit and the impulse is renewed.","माइलिन खंडों के बीच का खुला अंतराल जहाँ आयन-चैनल होते हैं और आवेग नवीकृत होता है।"],
+ term:["Axon terminals","तंत्रिकाक्ष अंत","Branched ends of the axon with swollen knobs (boutons) that contain vesicles of neurotransmitter.","एक्सॉन के शाखित सिरे, फूले बटन (बूटॉन) जिनमें न्यूरोट्रांसमीटर की पुटिकाएँ होती हैं।"],
+ pre:["Pre-synaptic knob","पूर्व-सिनैप्टिक बटन","The end of the sending neuron. An arriving impulse makes vesicles fuse with the membrane and release neurotransmitter.","भेजने वाली तंत्रिका का सिरा; आवेग आने पर पुटिकाएँ झिल्ली से जुड़कर न्यूरोट्रांसमीटर छोड़ती हैं।"],
+ ves4:["Vesicle","पुटिका","A bubble packed with neurotransmitter molecules.","न्यूरोट्रांसमीटर अणुओं से भरी बुलबुले जैसी थैली।"],
+ cleft:["Synaptic cleft","सिनैप्टिक दरार","A gap of about 20 nm. The chemical signal must cross it by diffusion — electricity cannot jump here.","लगभग 20 nm की दरार; रासायनिक संकेत को विसरण से पार करना पड़ता है — यहाँ विद्युत नहीं कूद सकती।"],
+ post:["Post-synaptic membrane","पश्च-सिनैप्टिक झिल्ली","The receiving cell's membrane, with receptor proteins that fit the neurotransmitter like a key in a lock.","ग्राही कोशिका की झिल्ली; ग्राही प्रोटीन न्यूरोट्रांसमीटर को ताले-चाबी की तरह पकड़ते हैं।"],
+ nt:["Neurotransmitter","न्यूरोट्रांसमीटर","Chemical messenger (e.g. acetylcholine) that carries the signal across the cleft.","रासायनिक संदेशवाहक (जैसे ऐसीटिलकोलीन) जो दरार पार संकेत ले जाता है।"],
+ rec:["Receptor protein","ग्राही प्रोटीन","Binds the neurotransmitter and opens a channel, starting a new impulse in the next cell.","न्यूरोट्रांसमीटर को बाँधकर चैनल खोलता है और अगली कोशिका में नया आवेग शुरू करता है।"],
+ skin:["Receptor (skin)","ग्राही (त्वचा)","Sense organ that detects the stimulus (heat, touch, pain) and starts a nerve impulse.","संवेदी अंग जो उद्दीपन (ऊष्मा, स्पर्श, पीड़ा) पहचानकर तंत्रिका आवेग शुरू करता है।"],
+ sens:["Sensory neuron","संवेदी तंत्रिका","Carries the impulse from the receptor to the spinal cord.","आवेग को ग्राही से मेरुरज्जु तक ले जाती है।"],
+ cord:["Spinal cord (relay)","मेरुरज्जु (रिले)","Grey matter where the relay neuron connects the sensory neuron to the motor neuron — the reflex is decided here, without waiting for the brain.","धूसर पदार्थ जहाँ रिले तंत्रिका संवेदी को प्रेरक से जोड़ती है — प्रतिवर्त यहीं तय होता है, मस्तिष्क की प्रतीक्षा किए बिना।"],
+ motor:["Motor neuron","प्रेरक तंत्रिका","Carries the command from the spinal cord to the muscle.","आदेश को मेरुरज्जु से पेशी तक ले जाती है।"],
+ musc:["Effector (muscle)","प्रभावक (पेशी)","The muscle contracts and pulls the hand away.","पेशी सिकुड़ती है और हाथ को खींच लेती है।"]};
+const N_ST=[
+["1","The neuron: the cell of the nervous system","न्यूरॉन: तंत्रिका तंत्र की कोशिका","A neuron has a cell body, many short dendrites and one long axon ending in terminals. Nothing else in the body is so specialised for carrying messages.","न्यूरॉन में कोशिका काय, अनेक छोटी द्रुमिकाएँ और एक लंबा एक्सॉन होता है जो अंत-शाखाओं में समाप्त होता है; संदेश ढोने के लिए इतनी विशिष्ट कोई और कोशिका नहीं।","Artistic model",9],
+["2","Dendrites receive, the axon sends","द्रुमिकाएँ लेती हैं, एक्सॉन भेजता है","Information enters through the dendrites, passes through the cell body and leaves along the axon: dendrite → cell body → axon → terminal. The impulse is electrical here.","सूचना द्रुमिकाओं से आती है, कोशिका काय से गुज़रती है और एक्सॉन से बाहर जाती है: द्रुमिका → कोशिका काय → एक्सॉन → अंत। यहाँ आवेग विद्युत है।","Animated (schematic)",10],
+["3","Myelin and the jumping impulse","माइलिन व कूदता आवेग","Myelin insulates the axon. The impulse jumps from one node of Ranvier to the next (saltatory conduction), which is much faster than creeping along a bare fibre.","माइलिन एक्सॉन को ढकता है; आवेग एक रैन्वियर पर्व से अगले पर कूदता है (लवणीय चालन), जो नंगे तंतु पर रेंगने से कहीं तेज़ है।","Animated · speed exaggerated",11],
+["4","What happens at a node","पर्व पर क्या होता है","At a node, sodium ions rush IN and the membrane flips from −70 mV to about +30 mV; then potassium ions flow OUT and it resets. This wave of change is the action potential.","पर्व पर Na⁺ आयन तेज़ी से अंदर आते हैं और झिल्ली −70 mV से लगभग +30 mV हो जाती है; फिर K⁺ बाहर बहते हैं और पुनः स्थापित होती है — यही क्रिया-विभव है।","Animated · schematic (ions not to scale)",11],
+["5","The synapse: a chemical bridge","सिनैप्स: रासायनिक पुल","The impulse reaches the knob; vesicles release neurotransmitter into the 20 nm gap; it binds receptors on the next cell and starts a new impulse. The signal goes one way only.","आवेग बटन तक पहुँचता है; पुटिकाएँ 20 nm दरार में न्यूरोट्रांसमीटर छोड़ती हैं; वह अगली कोशिका के ग्राहियों से जुड़कर नया आवेग शुरू करता है; संकेत केवल एक दिशा में जाता है।","Animated · magnified (not to scale)",13],
+["6","Reflex arc: the fast shortcut","प्रतिवर्त चाप: तेज़ छोटा रास्ता","Touch something hot: receptor → sensory neuron → spinal cord (relay) → motor neuron → muscle. The hand moves away before the brain even feels the pain.","गर्म वस्तु छूते ही: ग्राही → संवेदी तंत्रिका → मेरुरज्जु (रिले) → प्रेरक तंत्रिका → पेशी; मस्तिष्क को दर्द महसूस होने से पहले ही हाथ हट जाता है।","Animated · schematic",13]];
+function Mneuron(){sd=41;const n=new Ne;Ge(n,{key:1.9});Je(n,-5.2,40,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const SY=[18,0,0],RF=[0,-13,0];
+ const syn=new J;syn.position.set(...SY);g.add(syn);const ref=new J;ref.position.set(...RF);g.add(ref);
+ const warm=MAT(0xe8844f,{roughness:.5,clearcoat:.4,bumpScale:.3,opacity:.97,sheen:.2,sheenC:0xffd0b0,emissive:0x5a2008,emissiveIntensity:.18});
+ /* soma */
+ add("soma",sph(1.15,.09,1.6,1.05,1,1,48,64,2),warm,[-6,0,0]);
+ add("nuc4",sph(.58,.04,2,1,1,1,32,40,4),MAT(0x7a83d6,{roughness:.35,clearcoat:.7,opacity:.9,emissive:0x1b2160,emissiveIntensity:.25}),[-6.05,0,0]);
+ add("nuc4",sph(.2,.1,3,1,1,1,16,20,6),MAT(0x40206b,{roughness:.6,emissive:0x1d0a33,emissiveIntensity:.3}),[-5.9,.1,.2],{ns:1});
+ /* dendritic trees with spines */
+ const segs=[];const dend=(base,dir,len,r,depth)=>{const pts=[base.clone()];let p=base.clone(),d=dir.clone();for(let i=0;i<4;i++){d.add(c(R()-.5,R()-.5,R()-.5).multiplyScalar(.55)).normalize();p=p.clone().add(d.clone().multiplyScalar(len/4));pts.push(p)}segs.push({pts,r});
+  if(depth>0)for(let k=0;k<2;k++)dend(p,d.clone().add(c(R()-.5,R()-.5,R()-.5).multiplyScalar(1.3)).normalize(),len*.72,r*.7,depth-1)};
+ [[-1,.7,.4],[-1,-.6,.7],[-.7,1,-.3],[-.8,-1,-.2],[-.5,.2,1],[-.4,-.1,-1],[-1,.1,-.9]].forEach(d=>dend(c(-6+d[0]*.9,d[1]*.8,d[2]*.8),c(d[0],d[1],d[2]).normalize(),1.9,.2,2));
+ const spM=MAT(0xf7b894,{roughness:.5,opacity:1});
+ segs.forEach(s=>{add("dend",tube(s.pts,s.r,8,u=>1-.55*u),warm,[0,0,0],{ns:1});if(s.r<.12)for(let k=0;k<5;k++){const q=s.pts[1+(k%3)].clone().lerp(s.pts[2+(k%2)],R());add("dend",sph(.05,0,1,1,1,1,8,10),spM,[q.x+(R()-.5)*.18,q.y+(R()-.5)*.18,q.z+(R()-.5)*.18],{ns:1})}});
+ /* axon hillock + axon */
+ const axM=MAT(0xf3df9a,{roughness:.4,clearcoat:.6,emissive:0x4a3a08,emissiveIntensity:.2,bumpScale:.15});
+ add("axon",tube([c(-5,0,0),c(-4.6,0,0),c(-3.8,0,0)],.5,12,u=>1-.7*u),warm,[0,0,0],{ns:1});
+ add("axon",tube([c(-4.4,0,0),c(0,0,0),c(4,0,0),c(6.7,0,0)],.15,10),axM,[0,0,0],{ns:1});
+ /* myelin sheaths (Schwann cells) */
+ const myM=MAT(0xfff1c8,{roughness:.22,clearcoat:.9,clearcoatRoughness:.15,sheen:.5,emissive:0x3a2c08,emissiveIntensity:.18,bumpScale:.3,opacity:.97});const XN=[];
+ const myM2=MAT(0xf4d58a,{roughness:.3,clearcoat:.8,sheen:.4,emissive:0x4a3408,emissiveIntensity:.15,bumpScale:.4,opacity:.97});
+ for(let i=0;i<7;i++){const x0=-4.3+i*1.6,L=1.35-.04*(i%3),cut=i===3,mat=i%2?myM:myM2;
+  add("myelin",param(30,56,(u,v)=>{const x=(u-.5)*L,a=(cut?(.05+v*.7):v)*TAU,pr=Math.pow(sin(u*PI),.25),ridge=1+.045*sin(u*PI*5+i)+.03*fbm(u*3+i,v*3,i),k=.38*pr*ridge+.02;return[x,cos(a)*k,sin(a)*k]}),mat,[x0+L/2,0,0],{ns:1});
+  if(cut){[-1,1].forEach(sg=>add("myelin",param(6,150,(u,v)=>{const a=v*TAU*3.4,r=.07+.3*v+u*.03;return[sg*L/2*.985+sg*u*.02,cos(a)*r,sin(a)*r]}),MAT(0xfff4cf,{roughness:.4,opacity:1,emissive:0x4a3408,emissiveIntensity:.2,sheen:0}),[x0+L/2,0,0],{ns:1}))}
+  if(i<6)XN.push(x0+L+.1)}
+ /* nodes: tiny glowing rings */
+ const nodeM=MAT(0x9fd3ff,{roughness:.3,emissive:0x2a6ac0,emissiveIntensity:.5,opacity:.95});XN.forEach(x=>add("node",torus(.17,.045),nodeM,[x,0,0],{rot:[0,0,PI/2],ns:1}));
+ /* terminals + boutons */
+ const boM=MAT(0xf5c26b,{roughness:.35,clearcoat:.7,emissive:0x5a3a08,emissiveIntensity:.25});
+ [[1.2,.9,.4],[1.5,.2,1],[1.4,-.6,.6],[1.6,-.9,-.3],[1.3,.4,-.9]].forEach((e,i)=>{add("term",tube([c(6.7,0,0),c(7.2,e[1]*.4,e[2]*.4),c(7.7+e[0]*.15,e[1]*.9,e[2]*.9)],.09,8),axM,[0,0,0],{ns:1});add("term",sph(.3,.06,2,1,1,1,16,20,i),boM,[7.8+e[0]*.15,e[1]*.9,e[2]*.9])});
+ /* ---- synapse (magnified) ---- */
+ const preM=MAT(0xf0a63a,{roughness:.3,clearcoat:.7,opacity:.3,sheen:0,emissive:0x5a3a08,emissiveIntensity:.15,depthWrite:!1});
+ add("pre",sph(2.4,.04,1.2,1,.95,1,44,60,3),preM,[-3,0,0],{parent:syn,ns:1});
+ const vesM=MAT(0x3fb6a8,{roughness:.25,clearcoat:1,opacity:.95,emissive:0x0a4a44,emissiveIntensity:.35});const vs=[];
+ for(let i=0;i<14;i++){const a=i*2.399963,y=(i%5-2)*.55,z=Math.sin(a)*1.4,x=-1.6-(i%3)*.55+(i<4?.35:0);const m=add("ves4",sph(.27,.04,2,1,1,1,16,20,i),vesM,[x,y,z],{parent:syn,ns:1});vs.push({m,x,y,z,dock:i<5})}
+ add("ves4",sph(.5,0,1,1.6,.7,.7,18,24),MAT(0xd9732b,{roughness:.5,opacity:.8,emissive:0x5a2200,emissiveIntensity:.2}),[-3.6,-1.2,.4],{parent:syn,ns:1}); /* mitochondrion */
+ const postM=MAT(0xe08a8a,{roughness:.5,clearcoat:.5,opacity:.9,sheen:.3,emissive:0x4a1010,emissiveIntensity:.15,bumpScale:.25});
+ add("post",param(36,36,(u,v)=>{const y=(u-.5)*7,z=(v-.5)*7,x=1.1+.5*Math.cos(Math.hypot(y,z)*.45)+.18*fbm(y*.4,z*.4,2);return[x,y,z]}),postM,[0,0,0],{parent:syn,ns:1});
+ add("cleft",param(2,2,(u,v)=>[.55,(u-.5)*5.4,(v-.5)*5.4]),MAT(0xbfe4ff,{opacity:.12,roughness:.1,depthWrite:!1,sheen:0}),[0,0,0],{parent:syn,ns:1});
+ const recM=MAT(0x3b6fd6,{roughness:.35,clearcoat:.7,emissive:0x0a2a7a,emissiveIntensity:.35});const recs=[];
+ for(let i=0;i<12;i++){const a=i*2.399963,rr=.5+2.3*Math.sqrt(i/12),y=Math.cos(a)*rr,z=Math.sin(a)*rr,x=1.1+.5*Math.cos(Math.hypot(y,z)*.45)-.05;
+  add("rec",tube([c(x+.05,y,z),c(x-.2,y,z)],.07,6),recM,[0,0,0],{parent:syn,ns:1});add("rec",sph(.16,0,1,.8,1,1,12,14),recM,[x-.3,y,z],{parent:syn,ns:1});recs.push([x-.3,y,z])}
+ const NN=48,nt=new Wn(new it(.065,8,6),new bt({color:0xffe45e}),NN);nt.frustumCulled=!1;syn.add(nt);const m4=new gt;const nts=[];for(let i=0;i<NN;i++)nts.push({o:R(),v:recs[i%recs.length],v0:vs[i%vs.length]});
+ /* ---- reflex arc ---- */
+ const skinM=MAT(0xf1c9a5,{roughness:.55,clearcoat:.2,bumpScale:.3,opacity:.95});
+ add("skin",param(24,24,(u,v)=>[-9.5+u*3,-.5+.12*Math.sin(u*14)+.1*fbm(u*6,v*4,1),(v-.5)*2.4]),skinM,[0,0,0],{parent:ref,ns:1});
+ add("skin",sph(.2,.05,3,1,.6,1,14,18),MAT(0xff7a6a,{emissive:0x7a1a10,emissiveIntensity:.4,roughness:.4}),[-8,-.3,0],{parent:ref,ns:1});
+ const sensP=[c(-8,-.2,0),c(-6.5,.2,.1),c(-4.5,.1,.5),c(-2.6,.3,.4),c(-1.6,.5,.2)],motP=[c(1.4,.5,.2),c(2.8,.2,.5),c(4.6,.4,.3),c(6.2,.2,0),c(7.4,0,0)];
+ const sensM=MAT(0x6fb6ff,{roughness:.4,clearcoat:.6,emissive:0x0a2a6a,emissiveIntensity:.35}),motM=MAT(0xff8a6a,{roughness:.4,clearcoat:.6,emissive:0x6a1a0a,emissiveIntensity:.3}),relM=MAT(0xd6a8ff,{roughness:.4,clearcoat:.6,emissive:0x3a1a6a,emissiveIntensity:.3});
+ add("sens",tube(sensP,.1,8),sensM,[0,0,0],{parent:ref,ns:1});add("sens",sph(.35,.05,2,1,1,1,16,20),sensM,[-3.6,.3,.5],{parent:ref,ns:1});
+ add("motor",tube(motP,.1,8),motM,[0,0,0],{parent:ref,ns:1});add("motor",sph(.4,.05,2,1,1,1,16,20),motM,[1.9,.3,.3],{parent:ref,ns:1});
+ const cordM=MAT(0xf1e9d8,{roughness:.55,clearcoat:.2,opacity:.45,depthWrite:!1,bumpScale:.2}),grayM=MAT(0x6b6860,{roughness:.6,opacity:1,bumpScale:.25});
+ add("cord",sph(2.3,.02,1.5,1,1.02,.22,44,56,5),cordM,[0,0,0],{parent:ref,ns:1});
+ [[-.55,.6],[.55,.6],[-.5,-.6],[.5,-.6]].forEach(q=>add("cord",sph(.8,.04,2,.85,.9,.25,22,30),grayM,[q[0],q[1],.06],{parent:ref,ns:1}));add("cord",sph(.12,0,1,1,1,.4,10,12),MAT(0x9fd3ff,{roughness:.2,emissive:0x1a4a8a,emissiveIntensity:.4}),[0,0,.14],{parent:ref,ns:1});
+ add("cord",tube([c(-1.5,.5,.3),c(-.4,.4,.35),c(.4,.4,.35),c(1.4,.5,.3)],.09,8),relM,[0,0,0],{parent:ref,ns:1});add("cord",sph(.3,.05,2,1,1,1,14,18),relM,[0,.5,.38],{parent:ref,ns:1});
+ const musc=add("musc",sph(1,.03,2,1.6,.55,.55,28,36),MAT(0xb23838,{roughness:.4,clearcoat:.5,sheen:.7,sheenC:0xff9a8a,bumpScale:.5}),[8.6,0,0],{parent:ref});
+ /* impulse pulses */
+ const pulseM=new bt({color:0xfff7a0}),halo=new bt({color:0xffd54f,transparent:!0,opacity:.35});
+ const mkPulse=(par)=>{const a=new N(new it(.2,14,12),pulseM),b=new N(new it(.42,14,12),halo);a.add(b);par.add(a);a.visible=!1;return a};
+ const pAx=mkPulse(g),pRef=mkPulse(ref);
+ const refPath=new It([...sensP,c(-.8,.5,.2),c(0,.5,.25),c(.8,.5,.2),...motP]).getPoints(90);
+ /* ions at a node */
+ const NI=32,ions=new Wn(new it(.045,8,6),new bt({color:0xffffff}),NI);ions.frustumCulled=!1;g.add(ions);const ic=new we;for(let i=0;i<NI;i++)ions.setColorAt(i,ic.setHex(i%2?0xff9f43:0xb36bff));
+ const nx0=XN[1];
+ const cams=[[c(.8,1.6,21),c(.8,-1.4,0)],[c(-6.4,2.2,9.2),c(-6,0,0)],[c(0,2.2,11),c(0,0,0)],[c(nx0+.2,1.4,4.8),c(nx0,0,0)],[c(SY[0]-.5,2.4,11),c(SY[0],0,0)],[c(0,RF[1]+2,20),c(0,RF[1],0)]];
+ const camK=["Neuron","Dendrites","Axon","Node","Synapse","Reflex arc"];
+ const mine={soma:0,nuc4:0,dend:0,axon:0,myelin:0,node:0,term:0},S4=[...Object.keys(mine)];
+ const show={};const fr=(ids,on)=>ids.forEach(i=>show[i]=on);
+ const NEU=["soma","nuc4","dend","axon","myelin","node","term"],SYN=["pre","ves4","post","cleft","rec"],REF=["skin","sens","cord","motor","musc"];
+ [...NEU,...SYN,...REF].forEach(i=>show[i]=[0,0,0,0,0,0]);
+ NEU.forEach(i=>{for(let s=0;s<4;s++)show[i][s]=1});SYN.forEach(i=>show[i][4]=1);REF.forEach(i=>show[i][5]=1);show.soma[4]=0;
+ const base={soma:.96,nuc4:.9,dend:.96,axon:1,myelin:.97,node:.95,term:1,pre:.3,ves4:.95,post:.9,cleft:.12,rec:1,skin:.95,sens:1,cord:.45,motor:1,musc:1};
+ const L=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["n-so","Cell body (soma)","कोशिका काय",L(g,[-6,1.2,0]),[0,1]],["n-nu","Nucleus","केंद्रक",L(g,[-6,0,.6]),[0,1]],["n-de","Dendrites (receive)","द्रुमिकाएँ (ग्रहण)",L(g,[-7.6,1.6,.5]),[0,1]],["n-ax","Axon (carries away)","एक्सॉन (दूर ले जाता)",L(g,[0,.2,0]),[0,1,2]],["n-my","Myelin sheath","माइलिन आवरण",L(g,[-.9,.5,0]),[0,2]],["n-no","Node of Ranvier","रैन्वियर पर्व",L(g,[XN[1],.2,0]),[2,3]],["n-te","Axon terminals","एक्सॉन अंत",L(g,[8.2,.9,.4]),[0,4]],["n-dir","Impulse direction →","आवेग की दिशा →",L(g,[-2,1.6,0]),[1,2]],
+  ["n-na","Na⁺ in (depolarise)","Na⁺ अंदर (विध्रुवण)",L(g,[nx0-.3,.9,0]),[3]],["n-k","K⁺ out (repolarise)","K⁺ बाहर (पुनर्ध्रुवण)",L(g,[nx0+.3,-.9,0]),[3]],["n-ap","Action potential −70 → +30 mV","क्रिया-विभव −70 → +30 mV",L(g,[nx0,1.5,0]),[3]],
+  ["s-pr","Pre-synaptic knob","पूर्व-सिनैप्टिक बटन",L(syn,[-3,2.4,0]),[4]],["s-ve","Vesicles with neurotransmitter","पुटिकाएँ (न्यूरोट्रांसमीटर)",L(syn,[-1.8,.55,1.4]),[4]],["s-cl","Synaptic cleft (~20 nm)","सिनैप्टिक दरार",L(syn,[.55,2.4,0]),[4]],["s-po","Post-synaptic membrane","पश्च-सिनैप्टिक झिल्ली",L(syn,[1.3,-2.5,1]),[4]],["s-re","Receptors","ग्राही",L(syn,[.8,.9,.6]),[4]],["s-nt","Neurotransmitter crossing","न्यूरोट्रांसमीटर पार जाता",L(syn,[.5,-.5,.5]),[4]],
+  ["r-sk","Receptor (skin) — hot!","ग्राही (त्वचा) — गर्म!",L(ref,[-8,.7,0]),[5]],["r-se","Sensory neuron →","संवेदी तंत्रिका →",L(ref,[-4.6,.9,.5]),[5]],["r-sp","Spinal cord (relay neuron)","मेरुरज्जु (रिले तंत्रिका)",L(ref,[0,1.7,.2]),[5]],["r-mo","→ Motor neuron","→ प्रेरक तंत्रिका",L(ref,[4.5,.9,.3]),[5]],["r-mu","Effector: muscle contracts","प्रभावक: पेशी सिकुड़ती",L(ref,[8.6,1.1,0]),[5]]];
+ return run({kinds:KIND4,n,g,org,show,base,ST:N_ST,cams,camK,labels,
+  frame:(s,t)=>{g.rotation.y=0;const f=(t*.13)%1;
+   /* axon pulse: hops node to node */
+   pAx.visible=s===1||s===2||s===3;if(pAx.visible){const pts=[-5.2,...XN,6.7],k=Math.floor(f*(pts.length-1)),q=f*(pts.length-1)-k,e=q<.35?q/.35:1,x=pts[k]+(pts[k+1]-pts[k])*(s===1?q:e*e*(3-2*e));pAx.position.set(x,0,0);pAx.scale.setScalar(1+.3*sin(t*14))}
+   /* nodes flash as the pulse passes */
+   org.forEach(o=>{if(o.id==="node"){const nx=o.m.position.x,near=pAx.visible&&Math.abs(pAx.position.x-nx)<.7;o.mat.emissiveIntensity=near?1.6:.5}});
+   /* ions */
+   for(let i=0;i<NI;i++){if(s!==3){m4.makeScale(0,0,0);ions.setMatrixAt(i,m4);continue}const na=i%2===0,q=((t*.5+i*.137)%1),side=(i>>1)%2?1:-1;const inn=na?q:1-q;const y=.2+(1-inn)*.9,z=((i*.31)%1-.5)*.5;m4.makeScale(1,1,1);m4.setPosition(nx0+(i%7-3)*.1+side*.05,na?y*(1):-.2-(1-q)*.0-(q*.9)+(q<.5?0:0),z);ions.setMatrixAt(i,m4)}ions.instanceMatrix.needsUpdate=!0;
+   /* synapse vesicles dock/burst + transmitter */
+   vs.forEach((v,i)=>{const rel=s===4?((t*.35+i*.07)%1):0;v.m.position.x=v.dock?v.x+(rel>.5?.6*(rel-.5)*2:0):v.x+.05*sin(t+i);v.m.scale.setScalar(v.dock&&rel>.55?Math.max(.3,1-(rel-.55)*2):1)});
+   for(let i=0;i<NN;i++){const a=nts[i];if(s!==4){m4.makeScale(0,0,0);nt.setMatrixAt(i,m4);continue}const q=((t*.3+a.o)%1),st=q<.15?0:(q-.15)/.85,p0=a.v0,p1=a.v;const x=lerp(p0.x+.3,p1[0]-.2,Math.min(1,st*1.2)),y=lerp(p0.y,p1[1],st)+.08*sin(t*5+i),z=lerp(p0.z,p1[2],st);m4.makeScale(st>.02?1:0,st>.02?1:0,st>.02?1:0);m4.setPosition(x,y,z);nt.setMatrixAt(i,m4)}nt.instanceMatrix.needsUpdate=!0;
+   /* reflex pulse + muscle */
+   pRef.visible=s===5;if(pRef.visible){const k=Math.min(refPath.length-1,Math.floor(f*1.15*refPath.length)),p=refPath[k];pRef.position.copy(p);pRef.scale.setScalar(1+.3*sin(t*14));musc.scale.set(f*1.15>.92?.82:1,f*1.15>.92?1.35:1,f*1.15>.92?1.35:1)}else musc.scale.set(1,1,1)},
+  predict:{q:"Why can the impulse travel faster along a myelinated axon?",opts:[["It jumps between the nodes of Ranvier",!0,"Correct — saltatory conduction skips the insulated parts."],["The axon is thicker",!1,"Thickness helps a little, but myelin is the main reason."],["Myelin makes electrons move",!1,"The impulse is a wave of ion movement, not a flow of electrons."]]}})}
+Q_("ch6/neuron3d",[["Which part of a neuron receives information?","तंत्रिका कोशिका का कौन-सा भाग सूचना ग्रहण करता है?",["Axon","Dendrites","Myelin sheath","Axon terminal"],1,"Dendrites receive; the axon sends."],["What is the function of the myelin sheath?","माइलिन आवरण का कार्य?",["Makes proteins","Speeds up the impulse by insulating the axon","Stores neurotransmitter","Receives signals"],1,"Impulses jump between nodes."],["At a synapse the signal crosses the gap as…","सिनैप्स में संकेत दरार पार करता है…",["Electric current","Chemical neurotransmitter","Light","Sound"],1,"A chemical messenger diffuses across."],["Which is the correct reflex arc?","सही प्रतिवर्त चाप कौन-सा है?",["Receptor→sensory→relay→motor→effector","Brain→muscle→skin","Muscle→sensory→skin","Effector→relay→receptor"],0,"The path avoids the brain for speed."],["Which neuron carries the signal from the spinal cord to the muscle?","मेरुरज्जु से पेशी तक संकेत कौन-सी तंत्रिका ले जाती है?",["Sensory","Relay","Motor","None"],2,"Motor neurons carry commands to effectors."]]);
+Px["ch6/neuron3d"]=[["Touching a hot pan: your hand pulls back in about 0.05 s — before the pain reaches your brain.","गर्म बर्तन छूते ही हाथ लगभग 0.05 s में हट जाता है — दर्द मस्तिष्क तक पहुँचने से पहले।"],["Some neurons in your leg are about 1 m long — the longest cells in the body.","पैर की कुछ तंत्रिका कोशिकाएँ लगभग 1 m लंबी होती हैं — शरीर की सबसे लंबी कोशिकाएँ।"]];
+{const Ln=Hi.find(h=>h.no===6).topics,i=Ln.findIndex(x=>x.id==="neuron");Ln.splice(i<0?Ln.length:i+1,0,{id:"neuron3d",title:"Neuron, synapse & reflex arc — detailed 3D",hi:"न्यूरॉन, सिनैप्स व प्रतिवर्त चाप — विस्तृत 3D",build:Mneuron,ncert:"Ch 6 · control and coordination"})}
+/* ===================== SET 5: KIDNEY · NEPHRON · DIALYSIS ===================== */
+const KIND5={
+ kid:["Kidney","वृक्क","Bean-shaped organ (about 11 cm) that filters about 180 litres of blood plasma a day and makes 1–2 litres of urine. We have two. (Hand-modelled; not a medical mesh.)","सेम के आकार का अंग (लगभग 11 cm) जो प्रतिदिन लगभग 180 लीटर रक्त-प्लाज़्मा छानता और 1–2 लीटर मूत्र बनाता है; हमारे दो वृक्क होते हैं।"],
+ cortex:["Cortex","वल्कुट","Outer layer of the kidney where the glomeruli and convoluted tubules sit.","वृक्क की बाहरी परत जहाँ केशिकागुच्छ व कुंडलित नलिकाएँ होती हैं।"],
+ medulla:["Medulla (pyramids)","मध्यांश (पिरामिड)","Inner cone-shaped region with the loops of Henle and collecting ducts; its salty fluid helps save water.","भीतरी शंकु-आकार क्षेत्र जिसमें हेनले-लूप व संग्रह नलिकाएँ हैं; इसका नमकीन द्रव जल बचाने में सहायक है।"],
+ pelvis:["Renal pelvis","वृक्क श्रोणि","Funnel that collects urine and passes it into the ureter.","कीप जो मूत्र एकत्र कर मूत्रवाहिनी में भेजती है।"],
+ ureter:["Ureter","मूत्रवाहिनी","Muscular tube that pushes urine from kidney to bladder by peristalsis.","पेशीय नली जो क्रमाकुंचन से मूत्र को वृक्क से मूत्राशय तक पहुँचाती है।"],
+ bladder:["Urinary bladder","मूत्राशय","Stretchy muscular bag that stores urine until it is passed out through the urethra.","लचीली पेशीय थैली जो मूत्र को मूत्रमार्ग से बाहर निकलने तक जमा रखती है।"],
+ renalA:["Renal artery","वृक्क धमनी","Brings blood (rich in urea) from the aorta to the kidney.","महाधमनी से यूरिया-युक्त रक्त वृक्क तक लाती है।"],
+ renalV:["Renal vein","वृक्क शिरा","Takes the cleaned blood away from the kidney.","साफ़ हुआ रक्त वृक्क से दूर ले जाती है।"],
+ bow:["Bowman's capsule","बोमन संपुट","Cup-shaped end of the nephron that wraps the glomerulus and collects the filtrate.","नेफ्रॉन का प्याले जैसा सिरा जो केशिकागुच्छ को घेरकर निस्यंद एकत्र करता है।"],
+ glom:["Glomerulus","केशिकागुच्छ","A tuft of capillaries. High pressure squeezes water, glucose, salts and urea out of the blood; blood cells and big proteins stay in.","केशिकाओं का गुच्छा; उच्च दाब से जल, ग्लूकोज़, लवण व यूरिया रक्त से बाहर निचुड़ते हैं; रक्त कोशिकाएँ व बड़े प्रोटीन अंदर रहते हैं।"],
+ aff:["Afferent arteriole","अभिवाही धमनिका","Wide vessel bringing blood into the glomerulus (wider than the exit, so pressure builds).","केशिकागुच्छ में रक्त लाने वाली चौड़ी वाहिका (निकास से चौड़ी, इसलिए दाब बनता है)।"],
+ eff:["Efferent arteriole","अपवाही धमनिका","Narrow vessel leaving the glomerulus; it then forms capillaries around the tubule.","केशिकागुच्छ से निकलने वाली संकरी वाहिका; आगे नलिका के चारों ओर केशिकाएँ बनाती है।"],
+ pct:["Proximal convoluted tubule","समीपस्थ कुंडलित नलिका","Where selective reabsorption happens: all glucose and amino acids, most salts and about two-thirds of the water go back to the blood.","चयनात्मक पुनरावशोषण यहीं: सारा ग्लूकोज़ व अमीनो अम्ल, अधिकांश लवण और लगभग दो-तिहाई जल रक्त में लौटता है।"],
+ loop:["Loop of Henle","हेनले का पाश","U-shaped tube dipping into the medulla; it builds a salty gradient so more water can be recovered.","मध्यांश में उतरती U-आकार की नली; नमकीन ढाल बनाकर अधिक जल लौटाने में सहायक।"],
+ dct:["Distal convoluted tubule","दूरस्थ कुंडलित नलिका","Fine-tunes salts and pH; secretes extra ions and waste into the tubule.","लवण व pH का सूक्ष्म नियमन; अतिरिक्त आयन व अपशिष्ट नलिका में स्रावित करती है।"],
+ duct:["Collecting duct","संग्रह नलिका","Many nephrons drain here. Water is recovered under the control of hormone ADH; the remaining fluid is urine.","अनेक नेफ्रॉन यहाँ खाली होते हैं; हार्मोन ADH के नियंत्रण में जल लौटता है; शेष द्रव मूत्र है।"],
+ cap:["Peritubular capillaries","नलिका-परिवेशी केशिकाएँ","Capillary net around the tubule that takes back the reabsorbed substances.","नलिका के चारों ओर केशिका-जाल जो पुनरावशोषित पदार्थ वापस ले लेता है।"],
+ dia:["Dialysis machine (artificial kidney)","डायलिसिस मशीन (कृत्रिम वृक्क)","When kidneys fail, blood flows through tubes made of a semi-permeable membrane in dialysing fluid. Urea and extra salts diffuse out; blood cells and proteins stay in.","वृक्क विफल होने पर रक्त अर्धपारगम्य झिल्ली की नलिकाओं से डायलिसिस द्रव में बहता है; यूरिया व अतिरिक्त लवण बाहर विसरित होते हैं; रक्त कोशिकाएँ व प्रोटीन अंदर रहते हैं।"]};
+const NE_ST=[
+["1","The excretory system","उत्सर्जन तंत्र","Metabolism makes wastes such as urea. Two kidneys filter the blood; urine flows down the ureters to the bladder and leaves through the urethra.","उपापचय से यूरिया जैसे अपशिष्ट बनते हैं; दो वृक्क रक्त छानते हैं; मूत्र मूत्रवाहिनियों से मूत्राशय में आता है और मूत्रमार्ग से निकलता है।","Hand-modelled · not a medical mesh",9],
+["2","Inside a kidney","वृक्क के भीतर","A cut kidney shows the outer cortex and the inner medulla made of pyramids that drain into the pelvis. Each kidney holds about a million tiny filters called nephrons.","कटे वृक्क में बाहरी वल्कुट और पिरामिडों वाला भीतरी मध्यांश दिखता है जो श्रोणि में खुलता है; प्रत्येक वृक्क में लगभग दस लाख सूक्ष्म छन्ने — नेफ्रॉन — होते हैं।","Hand-modelled",10],
+["3","One nephron, enlarged","एक नेफ्रॉन, बड़ा करके","A nephron is the structural and functional unit of the kidney: Bowman's capsule with the glomerulus, proximal tubule, loop of Henle, distal tubule, ending in a collecting duct. (Greatly enlarged and stretched.)","नेफ्रॉन वृक्क की संरचनात्मक व क्रियात्मक इकाई है: केशिकागुच्छ सहित बोमन संपुट, समीपस्थ नलिका, हेनले पाश, दूरस्थ नलिका, और संग्रह नलिका। (बहुत बड़ा व खिंचा हुआ)।","Schematic · greatly enlarged",11],
+["4","Step 1 — Filtration","चरण 1 — निस्यंदन","Blood enters the glomerulus under high pressure. Small molecules — water, glucose, salts, urea — are forced into Bowman's capsule. Blood cells and big proteins stay in the blood.","रक्त उच्च दाब पर केशिकागुच्छ में आता है; छोटे अणु — जल, ग्लूकोज़, लवण, यूरिया — बोमन संपुट में निचुड़ते हैं; रक्त कोशिकाएँ व बड़े प्रोटीन रक्त में रहते हैं।","Animated (particles not to scale)",12],
+["5","Step 2 — Selective reabsorption","चरण 2 — चयनात्मक पुनरावशोषण","Along the proximal tubule the useful substances — all the glucose, amino acids, most salts and much water — are taken back into the capillaries. Urea stays behind.","समीपस्थ नलिका में उपयोगी पदार्थ — सारा ग्लूकोज़, अमीनो अम्ल, अधिकांश लवण व बहुत सा जल — केशिकाओं में लौट जाते हैं; यूरिया पीछे रहता है।","Animated · schematic",13],
+["6","Step 3 — Loop of Henle and urine","चरण 3 — हेनले पाश व मूत्र","The loop recovers more water, the distal tubule fine-tunes salts, and the collecting duct saves still more water. What is left — water, urea, extra salts — is urine.","पाश और जल लौटाता है, दूरस्थ नलिका लवण समायोजित करती है, संग्रह नलिका और जल बचाती है; शेष — जल, यूरिया, अतिरिक्त लवण — मूत्र है।","Animated · schematic",13],
+["7","Urine's journey","मूत्र की यात्रा","Urine collects in the renal pelvis, is pushed down the ureters by peristalsis into the bladder, and is stored. When the bladder is full, sphincters relax and urine is passed out.","मूत्र श्रोणि में एकत्र होता है, क्रमाकुंचन से मूत्रवाहिनियों में नीचे धकेला जाता है, मूत्राशय में जमा होता है; भर जाने पर अवरोधिनी शिथिल होकर मूत्र निकलता है।","Animated · schematic",10],
+["8","When kidneys fail: dialysis","वृक्क विफल हों तो: डायलिसिस","In haemodialysis the patient's blood runs through tubes of semi-permeable membrane bathed in dialysing fluid. Urea and extra salts diffuse out; the cleaned blood returns to the body. A kidney transplant is the permanent cure.","हीमोडायलिसिस में रोगी का रक्त अर्धपारगम्य झिल्ली की नलिकाओं में डायलिसिस द्रव के बीच बहता है; यूरिया व अतिरिक्त लवण बाहर विसरित होते हैं; साफ़ रक्त शरीर में लौटता है। वृक्क प्रत्यारोपण स्थायी उपचार है।","Animated · schematic",13]];
+function Mneph(){sd=51;const n=new Ne;Ge(n,{key:1.9});Je(n,-6,60,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const AN=new J;g.add(AN);const NP_=new J;NP_.position.set(24,0,0);g.add(NP_);const DI=new J;DI.position.set(0,-24,0);g.add(DI);
+ /* ---------- anatomy ---------- */
+ const cortM=MAT(0xc0584a,{roughness:.5,clearcoat:.5,bumpScale:.4,opacity:.55,sheen:.4,sheenC:0xff9a8a,emissive:0x3a0c08,emissiveIntensity:.15,depthWrite:!1});
+ const medM=MAT(0x8a2f2c,{roughness:.55,clearcoat:.3,bumpScale:.35,emissive:0x2a0808,emissiveIntensity:.2});
+ const kid=(sx)=>{const k=new J;k.position.set(sx,.4,0);AN.add(k);
+  const bean=(u,v,cutFront)=>{const th=u*PI,ph=cutFront?(.75+v*1.5)*PI:v*TAU,x=sin(th)*cos(ph),y=cos(th),z=sin(th)*sin(ph),kk=1+.05*(fbm(x*2+sx,y*2,z*2)-.5);let X=x*1.45*kk,Y=y*2.5*kk,Z=z*1.05*kk;X-=sx>0?.0:0;const hil=Math.exp(-((y*2.5)*(y*2.5))/.9)*Math.max(0,-x*(sx>0?-1:1));X+=(sx>0?-1:1)*0;const side=sx>0?-1:1;X+=side*.55*Math.exp(-(Y*Y)/1.1)*Math.max(0,x*side*-1+.2)*.9*-1;return[X,Y,Z]};
+  const c1=add("cortex",param(40,60,(u,v)=>bean(u,v,true)),cortM,[0,0,0],{parent:k,ns:1});
+  add("kid",param(30,40,(u,v)=>{const p=bean(u,v,false);return[p[0]*.92,p[1]*.92,p[2]*.9]}),MAT(0xa94540,{roughness:.5,opacity:.0,depthWrite:!1}),[0,0,0],{parent:k,ns:1});
+  for(let i=0;i<7;i++){const a=(i/7)*TAU*.85+.3,hx=Math.cos(a)*.7*(sx>0?-1:1)*0+Math.cos(a)*.65,hy=Math.sin(a)*1.55;add("medulla",param(14,24,(u,v)=>{const q=v*TAU,r=(1-u)*.34;return[hx+Math.cos(a)*u*.6+Math.cos(q)*r*.9,hy+Math.sin(a)*u*.45*0+Math.sin(q)*r*.9,Math.sin(q)*r*0+u*.0+Math.cos(q)*r*.5-.1]}),medM,[0,0,0],{parent:k,ns:1})}
+  add("pelvis",tube([c(0,.5,0),c(-.5*(sx>0?1:-1)*-1,0,.1),c(-.9*(sx>0?1:-1)*-1,-.7,.1)],.26,10,u=>1-.4*u),MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2}),[0,0,0],{parent:k,ns:1});
+  return k};
+ kid(-3.4);kid(3.4);
+ const urM=MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2});
+ [-1,1].forEach(sx=>add("ureter",tube([c(sx*2.5,-.3,0),c(sx*2.2,-2.2,.1),c(sx*1.6,-4.2,.2),c(sx*.9,-5.6,.1)],.1,8),urM,[0,0,0],{parent:AN,ns:1}));
+ const blad=add("bladder",sph(1.15,.05,2,1.1,.95,.9,32,44,3),MAT(0xe8b04a,{roughness:.45,clearcoat:.5,opacity:.8,bumpScale:.4,emissive:0x4a3008,emissiveIntensity:.15}),[0,-6.4,.1],{parent:AN});
+ add("ureter",tube([c(0,-7.4,0),c(0,-8.6,0)],.12,8),urM,[0,0,0],{parent:AN,ns:1});
+ const artM=MAT(0xd2413f,{roughness:.35,clearcoat:.7,emissive:0x5a0a08,emissiveIntensity:.25}),veinM=MAT(0x4f63d6,{roughness:.35,clearcoat:.7,emissive:0x101a5a,emissiveIntensity:.25});
+ add("renalA",tube([c(0,3.4,0),c(0,2.2,0)],.26,10),artM,[0,0,0],{parent:AN,ns:1});add("renalV",tube([c(.5,-3.5,-.2),c(.5,2.6,-.2)],.2,10),veinM,[0,0,0],{parent:AN,ns:1});
+ [-1,1].forEach(sx=>{add("renalA",tube([c(0,2.6,0),c(sx*1.2,1.5,.1),c(sx*2.2,.8,.2)],.12,8),artM,[0,0,0],{parent:AN,ns:1});add("renalV",tube([c(.5,0,-.2),c(sx*1.2,.3,-.1),c(sx*2.2,.3,0)],.1,8),veinM,[0,0,0],{parent:AN,ns:1})});
+ /* ---------- one nephron ---------- */
+ const tubM=MAT(0xf0b45a,{roughness:.3,clearcoat:.7,opacity:.8,emissive:0x5a3a08,emissiveIntensity:.18,depthWrite:!1,bumpScale:.15}),tubIn=MAT(0xfff1c8,{roughness:.4,opacity:.4,depthWrite:!1,sheen:0});
+ const cur=[];const heli=(y0,y1,x0,r,tn,steps)=>{for(let i=0;i<=steps;i++){const q=i/steps;cur.push(c(x0+r*Math.sin(q*TAU*tn),y0+(y1-y0)*q,r*Math.cos(q*TAU*tn)*.9))}};
+ cur.push(c(-3.9,4.6,0));heli(4.5,1.9,-3.4,.75,3.5,36);const M1=cur.length;                 /* PCT */
+ cur.push(c(-2.6,1.2,0),c(-1.9,-1,0),c(-1.7,-4,0),c(-1.5,-6.4,0),c(-.9,-7.4,0),c(-.1,-6.4,0)); /* descending + turn */
+ cur.push(c(.1,-3,0),c(.1,0,0),c(.1,2,0));const M2=cur.length;                              /* ascending */
+ heli(2.3,3.5,1.2,.6,2.5,22);const M3=cur.length;cur.push(c(3.3,3.4,0),c(3.4,1,0),c(3.4,-3,0),c(3.4,-7,0),c(3.4,-9.2,0)); /* DCT + collecting */
+ const cs=new It(cur),path=cs.getPoints(300);
+ const CAPSULE=c(-4.7,6,0);
+ add("bow",param(30,44,(u,v)=>{const th=u*PI*.82,ph=v*TAU,r=1.25;return[CAPSULE.x+Math.cos(th)*r*.0+Math.cos(ph)*Math.sin(th)*r-.0,CAPSULE.y-Math.cos(th)*r+.0,Math.sin(ph)*Math.sin(th)*r]}),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("pct",tube(cur.slice(0,M1+1),.2,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("loop",tube(cur.slice(M1,M2),.14,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("dct",tube(cur.slice(M2-1,M3+1),.17,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ add("duct",tube(cur.slice(M3),.26,10),tubM,[0,0,0],{parent:NP_,ns:1});
+ [[-1.2,5,2.6],[1,5.2,-2.6],[-1.1,7.8,-3],[1.1,7.4,3]].forEach(q=>add("duct",tube([c(3.4+q[2]*.0,q[1],q[0]*2),c(3.4,q[1]-1.4,q[0]),c(3.4,q[1]-3,0)],.14,8),tubM,[0,0,0],{parent:NP_,ns:1}));
+ /* glomerulus tuft inside capsule */
+ const gloM=MAT(0xd2413f,{roughness:.35,clearcoat:.8,emissive:0x5a0a08,emissiveIntensity:.35,bumpScale:.2});
+ for(let k=0;k<6;k++){const pts=[];for(let i=0;i<10;i++){const a=i/9*TAU*1.5+k*1.1;pts.push(c(CAPSULE.x+Math.cos(a)*(.45+.12*Math.sin(k+i)),CAPSULE.y+.0+Math.sin(a*1.3+k)*.45,Math.sin(a)*.5))}add("glom",tube(pts,.1,8),gloM,[0,0,0],{parent:NP_,ns:1})}
+ const affP=[c(-9,8.2,0),c(-7.2,7.2,0),c(-5.6,6.5,0),CAPSULE.clone().add(c(.2,.4,0))];
+ add("aff",tube(affP,.3,10,u=>1),gloM,[0,0,0],{parent:NP_,ns:1});
+ const effP=[CAPSULE.clone().add(c(-.2,-.3,0)),c(-5.9,4.6,0),c(-6.4,3.6,0)];
+ add("eff",tube(effP,.13,10),MAT(0xb23a38,{roughness:.35,clearcoat:.7,emissive:0x4a0a08,emissiveIntensity:.25}),[0,0,0],{parent:NP_,ns:1});
+ /* peritubular capillaries wrapping the proximal tubule, then venule */
+ const capM=MAT(0xd2413f,{roughness:.35,clearcoat:.6,opacity:.55,emissive:0x5a0a08,emissiveIntensity:.25,depthWrite:!1});
+ for(let k=0;k<7;k++){const pts=[];for(let i=0;i<=16;i++){const q=i/16,a=q*TAU*5+k*.9;pts.push(c(-3.4+1.05*Math.sin(a)+(k%2?.15:-.15),4.7-(2.9)*q+.0,1.05*Math.cos(a)*.95))}add("cap",tube(pts,.05,6),capM,[0,0,0],{parent:NP_,ns:1})}
+ const venP=[c(-3.6,1.6,0),c(-5.5,.8,0),c(-8,-.4,0),c(-10,-1.4,0)];add("cap",tube(venP,.2,10),MAT(0x4f63d6,{roughness:.35,clearcoat:.7,emissive:0x101a5a,emissiveIntensity:.25,opacity:.9}),[0,0,0],{parent:NP_,ns:1});
+ /* medulla salt gradient backdrop */
+ add("medbg",param(2,2,(u,v)=>[-6+u*13,-9+v*11.2,-1.6]),MAT(0xffb88a,{roughness:.6,opacity:.1,depthWrite:!1,sheen:0,envMapIntensity:.2}),[0,0,0],{parent:NP_,ns:1});
+ /* particles */
+ const NPT=110,pt=new Wn(new it(.07,8,6),new bt({color:0xffffff}),NPT);pt.frustumCulled=!1;NP_.add(pt);const pc=new we;const PT=[];
+ const TYP=[[0x59b4ff,.3,1],[0xffd23f,.2,1.1],[0x8b5a2b,0,1.2],[0xff8a3d,.36,.9],[0x59b4ff,.58,1],[0x8b5a2b,0,1.2]];
+ for(let i=0;i<NPT;i++){const t=TYP[i%6];PT.push({o:R(),leave:t[1],sc:t[2],col:t[0],side:(i%2?1:-1)});pt.setColorAt(i,pc.setHex(t[0]))}
+ const nm4=new gt;const cellsA=[];const cell=new we(0xd2413f);const NC=10,rc=new Wn(new it(.14,10,8),new bt({color:0xb02a2a}),NC);rc.frustumCulled=!1;NP_.add(rc);
+ const bigP=new Wn(new it(.1,8,6),new bt({color:0xfafafa}),6);bigP.frustumCulled=!1;NP_.add(bigP);
+ /* ---------- dialysis ---------- */
+ const tank=add("dia",boxy(5.6,2.5,2.2,.18,.0,2),MAT(0xbfe4ff,{opacity:.22,roughness:.1,clearcoat:.5,depthWrite:!1,sheen:0,envMapIntensity:.4}),[0,0,0],{parent:DI,ns:1});
+ const bloodM=MAT(0xd2413f,{roughness:.35,clearcoat:.7,opacity:.85,emissive:0x5a0a08,emissiveIntensity:.3});
+ for(let k=0;k<5;k++){const z=(k-2)*.6;add("dia",tube([c(-7.5,.2*(k-2),z),c(-5.5,.8*(k%2?1:-1),z),c(-2.5,-.8*(k%2?1:-1),z),c(.5,.8*(k%2?1:-1),z),c(3.5,-.8*(k%2?1:-1),z),c(7.5,.2*(k-2),z)],.16,10),bloodM,[0,0,0],{parent:DI,ns:1})}
+ add("dia",tube([c(-9.5,0,0),c(-7.5,0,0)],.3,10),bloodM,[0,0,0],{parent:DI,ns:1});add("dia",tube([c(7.5,0,0),c(9.5,0,0)],.3,10),MAT(0xe86a5a,{roughness:.35,clearcoat:.7,emissive:0x5a1a08,emissiveIntensity:.25}),[0,0,0],{parent:DI,ns:1});
+ const ND=60,dp=new Wn(new it(.07,8,6),new bt({color:0x8b5a2b}),ND);dp.frustumCulled=!1;DI.add(dp);const DD=[];for(let i=0;i<ND;i++)DD.push({o:R(),z:(R()-.5)*2.4,k:i%5});
+ const ND2=40,flow=new Wn(new it(.05,6,5),new bt({color:0x59b4ff}),ND2);flow.frustumCulled=!1;DI.add(flow);
+ const cams=[[c(0,1.4,19),c(0,-2,0)],[c(0,0,11),c(0,.2,0)],[c(21,-.5,40),c(21,-.5,0)],[c(21,5.6,12),c(21.4,5.6,0)],[c(21,3.2,12),c(20.8,3.2,0)],[c(24.4,-2.4,18),c(24.4,-2.4,0)],[c(0,-1,16),c(0,-3,0)],[c(0,-22,19),c(0,-24,0)]];
+ const camK=["System","Kidney","Nephron","Filtration","Reabsorption","Loop & urine","Urine path","Dialysis"];
+ const show={};const rows={medbg:[0,0,1,0,0,1,0,0],kid:[1,0,0,0,0,0,1,0],cortex:[1,1,0,0,0,0,1,0],medulla:[1,1,0,0,0,0,1,0],pelvis:[1,1,0,0,0,0,1,0],ureter:[1,1,0,0,0,0,1,0],bladder:[1,0,0,0,0,0,1,0],renalA:[1,1,0,0,0,0,1,0],renalV:[1,1,0,0,0,0,1,0],
+  bow:[0,0,1,1,1,1,0,0],glom:[0,0,1,1,1,0,0,0],aff:[0,0,1,1,0,0,0,0],eff:[0,0,1,1,1,0,0,0],pct:[0,0,1,1,1,1,0,0],loop:[0,0,1,0,0,1,0,0],dct:[0,0,1,0,0,1,0,0],duct:[0,0,1,0,0,1,0,0],cap:[0,0,1,0,1,0,0,0],dia:[0,0,0,0,0,0,0,1]};
+ Object.assign(show,rows);
+ const base={medbg:.12,kid:0,cortex:.55,medulla:.95,pelvis:1,ureter:1,bladder:.8,renalA:1,renalV:1,bow:.8,glom:1,aff:1,eff:1,pct:.8,loop:.8,dct:.8,duct:.8,cap:.55,dia:.22};
+ const L=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["k-ki","Kidney (×2)","वृक्क (×2)",L(AN,[-3.4,1.2,1.1]),[0]],["k-ur","Ureter","मूत्रवाहिनी",L(AN,[-2.2,-2.2,.1]),[0,6]],["k-bl","Urinary bladder","मूत्राशय",L(AN,[1.2,-6.4,.6]),[0,6]],["k-ra","Renal artery (urea-rich blood)","वृक्क धमनी",L(AN,[-.4,2.8,0]),[0]],["k-rv","Renal vein (clean blood)","वृक्क शिरा",L(AN,[.9,-2,-.2]),[0]],["k-ur2","Urethra → out","मूत्रमार्ग → बाहर",L(AN,[.2,-8.4,0]),[0,6]],
+  ["k-co","Cortex (nephrons here)","वल्कुट (नेफ्रॉन यहाँ)",L(AN,[-4.6,1.6,.9]),[1]],["k-me","Medulla (pyramids)","मध्यांश (पिरामिड)",L(AN,[-3.4,-.6,.3]),[1]],["k-pe","Renal pelvis","वृक्क श्रोणि",L(AN,[-2.6,-.1,.1]),[1]],
+  ["n-bo","Bowman's capsule","बोमन संपुट",L(NP_,[-4.7,6,.9]),[2,3]],["n-gl","Glomerulus","केशिकागुच्छ",L(NP_,[-4.7,6.2,0]),[2,3]],["n-af","Afferent (wide) in","अभिवाही (चौड़ी) अंदर",L(NP_,[-7.6,7.6,0]),[2,3]],["n-ef","Efferent (narrow) out","अपवाही (संकरी) बाहर",L(NP_,[-6.2,4,0]),[2,3]],["n-pc","Proximal tubule","समीपस्थ नलिका",L(NP_,[-2.6,3.2,.9]),[2,4]],["n-lo","Loop of Henle","हेनले पाश",L(NP_,[-.8,-7.6,0]),[2,5]],["n-dc","Distal tubule","दूरस्थ नलिका",L(NP_,[1.8,3.4,.8]),[2,5]],["n-cd","Collecting duct","संग्रह नलिका",L(NP_,[3.4,-4,.6]),[2,5]],["n-ca","Peritubular capillaries","नलिका-परिवेशी केशिकाएँ",L(NP_,[-4.3,3.2,.9]),[2,4]],
+  ["f-fi","Filtrate: water, glucose, salts, urea","निस्यंद: जल, ग्लूकोज़, लवण, यूरिया",L(NP_,[-3,7.2,.4]),[3]],["f-rb","Blood cells & proteins stay","रक्त कोशिकाएँ व प्रोटीन रुकते",L(NP_,[-6.4,6.6,.5]),[3]],["r-gl","Glucose back to blood (100%)","ग्लूकोज़ रक्त में लौटा (100%)",L(NP_,[-4.9,2.5,.9]),[4]],["r-wa","Water & salts back","जल व लवण वापस",L(NP_,[-2.6,2,.9]),[4]],["r-ur","Urea stays in the tubule","यूरिया नलिका में रहता",L(NP_,[-1.8,-2,.6]),[4,5]],["l-sa","Salty medulla (gradient)","नमकीन मध्यांश (ढाल)",L(NP_,[1.6,-5.4,-.8]),[5]],["l-ur","Urine: water + urea + salts","मूत्र: जल + यूरिया + लवण",L(NP_,[3.4,-8.4,.6]),[5]],
+  ["d-bl","Blood in (urea high)","रक्त अंदर (यूरिया अधिक)",L(DI,[-8.6,.8,0]),[7]],["d-me","Semi-permeable membrane","अर्धपारगम्य झिल्ली",L(DI,[-3,1.6,.5]),[7]],["d-fl","Dialysing fluid","डायलिसिस द्रव",L(DI,[2,-2.4,1]),[7]],["d-ur","Urea leaves the blood","यूरिया रक्त से बाहर",L(DI,[.4,.8,1.2]),[7]],["d-cl","Cleaned blood returns","साफ़ रक्त लौटता",L(DI,[8.8,.8,0]),[7]]];
+ return run({kinds:KIND5,n,g,org,show,base,ST:NE_ST,cams,camK,labels,
+  frame:(s,t)=>{const f0=(t*.1)%1;AN.rotation.y=s===0?sin(t*.2)*.18:0;
+   /* nephron particles */
+   for(let i=0;i<NPT;i++){const p=PT[i];let vis=s>=3&&s<=5;if(!vis){nm4.makeScale(0,0,0);pt.setMatrixAt(i,nm4);continue}
+    const lim=s===3?.1:s===4?.5:1;let f=((t*.045+p.o)%1)*lim;let pos;
+    if(s===3){const q=((t*.2+p.o)%1);const a=CAPSULE;pos=c(a.x+(q-.5)*.5,a.y+q*.5+.1,(p.o-.5)*.9);pos.x+=q*.8;if(i%6>2)pos.copy(path[Math.floor(q*20)])}else if(f<p.leave||p.leave===0||s<4){pos=path[Math.min(299,Math.floor(f*299))].clone();pos.z+=(p.o-.5)*.1}
+    else{const g_=cl((f-p.leave)/.12,0,1),a0=path[Math.min(299,Math.floor(p.leave*299))];const tgt=c(a0.x+p.side*.7,a0.y,a0.z+p.side*.5);pos=a0.clone().lerp(tgt,Math.min(1,g_*3));if(g_>.3){const w=venP[1].clone().lerp(venP[2],(g_-.3)/.7);pos.lerp(w,(g_-.3)*1.2)}}
+    const k=p.sc*(s===4&&p.leave>0&&f>p.leave?.8:1);nm4.makeScale(k,k,k);nm4.setPosition(pos.x,pos.y,pos.z);pt.setMatrixAt(i,nm4)}pt.instanceMatrix.needsUpdate=!0;
+   /* blood cells through the glomerulus loop */
+   for(let i=0;i<NC;i++){if(s<2||s>4){nm4.makeScale(0,0,0)}else{const q=((t*.12+i/NC)%1),P=q<.5?affP[0].clone().lerp(affP[3],q/.5):CAPSULE.clone().lerp(effP[2],(q-.5)/.5);nm4.makeScale(1,.6,1);nm4.setPosition(P.x,P.y,P.z)}rc.setMatrixAt(i,nm4)}rc.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<6;i++){if(s!==3){nm4.makeScale(0,0,0)}else{const q=((t*.12+i/6)%1),P=affP[1].clone().lerp(CAPSULE,q);nm4.makeScale(1.2,1.2,1.2);nm4.setPosition(P.x+.1,P.y+.15,P.z+.12)}bigP.setMatrixAt(i,nm4)}bigP.instanceMatrix.needsUpdate=!0;
+   /* bladder fills in step 7 */blad.scale.setScalar(s===6?1+.18*(.5+.5*sin(t*.6)):1);
+   /* dialysis */
+   for(let i=0;i<ND;i++){const d=DD[i];if(s!==7){nm4.makeScale(0,0,0)}else{const q=((t*.12+d.o)%1);nm4.makeScale(1,1,1);const x=-6+q*12,y=Math.sin(q*TAU*1.5)*.7*(d.k%2?1:-1);nm4.setPosition(x,y+(q>.1?(q-.1)*(d.k%2?1.2:-1.2):0)*(.8),d.z*.8)}dp.setMatrixAt(i,nm4)}dp.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<ND2;i++){if(s!==7){nm4.makeScale(0,0,0)}else{const q=((t*.2+i/ND2)%1);nm4.makeScale(1,1,1);nm4.setPosition(5.5-q*11,(i%4-1.5)*.5,((i*.37)%1-.5)*1.6)}flow.setMatrixAt(i,nm4)}flow.instanceMatrix.needsUpdate=!0},
+  predict:{q:"In which part of the nephron is all the glucose reabsorbed?",opts:[["Bowman's capsule",!1,"Glucose is filtered here, not taken back."],["Proximal convoluted tubule",!0,"Correct — selective reabsorption returns all the glucose to the blood."],["Collecting duct",!1,"Mainly water is recovered there."]]}})}
+Q_("ch5/nephron3d",[["The structural and functional unit of the kidney is…","वृक्क की संरचनात्मक व क्रियात्मक इकाई…",["Neuron","Nephron","Alveolus","Villus"],1,"Each kidney has about a million nephrons."],["Filtration takes place in the…","निस्यंदन कहाँ होता है?",["Loop of Henle","Glomerulus and Bowman's capsule","Collecting duct","Ureter"],1,"High pressure forces small molecules out of the blood."],["Which substance is NOT normally present in the filtrate that passes into urine?","इनमें से मूत्र में सामान्यतः क्या नहीं आता?",["Urea","Glucose","Water","Salts"],1,"All glucose is reabsorbed."],["The tube carrying urine from kidney to bladder is the…","मूत्र को वृक्क से मूत्राशय ले जाने वाली नली?",["Urethra","Ureter","Aorta","Trachea"],1,"The urethra carries urine out of the body."],["Dialysis works because the membrane is…","डायलिसिस इसलिए काम करता है क्योंकि झिल्ली…",["Semi-permeable","Impermeable","Fully permeable","Thick"],0,"Small waste molecules pass; blood cells and proteins do not."]]);
+Px["ch5/nephron3d"]=[["Your kidneys filter all your blood about 40 times a day — and send back all the glucose.","आपके वृक्क एक दिन में लगभग 40 बार सारा रक्त छानते हैं — और सारा ग्लूकोज़ लौटा देते हैं।"],["Drinking enough water keeps urine pale; very dark urine means the body is saving water.","पर्याप्त जल पीने से मूत्र हल्का रहता है; बहुत गहरा रंग शरीर में जल की कमी बताता है।"]];
+{const Lq=Hi.find(h=>h.no===5).topics,i=Lq.findIndex(x=>x.id==="nephron");Lq.splice(i<0?Lq.length:i+1,0,{id:"nephron3d",title:"Kidney, nephron & dialysis — detailed 3D",hi:"वृक्क, नेफ्रॉन व डायलिसिस — विस्तृत 3D",build:Mneph,ncert:"Ch 5 · excretion in human beings"})}
+/* ===================== SET 6: HUMAN REPRODUCTION ===================== */
+const KIND6={
+ testis:["Testis","वृषण","Makes sperm (in seminiferous tubules) and the hormone testosterone. It hangs in the scrotum where it is about 2–3 °C cooler than the body — needed for sperm formation.","शुक्राणु (शुक्रजनक नलिकाओं में) और टेस्टोस्टेरोन बनाता है; वृषणकोष में लटका रहता है जहाँ तापमान शरीर से 2–3 °C कम होता है — शुक्राणु बनने के लिए आवश्यक।"],
+ epid:["Epididymis","अधिवृषण","A tightly coiled tube on the testis where sperm mature and are stored.","वृषण पर कसकर कुंडलित नली जहाँ शुक्राणु परिपक्व होकर संचित रहते हैं।"],
+ vas:["Vas deferens","शुक्रवाहिका","Muscular tube that carries sperm from the epididymis up and over the bladder to join the urethra.","पेशीय नली जो शुक्राणुओं को अधिवृषण से मूत्राशय के ऊपर से मूत्रमार्ग तक ले जाती है।"],
+ scrot:["Scrotum","वृषणकोष","Skin sac keeping the testes 2–3 °C below body temperature.","त्वचा की थैली जो वृषणों को शरीर से 2–3 °C ठंडा रखती है।"],
+ sv:["Seminal vesicle","शुक्राशय","Gland adding a sugar-rich fluid (fructose) that feeds the sperm and helps them swim.","ग्रंथि जो फ्रक्टोज़-युक्त द्रव मिलाती है; यह शुक्राणुओं को पोषण व तैरने में सहायता देता है।"],
+ prost:["Prostate gland","पुरःस्थ ग्रंथि","Adds an alkaline fluid. Sperm + these fluids = semen.","क्षारीय द्रव जोड़ती है; शुक्राणु + ये द्रव = वीर्य।"],
+ ureth:["Urethra","मूत्रमार्ग","In males it carries both urine and semen (never at the same time).","पुरुषों में मूत्र व वीर्य दोनों ले जाता है (एक साथ नहीं)।"],
+ bladm:["Urinary bladder","मूत्राशय","Part of the urinary system, shown for position.","मूत्र-तंत्र का भाग, स्थिति दिखाने हेतु।"],
+ head:["Sperm head","शुक्राणु का शीर्ष","Contains the nucleus with 23 chromosomes. The acrosome cap holds enzymes that dissolve the egg's coat.","23 गुणसूत्रों वाला केंद्रक; एक्रोसोम टोपी में एंज़ाइम होते हैं जो अंडे की परत घोलते हैं।"],
+ mid:["Mid-piece","मध्य खंड","Packed with mitochondria that release the energy (ATP) for swimming.","माइटोकॉन्ड्रिया से भरा; तैरने के लिए ऊर्जा (ATP) देता है।"],
+ tail:["Tail (flagellum)","पूँछ (कशाभिका)","Whip-like tail that propels the sperm forward at about 3 mm per minute.","कोड़े जैसी पूँछ जो शुक्राणु को लगभग 3 mm प्रति मिनट आगे धकेलती है।"],
+ uterus:["Uterus (womb)","गर्भाशय","A pear-shaped muscular organ where the embryo implants and grows. Its inner lining (endometrium) thickens every month.","नाशपाती के आकार का पेशीय अंग जहाँ भ्रूण रोपित होकर बढ़ता है; इसकी भीतरी परत (एंडोमेट्रियम) हर माह मोटी होती है।"],
+ endo:["Endometrium","एंडोमेट्रियम","Soft, blood-rich lining that prepares for the embryo each month; shed as menstruation if there is no pregnancy.","कोमल, रक्त-समृद्ध परत जो हर माह भ्रूण के लिए तैयार होती है; गर्भ न ठहरे तो माहवारी में निकल जाती है।"],
+ cervix:["Cervix","ग्रीवा","Narrow lower end of the uterus opening into the vagina.","गर्भाशय का संकरा निचला सिरा जो योनि में खुलता है।"],
+ vagina:["Vagina","योनि","Muscular canal that receives sperm and serves as the birth canal.","पेशीय नली जो शुक्राणु ग्रहण करती है और जन्म-मार्ग भी है।"],
+ tube:["Fallopian tube (oviduct)","अंडवाहिनी","Carries the egg from the ovary towards the uterus. Fertilisation normally happens in its upper part.","अंडे को अंडाशय से गर्भाशय की ओर ले जाती है; निषेचन सामान्यतः इसके ऊपरी भाग में होता है।"],
+ fim:["Fimbriae","झालर","Finger-like fringes that sweep the released egg into the tube.","उँगली जैसी झालरें जो निकले अंडे को नली में बुहार लेती हैं।"],
+ ovary:["Ovary","अंडाशय","Makes eggs (ova) and the hormones oestrogen and progesterone. One egg is released about every 28 days.","अंडाणु तथा हार्मोन एस्ट्रोजन व प्रोजेस्टेरोन बनाता है; लगभग हर 28 दिन में एक अंडाणु निकलता है।"],
+ foll:["Follicle","पुटक","A fluid-filled bubble in which an egg ripens. The mature follicle bursts at ovulation.","तरल से भरा बुलबुला जिसमें अंडाणु परिपक्व होता है; अंडोत्सर्ग पर परिपक्व पुटक फटता है।"],
+ egg:["Egg cell (ovum)","अंडाणु","The largest human cell (~0.1 mm). It carries 23 chromosomes and a store of food in its cytoplasm.","मानव की सबसे बड़ी कोशिका (~0.1 mm); 23 गुणसूत्र व कोशिकाद्रव्य में भोजन भंडार।"],
+ zona:["Zona pellucida","ज़ोना पेल्यूसिडा","Clear protective coat. Once one sperm gets through, it hardens so no other sperm can enter.","पारदर्शी सुरक्षा-परत; एक शुक्राणु के प्रवेश के बाद सख्त हो जाती है ताकि दूसरा न घुसे।"],
+ corona:["Corona radiata","कोरोना रेडिएटा","Ring of follicle cells that surround the egg.","अंडे को घेरे हुए पुटक कोशिकाओं का घेरा।"],
+ nucz:["Nucleus","केंद्रक","Holds the mother's 23 chromosomes; after fertilisation it fuses with the father's 23 to make the zygote's 46.","माँ के 23 गुणसूत्र; निषेचन के बाद पिता के 23 से मिलकर युग्मनज के 46 बनाता है।"],
+ stage:["Early embryo","प्रारंभिक भ्रूण","The zygote divides again and again (cleavage) without growing: 2 → 4 → 8 → morula → blastocyst.","युग्मनज बिना बढ़े बार-बार विभाजित होता है (विदलन): 2 → 4 → 8 → मोरुला → ब्लास्टोसिस्ट।"],
+ blast:["Blastocyst","ब्लास्टोसिस्ट","A hollow ball: the outer cells will form the placenta, the inner cell mass will become the baby. It implants in the uterus wall about 6–7 days after fertilisation.","खोखली गेंद: बाहरी कोशिकाएँ अपरा बनाएँगी, भीतरी कोशिका समूह शिशु; निषेचन के लगभग 6–7 दिन बाद गर्भाशय की भित्ति में रोपित होता है।"],
+ foet:["Embryo / foetus","भ्रूण / गर्भस्थ शिशु","Grows in a fluid-filled amniotic sac that cushions it. Human pregnancy lasts about 9 months (≈ 40 weeks).","तरल से भरी उल्ब-थैली में बढ़ता है जो इसे आघात से बचाती है; मानव गर्भकाल लगभग 9 माह (≈ 40 सप्ताह)।"],
+ plac:["Placenta","अपरा (प्लेसेंटा)","Disc-shaped organ with villi embedded in the uterus wall. Oxygen and nutrients pass from mother to baby; CO₂ and wastes pass back. Mother's and baby's blood never mix.","गर्भाशय-भित्ति में धँसी तश्तरीनुमा संरचना (दीर्घरोम सहित); ऑक्सीजन व पोषण माँ से शिशु को, CO₂ व अपशिष्ट वापस; दोनों का रक्त आपस में नहीं मिलता।"],
+ cord:["Umbilical cord","नाभि-रज्जु","Links the baby to the placenta: two arteries and one vein.","शिशु को अपरा से जोड़ती है: दो धमनियाँ व एक शिरा।"],
+ amn:["Amniotic fluid","उल्बीय द्रव","Protects the foetus from shocks and keeps temperature steady.","भ्रूण को आघात से बचाता और तापमान स्थिर रखता है।"]};
+const R_ST=[
+["1","Male reproductive system","पुरुष जनन तंत्र","Testes make sperm and testosterone. Sperm mature in the epididymis, travel through the vas deferens, mix with fluids from the seminal vesicles and prostate (semen) and leave through the urethra.","वृषण शुक्राणु व टेस्टोस्टेरोन बनाते हैं; शुक्राणु अधिवृषण में परिपक्व होते, शुक्रवाहिका से जाते, शुक्राशय व पुरःस्थ ग्रंथि के द्रवों से मिलकर (वीर्य) मूत्रमार्ग से निकलते हैं।","Hand-modelled · schematic",11],
+["2","The sperm cell","शुक्राणु कोशिका","A sperm is a tiny swimmer (about 0.05 mm) with a head carrying 23 chromosomes and an acrosome, a mid-piece full of mitochondria and a long tail.","शुक्राणु लगभग 0.05 mm का सूक्ष्म तैराक है: 23 गुणसूत्रों व एक्रोसोम वाला शीर्ष, माइटोकॉन्ड्रिया से भरा मध्य खंड और लंबी पूँछ।","Animated · greatly enlarged",11],
+["3","Female reproductive system","महिला जनन तंत्र","Two ovaries make eggs and hormones. Fallopian tubes carry the egg to the pear-shaped uterus. The cervix and vagina lead outside.","दो अंडाशय अंडाणु व हार्मोन बनाते हैं; अंडवाहिनियाँ अंडे को नाशपाती-आकार के गर्भाशय तक पहुँचाती हैं; ग्रीवा व योनि बाहर की ओर खुलते हैं।","Hand-modelled · cut-away",11],
+["4","The egg and ovulation","अंडाणु व अंडोत्सर्ग","Every month a follicle ripens, bursts and releases an egg (ovulation, about day 14). The fimbriae sweep it into the fallopian tube.","हर माह एक पुटक परिपक्व होकर फटता है और अंडाणु निकलता है (अंडोत्सर्ग, लगभग 14वाँ दिन); झालरें उसे अंडवाहिनी में बुहार लेती हैं।","Animated · schematic",12],
+["5","Fertilisation","निषेचन","Millions of sperm swim up; they must pass the corona and zona. The first to enter fuses with the egg: the nuclei merge (23 + 23 = 46 chromosomes) and the zygote is formed.","लाखों शुक्राणु तैरते हैं; कोरोना व ज़ोना पार करनी होती है; पहला प्रवेश करने वाला अंडे से जुड़ता है, केंद्रक मिलते हैं (23 + 23 = 46 गुणसूत्र) और युग्मनज बनता है।","Animated · greatly enlarged",14],
+["6","Cleavage and implantation","विदलन व रोपण","The zygote divides repeatedly as it moves to the uterus: 2, 4, 8 cells, morula, then a hollow blastocyst, which burrows into the endometrium (implantation).","युग्मनज गर्भाशय की ओर जाते हुए बार-बार विभाजित होता है: 2, 4, 8 कोशिकाएँ, मोरुला, फिर खोखला ब्लास्टोसिस्ट, जो एंडोमेट्रियम में धँस जाता है (रोपण)।","Schematic row · not to scale",12],
+["7","Placenta and the growing baby","अपरा व बढ़ता शिशु","The embryo floats in amniotic fluid and is nourished through the placenta and umbilical cord: oxygen and food go in, carbon dioxide and wastes come out.","भ्रूण उल्बीय द्रव में तैरता है और अपरा व नाभि-रज्जु से पोषण पाता है: ऑक्सीजन व भोजन अंदर, CO₂ व अपशिष्ट बाहर।","Animated · schematic",13],
+["8","The monthly (menstrual) cycle","मासिक (आर्तव) चक्र","Over about 28 days a follicle ripens, ovulation occurs near day 14 and the uterine lining thickens. If no embryo implants, the lining is shed (menstruation, days 1–5) and the cycle repeats.","लगभग 28 दिन में पुटक परिपक्व होता है, 14वें दिन के आसपास अंडोत्सर्ग होता है, गर्भाशय-परत मोटी होती है; भ्रूण न रुके तो परत निकल जाती है (माहवारी, दिन 1–5) और चक्र दोहराता है।","Animated · 28-day loop",16]];
+function Mrepro(){sd=61;const n=new Ne;Ge(n,{key:1.9});Je(n,-7,80,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const M=new J;M.position.set(-26,0,0);g.add(M);const F=new J;g.add(F);const Z=new J;Z.position.set(26,0,0);g.add(Z);const Dv=new J;Dv.position.set(0,-24,0);g.add(Dv);const E=new J;E.position.set(26,-24,0);g.add(E);
+ const pink=MAT(0xe9a2a0,{roughness:.5,clearcoat:.4,sheen:.4,sheenC:0xffd0d0,bumpScale:.3,opacity:.5,depthWrite:!1,emissive:0x3a1010,emissiveIntensity:.1});
+ const flesh=MAT(0xeaa39a,{roughness:.7,clearcoat:.1,bumpScale:.06,sheen:0,emissive:0x6a2a24,emissiveIntensity:.28});const yel=MAT(0xf2d06b,{roughness:.4,clearcoat:.5,emissive:0x4a3a08,emissiveIntensity:.2});
+ const prof=u=>{const w=u<.12?.24+.2*u:.24+.98*Math.pow(Math.sin(Math.min(1,(u-.08)/.82)*PI/2),1.25);return u>.9?w*Math.sqrt(Math.max(0,1-Math.pow((u-.9)/.1,2))):w};
+ /* ---------- male ---------- */
+ const sac=add("scrot",param(30,44,(u,v)=>{const th=u*PI,ph=v*TAU;return[sin(th)*cos(ph)*2.1,-3.1+cos(th)*1.35,sin(th)*sin(ph)*.95]}),MAT(0xf1c9a5,{roughness:.55,opacity:.22,depthWrite:!1,bumpScale:.3,sheen:0}),[0,0,0],{parent:M,ns:1});
+ [-1,1].forEach(sx=>{add("testis",sph(.72,.04,2,.8,1.15,.8,28,36,sx),MAT(0xf0d8b8,{roughness:.4,clearcoat:.7,opacity:.95,sheen:.3,emissive:0x3a2a10,emissiveIntensity:.1}),[sx*.95,-3.1,0],{parent:M});
+  const pts=[];for(let i=0;i<=40;i++){const q=i/40,a=q*TAU*5;pts.push(c(sx*.95+sx*.35+.18*Math.sin(a),-2.4-q*.0+.45*Math.cos(q*PI)*.0-.45*q+.25*(1-q),-.15+.16*Math.cos(a)))}add("epid",tube(pts,.07,8),yel,[0,0,0],{parent:M,ns:1});
+  add("vas",tube([c(sx*1.3,-2.5,-.25),c(sx*1.45,-1,-.3),c(sx*1.1,.6,-.3),c(sx*.5,1.5,-.1),c(sx*.3,.2,.1),c(sx*.12,-.7,.1)],.1,8),yel,[0,0,0],{parent:M,ns:1});
+  add("sv",sph(.36,.15,3,.8,1.6,.8,18,24,sx),MAT(0xe4b86a,{roughness:.5,bumpScale:.4}),[sx*.65,-.2,-.55],{parent:M,rot:[0,0,sx*.5]})});
+ add("bladm",sph(.95,.05,2,1,.9,.9,28,36),MAT(0xe8b04a,{roughness:.45,clearcoat:.5,opacity:.7,bumpScale:.3,depthWrite:!1}),[0,1.5,.3],{parent:M});
+ add("prost",sph(.5,.05,2,1.1,.9,.9,20,28),MAT(0xd98a6a,{roughness:.5,bumpScale:.3}),[0,-.9,.1],{parent:M});
+ add("ureth",tube([c(0,1.0,.3),c(0,-.6,.15),c(0,-1.5,.3),c(0,-3.4,.85)],.12,8),MAT(0xfff1a8,{roughness:.4,emissive:0x4a3a08,emissiveIntensity:.25}),[0,0,0],{parent:M,ns:1});
+ add("ureth",tube([c(0,-1.4,.3),c(0,-3.2,.8),c(0,-4.2,1.0)],.3,12,u=>1-.15*u),MAT(0xf1c9a5,{roughness:.55,opacity:.55,depthWrite:!1,bumpScale:.2}),[0,0,0],{parent:M,ns:1});
+ /* ---------- female ---------- */
+ const ang=v=>(.75+v*1.5)*PI;
+ const wall=add("uterus",param(36,60,(u,v)=>{const y=-1.6+u*3.2,r=prof(u)*1.0,a=ang(v);return[cos(a)*r*1.15,y,sin(a)*r*.7]}),pink,[0,0,0],{parent:F,ns:1});
+ const endoM=MAT(0xc9373a,{roughness:.5,clearcoat:.4,bumpScale:.4,emissive:0x4a0808,emissiveIntensity:.25,sheen:.5,sheenC:0xff9a9a});
+ const endo=add("endo",param(34,56,(u,v)=>{const y=-1.1+u*2.5,r=prof(.15+u*.8)*.62,a=ang(v);return[cos(a)*r*1.15,y,sin(a)*r*.7]}),endoM,[0,0,0],{parent:F,ns:1});
+ add("cervix",tube([c(0,-1.9,0),c(0,-1.45,0)],.3,12),MAT(0xe29c94,{roughness:.7,bumpScale:.05,sheen:0,emissive:0x6a2a24,emissiveIntensity:.25}),[0,0,0],{parent:F,ns:1});
+ add("vagina",tube([c(0,-1.9,0),c(0,-3.6,.2),c(0,-5,.5)],.4,14),flesh,[0,0,0],{parent:F,ns:1});
+ const tubeP=sx=>[c(sx*.7,1.05,0),c(sx*1.5,1.65,0),c(sx*2.4,1.55,.05),c(sx*3.1,1.1,.1),c(sx*3.4,.55,.1)];
+ [-1,1].forEach(sx=>{add("tube",tube(tubeP(sx),.1,10,u=>1+.9*u),MAT(0xf0a89c,{roughness:.6,clearcoat:.2,bumpScale:.05,sheen:0,emissive:0x6a2a24,emissiveIntensity:.25}),[0,0,0],{parent:F,ns:1});
+  for(let k=0;k<9;k++){const a=k/9*TAU,e=tubeP(sx)[4];add("fim",tube([c(e.x,e.y,e.z),c(e.x+sx*.15*cos(a),e.y-.15+.25*sin(a),e.z+.3*cos(a)),c(e.x+sx*.3*cos(a),e.y-.4+.45*sin(a),e.z+.55*cos(a))],.04,5),MAT(0xf0a0a0,{roughness:.4,emissive:0x3a1010,emissiveIntensity:.15}),[0,0,0],{parent:F,ns:1})}
+  add("ovary",sph(.62,.05,2,1.25,1,.85,28,36,sx),MAT(0xf6bfae,{roughness:.8,clearcoat:0,bumpScale:.05,sheen:0,envMapIntensity:.5,emissive:0x6a3a2a,emissiveIntensity:.3}),[sx*3.55,-.35,.1],{parent:F});
+  for(let k=0;k<6;k++){const a=k*1.9;add("foll",sph(.12,.05,3,1,1,1,12,16),MAT(0xfff2d0,{roughness:.2,clearcoat:1,opacity:.9}),[sx*3.55+cos(a)*.5*sx,-.35+sin(a)*.4,.1+cos(a*2)*.3],{parent:F,ns:1})}});
+ const mature=add("foll",sph(.3,.03,2,1,1,1,20,26),MAT(0xfff6d8,{roughness:.15,clearcoat:1,opacity:.85,emissive:0x6a5a20,emissiveIntensity:.3}),[3.95,-.2,.35],{parent:F,ns:1});
+ const ovum=add("egg",sph(.13,0,1,1,1,1,16,20),MAT(0xffd7a0,{roughness:.2,clearcoat:1,emissive:0x8a5a10,emissiveIntensity:.5}),[3.95,-.2,.35],{parent:F,ns:1});
+ const eggPath=new It([c(3.95,-.2,.35),c(4.2,.2,.45),c(3.5,.5,.35),c(3.25,.75,.2),c(2.8,1.3,.08),c(2.1,1.6,.05)]).getPoints(60);
+ /* ---------- sperm + egg ---------- */
+ const mkSperm=(par,x,y,z)=>{const sg=new J;sg.position.set(x,y,z);par.add(sg);const hm=MAT(0x7b8fe0,{roughness:.35,clearcoat:.8,emissive:0x1a2a7a,emissiveIntensity:.3}),am=MAT(0xd6e0ff,{roughness:.25,clearcoat:1,opacity:.9}),mm=MAT(0xf2a63a,{roughness:.4,emissive:0x5a3408,emissiveIntensity:.3}),tm=MAT(0x9fb0f0,{roughness:.4,clearcoat:.6});
+  const part=(id,geo,mat,p)=>{const m=add(id,geo,mat,p,{parent:sg,ns:1});return m};
+  part("head",sph(.5,0,1,1.05,.78,.42,24,32),hm,[0,0,0]);part("head",sph(.33,0,1,.7,.95,.5,16,22),am,[.42,0,0]);
+  for(let i=0;i<8;i++)part("mid",torus(.16,.045),mm,[-.55-i*.14,0,0]).rotation.z=PI/2;
+  part("mid",tube([c(-.5,0,0),c(-1.75,0,0)],.12,8),mm,[0,0,0]);
+  const tp=[];for(let i=0;i<=24;i++){const q=i/24;tp.push(c(-1.75-q*4.2,Math.sin(q*TAU*2.2)*.22*q,0))}part("tail",tube(tp,.07,6,u=>1-.7*u),tm,[0,0,0]);return sg};
+ const sperms=[[-14,.8,-1,.6],[-12,-2.2,1.2,.5],[-16,2.4,.4,.8],[-11,-.6,-1.8,.4],[-13,1.6,1.8,.7]].map((p,i)=>({g:mkSperm(Z,p[0],p[1],p[2]),i,v:p[3]}));
+ const eggG=new J;eggG.position.set(2.5,0,0);Z.add(eggG);
+ add("zona",sph(2.0,.03,2,1,1,1,36,48,2),MAT(0xcfe8ff,{roughness:.2,clearcoat:.8,opacity:.28,depthWrite:!1,bumpScale:.4,sheen:0}),[0,0,0],{parent:eggG,ns:1});
+ add("egg",sph(1.65,.02,2,1,1,1,36,48,3),MAT(0xffd9a8,{roughness:.45,clearcoat:.6,opacity:.95,bumpScale:.3,emissive:0x6a4a18,emissiveIntensity:.15}),[0,0,0],{parent:eggG});
+ const nzM=MAT(0x6f7ad8,{roughness:.35,clearcoat:.8,emissive:0x1a2060,emissiveIntensity:.35});const nuc1=add("nucz",sph(.5,.04,2,1,1,1,20,26),nzM,[-.2,0,.1],{parent:eggG,ns:1});const nuc2=add("nucz",sph(.35,.04,2,1,1,1,16,22),MAT(0x9aa4f2,{roughness:.35,emissive:0x2a3080,emissiveIntensity:.35}),[.9,.2,0],{parent:eggG,ns:1});nuc2.visible=!1;
+ for(let i=0;i<34;i++){const y=1-(i+.5)/34*2,r=Math.sqrt(1-y*y),a=i*2.399963;add("corona",sph(.24,.1,3,1,1,1,10,14,i),MAT(0xffe6d0,{roughness:.45,opacity:.85}),[cos(a)*r*2.2,y*2.2,sin(a)*r*2.2],{parent:eggG,ns:1})}
+ /* ---------- cleavage row ---------- */
+ const cm=MAT(0xffd9a8,{roughness:.4,clearcoat:.6,opacity:.92,bumpScale:.25,emissive:0x6a4a18,emissiveIntensity:.15}),shell=MAT(0xcfe8ff,{roughness:.2,opacity:.25,depthWrite:!1,sheen:0});
+ const X0=-10.5,DX=3.5;
+ add("stage",sph(1.0,.03,2,1,1,1,24,32),cm,[X0,0,0],{parent:Dv});add("stage",sph(1.25,0,1,1,1,1,24,32),shell,[X0,0,0],{parent:Dv,ns:1});
+ [[-.55,0],[.55,0]].forEach(q=>add("stage",sph(.62,.03,2,1,1,1,20,26),cm,[X0+DX+q[0],q[1],0],{parent:Dv}));
+ [[-.5,.5],[.5,.5],[-.5,-.5],[.5,-.5]].forEach(q=>add("stage",sph(.46,.03,2,1,1,1,18,24),cm,[X0+DX*2+q[0],q[1],0],{parent:Dv}));
+ for(let i=0;i<8;i++){const a=i/8*TAU,z=i<4?.3:-.3;add("stage",sph(.36,.03,2,1,1,1,16,20),cm,[X0+DX*3+cos(a)*.5,sin(a)*.5,(i%2?.35:-.35)],{parent:Dv})}
+ for(let i=0;i<20;i++){const y=1-(i+.5)/20*2,r=Math.sqrt(1-y*y),a=i*2.399963;add("stage",sph(.3,.03,2,1,1,1,14,18),cm,[X0+DX*4+cos(a)*r*.7,y*.7,sin(a)*r*.7],{parent:Dv})}
+ add("blast",sph(1.15,.02,2,1,1,1,36,48),MAT(0xffe0b8,{roughness:.3,clearcoat:.7,opacity:.4,depthWrite:!1,sheen:0}),[X0+DX*5,0,0],{parent:Dv,ns:1});
+ for(let i=0;i<7;i++){const a=i*.9+.4;add("blast",sph(.3,.03,2,1,1,1,14,18),MAT(0x6f7ad8,{roughness:.35,emissive:0x1a2060,emissiveIntensity:.3}),[X0+DX*5-.55+cos(a)*.35,sin(a)*.35,sin(a*2)*.3],{parent:Dv,ns:1})}
+ add("endo",param(20,20,(u,v)=>[X0+DX*6.1+Math.sin(v*PI)*0+(.9-.4*Math.cos(u*PI)*Math.cos(v*PI)*0),(u-.5)*5.2,(v-.5)*5]),endoM,[0,0,0],{parent:Dv,ns:1}).position.x=0;
+ add("blast",sph(.9,.02,2,.8,1,1,28,36),MAT(0xffe0b8,{roughness:.3,clearcoat:.7,opacity:.7,sheen:0}),[X0+DX*6.1-.2,0,0],{parent:Dv});
+ /* ---------- placenta & foetus ---------- */
+ const sacM=MAT(0xffd0d0,{roughness:.3,opacity:.16,depthWrite:!1,sheen:0,bumpScale:.1,clearcoat:.5});
+ add("uterus",param(34,50,(u,v)=>{const y=-3+u*6.2,r=prof(u)*2.6,a=ang(v);return[cos(a)*r*1.1,y,sin(a)*r*.8]}),pink,[0,0,0],{parent:E,ns:1});
+ add("amn",sph(2.5,.03,1.5,1,1.15,.9,36,48,1),sacM,[0,.3,.2],{parent:E,ns:1});
+ const fM=MAT(0xf2b9a0,{roughness:.45,clearcoat:.5,bumpScale:.3,sheen:.4,sheenC:0xffd8c8,emissive:0x4a2010,emissiveIntensity:.12});const fet=new J;fet.position.set(0,.3,.2);E.add(fet);
+ add("foet",sph(.8,.03,2,1,1.05,.95,28,36),fM,[0,.9,0],{parent:fet});add("foet",tube([c(0,.2,0),c(-.1,-.5,.1),c(.15,-1.1,.15),c(.5,-1.5,.0)],.55,12,u=>1-.4*u),fM,[0,0,0],{parent:fet});
+ [-1,1].forEach(sx=>{add("foet",tube([c(sx*.35,.1,.2),c(sx*.7,-.2,.5),c(sx*.45,-.6,.7)],.14,8),fM,[0,0,0],{parent:fet,ns:1});add("foet",tube([c(sx*.2,-1,.1),c(sx*.5,-1.4,.4),c(sx*.3,-1.9,.3)],.17,8),fM,[0,0,0],{parent:fet,ns:1})});
+ const plM=MAT(0xa23a3a,{roughness:.55,bumpScale:.5,emissive:0x3a0808,emissiveIntensity:.25,sheen:.4});
+ add("plac",sph(1.15,.12,3,.5,1,1,28,36,4),plM,[-2.3,1.2,-.6],{parent:E});
+ for(let i=0;i<14;i++){const q=i/14;add("plac",tube([c(-2.4,.5+q*1.5,-.6),c(-2.7,.3+q*1.6,-.7),c(-3,.4+q*1.5,-.9)],.05,5),plM,[0,0,0],{parent:E,ns:1})}
+ const cordA=[c(-.2,1,.1),c(-1,1.3,-.1),c(-1.8,1.5,-.4),c(-2.3,1.4,-.5)];
+ add("cord",tube(cordA,.17,10),MAT(0xe8d8b0,{roughness:.4,clearcoat:.6,bumpScale:.3}),[0,0,0],{parent:E});
+ add("cord",tube(cordA.map((p,i)=>p.clone().add(c(0,.08*sin(i*2),.08))),.06,6),artM6(),[0,0,0],{parent:E,ns:1});add("cord",tube(cordA.map((p,i)=>p.clone().add(c(0,-.08,.06*cos(i*2)))),.06,6),vM6(),[0,0,0],{parent:E,ns:1});
+ function artM6(){return MAT(0x4f63d6,{roughness:.35,emissive:0x101a5a,emissiveIntensity:.3})}function vM6(){return MAT(0xd2413f,{roughness:.35,emissive:0x5a0a08,emissiveIntensity:.3})}
+ const NF=36,fl=new Wn(new it(.06,8,6),new bt({color:0xffffff}),NF);fl.frustumCulled=!1;E.add(fl);const fc=new we;for(let i=0;i<NF;i++)fl.setColorAt(i,fc.setHex(i%2?0xd2413f:0x4f63d6));
+ const m4=new gt,cordB=cordA.map(p=>p.clone().add(c(0,0,.02)));const cordCur=new It(cordA).getPoints(40);
+ /* ---------- cameras ---------- */
+ const cams=[[c(-26,-1.6,17),c(-26,-1.4,0)],[c(24,0,16),c(22,0,0)],[c(0,-.2,15.5),c(0,-.2,0)],[c(2.6,.5,9),c(3,.3,0)],[c(26,0,17),c(24,0,0)],[c(0,-24,19),c(0,-24,0)],[c(26,-24,16),c(26,-23.6,0)],[c(0,.2,14),c(0,-.2,0)]];
+ const camK=["Male","Sperm","Female","Ovulation","Fertilisation","Cleavage","Placenta","Cycle"];
+ const show={};const ids=["scrot","testis","epid","vas","sv","bladm","prost","ureth","head","mid","tail","uterus","endo","cervix","vagina","tube","fim","ovary","foll","egg","zona","corona","nucz","stage","blast","foet","plac","cord","amn"];
+ ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
+ on("scrot",[0]);on("testis",[0]);on("epid",[0]);on("vas",[0]);on("sv",[0]);on("bladm",[0]);on("prost",[0]);on("ureth",[0]);on("head",[1,4]);on("mid",[1,4]);on("tail",[1,4]);on("uterus",[2,3,4,7]);on("endo",[2,3,4,5,7]);on("cervix",[2,7]);on("vagina",[2,7]);on("tube",[2,3,4,7]);on("fim",[2,3,7]);on("ovary",[2,3,7]);on("foll",[2,3,7]);on("egg",[3,4]);on("zona",[4]);on("corona",[4]);on("nucz",[4]);on("stage",[5]);on("blast",[5]);on("foet",[6]);on("plac",[6]);on("cord",[6]);on("amn",[6]);
+ const base={scrot:.22,testis:.95,epid:1,vas:1,sv:1,bladm:.7,prost:1,ureth:1,head:1,mid:1,tail:1,uterus:.5,endo:1,cervix:1,vagina:1,tube:1,fim:1,ovary:1,foll:.9,egg:1,zona:.28,corona:.85,nucz:1,stage:.92,blast:.9,foet:1,plac:1,cord:1,amn:.16};
+ const Lw=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["m-te","Testis (sperm + testosterone)","वृषण (शुक्राणु + टेस्टोस्टेरोन)",Lw(M,[.95,-3.1,.8]),[0]],["m-ep","Epididymis (sperm mature)","अधिवृषण (शुक्राणु परिपक्व)",Lw(M,[1.4,-2.2,-.1]),[0]],["m-va","Vas deferens","शुक्रवाहिका",Lw(M,[1.45,-.6,-.3]),[0]],["m-sv","Seminal vesicle","शुक्राशय",Lw(M,[.8,-.1,-.5]),[0]],["m-pr","Prostate gland","पुरःस्थ ग्रंथि",Lw(M,[0,-.9,.5]),[0]],["m-ur","Urethra","मूत्रमार्ग",Lw(M,[0,-3.1,.9]),[0]],["m-sc","Scrotum (cooler: 2–3 °C)","वृषणकोष (2–3 °C ठंडा)",Lw(M,[-2,-3.4,.2]),[0]],["m-bl","Bladder","मूत्राशय",Lw(M,[-.8,1.9,.4]),[0]],
+  ["z-he","Head: nucleus (23) + acrosome","शीर्ष: केंद्रक (23) + एक्रोसोम",Lw(Z,[-14,1,-1]),[1]],["z-mi","Mid-piece: mitochondria","मध्य खंड: माइटोकॉन्ड्रिया",Lw(Z,[-14.9,.8,-1]),[1]],["z-ta","Tail: swims","पूँछ: तैरती है",Lw(Z,[-17.2,1,-1]),[1]],
+  ["f-ut","Uterus (womb)","गर्भाशय",Lw(F,[0,1.5,.6]),[2,7]],["f-en","Endometrium (lining)","एंडोमेट्रियम (परत)",Lw(F,[0,.2,.5]),[2,7]],["f-ce","Cervix","ग्रीवा",Lw(F,[0,-1.7,.4]),[2]],["f-va","Vagina","योनि",Lw(F,[0,-3.4,.6]),[2]],["f-tu","Fallopian tube","अंडवाहिनी",Lw(F,[2.2,1.7,.2]),[2,3]],["f-fi","Fimbriae","झालर",Lw(F,[3.5,.5,.5]),[2,3]],["f-ov","Ovary","अंडाशय",Lw(F,[-3.5,-.3,.5]),[2,3]],["f-fo","Mature follicle","परिपक्व पुटक",Lw(F,[3.95,-.2,.6]),[3]],["f-eg","Egg released (ovulation)","अंडाणु निकला (अंडोत्सर्ग)",()=>ovum.getWorldPosition(c()),[3]],
+  ["e-eg","Egg cell (largest human cell)","अंडाणु (सबसे बड़ी कोशिका)",Lw(Z,[2.5,-1.3,1.6]),[4]],["e-zo","Zona pellucida","ज़ोना पेल्यूसिडा",Lw(Z,[2.5,1.9,.5]),[4]],["e-co","Corona radiata","कोरोना रेडिएटा",Lw(Z,[2.5,-2.2,.6]),[4]],["e-nu","Nucleus (23 + 23 = 46)","केंद्रक (23 + 23 = 46)",Lw(Z,[2.3,.2,.6]),[4]],["e-sp","Sperm entering","शुक्राणु प्रवेश",Lw(Z,[-1,.2,0]),[4]],
+  ["c-z","Zygote (1 cell)","युग्मनज (1 कोशिका)",Lw(Dv,[X0,1.5,0]),[5]],["c-2","2 cells","2 कोशिकाएँ",Lw(Dv,[X0+DX,1.2,0]),[5]],["c-4","4 cells","4 कोशिकाएँ",Lw(Dv,[X0+DX*2,1.4,0]),[5]],["c-8","8 cells","8 कोशिकाएँ",Lw(Dv,[X0+DX*3,1.2,0]),[5]],["c-mo","Morula","मोरुला",Lw(Dv,[X0+DX*4,1.2,0]),[5]],["c-bl","Blastocyst","ब्लास्टोसिस्ट",Lw(Dv,[X0+DX*5,1.6,0]),[5]],["c-im","Implantation in endometrium","एंडोमेट्रियम में रोपण",Lw(Dv,[X0+DX*6.1,2.2,0]),[5]],
+  ["p-fo","Foetus","गर्भस्थ शिशु",()=>fet.getWorldPosition(c()),[6]],["p-pl","Placenta","अपरा",Lw(E,[-2.6,2.5,-.6]),[6]],["p-co","Umbilical cord","नाभि-रज्जु",Lw(E,[-1.2,1.7,-.2]),[6]],["p-am","Amniotic fluid","उल्बीय द्रव",Lw(E,[2.2,1.4,.5]),[6]],["p-ox","O₂ + food → baby","O₂ + भोजन → शिशु",Lw(E,[-1.8,.7,0]),[6]],["p-wa","CO₂ + waste → mother","CO₂ + अपशिष्ट → माँ",Lw(E,[-1.2,2,0]),[6]],
+  ["y-fo","Follicle grows","पुटक बढ़ता",Lw(F,[3.95,.2,.6]),[7]],["y-en","Lining thickens / is shed","परत मोटी / निष्कासित",Lw(F,[0,.2,.5]),[7]]];
+ const phase=t=>((t*.07)%1)*28;
+ return run({kinds:KIND6,n,g,org,show,base,ST:R_ST,cams,camK,labels,
+  hud:(s,t)=>s===7?`Day ${Math.floor(phase(t))+1} of 28 · `+(phase(t)<5?"menstruation (lining shed)":phase(t)<13?"follicle ripens · lining rebuilds":phase(t)<15?"OVULATION":phase(t)<24?"corpus luteum · lining thick":"lining breaks down"):"",
+  frame:(s,t)=>{F.rotation.y=s===2?sin(t*.2)*.25:0;M.rotation.y=s===0?sin(t*.2)*.3:0;
+   const pd=s===7?phase(t):13,thick=s===7?(pd<5?.35+.0:pd<14?.45+.55*(pd-5)/9:pd<24?1:1-.65*(pd-24)/4):1;endo.scale.set(thick*.8+.2,1,thick*.8+.2);endoM.emissiveIntensity=s===7&&pd<5?.8:.25;
+   mature.scale.setScalar(s===7?.4+.9*cl(pd/13,0,1)*(pd>14?0:1):1);mature.visible=s!==7||pd<14||pd>14.5;
+   /* ovulation: egg leaves follicle and moves along the tube */
+   const q=s===3?((t*.07)%1):s===7?cl((pd-13.5)/3,0,1):0;ovum.visible=s===3||(s===7&&pd>13.4&&pd<17);const k=Math.min(59,Math.floor(q*59));ovum.position.copy(eggPath[s===3||s===7?k:0]);
+   /* sperm swim toward the egg */
+   sperms.forEach((p,i)=>{const sw=s===4?(1-Math.exp(-t*.15)):0,tx=s===1?0:(i===0&&s===4?7.6+.0:6.4+i*.0),x0=-14+i*-.4;const base0=s===1?-6+i*1.6:x0;const tt=s===4?lerp(x0,tx-2.2,cl(((t*.06)%1)*1.6,0,1)):base0;p.g.position.set(s===1?-3.4+i*.0:tt,s===1?(i-2)*1.0:p.g.position.y,s===1?(i%2?-1:1)*(i*.6):p.g.position.z);p.g.rotation.z=sin(t*6+i)*.08;p.g.rotation.y=s===1?0:0;p.g.children.forEach(c_=>{if(c_.userData.part==="tail")c_.rotation.y=sin(t*9+i)*.12})});
+   sperms.forEach((p,i)=>{p.g.visible=s===1||s===4;if(s===1){p.g.position.set(-3.5,(i-2)*1.15,(i%2?-1:1)*(i*.5-.5));p.g.scale.setScalar(i===0?1:.7)}else if(s===4){const ff=cl(((t*.07)%1)*1.4,0,1);p.g.position.set(lerp(-16+i*-1.5,i===0?-.2:-1.4,ff*(i===0?1:.9)),(i-2)*.9*(1-ff*.8),(i%2?-1:1)*(1-ff)*i*.5);p.g.scale.setScalar(.8)}});
+   const fz=s===4?cl(((t*.07)%1)*1.4-.9,0,1):0;nuc2.visible=s===4&&fz>.2;nuc1.position.x=-.2+fz*.5;nuc2.position.x=.9-fz*.8;nuc1.scale.setScalar(1+fz*.3);
+   /* placenta flow */
+   for(let i=0;i<NF;i++){if(s!==6){m4.makeScale(0,0,0)}else{const f=((t*.2+i/NF*2)%1),to=i%2===0,P=cordCur[Math.floor((to?f:1-f)*39)];m4.makeScale(1,1,1);m4.setPosition(P.x+(i%3-1)*.05,P.y+(to?.1:-.1),P.z+(i%2)*.06)}fl.setMatrixAt(i,m4)}fl.instanceMatrix.needsUpdate=!0;
+   fet.scale.setScalar(1+.02*sin(t*2))},
+  predict:{q:"Where does fertilisation normally take place?",opts:[["In the uterus",!1,"The embryo implants in the uterus a few days later."],["In the fallopian tube (oviduct)",!0,"Correct — in the upper part of the tube."],["In the vagina",!1,"Sperm are deposited in the vagina but must swim on."]]}})}
+Q_("ch7/human3d",[["Where are sperm produced?","शुक्राणु कहाँ बनते हैं?",["Epididymis","Testes","Prostate","Vas deferens"],1,"In the seminiferous tubules of the testes."],["Why are the testes outside the body in the scrotum?","वृषण शरीर के बाहर वृषणकोष में क्यों होते हैं?",["For protection","Sperm formation needs a temperature lower than body temperature","To store urine","For hormones only"],1,"About 2–3 °C cooler."],["The release of an egg from the ovary is called…","अंडाशय से अंडाणु निकलना कहलाता है…",["Fertilisation","Ovulation","Implantation","Menstruation"],1,"Near day 14 of the cycle."],["The placenta allows exchange of…","अपरा किसका आदान-प्रदान कराती है?",["Blood of mother and baby","Oxygen, nutrients and wastes (blood does not mix)","Only hormones","Only water"],1,"Materials diffuse across the villi."],["If the egg is not fertilised, what happens to the uterine lining?","यदि अंडाणु निषेचित न हो तो गर्भाशय-परत का क्या होता है?",["It becomes thicker","It is shed as menstruation","It becomes an embryo","It stays"],1,"Menstruation lasts about 2–8 days."]]);
+Px["ch7/human3d"]=[["A human egg is about 0.1 mm — just visible to the naked eye; a sperm is about 0.05 mm long.","मानव अंडाणु लगभग 0.1 mm — नंगी आँख से बस दिखता है; शुक्राणु लगभग 0.05 mm।"],["Identical twins form when one zygote splits in two; fraternal twins come from two separate eggs.","समान जुड़वाँ तब बनते हैं जब एक युग्मनज दो भागों में बँट जाए; असमान जुड़वाँ दो अलग अंडाणुओं से।"]];
+{const Lr=Hi.find(h=>h.no===7).topics,i=Lr.findIndex(x=>x.id==="human");Lr.splice(i<0?Lr.length:i+1,0,{id:"human3d",title:"Human reproduction — detailed 3D",hi:"मानव प्रजनन — विस्तृत 3D",build:Mrepro,ncert:"Ch 7 · reproduction in human beings"})}
+/* ===================== SET 7: FLOWER · POLLINATION · FERTILISATION · FRUIT & SEED ===================== */
+const KIND7={
+ sepal:["Sepals (calyx)","बाह्यदल (कैलिक्स)","Green leaf-like parts that protect the flower bud.","हरे पत्ती-जैसे भाग जो कली की रक्षा करते हैं।"],
+ petal:["Petals (corolla)","दल (कोरोला)","Brightly coloured, often scented parts that attract insects for pollination.","चटक रंग व प्रायः सुगंध वाले भाग जो परागण हेतु कीटों को आकर्षित करते हैं।"],
+ fil:["Filament","पुंतंतु","The stalk that holds the anther up where insects or wind can reach the pollen.","वह डंठल जो परागकोश को ऊपर थामता है ताकि कीट/वायु पराग तक पहुँच सकें।"],
+ anther:["Anther","परागकोश","Makes and holds pollen grains (the male gametophytes). Together anther + filament = stamen, the male part.","पराग कण (नर युग्मकजनक) बनाता व रखता है; परागकोश + पुंतंतु = पुंकेसर, नर भाग।"],
+ pollen:["Pollen grain","पराग कण","Microscopic grain with a hard, sculpted wall. It carries the male gametes.","कठोर, नक्काशीदार भित्ति वाला सूक्ष्म कण; नर युग्मक ले जाता है।"],
+ stigma:["Stigma","वर्तिकाग्र","Sticky top of the pistil that catches pollen and helps it germinate.","स्त्रीकेसर का चिपचिपा शीर्ष जो पराग पकड़ता और अंकुरण में मदद करता है।"],
+ style:["Style","वर्तिका","Tube-like stalk through which the pollen tube grows down to the ovary.","नली जैसा डंठल जिसमें से पराग नलिका नीचे अंडाशय तक बढ़ती है।"],
+ ovary:["Ovary","अंडाशय","Swollen base of the pistil containing ovules. After fertilisation it becomes the fruit.","स्त्रीकेसर का फूला आधार जिसमें बीजांड होते हैं; निषेचन के बाद फल बनता है।"],
+ ovule:["Ovule","बीजांड","Holds the egg cell inside an embryo sac. After fertilisation it becomes the seed.","भ्रूणकोष के भीतर अंड कोशिका रखता है; निषेचन के बाद बीज बनता है।"],
+ recept:["Receptacle","पुष्पासन","The swollen tip of the flower stalk that holds all the floral parts.","पुष्प-डंठल का फूला सिरा जो सभी पुष्प-भाग थामता है।"],
+ bee:["Bee (pollinating agent)","मधुमक्खी (परागण कारक)","Collects nectar and carries pollen on its hairy body from flower to flower — cross-pollination.","मकरंद इकट्ठा करती है और बालों वाले शरीर पर पराग एक फूल से दूसरे तक ले जाती है — पर-परागण।"],
+ tubeP:["Pollen tube","पराग नलिका","Grows from the pollen grain down the style, carrying two male gametes to the ovule.","पराग कण से वर्तिका में नीचे बढ़ती है और दो नर युग्मक बीजांड तक ले जाती है।"],
+ micro:["Micropyle","बीजांडद्वार","The tiny opening of the ovule through which the pollen tube enters.","बीजांड का सूक्ष्म छिद्र जिससे पराग नलिका प्रवेश करती है।"],
+ egg7:["Egg cell","अंड कोशिका","The female gamete in the embryo sac. It fuses with one male gamete to form the zygote.","भ्रूणकोष में मादा युग्मक; एक नर युग्मक से मिलकर युग्मनज बनाती है।"],
+ polar:["Polar nuclei","ध्रुवीय केंद्रक","Two nuclei in the centre of the embryo sac; the second male gamete fuses with them to start the endosperm (food store) — double fertilisation.","भ्रूणकोष के केंद्र के दो केंद्रक; दूसरा नर युग्मक इनसे जुड़कर भ्रूणपोष (खाद्य भंडार) शुरू करता है — द्विनिषेचन।"],
+ male:["Male gamete","नर युग्मक","One of the two sperm cells carried by the pollen tube.","पराग नलिका द्वारा लाई गई दो शुक्राणु कोशिकाओं में से एक।"],
+ zyg:["Zygote","युग्मनज","Formed when the male gamete fuses with the egg; it divides to form the embryo.","नर युग्मक व अंड के मिलने से बनता है; विभाजित होकर भ्रूण बनाता है।"],
+ fruit:["Fruit","फल","The ripened ovary, which protects the seeds and helps to spread them.","परिपक्व अंडाशय जो बीजों की रक्षा करता और उनके प्रसार में मदद करता है।"],
+ seed:["Seed","बीज","The ripened ovule: it holds the embryo and a food store inside a protective seed coat.","परिपक्व बीजांड: बीज-चोल के भीतर भ्रूण व खाद्य भंडार।"],
+ coty:["Cotyledon","बीजपत्र","Seed leaf that stores or absorbs food for the growing seedling.","बीज-पत्ती जो अंकुर के लिए भोजन संचित/अवशोषित करती है।"],
+ radicle:["Radicle","मूलांकुर","The embryonic root: it grows out first and anchors the seedling.","भ्रूणीय जड़: सबसे पहले निकलकर अंकुर को जमाती है।"],
+ plumule:["Plumule","प्रांकुर","The embryonic shoot that grows up into stem and leaves.","भ्रूणीय प्ररोह जो ऊपर बढ़कर तना व पत्तियाँ बनाता है।"]};
+const F_ST=[
+["1","Parts of a flower","पुष्प के भाग","A flower is the reproductive organ of a flowering plant. From outside to inside: sepals, petals, stamens (male) and the pistil (female), all attached to the receptacle. The front half is cut away.","पुष्प आवृतबीजी पौधे का जनन अंग है: बाहर से भीतर — बाह्यदल, दल, पुंकेसर (नर) और स्त्रीकेसर (मादा), सब पुष्पासन पर; आगे का आधा भाग काट दिया है।","Hand-modelled · half cut-away",10],
+["2","The stamen: pollen factory","पुंकेसर: पराग की फ़ैक्टरी","Each stamen has a filament and an anther. The anther splits open (dehisces) and releases pollen grains — each with a tough, patterned wall.","प्रत्येक पुंकेसर में पुंतंतु व परागकोश होता है; परागकोश फटकर पराग कण छोड़ता है — हर कण की कठोर, नक्काशीदार भित्ति होती है।","Animated · pollen not to scale",11],
+["3","The pistil: stigma, style, ovary","स्त्रीकेसर: वर्तिकाग्र, वर्तिका, अंडाशय","The pistil is the female part. The sticky stigma receives pollen, the style is a tube leading down, and the ovary at the base holds the ovules, each with an egg cell.","स्त्रीकेसर मादा भाग है: चिपचिपा वर्तिकाग्र पराग लेता है, वर्तिका नीचे जाने वाली नली है, और आधार का अंडाशय बीजांड रखता है — प्रत्येक में अंड कोशिका।","Hand-modelled · ovary cut open",11],
+["4","Pollination","परागण","Pollen is transferred from an anther to a stigma. Here a bee carries it from another flower. Same flower or same plant = self-pollination; a different plant = cross-pollination. Wind, water and animals are the agents.","पराग का परागकोश से वर्तिकाग्र तक पहुँचना। यहाँ मधुमक्खी दूसरे फूल से पराग लाती है। उसी फूल/पौधे में = स्व-परागण; दूसरे पौधे में = पर-परागण; वायु, जल व जंतु वाहक हैं।","Animated · schematic",13],
+["5","The pollen tube grows","पराग नलिका बढ़ती है","On the stigma the pollen grain germinates. A pollen tube grows down through the style towards the ovule, guided by chemical signals, carrying two male gametes.","वर्तिकाग्र पर पराग कण अंकुरित होता है; पराग नलिका रासायनिक संकेतों के सहारे वर्तिका में नीचे बीजांड की ओर बढ़ती है और दो नर युग्मक ले जाती है।","Animated · tube growth speeded up",13],
+["6","Fertilisation inside the ovule","बीजांड के भीतर निषेचन","The tube enters the ovule through the micropyle. One male gamete fuses with the egg to make the zygote; the other fuses with the two polar nuclei to start the food store (endosperm): double fertilisation.","नलिका बीजांडद्वार से बीजांड में जाती है; एक नर युग्मक अंड से मिलकर युग्मनज बनाता है, दूसरा दो ध्रुवीय केंद्रकों से मिलकर भ्रूणपोष शुरू करता है — द्विनिषेचन।","Animated · magnified ovule",14],
+["7","Ovary becomes fruit, ovule becomes seed","अंडाशय फल, बीजांड बीज","After fertilisation the petals and stamens wither. The zygote grows into the embryo, the ovule into the seed and the ovary into the fruit.","निषेचन के बाद दल व पुंकेसर मुरझा जाते हैं; युग्मनज भ्रूण में, बीजांड बीज में और अंडाशय फल में बदलता है।","Animated · schematic",13],
+["8","Seed to seedling: germination","बीज से अंकुर: अंकुरण","With water, air and warmth the seed germinates: the radicle grows down as the root and the plumule grows up as the shoot, fed by the cotyledons. The life cycle begins again.","जल, वायु व गर्मी मिलने पर बीज अंकुरित होता है: मूलांकुर नीचे जड़ बनता है और प्रांकुर ऊपर प्ररोह, बीजपत्र भोजन देते हैं; जीवन-चक्र फिर शुरू।","Animated · schematic",13]];
+function Mflower(){sd=71;const n=new Ne;Ge(n,{key:1.9});Je(n,-4.6,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const FL=new J;g.add(FL);const OV=new J;OV.position.set(22,0,0);g.add(OV);const GR=new J;GR.position.set(0,-22,0);g.add(GR);const FB=new J;FB.position.set(-14,.6,-2.5);g.add(FB);
+ const petM=MAT(0xe8407c,{roughness:.6,clearcoat:.1,sheen:0,envMapIntensity:.5,bumpScale:.08,opacity:1,side:vt,emissive:0x7a1038,emissiveIntensity:.3});
+ const petal=(par,ang,tilt,L,W,mat,id)=>{const gr=new J;gr.rotation.y=ang;par.add(gr);add(id,param(18,12,(u,v)=>{const w=Math.pow(sin(Math.min(1,u*.97)*PI*.85+.15),.8)*W*(v-.5)*2*(1-.25*u*u),x=u*L,y=u*u*L*.55*(tilt*.5)-Math.pow(Math.abs(v-.5)*2,2)*.5*W*.55*(.4+u);return[x,y,w]}),mat,[0,0,0],{parent:gr,ns:0});return gr};
+ const flowerAt=(par,sc,ids)=>{const P=new J;P.scale.setScalar(sc);par.add(P);
+  /* sepals */
+  const sepM=MAT(0x6aa84f,{roughness:.55,clearcoat:.2,bumpScale:.15,side:vt,emissive:0x143a0e,emissiveIntensity:.15});
+  for(let i=0;i<5;i++)petal(P,i/5*TAU+.3,1.6,2.1,.45,sepM,ids.sepal).position.y=-.2;
+  /* petals (front two removed in the cut-away flower) */
+  for(let i=0;i<6;i++){const a=i/6*TAU+.1;if(ids.cut&&Math.cos(a-.0)>.55&&Math.sin(a)>-.1&&Math.sin(a)<.9&&i<2&&false)continue;const p=petal(P,a,1.5,3.1,1.0,petM,ids.petal);p.position.y=-.05;p.userData.a=a}
+  add(ids.recept,sph(.55,.05,2,1.1,.55,1.1,22,28),MAT(0x7cb55a,{roughness:.5,bumpScale:.2}),[0,-.35,0],{parent:P});
+  /* stamens */
+  const an=[];for(let i=0;i<6;i++){const a=i/6*TAU+.52,r=.95,fx=Math.cos(a)*r,fz=Math.sin(a)*r;add(ids.fil,tube([c(fx*.3,-.1,fz*.3),c(fx*.8,1,fz*.8),c(fx*1.05,1.9,fz*1.05)],.045,8),MAT(0xf2e6a0,{roughness:.45,bumpScale:.1,emissive:0x4a3a08,emissiveIntensity:.15}),[0,0,0],{parent:P,ns:1});
+   const am=MAT(0xf5c518,{roughness:.55,bumpScale:.5,emissive:0x6a4a00,emissiveIntensity:.25,sheen:0});
+   [[-.07,0],[.07,0]].forEach(q=>add(ids.anther,sph(.12,.15,3,.8,1.7,.8,14,18,i),am,[fx*1.08+q[0]*Math.cos(a+PI/2),2.05,fz*1.08+q[0]*Math.sin(a+PI/2)],{parent:P,ns:1}));an.push(c(fx*1.08,2.05,fz*1.08))}
+  return{P,an}};
+ const A=flowerAt(FL,1,{sepal:"sepal",petal:"petal",recept:"recept",fil:"fil",anther:"anther",cut:!0});
+ /* pistil: stigma, style, ovary (cut open), ovules */
+ const styleM=MAT(0xb8e08a,{roughness:.45,clearcoat:.4,bumpScale:.15,emissive:0x2a4a10,emissiveIntensity:.15});
+ add("style",tube([c(0,.5,0),c(0,1.5,0),c(0,2.7,0)],.1,10,u=>1-.2*u),styleM,[0,0,0],{parent:FL,ns:1});
+ add("stigma",sph(.3,.1,3,1,.7,1,18,24),MAT(0xe8f080,{roughness:.2,clearcoat:.9,bumpScale:.5,emissive:0x4a5a10,emissiveIntensity:.25,sheen:0}),[0,2.82,0],{parent:FL});
+ for(let i=0;i<14;i++){const a=i*2.4,r=.22;add("stigma",tube([c(Math.cos(a)*.14,2.88,Math.sin(a)*.14),c(Math.cos(a)*r,3.05,Math.sin(a)*r)],.025,4),MAT(0xf3f6a0,{roughness:.3}),[0,0,0],{parent:FL,ns:1})}
+ const ovM=MAT(0x9cd06a,{roughness:.4,clearcoat:.5,bumpScale:.2,opacity:.6,depthWrite:!1,emissive:0x2a4a10,emissiveIntensity:.15});
+ const ovMesh=add("ovary",param(30,48,(u,v)=>{const th=u*PI,ph=(.62+v*1.76)*PI,x=Math.sin(th)*Math.cos(ph)*.8,y=Math.cos(th)*.95,z=Math.sin(th)*Math.sin(ph)*.8;return[x,y+.35,z]}),ovM,[0,0,0],{parent:FL,ns:1});
+ const ovuleM=MAT(0xf7e3a0,{roughness:.6,clearcoat:.05,envMapIntensity:.35,bumpScale:.08,sheen:0,emissive:0x8a7a30,emissiveIntensity:.45});
+ [[.28,.1,.18],[-.25,.35,.2],[.05,.7,-.25],[-.25,.6,-.2]].forEach(p=>add("ovule",sph(.19,.05,3,1,1.2,1,16,22),ovuleM,[p[0],p[1]+.05,p[2]],{parent:FL}));
+ /* pollen grains released in step 2 */
+ const NP=60,pol=new Wn(new it(.05,8,6),new bt({color:0xffd23f}),NP);pol.frustumCulled=!1;FL.add(pol);const m4=new gt;const PL=[];for(let i=0;i<NP;i++)PL.push({a:i%6,o:R(),dx:(R()-.5)*.5,dz:(R()-.5)*.5});
+ /* big pollen grain (sculpted) for step 2/5 close-up */
+ const bigPol=add("pollen",param(30,44,(u,v)=>{const th=u*PI,ph=v*TAU,k=1+.12*Math.pow(Math.abs(Math.sin(th*6)*Math.sin(ph*6)),.6);return[sin(th)*cos(ph)*.28*k,cos(th)*.28*k,sin(th)*sin(ph)*.28*k]}),MAT(0xffd23f,{roughness:.6,bumpScale:.8,emissive:0x6a4a00,emissiveIntensity:.3,sheen:0}),[1.7,1.7,1.4],{parent:FL});
+ /* bee + second flower */
+ flowerAt(FB,.55,{sepal:"sepalB",petal:"petalB",recept:"receptB",fil:"filB",anther:"antherB"});
+ const bee=new J;g.add(bee);const stripe=MAT(0x2a2a2a,{roughness:.5}),yw=MAT(0xf5c518,{roughness:.5,bumpScale:.4,emissive:0x5a4000,emissiveIntensity:.2});
+ add("bee",sph(.28,0,1,1.3,.9,.9,16,20),yw,[0,0,0],{parent:bee});add("bee",sph(.22,0,1,.35,1.05,1.05,12,16),stripe,[.1,0,0],{parent:bee,ns:1});add("bee",sph(.2,0,1,.8,.9,.9,12,16),yw,[.34,0,0],{parent:bee});add("bee",sph(.15,0,1,1,1,1,12,16),stripe,[.55,0,0],{parent:bee});
+ const wM=MAT(0xdfefff,{roughness:.1,opacity:.45,depthWrite:!1,sheen:0});const w1=add("bee",sph(.34,0,1,1,.04,.55,12,16),wM,[.05,.2,.25],{parent:bee,ns:1}),w2=add("bee",sph(.34,0,1,1,.04,.55,12,16),wM,[.05,.2,-.25],{parent:bee,ns:1});
+ [-.18,.0,.18].forEach(x=>add("bee",tube([c(x,-.15,.1),c(x,-.35,.2)],.02,4),stripe,[0,0,0],{parent:bee,ns:1}));
+ const beeP=new It([c(-14,2.4,-2.5),c(-10,3.3,-1.5),c(-5.5,4.2,.2),c(-2.2,3.9,.6),c(-.3,3.4,.4),c(.1,3.2,.2)]).getPoints(80);
+ /* pollen tube in the style (grows with progress), pollen on stigma */
+ const tubeCur=new It([c(0,2.9,0),c(.04,2.2,.03),c(-.04,1.4,-.02),c(.02,.9,.05),c(.0,.62,.06)]);const TN=60,tubeG=(()=>{const pts=tubeCur.getPoints(TN);const frames=pts.map(()=>[c(1,0,0),c(0,0,1)]);return param(TN,8,(u,v)=>{const i=Math.round(u*TN),p=pts[i],a=v*TAU,r=.035*(i>TN-3?1.3:1);return[p.x+Math.cos(a)*r,p.y,p.z+Math.sin(a)*r]})})();
+ const tubeM=MAT(0xff8fb0,{roughness:.35,clearcoat:.7,emissive:0x7a1a3a,emissiveIntensity:.35});const tubeMesh=add("tubeP",tubeG,tubeM,[0,0,0],{parent:FL,ns:1});
+ /* ---------- magnified ovule ---------- */
+ const intM=MAT(0xf2d28a,{roughness:.6,clearcoat:.05,envMapIntensity:.3,sheen:0,bumpScale:.1,opacity:.42,depthWrite:!1,emissive:0x5a4a10,emissiveIntensity:.15});
+ add("ovule",param(36,56,(u,v)=>{const th=u*PI,ph=(.6+v*1.8)*PI,x=Math.sin(th)*Math.cos(ph)*3.1,y=Math.cos(th)*4.2,z=Math.sin(th)*Math.sin(ph)*3.1;return[x,y,z+Math.max(0,-y-3.5)*0]}),intM,[0,0,0],{parent:OV,ns:1});
+ add("ovule",param(32,52,(u,v)=>{const th=u*PI,ph=(.6+v*1.8)*PI;return[Math.sin(th)*Math.cos(ph)*2.7,Math.cos(th)*3.8,Math.sin(th)*Math.sin(ph)*2.7]}),MAT(0xf7e6b0,{roughness:.4,opacity:.5,depthWrite:!1,sheen:0,bumpScale:.15}),[0,0,0],{parent:OV,ns:1});
+ add("ovule",sph(1.6,.03,2,.95,1.35,.95,34,48,3),MAT(0xfff0c4,{roughness:.6,clearcoat:.05,envMapIntensity:.3,opacity:.62,depthWrite:!1,sheen:0,bumpScale:.05}),[0,.3,0],{parent:OV,ns:1});
+ add("micro",torus(.45,.1),MAT(0xc9a15a,{roughness:.5}),[0,-4.15,0],{parent:OV,ns:1});
+ const cellM=MAT(0xffd7a0,{roughness:.6,clearcoat:.05,envMapIntensity:.35,sheen:0,emissive:0x8a5a10,emissiveIntensity:.45}),nucM=MAT(0x6f7ad8,{roughness:.5,clearcoat:.1,envMapIntensity:.4,sheen:0,emissive:0x2a3090,emissiveIntensity:.55});
+ const eggG=new J;eggG.position.set(0,-1.55,0);OV.add(eggG);add("egg7",sph(.55,.03,2,1,1.15,1,22,30),cellM,[0,0,0],{parent:eggG});const eggN=add("egg7",sph(.2,0,1,1,1,1,12,16),nucM,[0,.1,0],{parent:eggG,ns:1});
+ [-.55,.55].forEach(x=>add("egg7",sph(.3,.03,2,.8,1.1,.8,16,22),MAT(0xffe6b8,{roughness:.35,emissive:0x6a4a18,emissiveIntensity:.2}),[x,-.1,0],{parent:eggG,ns:1}));
+ const polA=add("polar",sph(.22,0,1,1,1,1,14,18),nucM,[-.25,.5,0],{parent:OV}),polB=add("polar",sph(.22,0,1,1,1,1,14,18),nucM,[.25,.5,0],{parent:OV});
+ for(let i=0;i<3;i++)add("polar",sph(.2,0,1,1,1,1,12,16),MAT(0xc9d0ff,{roughness:.4}),[(i-1)*.4,2.35,0],{parent:OV,ns:1});
+ const OVT=[c(0,-9,0),c(.15,-7,0),c(-.1,-5.4,0),c(0,-4.2,0),c(0,-3.3,0)];const tubeOC=new It(OVT),ON=50;
+ const tubeOG=param(ON,10,(u,v)=>{const p=tubeOC.getPoint(u),a=v*TAU,r=.22;return[p.x+Math.cos(a)*r,p.y,p.z+Math.sin(a)*r]});tubeOG.setDrawRange(0,0);
+ const tubeO=add("tubeP",tubeOG,MAT(0xff8fb0,{roughness:.35,clearcoat:.7,opacity:.8,emissive:0x7a1a3a,emissiveIntensity:.35,depthWrite:!1}),[0,0,0],{parent:OV,ns:1});
+ const mg1=add("male",sph(.2,0,1,1,1,1,12,16),MAT(0xffd23f,{emissive:0x8a6a00,emissiveIntensity:.8}),[0,-9,0],{parent:OV,ns:1}),mg2=add("male",sph(.2,0,1,1,1,1,12,16),MAT(0xffd23f,{emissive:0x8a6a00,emissiveIntensity:.8}),[0,-9,0],{parent:OV,ns:1});
+ const seedCoat=add("seed",param(30,44,(u,v)=>{const th=u*PI,ph=(.6+v*1.8)*PI;return[Math.sin(th)*Math.cos(ph)*3.1,Math.cos(th)*4.2,Math.sin(th)*Math.sin(ph)*3.1]}),MAT(0x8a5a2b,{roughness:.6,bumpScale:.6,opacity:0,depthWrite:!1,sheen:0}),[0,0,0],{parent:OV,ns:1});
+ /* ---------- germination ---------- */
+ const soil=add("soil",new Xe(6.5,6.5,4.4,48,1,!1,PI*.5,PI),new bt({color:0x6b4a2e,side:vt}),[0,-2.7,0],{parent:GR,ns:1});const soil2=add("soil",new Xe(6.5,6.5,.14,48,1,!1,PI*.5,PI),new bt({color:0x8a5e38,side:vt}),[0,-.5,0],{parent:GR,ns:1});const cutFace=add("soil",new Xe(6.5,6.5,.2,4),new bt({color:0x7d5535}),[0,-2.7,-.15],{parent:GR,ns:1,rot:[PI/2,PI/4,0],scl:[1,1,.68]});
+ const sdM=MAT(0xb98450,{roughness:.7,clearcoat:.05,envMapIntensity:.35,bumpScale:.3,sheen:0,emissive:0x4a2c10,emissiveIntensity:.35});
+ const sd_=add("seed",sph(1.1,.05,2,1.2,.9,.8,26,34),sdM,[0,-1.6,0],{parent:GR});
+ [-1,1].forEach(sx=>add("coty",sph(.8,.04,2,.55,.9,.8,20,26),MAT(0xf2e6a0,{roughness:.45,emissive:0x4a3a08,emissiveIntensity:.15}),[sx*.55,-1.6,0],{parent:GR}));
+ const rad=new J;rad.position.set(0,-2.3,0);GR.add(rad);const rootC=new It([c(0,0,0),c(.1,-1,0),c(-.1,-2.2,.1),c(.2,-3.4,0)]);add("radicle",tube(rootC.getPoints(10),.12,8,u=>1-.7*u),MAT(0xf3ead0,{roughness:.5,bumpScale:.2}),[0,0,0],{parent:rad});
+ for(let k=0;k<6;k++){const q=rootC.getPoint(.3+k*.12);add("radicle",tube([q,q.clone().add(c((k%2?1:-1)*.5,-.3,0))],.04,5),MAT(0xf3ead0,{roughness:.5}),[0,0,0],{parent:rad,ns:1})}
+ const shoot=new J;shoot.position.set(0,-1.1,0);GR.add(shoot);add("plumule",tube([c(0,0,0),c(0,.8,0),c(.1,1.7,0),c(0,2.6,0)],.1,8,u=>1-.4*u),MAT(0x8cc152,{roughness:.45,clearcoat:.3,bumpScale:.2}),[0,0,0],{parent:shoot});
+ [-1,1].forEach(sx=>add("plumule",sph(.5,.04,2,1.2,.1,.7,18,24),MAT(0x5aa83a,{roughness:.45,clearcoat:.3,side:vt,bumpScale:.25}),[sx*.55,2.7,0],{parent:shoot,rot:[0,0,sx*-.6]}));
+ /* cameras */
+ const cams=[[c(0,3.2,9.5),c(0,1.3,0)],[c(0,3.6,7.4),c(0,2,0)],[c(1.4,1.6,6.8),c(0,1.2,0)],[c(-5,3.4,12),c(-4,2.6,0)],[c(.6,2,6),c(0,1.5,0)],[c(22,-2.2,26),c(22,-2.4,0)],[c(0,2,13),c(0,1,0)],[c(0,-19,16),c(0,-23,0)]];
+ const camK=["Flower","Stamen","Pistil","Pollination","Pollen tube","Ovule","Fruit & seed","Germination"];
+ const show={};const ids=["sepal","petal","recept","fil","anther","pollen","stigma","style","ovary","ovule","bee","sepalB","petalB","receptB","filB","antherB","tubeP","micro","egg7","polar","male","zyg","fruit","seed","coty","radicle","plumule","soil"];ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
+ ["sepal","petal","recept","fil","anther","stigma","style","ovary"].forEach(i=>on(i,[0,1,2,3,4,6]));on("ovule",[0,2,3,4,6]);on("pollen",[1]);on("bee",[3]);["sepalB","petalB","receptB","filB","antherB"].forEach(i=>on(i,[3]));on("tubeP",[4,5]);["micro","egg7","polar","male"].forEach(i=>on(i,[5]));on("ovule",[5]);on("seed",[6,7]);on("soil",[7]);on("coty",[7]);on("radicle",[7]);on("plumule",[7]);
+ show.petal=[1,0,0,1,1,0,1,0].map((v,i)=>v);show.sepal=show.petal.slice();show.ovary=[1,1,1,1,1,0,1,0];
+ const base={sepal:.96,petal:.96,recept:1,fil:1,anther:1,pollen:1,stigma:1,style:1,ovary:.6,ovule:1,bee:1,sepalB:.96,petalB:.96,receptB:1,filB:1,antherB:1,tubeP:1,micro:1,egg7:1,polar:1,male:1,seed:1,soil:1,coty:1,radicle:1,plumule:1};
+ const Lw=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["f-pe","Petals (corolla)","दल (कोरोला)",Lw(FL,[3.2,.8,1.1]),[0,3]],["f-se","Sepals (calyx)","बाह्यदल",Lw(FL,[2,-.2,-1.1]),[0]],["f-st","Stamen (male)","पुंकेसर (नर)",Lw(FL,[1.3,2.2,.9]),[0,1]],["f-an","Anther","परागकोश",Lw(FL,[.4,2.2,1]),[1]],["f-fi","Filament","पुंतंतु",Lw(FL,[.9,1,.9]),[0,1]],["f-pi","Pistil (female)","स्त्रीकेसर (मादा)",Lw(FL,[0,3.1,.2]),[0,2]],["f-sg","Stigma (sticky)","वर्तिकाग्र (चिपचिपा)",Lw(FL,[.5,3,.3]),[2,3,4]],["f-sy","Style","वर्तिका",Lw(FL,[.15,1.8,0]),[0,2,4]],["f-ov","Ovary","अंडाशय",Lw(FL,[.8,.5,.4]),[0,2]],["f-ovu","Ovules (each has an egg)","बीजांड (प्रत्येक में अंड)",Lw(FL,[-.5,.55,.2]),[2]],["f-re","Receptacle","पुष्पासन",Lw(FL,[-.7,-.5,.2]),[0]],["f-po","Pollen grain (magnified)","पराग कण (बड़ा)",Lw(FL,[1.7,2.1,1.4]),[1]],
+  ["p-be","Bee carries pollen","मधुमक्खी पराग लाती",()=>bee.getWorldPosition(c()),[3]],["p-fb","Pollen donor flower","पराग-दाता फूल",Lw(FB,[0,3,0]),[3]],["p-cr","Cross-pollination (different plant)","पर-परागण (दूसरा पौधा)",Lw(FL,[-3,4.6,0]),[3]],
+  ["t-tu","Pollen tube","पराग नलिका",Lw(FL,[.25,1.9,.15]),[4]],["t-ga","2 male gametes inside","2 नर युग्मक भीतर",Lw(FL,[-.2,1.2,0]),[4]],
+  ["o-mi","Micropyle (entry)","बीजांडद्वार (प्रवेश)",Lw(OV,[1,-4.2,0]),[5]],["o-tu","Pollen tube","पराग नलिका",Lw(OV,[1.1,-6,0]),[5]],["o-eg","Egg cell + 2 synergids","अंड + 2 सहायक कोशिकाएँ",Lw(OV,[1.2,-1.6,0]),[5]],["o-po","2 polar nuclei → endosperm","2 ध्रुवीय केंद्रक → भ्रूणपोष",Lw(OV,[1.2,.6,0]),[5]],["o-ma","Male gametes","नर युग्मक",()=>mg1.getWorldPosition(c()),[5]],["o-zy","Zygote (egg + male gamete)","युग्मनज (अंड + नर युग्मक)",Lw(OV,[1.2,-2.4,0]),[5]],
+  ["r-fr","Ovary → fruit","अंडाशय → फल",Lw(FL,[1.2,.4,.4]),[6]],["r-se","Ovule → seed","बीजांड → बीज",Lw(OV,[3.4,0,0]),[6]],["r-wi","Petals & stamens wither","दल व पुंकेसर मुरझाते",Lw(FL,[3,1.6,1]),[6]],
+  ["g-se","Seed coat","बीज-चोल",Lw(GR,[1.4,-1.6,.4]),[7]],["g-co","Cotyledons","बीजपत्र",Lw(GR,[-.9,-1.6,.5]),[7]],["g-ra","Radicle → root","मूलांकुर → जड़",Lw(GR,[.8,-3.8,.2]),[7]],["g-pl","Plumule → shoot","प्रांकुर → प्ररोह",Lw(GR,[.9,.9,.3]),[7]],["g-so","Soil","मिट्टी",Lw(GR,[-5,-.2,.5]),[7]]];
+ const clk=t=>(t*.08)%1;
+ return run({kinds:KIND7,n,g,org,show,base,ST:F_ST,cams,camK,labels,
+  frame:(s,t)=>{FL.rotation.y=s===0?sin(t*.18)*.25:0;GR.rotation.y=0;
+   /* pollen release */
+   for(let i=0;i<NP;i++){const p=PL[i];if(s!==1){m4.makeScale(0,0,0)}else{const q=((t*.18+p.o)%1),a=A.an[p.a];m4.makeScale(1,1,1);m4.setPosition(a.x+p.dx*q*2,a.y-q*1.3+Math.sin(q*3)*.1,a.z+p.dz*q*2)}pol.setMatrixAt(i,m4)}pol.instanceMatrix.needsUpdate=!0;bigPol.rotation.y=t*.8;
+   /* bee flight and wing beat */
+   bee.visible=s===3;if(bee.visible){const f=clk(t)*1.1,k=Math.min(79,Math.floor(cl(f,0,1)*79)),p=beeP[k],pn=beeP[Math.min(79,k+1)];bee.position.copy(p);bee.lookAt(pn.x+p.x*0,pn.y,pn.z);bee.rotation.y+=PI/2*0;bee.rotation.z=0;w1.rotation.x=w2.rotation.x=sin(t*60)*.6;
+    bee.rotation.set(0,Math.atan2(-(pn.z-p.z),pn.x-p.x),Math.atan2(pn.y-p.y,Math.hypot(pn.x-p.x,pn.z-p.z)))}
+   /* pollen tube grows */
+   const tg=s===4?cl(((t*.07)%1)*1.2,0,1):s===5||s===6?1:0;tubeG.setDrawRange(0,Math.floor(tg*TN)*8*6);tubeMesh.visible=s>=4&&s<=6;
+   const og=s===5?cl(((t*.05)%1)*2,0,1):s>5?1:0;tubeOG.setDrawRange(0,Math.floor(Math.min(1,og*1.3)*ON)*10*6);
+   const fz=s===5?cl(((t*.05)%1)*2-1,0,1):s>5?1:0;mg1.visible=mg2.visible=s===5;const tp=tubeOC.getPoint(cl(og*1.3,0,1));
+   mg1.position.set(tp.x-.08,fz>0?lerp(tp.y,-1.6,fz):tp.y,0);mg2.position.set(tp.x+.08,fz>0?lerp(tp.y,.5,fz):tp.y,0);if(fz>0){mg1.position.x=lerp(mg1.position.x,0,fz);mg2.position.x=lerp(mg2.position.x,0,fz)}
+   eggN.scale.setScalar(1+.5*fz);polA.position.x=-.25+.25*fz;polB.position.x=.25-.25*fz;
+   /* fruit and seed development in step 7 */
+   const dv=s===6?cl(((t*.06)%1)*1.4,0,1):s>6?1:0;org.forEach(o=>{if(o.id==="petal"&&o.m.parent&&o.m.parent.parent===FL)o.m.parent.scale.setScalar(s===6?1-dv:1)});ovMesh.scale.setScalar(1+dv*.9);ovM.color.setHex(dv>.5?0xf2a23a:0x9cd06a);ovM.opacity=s===6?.6+.3*dv:.6;
+   seedCoat.material.opacity=s===6?dv*.9:0;
+   /* germination */
+   const gm=s===7?cl(((t*.05)%1)*1.3,0,1):0;rad.scale.set(1,.2+.8*gm,1);rad.position.y=-2.3;shoot.scale.set(1,.15+.85*gm,1);shoot.position.y=-1.1+gm*.3;sd_.scale.set(1,1,1)},
+  predict:{q:"After fertilisation, what does the ovary develop into?",opts:[["Seed",!1,"The ovule becomes the seed."],["Fruit",!0,"Correct — the ovary becomes the fruit and the ovule becomes the seed."],["Flower",!1,"The flower withers after fertilisation."]]}})}
+Q_("ch7/flower3d",[["The male reproductive part of a flower is the…","पुष्प का नर जनन भाग?",["Pistil","Stamen","Petal","Sepal"],1,"Anther + filament = stamen."],["Transfer of pollen from anther to stigma is called…","पराग का परागकोश से वर्तिकाग्र तक पहुँचना?",["Fertilisation","Pollination","Germination","Dispersal"],1,"Pollination comes before fertilisation."],["Pollen tube enters the ovule through the…","पराग नलिका बीजांड में कहाँ से घुसती है?",["Stigma","Micropyle","Style","Receptacle"],1,"The micropyle is the small opening."],["After fertilisation the ovule develops into a…","निषेचन के बाद बीजांड क्या बनता है?",["Fruit","Seed","Petal","Pollen"],1,"The ovary becomes the fruit."],["Cross-pollination brings pollen from…","पर-परागण में पराग कहाँ से आता है?",["The same flower","A flower on a different plant of the same species","A different species","The stem"],1,"It increases variation."]]);
+Px["ch7/flower3d"]=[["Bees visit about 2 million flowers to make 500 g of honey — and pollinate crops on the way.","500 g शहद के लिए मधुमक्खियाँ लगभग 20 लाख फूलों पर जाती हैं — और रास्ते में फ़सलों का परागण करती हैं।"],["Fruits like mango, tomato and cucumber are ripened ovaries; the seeds inside were ovules.","आम, टमाटर, खीरा परिपक्व अंडाशय हैं; भीतर के बीज पहले बीजांड थे।"]];
+{const Lf=Hi.find(h=>h.no===7).topics,i=Lf.findIndex(x=>x.id==="flower");Lf.splice(i<0?Lf.length:i+1,0,{id:"flower3d",title:"Flower, pollination & fertilisation — detailed 3D",hi:"पुष्प, परागण व निषेचन — विस्तृत 3D",build:Mflower,ncert:"Ch 7 · sexual reproduction in flowering plants"})}
+/* ===================== SET 8: DNA · GENES · MENDEL · SEX DETERMINATION ===================== */
+const KIND8={
+ nuc8:["Nucleus","केंद्रक","Holds the chromosomes. A human cell nucleus has 46 chromosomes (23 pairs).","इसमें गुणसूत्र होते हैं; मानव कोशिका के केंद्रक में 46 गुणसूत्र (23 जोड़े) होते हैं।"],
+ chrom:["Chromosome","गुणसूत्र","A coiled thread of DNA wrapped around histone proteins. Before division it is copied, so it looks like an X: two identical chromatids joined at the centromere.","हिस्टोन प्रोटीन पर लिपटा DNA का कुंडलित धागा; विभाजन से पहले प्रतिलिपि बनने पर X जैसा दिखता है — सेंट्रोमियर पर जुड़ी दो समान क्रोमैटिड।"],
+ histone:["Histones (nucleosomes)","हिस्टोन (न्यूक्लियोसोम)","Protein 'spools' on which DNA is wound so that 2 m of DNA fits inside a tiny nucleus.","प्रोटीन 'चरखियाँ' जिन पर DNA लिपटा रहता है ताकि लगभग 2 m DNA छोटे केंद्रक में समा जाए।"],
+ back:["Sugar–phosphate backbone","शर्करा–फ़ॉस्फ़ेट आधार-रज्जु","The two outer rails of the DNA ladder: deoxyribose sugar and phosphate in a repeating chain.","DNA सीढ़ी की दो बाहरी पटरियाँ: डीऑक्सीराइबोस शर्करा व फ़ॉस्फ़ेट की दोहराती कड़ी।"],
+ A:["Adenine (A)","एडेनीन (A)","Pairs only with thymine (T) using two hydrogen bonds.","केवल थाइमीन (T) से दो हाइड्रोजन बंधों द्वारा जुड़ता है।"],
+ T:["Thymine (T)","थाइमीन (T)","Pairs only with adenine (A).","केवल एडेनीन (A) से जुड़ता है।"],
+ G:["Guanine (G)","ग्वानीन (G)","Pairs only with cytosine (C) using three hydrogen bonds.","केवल साइटोसीन (C) से तीन हाइड्रोजन बंधों द्वारा जुड़ता है।"],
+ C:["Cytosine (C)","साइटोसीन (C)","Pairs only with guanine (G).","केवल ग्वानीन (G) से जुड़ता है।"],
+ gene:["Gene","जीन","A stretch of DNA with the code for one protein. Proteins decide traits such as seed shape or flower colour.","DNA का वह खंड जिसमें एक प्रोटीन का कूट होता है; प्रोटीन बीज का आकार, फूल का रंग जैसे लक्षण तय करते हैं।"],
+ mrna:["mRNA","mRNA","A single-stranded copy of a gene that carries the code from the nucleus to the ribosome.","जीन की एकल-रज्जु प्रतिलिपि जो कूट को केंद्रक से राइबोसोम तक ले जाती है।"],
+ ribo:["Ribosome","राइबोसोम","Reads the mRNA three letters at a time and joins amino acids into a protein.","mRNA को तीन अक्षर प्रति बार पढ़ता है और अमीनो अम्ल जोड़कर प्रोटीन बनाता है।"],
+ prot:["Protein (trait)","प्रोटीन (लक्षण)","The finished protein — e.g. an enzyme — produces the visible trait.","तैयार प्रोटीन — जैसे एंज़ाइम — दृश्य लक्षण पैदा करता है।"],
+ pea:["Pea plant","मटर का पौधा","Mendel's experimental plant: many contrasting traits, short life cycle, easy to cross.","मेंडल का प्रयोग-पौधा: अनेक विपरीत लक्षण, छोटा जीवन-चक्र, आसान संकरण।"],
+ allT:["Allele T (tall, dominant)","उपजाति T (लंबा, प्रभावी)","A dominant allele shows its trait even when only one copy is present.","प्रभावी उपजाति का लक्षण तब भी दिखता है जब केवल एक प्रति हो।"],
+ allt:["Allele t (dwarf, recessive)","उपजाति t (बौना, अप्रभावी)","A recessive allele shows its trait only when both copies are recessive (tt).","अप्रभावी उपजाति का लक्षण तभी दिखता है जब दोनों प्रतियाँ अप्रभावी हों (tt)।"],
+ gam:["Gamete","युग्मक","Sex cell carrying only one allele of each gene (law of segregation).","लैंगिक कोशिका जिसमें प्रत्येक जीन की केवल एक उपजाति होती है (पृथक्करण का नियम)।"],
+ punn:["Punnett square","पुनेट वर्ग","A grid that combines the gametes of the two parents to show every possible offspring.","ग्रिड जो दोनों जनकों के युग्मकों को मिलाकर सभी संभावित संतानें दिखाता है।"],
+ off:["Offspring","संतान","Genotype shows the alleles; phenotype shows the trait you can see.","जीनप्ररूप में उपजातियाँ, लक्षणप्ररूप में दिखने वाला लक्षण।"],
+ X:["X chromosome","X गुणसूत्र","Large chromosome carried by everyone; females have two (XX).","बड़ा गुणसूत्र जो सबमें होता है; महिलाओं में दो (XX)।"],
+ Y:["Y chromosome","Y गुणसूत्र","Small chromosome only in males (XY); it carries the gene that makes the embryo male.","छोटा गुणसूत्र जो केवल पुरुषों में (XY) होता है; इसमें वह जीन है जो भ्रूण को नर बनाता है।"]};
+const G_ST=[
+["1","From cell to DNA","कोशिका से DNA तक","Zoom into a cell: the nucleus holds 46 chromosomes; each chromosome is DNA wound around histone proteins; unwound it is a double helix about 2 nm wide.","कोशिका में ज़ूम करें: केंद्रक में 46 गुणसूत्र हैं; प्रत्येक गुणसूत्र हिस्टोन पर लिपटा DNA है; खोलने पर यह लगभग 2 nm चौड़ी दोहरी कुंडली है।","Hand-modelled · zoom levels not to scale",12],
+["2","The DNA double helix","DNA की दोहरी कुंडली","Two sugar–phosphate backbones twist round each other. The rungs are base pairs: A always pairs with T, G with C (Chargaff's rule). The order of the letters is the genetic code.","दो शर्करा–फ़ॉस्फ़ेट रज्जुएँ एक-दूसरे पर ऐंठी हैं; डंडियाँ क्षार-युग्म हैं: A सदा T से, G सदा C से (शारगाफ़ का नियम); अक्षरों का क्रम ही आनुवंशिक कूट है।","Hand-modelled · ~10 base pairs per turn",12],
+["3","Copying DNA","DNA की प्रतिलिपि","Before a cell divides the helix unzips and each strand builds a new partner from free letters. Two identical DNA molecules result — each has one old and one new strand (semi-conservative).","कोशिका विभाजन से पहले कुंडली खुलती है और प्रत्येक रज्जु मुक्त अक्षरों से नया साथी बनाती है; दो समान DNA बनते हैं — प्रत्येक में एक पुरानी, एक नई रज्जु (अर्ध-संरक्षी)।","Animated · schematic",13],
+["4","Gene → protein → trait","जीन → प्रोटीन → लक्षण","A gene is a stretch of DNA. It is copied into mRNA; a ribosome reads the mRNA and builds a protein; the protein produces the trait.","जीन DNA का खंड है; इसकी प्रतिलिपि mRNA बनती है; राइबोसोम mRNA पढ़कर प्रोटीन बनाता है; प्रोटीन लक्षण पैदा करता है।","Animated · schematic",13],
+["5","Mendel and his peas","मेंडल व उनके मटर","Gregor Mendel studied pairs of contrasting traits in pea plants — tall/dwarf, round/wrinkled, yellow/green. A tall (TT) plant crossed with a dwarf (tt) gives all tall (Tt) plants in F1.","ग्रेगर मेंडल ने मटर में विपरीत लक्षण-जोड़ों — लंबा/बौना, गोल/झुर्रीदार, पीला/हरा — का अध्ययन किया; लंबा (TT) × बौना (tt) से F1 में सभी लंबे (Tt) मिलते हैं।","Hand-modelled",12],
+["6","F2: the 3 : 1 ratio","F2: 3 : 1 अनुपात","Self-pollinate the F1 (Tt × Tt). The Punnett square gives TT, Tt, Tt, tt: genotype 1 : 2 : 1 and phenotype 3 tall : 1 dwarf. The dwarf trait that vanished in F1 returns in F2.","F1 का स्व-परागण (Tt × Tt): पुनेट वर्ग से TT, Tt, Tt, tt — जीनप्ररूप 1 : 2 : 1 और लक्षणप्ररूप 3 लंबे : 1 बौना; F1 में लुप्त बौना लक्षण F2 में लौट आता है।","Animated · Punnett square",14],
+["7","Two traits together: 9 : 3 : 3 : 1","दो लक्षण साथ: 9 : 3 : 3 : 1","Cross round-yellow (RRYY) with wrinkled-green (rryy): F1 is all round-yellow (RrYy). In F2 the traits assort independently: 9 round-yellow : 3 round-green : 3 wrinkled-yellow : 1 wrinkled-green.","गोल-पीले (RRYY) × झुर्रीदार-हरे (rryy): F1 सभी गोल-पीले (RrYy); F2 में लक्षण स्वतंत्र रूप से छँटते हैं: 9 गोल-पीले : 3 गोल-हरे : 3 झुर्रीदार-पीले : 1 झुर्रीदार-हरे।","Animated · 4×4 Punnett square",16],
+["8","Sex determination","लिंग निर्धारण","Humans have 22 pairs of autosomes and one pair of sex chromosomes: XX in females, XY in males. All eggs carry X; a sperm carries X or Y — so the father's sperm decides the baby's sex, 50 : 50.","मनुष्य में 22 जोड़े अलिंग-सूत्र और एक जोड़ा लिंग-गुणसूत्र: महिला XX, पुरुष XY; सभी अंडाणुओं में X; शुक्राणु में X या Y — अतः पिता का शुक्राणु शिशु का लिंग तय करता है, 50 : 50।","Animated · Punnett square",13]];
+function Mgenetics(){sd=81;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const ZM=new J,HX=new J,CP=new J,PR=new J,MD=new J,PN=new J,SX=new J;[ZM,HX,CP,PR,MD,PN,SX].forEach(x=>g.add(x));
+ HX.position.set(0,0,0);ZM.position.set(-13,0,0);CP.position.set(0,-24,0);CP.scale.setScalar(1.5);PR.position.set(34,0,0);MD.position.set(-30,-24,0);PN.position.set(30,-24,0);SX.position.set(0,-48,0);
+ /* ---------- zoom stack: nucleus -> chromosome -> nucleosomes ---------- */
+ const nucM=MAT(0x8d92e6,{opacity:.4,roughness:.4,clearcoat:.2,envMapIntensity:.4,sheen:0,depthWrite:!1,emissive:0x1b2160,emissiveIntensity:.25,bumpScale:.1});
+ add("nuc8",sph(4.2,.05,1.5,1,1,1,40,56,2),nucM,[0,0,0],{parent:ZM,ns:1});
+ const chM=[0xe0453a,0x3a86e0,0x45b97c,0xf2a63a,0xa05ad6,0xe86aa0].map(c_=>MAT(c_,{roughness:.5,clearcoat:.3,envMapIntensity:.4,sheen:0,bumpScale:.25,emissive:c_*0+0x101010,emissiveIntensity:.3}));
+ const chr=(par,id,L,r,mat,cx,cy,cz,rot)=>{const grp=new J;grp.position.set(cx,cy,cz);grp.rotation.z=rot||0;par.add(grp);[-1,1].forEach(sd_=>{const pts=[];for(let i=0;i<=14;i++){const q=i/14;pts.push(c(sd_*(.18+.12*sin(q*PI)*.5),.0+q*L*.5-.0,0))}const m=add(id,tube([c(sd_*.16,.06,0),c(sd_*.2,L*.25,0),c(sd_*.16,L*.5,0)],r,10,u=>1-.15*u),mat,[0,0,0],{parent:grp,ns:1});const m2=add(id,tube([c(sd_*.16,-.06,0),c(sd_*.2,-L*.25,0),c(sd_*.16,-L*.5,0)],r,10,u=>1-.15*u),mat,[0,0,0],{parent:grp,ns:1})});add(id,sph(r*1.05,0,1,1.3,.8,1,12,16),MAT(0xffffff,{roughness:.4,emissive:0x333333,emissiveIntensity:.3}),[0,0,0],{parent:grp,ns:1});return grp};
+ for(let i=0;i<10;i++){const a=i*2.399963,y=1-(i+.5)/10*2,r=Math.sqrt(1-y*y);chr(ZM,"chrom",1.2+.5*(i%3),.2,chM[i%6],cos(a)*r*2.3,y*2.3,sin(a)*r*2.3,i*.9)}
+ /* big chromosome for zoom 2 */
+ const BC=new J;BC.position.set(0,0,0);HX.add(BC);
+ const bcM=MAT(0xe0453a,{roughness:.5,clearcoat:.3,bumpScale:.3,envMapIntensity:.4,sheen:0,emissive:0x3a0a08,emissiveIntensity:.3}),hsM=MAT(0xffb0a0,{roughness:.4,emissive:0x5a1a10,emissiveIntensity:.3,envMapIntensity:.4,sheen:0});
+ [-1,1].forEach(sd_=>{const a0=c(-sd_*1.9,-4.6,0),a1=c(sd_*1.9,4.6,0),d=a1.clone().sub(a0),Ld=d.length(),dn=d.clone().normalize(),u=c(dn.y,-dn.x,0).normalize(),v=c(0,0,1);
+  const pts=[0,.25,.5,.75,1].map(q=>a0.clone().lerp(a1,q));add("chrom",tube(pts,.62,14,u_=>.55+.45*Math.pow(sin(u_*PI),.35)),bcM,[0,0,0],{parent:BC});
+  const hel=[];for(let i=0;i<=150;i++){const q=i/150,ang=q*TAU*18,r=.95*(.6+.4*Math.pow(sin(q*PI),.35));const pp=a0.clone().lerp(a1,q);hel.push(pp.add(u.clone().multiplyScalar(Math.cos(ang)*r)).add(v.clone().multiplyScalar(Math.sin(ang)*r)))}add("histone",tube(hel,.13,6),hsM,[0,0,0],{parent:BC,ns:1})});
+ add("chrom",sph(.55,0,1,1,1,1,16,20),MAT(0xffffff,{roughness:.4,emissive:0x555555,emissiveIntensity:.4,sheen:0}),[0,0,0],{parent:BC});
+ /* nucleosomes + DNA, helix */
+ const NUCL=new J;NUCL.position.set(0,0,0);HX.add(NUCL);
+ const bm={A:MAT(0x3fb0ff,{roughness:.35,clearcoat:.6,emissive:0x0a3a6a,emissiveIntensity:.4,envMapIntensity:.5}),T:MAT(0xffd23f,{roughness:.35,clearcoat:.6,emissive:0x6a5000,emissiveIntensity:.4,envMapIntensity:.5}),G:MAT(0x4fd17a,{roughness:.35,clearcoat:.6,emissive:0x0a5a24,emissiveIntensity:.4,envMapIntensity:.5}),C:MAT(0xff6a6a,{roughness:.35,clearcoat:.6,emissive:0x6a1010,emissiveIntensity:.4,envMapIntensity:.5})};
+ const bkM=MAT(0xb9c3d6,{roughness:.4,clearcoat:.6,envMapIntensity:.6,emissive:0x1a2030,emissiveIntensity:.25,bumpScale:.1,sheen:0});
+ const seq="ATGCCGTAGCTAAGCTTGCA";const comp={A:"T",T:"A",G:"C",C:"G"};const HN=24,HT=.55,HH=.62,HR=1.1;
+ const hp=(i,sd_)=>{const a=i*HT+(sd_?PI:0);return c(Math.cos(a)*HR,i*HH-HN*HH/2,Math.sin(a)*HR)};
+ const DNA=new J;HX.add(DNA);
+ [0,1].forEach(sd_=>{const pts=[];for(let i=0;i<=HN*4;i++){const q=i/4;pts.push(hp(q,sd_))}add("back",tube(pts,.16,8),bkM,[0,0,0],{parent:DNA,ns:1});for(let i=0;i<HN;i++)add("back",sph(.24,0,1,1,1,1,10,14),MAT(0xe8ecf6,{roughness:.4,emissive:0x2a3040,emissiveIntensity:.25,sheen:0}),hp(i,sd_).toArray(),{parent:DNA,ns:1})});
+ const rungs=[];for(let i=0;i<HN;i++){const b1=seq[i%seq.length],b2=comp[b1],p1=hp(i,0),p2=hp(i,1),mid=p1.clone().lerp(p2,.5);
+  const h1=add(b1,tube([p1.clone().lerp(mid,.12),mid],.17,8),bm[b1],[0,0,0],{parent:DNA,ns:1}),h2=add(b2,tube([mid,p2.clone().lerp(mid,.12)],.17,8),bm[b2],[0,0,0],{parent:DNA,ns:1});rungs.push({b1,b2,p1,p2,mid,h1,h2})}
+ /* free letters for replication */
+ const NL=HN*2,fl=new Wn(new it(.2,10,8),new bt({color:0xffffff}),NL);fl.frustumCulled=!1;DNA.add(fl);const m4=new gt,fc=new we;const LC={A:0x3fb0ff,T:0xffd23f,G:0x4fd17a,C:0xff6a6a};for(let i=0;i<NL;i++){const r=rungs[i>>1];fl.setColorAt(i,fc.setHex(LC[i%2?r.b2:r.b1]))}
+ /* ---------- gene -> protein ---------- */
+ const GN=[c(-6,.8,0),c(-3,.8,0),c(0,.8,0),c(3,.8,0)];const gp=new J;gp.position.set(0,0,0);CP.add(gp);
+ const gnM=MAT(0xf2c64a,{roughness:.4,clearcoat:.5,emissive:0x6a4a00,emissiveIntensity:.35,bumpScale:.1});
+ const dnaPts=[];for(let i=0;i<=80;i++){const q=i/80;dnaPts.push(c(-9+q*18,-3+Math.sin(q*TAU*4)*.5,Math.cos(q*TAU*4)*.5))}add("back",tube(dnaPts,.11,6),bkM,[0,0,0],{parent:CP,ns:1});const dnaPts2=dnaPts.map((p,i)=>c(p.x,-3-Math.sin(i/80*TAU*4)*.5,-Math.cos(i/80*TAU*4)*.5));add("back",tube(dnaPts2,.11,6),bkM,[0,0,0],{parent:CP,ns:1});
+ add("gene",tube(dnaPts.filter((p,i)=>i>=18&&i<=50),.17,6),gnM,[0,0,0],{parent:CP,ns:1});add("gene",tube(dnaPts2.filter((p,i)=>i>=18&&i<=50),.17,6),gnM,[0,0,0],{parent:CP,ns:1});
+ const mr=[];for(let i=0;i<=40;i++){const q=i/40;mr.push(c(-3+q*6-q*q*2,-.6+q*2.4+Math.sin(q*TAU*3)*.2,Math.cos(q*TAU*3)*.3))}const mrM=MAT(0xff8fb0,{roughness:.35,clearcoat:.6,emissive:0x7a1a3a,emissiveIntensity:.35});
+ const mrG=tube(mr,.17,8);mrG.setDrawRange(0,0);const mrMesh=add("mrna",mrG,mrM,[0,0,0],{parent:CP,ns:1});
+ const rb1=add("ribo",sph(1.0,.03,2,1.3,.75,.9,20,26),MAT(0x2e9ab0,{roughness:.45,clearcoat:.4,emissive:0x0a3a48,emissiveIntensity:.3}),[5.5,2.8,0],{parent:CP}),rb2=add("ribo",sph(.7,.03,2,1.3,.7,.9,16,22),MAT(0x2e9ab0,{roughness:.45,emissive:0x0a3a48,emissiveIntensity:.3}),[5.5,3.55,0],{parent:CP,ns:1});
+ const NA=14,aa=new Wn(new it(.5,14,12),new bt({color:0xffffff}),NA);aa.frustumCulled=!1;CP.add(aa);const ac=new we;const ACOL=[0xff6a6a,0x3fb0ff,0x4fd17a,0xffd23f,0xa05ad6,0xf2a63a,0xe86aa0];for(let i=0;i<NA;i++)aa.setColorAt(i,ac.setHex(ACOL[i%7]));
+ const protP=[];for(let i=0;i<NA;i++){const q=i/NA;protP.push(c(6.8+Math.cos(q*TAU*1.2)*1.4+q*1.6,3.1+q*1.4+Math.sin(q*TAU*1.2)*1.4,Math.sin(q*TAU*2)*.4))}
+ const protM=MAT(0xff9a3d,{roughness:.4,clearcoat:.7,emissive:0x6a3000,emissiveIntensity:.35,bumpScale:.15});const protG=add("prot",sph(1.8,.14,3,1.2,1,1,32,40,3),protM,[11.5,5.6,0],{parent:CP});
+ /* ---------- Mendel: pea plants ---------- */
+ const stem=(par,x,h,mat,leafM)=>{add("pea",tube([c(x,0,0),c(x+.05,h*.5,0),c(x,h,0)],.1,8,u=>1-.4*u),mat,[0,0,0],{parent:par});for(let k=1;k<=Math.max(2,Math.round(h/1.3));k++){[-1,1].forEach(sg=>add("pea",sph(.42,.03,2,1,.12,.6,14,18),leafM,[x+sg*.4,k*h/(Math.max(2,Math.round(h/1.3))+1),0],{parent:par,ns:1}))}add("pea",sph(.28,.04,2,1,1,1,12,16),MAT(0xffffff,{roughness:.5,emissive:0x444444,emissiveIntensity:.3}),[x,h+.1,0],{parent:par,ns:1})};
+ const stM=MAT(0x6aa84f,{roughness:.5,bumpScale:.2,emissive:0x143a0e,emissiveIntensity:.2}),lfM=MAT(0x4a9a3a,{roughness:.5,side:vt,emissive:0x143a0e,emissiveIntensity:.2});
+ const plant=(par,x,tall,tag)=>{const gr=new J;gr.position.set(x,-3,0);par.add(gr);stem(gr,0,tall?4.6:1.9,stM,lfM);return gr};
+ const pot=(par,x)=>add("pea",new Xe(.9,.7,.5,24),new bt({color:0xb5693a}),[x,-3.3,0],{parent:par,ns:1});
+ /* P generation: TT tall, tt dwarf ; F1 Tt tall */
+ const pea=[];const mkPea=(par,x,y,col,wr,rr)=>{const m=add("off",sph(.3,wr?.18:.02,3,1,1,1,16,20,Math.floor(x*10)),MAT(col,{roughness:.55,clearcoat:.15,envMapIntensity:.4,bumpScale:wr?.4:.05,sheen:0,emissive:col*0+0x222200,emissiveIntensity:.2}),[x,y,0],{parent:par,ns:1});return m};
+ /* P cross panel */
+ plant(PR,-5.6,!0);plant(PR,-1.4,!1);pot(PR,-5.6);pot(PR,-1.4);plant(PR,5.6,!0);pot(PR,5.6);
+ add("allT",sph(.5,0,1,1,1,1,14,18),MAT(0x3fb0ff,{emissive:0x0a3a6a,emissiveIntensity:.5,roughness:.35}),[-5.6,-5.2,0],{parent:PR,ns:1});add("allT",sph(.5,0,1,1,1,1,14,18),MAT(0x3fb0ff,{emissive:0x0a3a6a,emissiveIntensity:.5,roughness:.35}),[-5.0,-5.2,0],{parent:PR,ns:1});
+ add("allt",sph(.5,0,1,1,1,1,14,18),MAT(0xff9a3d,{emissive:0x6a3000,emissiveIntensity:.5,roughness:.35}),[-1.7,-5.2,0],{parent:PR,ns:1});add("allt",sph(.5,0,1,1,1,1,14,18),MAT(0xff9a3d,{emissive:0x6a3000,emissiveIntensity:.5,roughness:.35}),[-1.1,-5.2,0],{parent:PR,ns:1});
+ add("allT",sph(.5,0,1,1,1,1,14,18),MAT(0x3fb0ff,{emissive:0x0a3a6a,emissiveIntensity:.5,roughness:.35}),[5.3,-5.2,0],{parent:PR,ns:1});add("allt",sph(.5,0,1,1,1,1,14,18),MAT(0xff9a3d,{emissive:0x6a3000,emissiveIntensity:.5,roughness:.35}),[5.9,-5.2,0],{parent:PR,ns:1});
+ const arrM=MAT(0xffffff,{roughness:.4,emissive:0x555555,emissiveIntensity:.4});add("gam",tube([c(-3.6,.4,0),c(-3.6,-1.4,0)],.08,6),arrM,[0,0,0],{parent:PR,ns:1});add("gam",tube([c(1.8,.4,0),c(3.0,-.4,0),c(4.2,-1.4,0)],.0,6),arrM,[0,0,0],{parent:PR,ns:1});
+ /* monohybrid Punnett grid (MD) */
+ const cell=(par,id,x,y,w,col,txt)=>add(id,new Xe(w/2*1.42,w/2*1.42,.18,4),new bt({color:col,transparent:!0}),[x,y,0],{parent:par,rot:[PI/2,PI/4,0],ns:1});
+ const gridM=[];const mono=[["TT",0],["Tt",0],["Tt",0],["tt",1]];
+ [[-1.6,1.6],[1.6,1.6],[-1.6,-1.6],[1.6,-1.6]].forEach((p,i)=>{const dw=mono[i][1];cell(MD,"punn",p[0],p[1],3.0,dw?0xfff0d0:0xe8f4ff);add("pea",tube([c(p[0],p[1]-.7,.3),c(p[0],p[1]-.7+(dw?.5:1.3),.3)],.07,6),stM,[0,0,0],{parent:MD,ns:1});add("pea",sph(.26,0,1,1.6,.25,.8,12,16),lfM,[p[0]+.2,p[1]-.7+(dw?.35:1.0),.3],{parent:MD,ns:1});add("pea",sph(.26,0,1,1.6,.25,.8,12,16),lfM,[p[0]-.2,p[1]-.7+(dw?.2:.6),.3],{parent:MD,ns:1});
+  [0,1].forEach(k=>add(mono[i][0][k]===mono[i][0][k].toUpperCase()?"allT":"allt",sph(.2,0,1,1,1,1,10,14),MAT(mono[i][0][k]===mono[i][0][k].toUpperCase()?0x3fb0ff:0xff9a3d,{emissive:mono[i][0][k]===mono[i][0][k].toUpperCase()?0x0a3a6a:0x6a3000,emissiveIntensity:.5,roughness:.35}),[p[0]-.35+k*.7,p[1]-1.0,.3],{parent:MD,ns:1}))});
+ [[-1.6,2.9,"T"],[1.6,2.9,"t"]].forEach(q=>add(q[2]==="T"?"allT":"allt",sph(.42,0,1,1,1,1,14,18),MAT(q[2]==="T"?0x3fb0ff:0xff9a3d,{emissive:q[2]==="T"?0x0a3a6a:0x6a3000,emissiveIntensity:.5,roughness:.35}),[q[0],q[1],0],{parent:MD,ns:1}));
+ [[-3.5,1.6,"T"],[-3.5,-1.6,"t"]].forEach(q=>add(q[2]==="T"?"allT":"allt",sph(.42,0,1,1,1,1,14,18),MAT(q[2]==="T"?0x3fb0ff:0xff9a3d,{emissive:q[2]==="T"?0x0a3a6a:0x6a3000,emissiveIntensity:.5,roughness:.35}),[q[0],q[1],0],{parent:MD,ns:1}));
+ /* dihybrid 4x4 (PN) */
+ const gm=["RY","Ry","rY","ry"];const col={R:0x3fb0ff,r:0xff9a3d,Y:0xffd23f,y:0x4fd17a};
+ const dih=[];for(let i=0;i<4;i++)for(let j=0;j<4;j++){const a=gm[i],b=gm[j],ge=(a[0]<b[0]?a[0]+b[0]:b[0]+a[0]),g1=[a[0],b[0]].sort().join(""),g2=[a[1],b[1]].sort().join("");const round=/R/.test(g1),yel=/Y/.test(g2);
+  const x=(j-1.5)*2.05,y=(1.5-i)*2.05;add("punn",new Xe(1.38,1.38,.14,4),new bt({color:round?(yel?0xfff2a0:0xcdf0c0):(yel?0xffe6b8:0xdfeedb),transparent:!0}),[x,y,0],{parent:PN,rot:[PI/2,PI/4,0],ns:1});
+  const pm=add("off",sph(.5,round?.015:.0,3,1,1,1,20,26,i*4+j),MAT(yel?0xf2c200:0x3f9a3a,{roughness:.5,clearcoat:.1,envMapIntensity:.4,sheen:0,bumpScale:round?.05:.7,emissive:yel?0x6a5000:0x0a3a0a,emissiveIntensity:.4}),[x,y,.25],{parent:PN});if(!round){pm.scale.set(.85,.8,.85)}dih.push({pm,round,yel,i,j})}
+ gm.forEach((q,k)=>{[[(k-1.5)*2.05,4.0],[-4.4,(1.5-k)*2.05]].forEach(p=>{[0,1].forEach(m=>add(q[m]==="R"||q[m]==="r"?(q[m]==="R"?"allT":"allt"):(q[m]==="Y"?"allT":"allt"),sph(.28,0,1,1,1,1,12,16),MAT(col[q[m]],{emissive:col[q[m]]*0+0x222222,emissiveIntensity:.5,roughness:.35}),[p[0]-.3+m*.6,p[1],.15],{parent:PN,ns:1}))})});
+ /* sex determination (SX): chromosomes X and Y + 2x2 Punnett */
+ const xM=MAT(0xe86aa0,{roughness:.45,clearcoat:.4,envMapIntensity:.4,sheen:0,bumpScale:.2,emissive:0x4a1030,emissiveIntensity:.3}),yM=MAT(0x3a86e0,{roughness:.45,clearcoat:.4,envMapIntensity:.4,sheen:0,bumpScale:.2,emissive:0x0a2a5a,emissiveIntensity:.3});
+ const xchr=(par,x,y,id,mat,L)=>{const gr=new J;gr.position.set(x,y,0);par.add(gr);[[-1,1],[1,1]].forEach(q=>{add(id,tube([c(0,0,0),c(q[0]*.9,L*.55,0)],.26,10,u=>1-.2*u),mat,[0,0,0],{parent:gr,ns:1});add(id,tube([c(0,0,0),c(q[0]*.9,-L*.55,0)],.26,10,u=>1-.2*u),mat,[0,0,0],{parent:gr,ns:1})});if(id==="Y"){gr.children.forEach((m,i)=>{if(i===0||i===1)return;});}return gr};
+ const xl=(par,x,y,id,mat)=>{const gr=new J;gr.position.set(x,y,0);par.add(gr);const L=id==="X"?1.5:1.0;[-1,1].forEach(sg=>{add(id,tube([c(sg*.05,0,0),c(sg*.55,L*.5,0),c(sg*.9,L,0)],.24,10,u=>1-.25*u),mat,[0,0,0],{parent:gr,ns:1});add(id,tube([c(sg*.05,0,0),c(sg*.55,-L*.5,0),c(sg*.9,-L,0)],.24,10,u=>1-.25*u),mat,[0,0,0],{parent:gr,ns:1})});return gr};
+ /* parents' sex chromosomes */
+ xl(SX,-7,3.2,"X",xM).scale.setScalar(.6);xl(SX,-5.4,3.2,"X",xM).scale.setScalar(.6);xl(SX,7,3.2,"X",xM).scale.setScalar(.6);xl(SX,8.6,3.2,"Y",yM).scale.setScalar(.6);
+ /* gametes row + Punnett 2x2 */
+ [[-1.6,1.6,"XX",0],[1.6,1.6,"XY",1],[-1.6,-1.6,"XX",0],[1.6,-1.6,"XY",1]].forEach((p,i)=>{const mm=i%2;add("punn",new Xe(1.98,1.98,.15,4),new bt({color:mm?0xdbe9ff:0xffe0ec,transparent:!0}),[p[0],p[1]-3.2,0],{parent:SX,rot:[PI/2,PI/4,0],ns:1});xl(SX,p[0]-.5,p[1]-3.2,"X",xM).scale.setScalar(.5);xl(SX,p[0]+.5,p[1]-3.2,mm?"Y":"X",mm?yM:xM).scale.setScalar(.5)});
+ xl(SX,-1.6,-.2,"X",xM).scale.setScalar(.5);xl(SX,1.6,-.2,"X",xM).scale.setScalar(.5);xl(SX,-3.8,-2.7,"X",xM).scale.setScalar(.5);xl(SX,-3.8,-6.2,"X",xM).scale.setScalar(.5);
+ /* cameras */
+ const cams=[[c(-1,0,33),c(-1,0,0)],[c(0,0,22),c(0,0,0)],[c(0,0,22),c(0,0,0)],[c(7,-22,31),c(7,-22,0)],[c(32,-3,17),c(32,-3.6,0)],[c(-30,-24.4,21),c(-30,-24.4,0)],[c(30,-24.4,23),c(30,-24.4,0)],[c(0,-50,31),c(0,-50.5,0)]];
+ const camK=["Cell→DNA","Helix","Copying","Gene","Mendel","3:1","9:3:3:1","Sex"];
+ const show={};const ids=["nuc8","chrom","histone","back","A","T","G","C","gene","mrna","ribo","prot","pea","allT","allt","gam","punn","off","X","Y"];ids.forEach(i=>show[i]=[0,0,0,0,0,0,0,0]);const on=(i,ss)=>ss.forEach(x=>show[i][x]=1);
+ on("nuc8",[0]);on("chrom",[0]);on("histone",[0]);["back","A","T","G","C"].forEach(i=>on(i,[0,1,2,3]));on("gene",[3]);on("mrna",[3]);on("ribo",[3]);on("prot",[3]);on("pea",[4]);on("allT",[4,5,6]);on("allt",[4,5,6]);on("gam",[4]);on("punn",[5,6,7]);on("off",[5,6]);on("X",[7]);on("Y",[7]);
+ const base={nuc8:.4,chrom:1,histone:1,back:1,A:1,T:1,G:1,C:1,gene:1,mrna:1,ribo:1,prot:1,pea:1,allT:1,allt:1,gam:1,punn:1,off:1,X:1,Y:1};
+ const Lw=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["z-nu","Nucleus (46 chromosomes)","केंद्रक (46 गुणसूत्र)",Lw(ZM,[0,4.4,0]),[0]],["z-ch","Chromosomes","गुणसूत्र",Lw(ZM,[2.2,1.2,.6]),[0]],["z-ze","Chromosome (DNA on histones)","गुणसूत्र (हिस्टोन पर DNA)",Lw(HX,[2,4.4,0]),[0]],["z-dn","DNA double helix","DNA दोहरी कुंडली",Lw(HX,[11,5,0]),[0]],
+  ["h-ba","Sugar–phosphate backbone","शर्करा–फ़ॉस्फ़ेट आधार-रज्जु",Lw(DNA,[1.1,5,.2]),[1,2]],["h-A","A–T (2 H-bonds)","A–T (2 H-बंध)",Lw(DNA,[0,-2,0]),[1]],["h-G","G–C (3 H-bonds)","G–C (3 H-बंध)",Lw(DNA,[0,-4.3,0]),[1]],["h-tu","One turn = 10 base pairs (3.4 nm)","एक घुमाव = 10 क्षार-युग्म (3.4 nm)",Lw(DNA,[-1.3,6,0]),[1]],["h-co","A=T · G≡C (Chargaff)","A=T · G≡C (शारगाफ़)",Lw(DNA,[1.3,2,0]),[1]],["h-re","Free letters build new strands","मुक्त अक्षर नई रज्जु बनाते",Lw(DNA,[2.6,.4,0]),[2]],["h-se","Each copy: 1 old + 1 new strand","प्रत्येक: 1 पुरानी + 1 नई रज्जु",Lw(DNA,[-2.6,5,0]),[2]],
+  ["g-ge","Gene (stretch of DNA)","जीन (DNA का खंड)",Lw(CP,[-1.5,-2.2,0]),[3]],["g-mr","mRNA copy leaves the nucleus","mRNA प्रतिलिपि केंद्रक से बाहर",Lw(CP,[1,1.5,.4]),[3]],["g-ri","Ribosome reads mRNA","राइबोसोम mRNA पढ़ता",Lw(CP,[5.5,2.8,0]),[3]],["g-aa","Amino acids join in order","अमीनो अम्ल क्रम से जुड़ते",Lw(CP,[8,4.2,0]),[3]],["g-pr","Protein → trait","प्रोटीन → लक्षण",Lw(CP,[10.3,6.6,0]),[3]],
+  ["m-tt","TT tall (P)","TT लंबा (P)",Lw(PR,[-5.6,2,0]),[4]],["m-dd","tt dwarf (P)","tt बौना (P)",Lw(PR,[-1.4,-.2,0]),[4]],["m-f1","F1: all Tt, tall","F1: सभी Tt, लंबे",Lw(PR,[5.6,2.2,0]),[4]],["m-ga","Gametes: T and t","युग्मक: T व t",Lw(PR,[2,-1.8,0]),[4]],["m-do","T dominant · t recessive","T प्रभावी · t अप्रभावी",Lw(PR,[5.6,-4.4,0]),[4]],
+  ["u-gt","Gametes T / t","युग्मक T / t",Lw(MD,[0,3.8,0]),[5]],["u-pu","Punnett square","पुनेट वर्ग",Lw(MD,[0,-3.4,0]),[5]],["u-tt","TT","TT",Lw(MD,[-1.6,.6,0]),[5]],["u-dw","tt (dwarf)","tt (बौना)",Lw(MD,[1.6,-2.6,0]),[5]],["u-ra","3 tall : 1 dwarf","3 लंबे : 1 बौना",Lw(MD,[3.8,0,0]),[5]],["u-ge","Genotype 1 TT : 2 Tt : 1 tt","जीनप्ररूप 1 : 2 : 1",Lw(MD,[-3.6,-3.2,0]),[5]],
+  ["d-rr","9 round-yellow","9 गोल-पीले",Lw(PN,[-2.0,2.0,0]),[6]],["d-rg","3 round-green","3 गोल-हरे",Lw(PN,[2.0,-.2,0]),[6]],["d-wy","3 wrinkled-yellow","3 झुर्रीदार-पीले",Lw(PN,[-2.0,-2.2,0]),[6]],["d-wg","1 wrinkled-green","1 झुर्रीदार-हरा",Lw(PN,[3.0,-3.1,0]),[6]],["d-ga","16 gamete combinations","16 युग्मक-संयोजन",Lw(PN,[0,4.8,0]),[6]],["d-pu","Independent assortment","स्वतंत्र छँटाव",Lw(PN,[-5.8,0,0]),[6]],
+  ["x-mo","Mother XX → all eggs X","माँ XX → सभी अंडाणु X",Lw(SX,[-6.2,4.3,0]),[7]],["x-fa","Father XY → X or Y sperm","पिता XY → X या Y शुक्राणु",Lw(SX,[8,4.3,0]),[7]],["x-gi","XX girl","XX बालिका",Lw(SX,[-1.6,-4.4,0]),[7]],["x-bo","XY boy","XY बालक",Lw(SX,[1.6,-4.4,0]),[7]],["x-ra","50 : 50 — father decides","50 : 50 — पिता तय करता",Lw(SX,[4.2,-5,0]),[7]]];
+ const gr_=(q)=>q;
+ return run({kinds:KIND8,n,g,org,show,base,ST:G_ST,cams,camK,labels,
+  hud:(s,t)=>s===5?"F2 phenotype 3 tall : 1 dwarf · genotype 1 TT : 2 Tt : 1 tt":s===6?"F2 phenotype 9 : 3 : 3 : 1":s===7?"Daughters 50% · Sons 50%":"",
+  frame:(s,t)=>{const ph=(t*.05)%1;
+   ZM.rotation.y=sin(t*.3)*.4;ZM.visible=s===0;HX.visible=s===0||s===1||s===2;
+   /* step 0: zoom - show nucleus+chromosomes, big chromosome and helix gradually; step 1+: helix only */
+   BC.visible=s===0;NUCL.visible=!1;DNA.visible=s>=1&&s<=2;DNA.position.set(0,0,0);DNA.rotation.y=t*.35;
+   BC.position.set(8,0,0);BC.scale.setScalar(.8);BC.rotation.y=t*.3;ZM.position.set(-13,0,0);
+   if(s===0){HX.position.set(0,0,0);DNA.visible=!0;DNA.position.set(11,0,0);DNA.scale.setScalar(.95);BC.position.set(2,0,0)}else{DNA.scale.setScalar(1.15);HX.position.set(0,0,0)}
+   /* replication */
+   const un=s===2?cl(ph*1.3,0,1):0;rungs.forEach((r,i)=>{const k=cl(un*1.6-i/HN*.6,0,1),off=k*1.2;[r.h1,r.h2].forEach(h=>h.visible=k<.98);if(s===2){r.h1.position.set(0,0,0)}});
+   for(let i=0;i<NL;i++){if(s!==2){m4.makeScale(0,0,0);fl.setMatrixAt(i,m4);continue}const r=rungs[i>>1],side=i%2,k=cl(un*1.6-(i>>1)/HN*.6,0,1),home=side?r.p2:r.p1,away=c(home.x*(side?-1:1)*0+home.x*2.3,home.y+((i*13)%7-3)*.1,home.z*2.3);const p=away.clone().lerp(home,k);const nm=side?r.p2:r.p1;m4.makeScale(1,1,1);const q=home.clone().multiplyScalar(1).add(home.clone().setY(0).normalize().multiplyScalar(.9+(1-k)*1.8));m4.setPosition(q.x,home.y,q.z);fl.setMatrixAt(i,m4)}fl.instanceMatrix.needsUpdate=!0;
+   /* gene -> protein */
+   const gp_=s===3?ph:0;mrG.setDrawRange(0,Math.floor(cl(gp_*2.2,0,1)*(mrG.index.count/3))*3);mrMesh.visible=s===3;
+   for(let i=0;i<NA;i++){if(s!==3){m4.makeScale(0,0,0)}else{const f=cl((gp_-.45)*3.2-i/NA*1.2,0,1),p=protP[i],from=c(5.5,2.2,0);const q=from.clone().lerp(p,f);m4.makeScale(f>0?1:0,f>0?1:0,f>0?1:0);m4.setPosition(q.x,q.y,q.z)}aa.setMatrixAt(i,m4)}aa.instanceMatrix.needsUpdate=!0;
+   protG.visible=s===3&&gp_>.8;rb1.position.x=5.5+cl((gp_-.2)*3,0,1)*.3},
+  predict:{q:"In a cross between two heterozygous tall pea plants (Tt × Tt), what fraction of the offspring will be dwarf?",opts:[["1/4",!0,"Correct — only tt is dwarf: 3 tall : 1 dwarf."],["1/2",!1,"That is the ratio for a test cross (Tt × tt)."],["3/4",!1,"3/4 are tall."]]}})}
+Q_("ch8/genetics3d",[["DNA base A always pairs with…","DNA में A सदा किससे जुड़ता है?",["G","T","C","A"],1,"A–T and G–C."],["A gene is…","जीन क्या है?",["A whole chromosome","A segment of DNA coding for a protein","A protein","A cell"],1,"Genes are stretches of DNA."],["F2 phenotypic ratio of a monohybrid cross is…","एकल संकर का F2 लक्षणप्ररूप अनुपात?",["1:1","3:1","9:3:3:1","1:2:1"],1,"3 dominant : 1 recessive."],["F2 ratio of a dihybrid cross is…","द्विसंकर का F2 अनुपात?",["3:1","1:2:1","9:3:3:1","1:1:1:1"],2,"Independent assortment."],["Who determines the sex of a human baby?","शिशु का लिंग कौन तय करता है?",["Mother's egg","Father's sperm (X or Y)","The doctor","Both equally"],1,"All eggs carry X."]]);
+Px["ch8/genetics3d"]=[["If you stretched out the DNA in one human cell it would be about 2 metres long.","एक मानव कोशिका का DNA खींचने पर लगभग 2 मीटर लंबा होगा।"],["Mendel grew and counted about 28,000 pea plants over eight years to find his ratios.","मेंडल ने अनुपात खोजने के लिए आठ वर्षों में लगभग 28,000 मटर के पौधे उगाए और गिने।"]];
+{const Lg=Hi.find(h=>h.no===8).topics,i=Lg.findIndex(x=>x.id==="mendel");Lg.splice(i<0?Lg.length:i+1,0,{id:"genetics3d",title:"DNA, genes & Mendel's laws — detailed 3D",hi:"DNA, जीन व मेंडल के नियम — विस्तृत 3D",build:Mgenetics,ncert:"Ch 8 · heredity"})}
+/* ===================== SET 9: CELL DIVISION — MITOSIS & MEIOSIS ===================== */
+const KIND9={
+ cell9:["Cell (plasma membrane)","कोशिका (झिल्ली)","The dividing cell. In this model the organism has 2 pairs of chromosomes (2n = 4): a long pair and a short pair; red came from the mother, blue from the father.","विभाजित होती कोशिका; इस मॉडल में जीव में 2 जोड़े गुणसूत्र (2n = 4) हैं — एक लंबा, एक छोटा; लाल माँ से, नीला पिता से।"],
+ nuc9:["Nuclear envelope","केंद्रक आवरण","Double membrane around the chromosomes. It breaks down in prophase and re-forms in telophase.","गुणसूत्रों को घेरने वाली दोहरी झिल्ली; पूर्वावस्था में टूटती और अंत्यावस्था में पुनः बनती है।"],
+ chrom9:["Chromosome / chromatid","गुणसूत्र / क्रोमैटिड","Each duplicated chromosome has two identical sister chromatids joined at the centromere. Long thin chromatin condenses into short thick chromosomes so they can be moved without tangling.","प्रत्येक द्विगुणित गुणसूत्र में सेंट्रोमियर पर जुड़ी दो समान सहोदर क्रोमैटिड होती हैं; लंबा पतला क्रोमैटिन छोटे मोटे गुणसूत्र में संघनित होता है ताकि बिना उलझे खिसक सके।"],
+ spindle:["Spindle fibres","तर्कु तंतु","Microtubules from the two centrioles. They attach to the centromeres, line the chromosomes up and pull the chromatids apart.","दो तारककायों से निकली सूक्ष्मनलिकाएँ; सेंट्रोमियर से जुड़कर गुणसूत्रों को पंक्ति में लाती और क्रोमैटिड खींचती हैं।"],
+ cen9:["Centrioles (poles)","तारककाय (ध्रुव)","They organise the spindle. They duplicate in interphase and move to opposite poles in prophase.","तर्कु को व्यवस्थित करती हैं; अंतरावस्था में द्विगुणित होकर पूर्वावस्था में विपरीत ध्रुवों पर जाती हैं।"],
+ chiasma:["Crossing over (chiasma)","जीन विनिमय (किएज़्मा)","In meiosis I, homologous chromosomes pair up and swap pieces. The new combinations (recombination) make every gamete different — a source of variation.","अर्धसूत्री-I में समजात गुणसूत्र जोड़ी बनाकर टुकड़े अदल-बदल करते हैं; नए संयोजन हर युग्मक को अलग बनाते हैं — विविधता का स्रोत।"]};
+const D_ST=[
+["1","Interphase: getting ready","अंतरावस्था: तैयारी","Before dividing the cell grows and copies its DNA (S phase), so every chromosome now has two identical sister chromatids. The chromosomes are long, thin threads (chromatin) inside the nucleus.","विभाजन से पहले कोशिका बढ़ती है और अपना DNA दोहराती है (S-प्रावस्था), इसलिए हर गुणसूत्र में दो समान सहोदर क्रोमैटिड हैं; गुणसूत्र केंद्रक में लंबे पतले धागे (क्रोमैटिन) हैं।","Animated · 2n = 4 model",11],
+["2","Mitosis · Prophase","समसूत्री · पूर्वावस्था","The chromosomes coil up and become short and thick — visible X shapes. The nuclear envelope and nucleolus disappear; the centrioles move to the two poles and spindle fibres start to form.","गुणसूत्र कुंडलित होकर छोटे व मोटे (X आकार) हो जाते हैं; केंद्रक आवरण व केंद्रिका लुप्त होते हैं; तारककाय दोनों ध्रुवों पर जाती हैं और तर्कु तंतु बनने लगते हैं।","Animated",12],
+["3","Mitosis · Metaphase","समसूत्री · मध्यावस्था","Spindle fibres line all the chromosomes up on the equator (metaphase plate), one chromatid facing each pole. This is the best stage to count and photograph chromosomes.","तर्कु तंतु सभी गुणसूत्रों को मध्य रेखा (मध्यावस्था पट्टिका) पर पंक्ति में लाते हैं, प्रत्येक की एक क्रोमैटिड प्रत्येक ध्रुव की ओर; गुणसूत्र गिनने व चित्र लेने का सर्वोत्तम चरण।","Animated",12],
+["4","Mitosis · Anaphase","समसूत्री · पश्चावस्था","The centromeres split and the spindle shortens: the sister chromatids are pulled to opposite poles. Each pole now receives an identical, complete set of chromosomes.","सेंट्रोमियर टूटते हैं और तर्कु छोटा होता है: सहोदर क्रोमैटिड विपरीत ध्रुवों पर खिंच जाते हैं; प्रत्येक ध्रुव को गुणसूत्रों का एक समान, पूरा समूह मिलता है।","Animated",12],
+["5","Telophase and cytokinesis","अंत्यावस्था व कोशिकाद्रव्य-विभाजन","Nuclear envelopes re-form round each set, the chromosomes uncoil, and the cytoplasm pinches in two (cytokinesis). Result: 2 daughter cells, identical to each other and to the parent (2n = 4). Used for growth and repair.","प्रत्येक समूह के चारों ओर केंद्रक आवरण पुनः बनता है, गुणसूत्र खुलते हैं और कोशिकाद्रव्य बीच से दो भागों में बँटता है; परिणाम: 2 संतति कोशिकाएँ, परस्पर व जनक के समान (2n = 4); वृद्धि व मरम्मत हेतु।","Animated",13],
+["6","Meiosis I · Prophase I: pairing and crossing over","अर्धसूत्री-I · पूर्वावस्था-I: जोड़ी व विनिमय","Now a cell that will make gametes. Homologous chromosomes (red + blue) find each other and pair up as a tetrad. They swap pieces at crossing-over points (chiasmata) — new gene combinations.","अब ऐसी कोशिका जो युग्मक बनाएगी: समजात गुणसूत्र (लाल + नीला) एक-दूसरे को पहचानकर चतुष्क (टेट्राड) में जुड़ते हैं और किएज़्मा पर टुकड़े अदल-बदल करते हैं — नए जीन-संयोजन।","Animated · schematic",14],
+["7","Meiosis I: homologues separate","अर्धसूत्री-I: समजात अलग होते हैं","The pairs line up on the equator and then the whole homologous chromosomes (not chromatids) are pulled apart. Two cells form, each with only 2 chromosomes (n = 2): the chromosome number is halved. The reduction division.","जोड़े मध्य रेखा पर आते हैं और फिर पूरे समजात गुणसूत्र (क्रोमैटिड नहीं) अलग खिंचते हैं; दो कोशिकाएँ बनती हैं जिनमें केवल 2 गुणसूत्र (n = 2) हैं: संख्या आधी — न्यूनीकरण विभाजन।","Animated",14],
+["8","Meiosis II: chromatids separate","अर्धसूत्री-II: क्रोमैटिड अलग होते हैं","Each cell divides again like mitosis: the sister chromatids split. Result: 4 genetically different haploid cells (n = 2) — the gametes (sperm or egg).","प्रत्येक कोशिका समसूत्री की तरह फिर बँटती है: सहोदर क्रोमैटिड अलग होते हैं; परिणाम: 4 आनुवंशिक रूप से भिन्न अगुणित कोशिकाएँ (n = 2) — युग्मक (शुक्राणु या अंडाणु)।","Animated",14],
+["9","Mitosis vs meiosis","समसूत्री बनाम अर्धसूत्री","Mitosis: 1 division → 2 identical diploid cells (growth, repair, asexual reproduction). Meiosis: 2 divisions → 4 different haploid cells (gametes). At fertilisation two haploid gametes restore the diploid number.","समसूत्री: 1 विभाजन → 2 समान द्विगुणित कोशिकाएँ (वृद्धि, मरम्मत, अलैंगिक जनन)। अर्धसूत्री: 2 विभाजन → 4 भिन्न अगुणित कोशिकाएँ (युग्मक); निषेचन पर दो अगुणित युग्मक द्विगुणित संख्या लौटाते हैं।","Comparison",14]];
+function Mdivision(){sd=91;const n=new Ne;Ge(n,{key:1.9});Je(n,-6.5,90,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const M=new J,E=new J;M.position.set(-18,0,0);E.position.set(18,0,0);g.add(M);g.add(E);
+ const cmem=(col,op)=>MAT(col,{opacity:op,roughness:.4,clearcoat:.2,envMapIntensity:.4,sheen:0,depthWrite:!1,bumpScale:.05,emissive:0x302020,emissiveIntensity:.15});
+ const cellMat=cmem(0xf3c9b8,.22),envMat=MAT(0x8d92e6,{opacity:.4,roughness:.4,clearcoat:.2,envMapIntensity:.4,sheen:0,depthWrite:!1,emissive:0x1b2160,emissiveIntensity:.25});
+ const mkCell=(par,r,x,y)=>add("cell9",sph(r,.03,1.4,1,1,1,36,48,Math.abs(x*3+y)|0),cellMat,[x,y,0],{parent:par,ns:1});
+ const mkEnv=(par,r,x,y)=>add("nuc9",sph(r,.03,1.5,1,1,1,32,44,2),envMat,[x,y,0],{parent:par,ns:1});
+ /* membranes */
+ const mBig=mkCell(M,5.0,0,0),mA=mkCell(M,3.1,0,3.4),mB=mkCell(M,3.1,0,-3.4),mNuc=mkEnv(M,3.4,0,0),mNA=mkEnv(M,1.9,0,3.5),mNB=mkEnv(M,1.9,0,-3.5);
+ const eBig=mkCell(E,5.0,0,0),eT=mkCell(E,3.0,0,3.3),eBt=mkCell(E,3.0,0,-3.3),eTL=mkCell(E,1.95,-3.1,3.3),eTR=mkCell(E,1.95,3.1,3.3),eBL=mkCell(E,1.95,-3.1,-3.3),eBR=mkCell(E,1.95,3.1,-3.3),eNuc=mkEnv(E,3.4,0,0);
+ /* chromatids */
+ const CL=[0xe0453a,0x3a86e0,0xe0453a,0x3a86e0],LEN=[1.6,1.6,1.0,1.0],HOME=[[-1.5,1.0],[1.4,1.1],[-1.1,-1.2],[1.6,-.9]],RH=[.5,-.4,1.2,-.9];
+ const mkChr=(par)=>{const L=[];for(let k=0;k<8;k++){const i=k>>1;const grp=new J;par.add(grp);const mat=MAT(CL[i],{roughness:.45,clearcoat:.3,envMapIntensity:.4,sheen:0,bumpScale:.2,emissive:CL[i]===0xe0453a?0x3a0a08:0x08203a,emissiveIntensity:.35});
+  const body=add("chrom9",sph(1,0,1,1,1,1,14,18),mat,[0,0,0],{parent:grp,ns:1});const kin=add("chrom9",sph(.2,0,1,1,1,1,10,12),new bt({color:0xffffff}),[0,0,0],{parent:grp,ns:1});
+  const capM=new bt({color:CL[i]===0xe0453a?0x3a86e0:0xe0453a});const cap=add("chiasma",sph(.3,0,1,1,1.1,1,10,14),capM,[0,LEN[i]*.78,0],{parent:grp,ns:1});cap.visible=!1;L.push({grp,body,kin,cap,capM,mat,i,side:k&1?1:-1,L:LEN[i]})}return L};
+ const cM=mkChr(M),cE=mkChr(E);
+ /* centrioles + spindle */
+ const cenM=MAT(0x7ac05a,{roughness:.4,emissive:0x1f3a08,emissiveIntensity:.3,envMapIntensity:.4});const cenMs=[M,E].map(par=>[1,-1].map(sg=>add("cen9",new Xe(.16,.16,.5,10),cenM,[0,sg*4.4,0],{parent:par,ns:1})));
+ const spM=MAT(0x9fd0a8,{roughness:.5,opacity:.7,depthWrite:!1,emissive:0x0f3a22,emissiveIntensity:.25});
+ const mkSp=(par)=>{const L=[];for(let k=0;k<8;k++){const m=add("spindle",new Xe(.028,.028,1,6),spM,[0,0,0],{parent:par,ns:1});m.visible=!1;L.push(m)}return L};
+ const spMs=mkSp(M),spEs=mkSp(E);
+ const up=c(0,1,0);
+ const setSp=(L,cr,show,poles)=>{L.forEach((m,k)=>{m.visible=show;if(!show)return;const t=cr[k],pole=c(0,poles*(k&1?-1:1)*0+(k&1?-4.4:4.4),0);const a=c(t.grp.position.x,t.grp.position.y,0),d=pole.clone().sub(a),len=d.length();m.position.copy(a.clone().add(pole).multiplyScalar(.5));m.scale.set(1,len,1);m.quaternion.setFromUnitVectors(up,d.normalize())})};
+ /* state helpers */
+ const EQ=[[-2.5,0],[-.85,0],[.85,0],[2.5,0]];
+ const lerp2=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t)];
+ const apply=(L,k,x,y,rot,cond,sep,t,thick=1)=>{const o=L[k],side=o.side;const sp=sep*1.1;const px=Math.cos(rot),py=Math.sin(rot);o.grp.position.set(x+px*side*sep*.12,y+py*side*sep*.12,0);o.grp.rotation.z=rot+side*sp*(cond>.5?1:.0)+(1-cond)*Math.sin(t*2.2+k*1.7)*.35;
+  const th=lerp(.1,.3,cond)*thick,ln=o.L*lerp(1.45,1,cond);o.body.scale.set(th,ln,th);o.body.material.opacity=lerp(.8,1,cond);o.body.material.transparent=!0;o.kin.visible=cond>.6;o.kin.scale.setScalar(1)};
+ const mitosis=(s,p,t)=>{const A=s,Pp=p;for(let k=0;k<8;k++){const i=k>>1,h=HOME[i];let x=h[0]*.9,y=h[1]*.9,rot=RH[i],cond=0,sep=0,pole=0;
+   if(s===0){sep=.3*p;cond=0}else if(s===1){x=h[0]*.9+(h[0]*.1)*p;y=h[1]*.9+(h[1]*.1)*p;cond=p;sep=.3+.1*p;rot=RH[i]}
+   else if(s===2){const e=EQ[i],q=cl(p*1.3,0,1);const pq=lerp2(h,e,q);x=pq[0];y=pq[1];rot=lerp(RH[i],0,q);cond=1;sep=.4}
+   else if(s===3){const e=EQ[i];x=e[0];y=e[1];rot=0;cond=1;sep=.4+.0;pole=3.4*p}
+   else{const e=EQ[i];x=e[0]*lerp(1,.6,p);y=e[1];rot=0;cond=lerp(1,.35,p);sep=.4;pole=3.4+.2*p}
+   const side=k&1?1:-1,yy=y+side*pole;apply(cM,k,x,yy,rot,cond,(s>=3?0:sep),t);if(s>=3){cM[k].grp.rotation.z=rot+side*(s===3?-.18*Math.sin(p*PI)*0:0)}}};
+ const meiosis=(s,p,t)=>{const PAIR=[[-1.8,.4],[-1.0,.4],[1.0,-.4],[1.8,-.4]];for(let k=0;k<8;k++){const i=k>>1,h=HOME[i],side=k&1?1:-1;let x,y,rot,cond,sep,fx=0;
+   if(s<=5){cond=s<5?cl(p*0+(s===5?1:0),0,1):cl(p*3,0,1);const pr=cl((p-.25)/.45,0,1),q=lerp2(h,PAIR[i],pr);x=q[0];y=q[1];rot=lerp(RH[i],0,pr);sep=.3+.2*pr;cond=cl(p*3,0,1)}
+   else if(s===6){cond=1;sep=.5;const a=cl(p/.35,0,1),b=cl((p-.35)/.45,0,1),c2=cl((p-.8)/.2,0,1);const eqy=0;x=PAIR[i][0];y=lerp(PAIR[i][1],eqy,a);const dir=(i%2===0)?1:-1;y=y+dir*3.3*b;x=lerp(x,(i%2===0?-.5:-.5)+(i>1?1:0),c2);rot=0}
+   else{cond=1;const a=cl((p-.0)/.3,0,1),b=cl((p-.35)/.4,0,1);const dir=(i%2===0)?1:-1,cy=dir*3.3,cx=(i>1?.5:-.5);x=cx+side*b*2.7;y=cy;rot=0;sep=.5*(1-b)}
+   apply(cE,k,x,y,rot,cond,sep,t,.95);
+   const cross=s===5?cl((p-.7)/.3,0,1):(s>5?1:0);const inner=(i===0&&side===1)||(i===1&&side===-1)||(i===2&&side===1)||(i===3&&side===-1);cE[k].cap.visible=inner&&cross>.5}};
+ /* ---- cell shapes by step ---- */
+ const cellsM=(s,p)=>{const big=s<4?1:(s===4?1-cl((p-.35)/.4,0,1):0),two=s===4?cl((p-.35)/.4,0,1):(s>4?1:0);mBig.visible=big>.02;mBig.scale.set(1,1+(s===3?.35*p:s===4?.45:0),1);mA.visible=mB.visible=two>.02;mA.position.y=3.4*two*1.0;mB.position.y=-3.4*two*1.0;mA.scale.setScalar(.6+.4*two);mB.scale.setScalar(.6+.4*two);
+  const nv=s===0?1:s===1?1-cl((p-.3)/.5,0,1):0;mNuc.visible=nv>.02;envMat.opacity=.4*nv||.4;mNuc.material.opacity=.4*nv;mNA.visible=mNB.visible=s===4&&p>.1||s>4;};
+ const cellsE=(s,p)=>{const k1=cl((p-.35)/.35,0,1),k2=cl((p-.7)/.2,0,1);
+  eBig.visible=s<=5||(s===6&&p<.7);eBig.scale.set(1,s===6?1+.35*k1:1,1);eNuc.visible=s===5&&p<.35;
+  const two=(s===6&&p>=.7)||(s===7&&p<.7);eT.visible=eBt.visible=two;const g2=s===6?.6+.4*k2:1;eT.scale.setScalar(g2);eBt.scale.setScalar(g2);
+  const four=(s===7&&p>=.7)||s>=8;[eTL,eTR,eBL,eBR].forEach(m=>{m.visible=four;m.scale.setScalar(s===7?.6+.4*k2:1)})};
+ const cams=[[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.6,17),c(-18,-.6,0)],[c(-18,-.8,19),c(-18,-.8,0)],[c(-18,-1.4,24),c(-18,-1.4,0)],[c(18,-.6,17),c(18,-.6,0)],[c(18,-1.5,24),c(18,-1.5,0)],[c(18,-1.5,25),c(18,-1.5,0)],[c(0,-1.5,40),c(0,-1.5,0)]];
+ const camK=["Interphase","Prophase","Metaphase","Anaphase","Telophase","Meiosis I prophase","Meiosis I","Meiosis II","Compare"];
+ const show={};const ids=["cell9","nuc9","chrom9","spindle","cen9","chiasma"];ids.forEach(i=>show[i]=[1,1,1,1,1,1,1,1,1]);
+ const base={cell9:.22,nuc9:.4,chrom9:1,spindle:.7,cen9:1,chiasma:1};
+ const Lw=(par,p)=>()=>par.localToWorld(c(...p));
+ const labels=[["d-nu","Nucleus (intact)","केंद्रक (साबुत)",Lw(M,[2.6,2.4,0]),[0]],["d-ch","Chromatin: long thin threads","क्रोमैटिन: लंबे पतले धागे",Lw(M,[-2,1.5,0]),[0]],["d-ce","Centrioles duplicated","तारककाय द्विगुणित",Lw(M,[1,4.5,0]),[0,1]],["d-sc","2 sister chromatids","2 सहोदर क्रोमैटिड",Lw(M,[1.4,.4,0]),[0]],
+  ["d-co","Condensed chromosomes (X)","संघनित गुणसूत्र (X)",Lw(M,[-1.4,1.6,0]),[1]],["d-ne","Envelope breaking down","आवरण टूटता हुआ",Lw(M,[2.9,1.8,0]),[1]],["d-po","Centrioles move to poles","तारककाय ध्रुवों पर",Lw(M,[1,-4.5,0]),[1,2]],
+  ["d-eq","Equator: chromosomes line up","मध्य रेखा: गुणसूत्र पंक्ति में",Lw(M,[3.2,0,0]),[2]],["d-sp","Spindle fibres","तर्कु तंतु",Lw(M,[-1.6,2.6,0]),[2,3]],
+  ["d-an","Chromatids pulled apart","क्रोमैटिड अलग खिंचते",Lw(M,[2.8,2.6,0]),[3]],["d-pl","Poles: identical sets","ध्रुव: समान समूह",Lw(M,[-3,-3.2,0]),[3]],
+  ["d-d1","Daughter cell 1 (2n = 4)","संतति कोशिका 1 (2n = 4)",Lw(M,[3.4,3.6,0]),[4]],["d-d2","Daughter cell 2 (2n = 4)","संतति कोशिका 2 (2n = 4)",Lw(M,[3.4,-3.6,0]),[4]],["d-ne2","Nuclei re-form · chromosomes uncoil","केंद्रक पुनः बनते",Lw(M,[-3.4,0,0]),[4]],
+  ["e-ho","Homologous pair (tetrad)","समजात जोड़ी (टेट्राड)",Lw(E,[-1.4,2.4,0]),[5]],["e-ch","Crossing over (chiasma)","जीन विनिमय (किएज़्मा)",Lw(E,[-1.4,1.8,0]),[5]],["e-mo","Maternal (red) · paternal (blue)","मातृक (लाल) · पैतृक (नीला)",Lw(E,[2.6,1.2,0]),[5]],
+  ["f-eq","Pairs on the equator","जोड़े मध्य रेखा पर",Lw(E,[3.4,.2,0]),[6]],["f-se","Whole homologues separate","समजात गुणसूत्र अलग",Lw(E,[2.6,3.4,0]),[6]],["f-n2","Two cells: n = 2 (halved)","दो कोशिकाएँ: n = 2 (आधी)",Lw(E,[-3.6,0,0]),[6]],
+  ["g-m2","Meiosis II: chromatids split","अर्धसूत्री-II: क्रोमैटिड टूटते",Lw(E,[0,5.4,0]),[7]],["g-4","4 different haploid gametes","4 भिन्न अगुणित युग्मक",Lw(E,[0,-5.6,0]),[7]],
+  ["c-mi","MITOSIS → 2 identical (2n)","समसूत्री → 2 समान (2n)",Lw(M,[0,5.8,0]),[8]],["c-me","MEIOSIS → 4 different (n)","अर्धसूत्री → 4 भिन्न (n)",Lw(E,[0,5.8,0]),[8]],["c-pu","Growth · repair","वृद्धि · मरम्मत",Lw(M,[0,-5.8,0]),[8]],["c-ga","Gametes · variation","युग्मक · विविधता",Lw(E,[0,-5.8,0]),[8]]];
+ const r0=run({kinds:KIND9,n,g,org,show,base,ST:D_ST,cams,camK,labels,
+  hud:(s,t)=>s<=4?["2n = 4 · DNA copied (S phase)","2n = 4 · chromosomes condensed","2n = 4 · chromosomes at equator","2n = 4 each pole · 4 chromatids to each side","2 cells · 2n = 4 each"][s]:s===5?"2n = 4 · tetrad · crossing over":s===6?"n = 2 per cell · chromosomes still doubled":s===7?"4 cells · n = 2 · single chromatids":"Mitosis: 2 cells 2n | Meiosis: 4 cells n",
+  frame:(s,t)=>{const p=(t*.07)%1,pM=s<=4?p:1,sM=s<=4?s:4,pE=s>=5&&s<=7?p:(s>7?1:0),sE=s>=5?s:5;
+   M.rotation.y=0;E.rotation.y=0;
+   const ms=s<=4?s:4,mp=s<=4?p:1;mitosis(ms,mp,t);cellsM(ms,mp);
+   const es=s<5?5:(s>7?7:s),ep=s<5?0:(s>7?1:p);meiosis(es,ep,t);cellsE(es,ep);
+   setSp(spMs,cM,ms>=1&&ms<=3&&s<=4||false,4.4);setSp(spEs,cE,false,4.4);
+   cenMs[0].forEach((m,j)=>{const sg=j?-1:1,pe=ms===0?0:ms===1?p:1;m.position.set(sg*0,sg*lerp(1.2,4.4,pe),0);m.rotation.z=0;m.visible=s<=4});
+   cenMs[1].forEach((m,j)=>{const sg=j?-1:1;m.position.set(0,sg*4.4,0);m.visible=s>=5&&s<=6});
+   const showE=s>=5;E.visible=showE||s>=0;M.visible=!0;
+   if(s<5){E.visible=!1}else{E.visible=!0}
+   if(s===8){M.visible=!0;E.visible=!0}},
+  predict:{q:"How many daughter cells and what chromosome number result from meiosis of a diploid (2n = 4) cell?",opts:[["2 cells, 2n = 4",!1,"That is mitosis."],["4 cells, n = 2",!0,"Correct — two divisions halve the chromosome number."],["4 cells, 2n = 4",!1,"Meiosis halves the number."]]}});
+ const ap=r0.apply;r0.apply=(s,k,t)=>{ap(s,k,t);cellMat.opacity=.22;const nv=envMat;};return r0}
+Q_("ix1/division3d",[["During which phase do chromosomes line up at the equator?","किस प्रावस्था में गुणसूत्र मध्य रेखा पर आते हैं?",["Prophase","Metaphase","Anaphase","Telophase"],1,"Metaphase."],["Mitosis produces…","समसूत्री विभाजन से बनती हैं…",["2 identical daughter cells","4 different cells","2 haploid cells","1 cell"],0,"2n → 2 × 2n."],["Crossing over occurs in…","जीन विनिमय होता है…",["Mitosis","Prophase I of meiosis","Anaphase II","Interphase"],1,"Homologous chromosomes swap segments."],["Meiosis results in…","अर्धसूत्री से बनती हैं…",["2 diploid cells","4 haploid cells","4 diploid cells","1 haploid cell"],1,"Two divisions → 4 gametes."],["Which type of division is used for growth and repair?","वृद्धि व मरम्मत के लिए कौन-सा विभाजन?",["Meiosis","Mitosis","Fertilisation","Budding only"],1,"Mitosis keeps the chromosome number."]]);
+Px["ix1/division3d"]=[["Your body makes about 2 million new red blood cells every second by mitosis.","आपका शरीर समसूत्री से प्रति सेकंड लगभग 20 लाख नई लाल रक्त कोशिकाएँ बनाता है।"],["Crossing over means no two sperm — or siblings, except identical twins — carry the same gene combination.","जीन विनिमय के कारण दो शुक्राणु — या (समान जुड़वाँ को छोड़) भाई-बहन — समान जीन-संयोजन नहीं रखते।"]];
+{const Ld=Hj.find(h=>h.kp==="ix1").topics,i=Ld.findIndex(x=>x.id==="division");Ld.splice(i<0?Ld.length:i+1,0,{id:"division3d",title:"Cell division: mitosis & meiosis — detailed 3D",hi:"कोशिका विभाजन: समसूत्री व अर्धसूत्री — विस्तृत 3D",build:Mdivision,ncert:"Class IX/X · cell division"})}
+
+/* ===================== SET 10: HAEMODIALYSIS — the artificial kidney (ultra-realistic procedural model) =====================
+   Patient's forearm with an AV fistula and two needles, clear PVC blood lines with live blood inside, a peristaltic blood pump, heparin syringe pump,
+   air trap, a dialysis machine, and a dialyzer cut open to show ~60 hollow semi-permeable fibres with counter-current dialysing fluid.
+   A magnified membrane panel (step 5) shows urea and extra salts crossing the pores while blood cells and proteins stay in. Fully procedural, no mesh import.
+   Proportions and flow rates are schematic (stated on screen). NCERT Class X ch 5: artificial kidney = haemodialysis; there is no reabsorption in dialysis. */
+const lathe=(pts,seg=44)=>{const n=pts.length-1;return param(n*4,seg,(u,v)=>{const f=u*n,i=Math.min(n-1,Math.floor(f)),q=f-i,r=lerp(pts[i][0],pts[i+1][0],q),y=lerp(pts[i][1],pts[i+1][1],q),a=v*TAU;return[r*cos(a),y,r*sin(a)]})};
+const mergeG=gs=>{const P=[],I=[];let off=0;for(const g of gs){const p=g.attributes.position.array,ix=g.index.array;for(let i=0;i<p.length;i++)P.push(p[i]);for(let i=0;i<ix.length;i++)I.push(ix[i]+off);off+=p.length/3}const o=new zt;o.setAttribute("position",new dn(new Float32Array(P),3));o.setIndex(I);o.computeVertexNormals();return o};
+const KIND10={
+ arm:["Forearm of the patient","रोगी की बाँह","The patient rests the arm that carries the fistula on a cushion for about four hours while the machine works. Dialysis is usually done three times a week.","फिस्टुला वाली बाँह को लगभग चार घंटे तकिए पर टिकाकर रखा जाता है। डायलिसिस आमतौर पर सप्ताह में तीन बार होता है।"],
+ fist:["AV fistula","धमनी-शिरा फिस्टुला (AV fistula)","A surgeon joins an artery to a vein in the forearm. The fast, high-pressure arterial blood makes the vein thick and strong, so it can take two needles again and again and deliver 300–500 mL of blood per minute.","शल्य-चिकित्सक बाँह की एक धमनी को शिरा से जोड़ देता है। धमनी का तेज़, उच्च-दाब रक्त शिरा को मोटा व मज़बूत बना देता है, जिससे बार-बार दो सुइयाँ लग सकती हैं और प्रति मिनट 300–500 mL रक्त मिलता है।"],
+ needleA:["Arterial needle","धमनी-पक्ष की सुई","The 'out' needle: it takes blood from the fistula and sends it along the arterial line to the machine. (The name refers to the side of the circuit, not to an artery.)","'बाहर' वाली सुई: यह फिस्टुला से रक्त लेकर धमनी-लाइन द्वारा मशीन तक भेजती है। (नाम परिपथ के पक्ष को दर्शाता है, धमनी में लगाने को नहीं।)"],
+ needleV:["Venous needle","शिरा-पक्ष की सुई","The 'return' needle: the cleaned blood goes back into the fistula vein through it, a few centimetres downstream of the first needle.","'वापसी' वाली सुई: साफ़ हुआ रक्त इसी से फिस्टुला की शिरा में लौटता है, पहली सुई से कुछ सेंटीमीटर आगे।"],
+ lineA:["Arterial blood line","रक्त-नली (निर्गम)","Clear medical-grade PVC tubing. It carries the patient's urea-rich blood to the dialyzer. About 200–250 mL of blood is outside the body at any moment.","पारदर्शी मेडिकल-ग्रेड PVC नली; यह रोगी का यूरिया-युक्त रक्त डायलाइज़र तक ले जाती है। किसी भी क्षण लगभग 200–250 mL रक्त शरीर के बाहर रहता है।"],
+ lineV:["Venous blood line","रक्त-नली (वापसी)","Carries the cleaned blood back to the patient through the air trap, which catches any bubble before it reaches the body.","साफ़ रक्त को एयर-ट्रैप से होकर रोगी तक लौटाती है; ट्रैप शरीर तक पहुँचने से पहले हर बुलबुला रोक लेता है।"],
+ pump:["Blood pump (peristaltic)","रक्त पंप (क्रमाकुंचक)","Rollers squeeze the tube in turn and push the blood forward, about 300 mL per minute — the machine does the work the heart's extra pressure would otherwise have to do.","रोलर बारी-बारी से नली को दबाकर रक्त को आगे धकेलते हैं (लगभग 300 mL प्रति मिनट)।"],
+ hep:["Heparin pump","हिपेरिन पंप","A syringe pump that slowly adds heparin, an anticoagulant, so that blood does not clot inside the tubing and the fibres.","सिरिंज पंप जो धीरे-धीरे हिपेरिन (थक्का-रोधी) मिलाता है, ताकि नली व तंतुओं में रक्त न जमे।"],
+ trap:["Air trap and bubble detector","एयर-ट्रैप व बुलबुला संसूचक","A clear chamber where the blood level is watched. If any air is detected the machine clamps the venous line and sounds an alarm.","स्पष्ट कक्ष जहाँ रक्त का स्तर देखा जाता है; हवा मिलने पर मशीन वापसी-नली को दबा देती है और अलार्म बजाती है।"],
+ mach:["Dialysis machine","डायलिसिस मशीन","Controls the blood flow, the dialysing-fluid flow, temperature (about 37 °C), pressures and the amount of water removed, and watches every alarm. It is the control room of the artificial kidney.","रक्त-प्रवाह, डायलिसिस-द्रव का प्रवाह, ताप (लगभग 37 °C), दाब और निकाले जाने वाले जल की मात्रा नियंत्रित करती है और हर अलार्म पर नज़र रखती है।"],
+ dial:["Dialyzer (artificial kidney)","डायलाइज़र (कृत्रिम वृक्क)","A transparent cylinder packed with about 10 000 hollow fibres (only about 60 are drawn here). Blood runs inside the fibres, dialysing fluid around them.","पारदर्शी बेलन जिसमें लगभग 10 000 खोखले तंतु भरे होते हैं (यहाँ केवल लगभग 60 दिखाए हैं)। तंतुओं के भीतर रक्त और बाहर डायलिसिस-द्रव बहता है।"],
+ fibre:["Hollow fibre (semi-permeable membrane)","खोखला तंतु (अर्धपारगम्य झिल्ली)","Each fibre is a tube thinner than a hair whose wall has tiny pores. Urea, creatinine, extra salts and water pass through; blood cells and large proteins cannot.","प्रत्येक तंतु बाल से भी पतली नली है जिसकी दीवार में सूक्ष्म छिद्र हैं। यूरिया, क्रिएटिनिन, अतिरिक्त लवण व जल निकल जाते हैं; रक्त कोशिकाएँ व बड़े प्रोटीन नहीं निकल सकते।"],
+ pot:["Potting resin","पॉटिंग रेज़िन","The fibres are glued into the end discs so that blood can only travel through their insides and dialysing fluid only around them.","तंतु सिरों की डिस्क में चिपके होते हैं, ताकि रक्त केवल तंतुओं के भीतर और डायलिसिस-द्रव केवल बाहर बहे।"],
+ dsy:["Dialysing fluid (dialysate)","डायलिसिस-द्रव","A sterile solution made from purified water, with salts, glucose and bicarbonate at normal blood levels — so useful substances are not lost — but with no urea. It flows opposite to the blood.","शुद्ध जल में रक्त जैसी मात्रा के लवण, ग्लूकोज़ व बाइकार्बोनेट वाला निर्जर्म विलयन — अतः उपयोगी पदार्थ नहीं निकलते — पर इसमें यूरिया नहीं होता। यह रक्त के विपरीत दिशा में बहता है।"],
+ tank:["Fresh dialysate supply","ताज़ा डायलिसिस-द्रव","Fresh fluid is mixed and warmed by the machine and pumped to the dialyzer.","मशीन ताज़ा द्रव मिलाकर गर्म करती है और डायलाइज़र तक पंप करती है।"],
+ drain:["Used fluid to the drain","प्रयुक्त द्रव — निकास","The used dialysing fluid, now carrying urea and extra salts, goes down the drain; it is never reused.","यूरिया व अतिरिक्त लवण ले जाने वाला प्रयुक्त द्रव निकास में जाता है; इसे दोबारा उपयोग नहीं करते।"],
+ mem:["Pore in the membrane","झिल्ली का छिद्र","Small waste molecules fit through the pores and diffuse from the high-concentration side (blood) to the low-concentration side (dialysing fluid). Cells and big proteins are too large.","छोटे अपशिष्ट अणु छिद्रों से निकलकर अधिक सांद्रता (रक्त) से कम सांद्रता (डायलिसिस-द्रव) की ओर विसरित होते हैं; कोशिकाएँ व बड़े प्रोटीन बहुत बड़े हैं।"],
+ urea:["Urea and extra salts","यूरिया व अतिरिक्त लवण","Waste from protein breakdown. It diffuses out of the blood because the dialysing fluid has none, so the gradient stays steep all along the dialyzer.","प्रोटीन-विघटन का अपशिष्ट; डायलिसिस-द्रव में यह नहीं होता, इसलिए रक्त से बाहर विसरित हो जाता है और पूरे डायलाइज़र में सांद्रता-ढाल बना रहता है।"],
+ cells:["Blood cells and proteins","रक्त कोशिकाएँ व प्रोटीन","Red cells, white cells, platelets and large proteins stay inside the fibres and return to the patient.","लाल/श्वेत कोशिकाएँ, बिम्बाणु व बड़े प्रोटीन तंतुओं के भीतर रहते और रोगी को लौट जाते हैं।"]};
+Object.assign(KIND10,{lineAs:KIND10.lineA,lineVs:KIND10.lineV,traps:KIND10.trap,tankL:KIND10.tank,drains:KIND10.drain,heps:KIND10.hep,dsyB:KIND10.dsy,fibreB:KIND10.fibre});
+const DI_ST=[
+["1","The artificial kidney","कृत्रिम वृक्क","When both kidneys fail, urea and extra salts build up in the blood. Haemodialysis does the cleaning outside the body: blood leaves through one needle, is cleaned in the dialyzer and returns through another.","जब दोनों वृक्क विफल हो जाते हैं, तो रक्त में यूरिया व अतिरिक्त लवण जमा होने लगते हैं। हीमोडायलिसिस सफ़ाई शरीर के बाहर करता है: रक्त एक सुई से निकलता है, डायलाइज़र में साफ़ होता है और दूसरी सुई से लौट आता है।","Schematic proportions",10],
+["2","Access: the AV fistula","पहुँच-मार्ग: AV फिस्टुला","A fistula joins an artery to a vein in the forearm so that the vein becomes thick and strong. Two needles are placed in it: one takes blood out, the other brings it back.","फिस्टुला बाँह की धमनी को शिरा से जोड़ता है, जिससे शिरा मोटी व मज़बूत हो जाती है। उसमें दो सुइयाँ लगती हैं: एक रक्त निकालती है, दूसरी लौटाती है।","Anatomical idea, schematic",10],
+["3","Blood leaves the body","रक्त शरीर से बाहर","The blood pump pushes blood through the arterial line at about 300 mL per minute. A syringe pump adds heparin so the blood does not clot in the circuit.","रक्त पंप धमनी-लाइन से लगभग 300 mL प्रति मिनट रक्त धकेलता है। सिरिंज पंप हिपेरिन मिलाता है ताकि परिपथ में रक्त न जमे।","Animated (speed schematic)",10],
+["4","Inside the dialyzer","डायलाइज़र के भीतर","Blood enters at the top and runs down thousands of hollow fibres. Their walls are semi-permeable membranes. The shell is cut open so you can see the fibres.","रक्त ऊपर से घुसकर हज़ारों खोखले तंतुओं में नीचे बहता है। इनकी दीवारें अर्धपारगम्य झिल्ली हैं। खोल को काटकर तंतु दिखाए गए हैं।","Cut-away, schematic",11],
+["5","Diffusion across the membrane","झिल्ली के आर-पार विसरण","Magnified view of one fibre wall: urea and extra salts diffuse out through the pores into the dialysing fluid, which has none. Blood cells and big proteins are too large and stay in the blood. There is no reabsorption in dialysis.","एक तंतु की दीवार का बड़ा दृश्य: यूरिया व अतिरिक्त लवण छिद्रों से निकलकर डायलिसिस-द्रव में विसरित हो जाते हैं, जिसमें ये नहीं होते। रक्त कोशिकाएँ व बड़े प्रोटीन बहुत बड़े हैं और रक्त में ही रहते हैं। डायलिसिस में पुनरावशोषण नहीं होता।","Magnified, schematic",12],
+["6","Counter-current flow","विपरीत-दिशा प्रवाह","Dialysing fluid enters at the bottom and flows up, opposite to the blood. Meeting fresher fluid all along the way keeps the concentration gradient steep, so more waste is removed.","डायलिसिस-द्रव नीचे से घुसकर ऊपर बहता है, रक्त के विपरीत। रास्ते भर ताज़ा द्रव मिलने से सांद्रता-ढाल तेज़ बना रहता है, इसलिए अधिक अपशिष्ट निकलता है।","Animated (schematic)",11],
+["7","Clean blood returns","साफ़ रक्त की वापसी","The cleaned blood leaves at the bottom, passes the air trap and goes back to the patient through the venous needle. The blood is warmed and tested for air all the way.","साफ़ रक्त नीचे से निकलकर एयर-ट्रैप से गुज़रता है और वापसी-सुई से रोगी में लौट जाता है। रास्ते भर रक्त गर्म रखा जाता और हवा की जाँच होती रहती है।","Animated (schematic)",10],
+["8","Safety, schedule and the cure","सुरक्षा, समय-सारणी व स्थायी उपाय","The machine watches pressures, temperature and air. A session lasts about four hours, three times a week, and also removes extra water. A kidney transplant is the permanent solution.","मशीन दाब, ताप व हवा पर नज़र रखती है। एक सत्र लगभग चार घंटे का होता है, सप्ताह में तीन बार, और अतिरिक्त जल भी निकालता है। वृक्क प्रत्यारोपण स्थायी समाधान है।","Summary",10]];
+function Mdialysis(){sd=101;const n=new Ne;Ge(n,{key:1.9});Je(n,-7.4,60,.08);Vt.localClippingEnabled=!0;
+ const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);const plane=new Zt(c(0,0,-1),99);
+ const MI=new J;MI.position.set(34,0,0);g.add(MI);
+ const clear=(o={})=>MAT(0xdff3ff,{opacity:.16,roughness:.05,clearcoat:1,clearcoatRoughness:.04,depthWrite:!1,sheen:0,envMapIntensity:.9,...o});
+ const steel=MAT(0xcfd6de,{roughness:.22,clearcoat:.9,sheen:0,bumpScale:.02,opacity:1,envMapIntensity:1.6});
+ const white=MAT(0xf1f4f7,{roughness:.32,clearcoat:.85,sheen:.2,bumpScale:.02,opacity:1});
+ const grey=MAT(0x59636e,{roughness:.45,clearcoat:.5,sheen:0,bumpScale:.03,opacity:1});
+ const bloodM=()=>MAT(0xb3221f,{roughness:.28,clearcoat:.8,opacity:.96,emissive:0x4a0805,emissiveIntensity:.28,sheen:0});
+ /* ---------- the machine ---------- */
+ const mach=add("mach",boxy(4.3,5.8,2.2,.1,0,2),white,[0,-.8,0]);
+ add("mach",boxy(3.7,.45,2.0,.06),grey,[0,-6.9,.05],{ns:1});
+ add("mach",boxy(3.5,.2,1.5,.2),MAT(0x1fbf6b,{roughness:.3,clearcoat:.9,emissive:0x0e7a40,emissiveIntensity:.9,sheen:0,opacity:1}),[0,5.12,.1],{ns:1});
+ add("mach",boxy(4.36,.12,2.24,.1),MAT(0x2f6fe0,{roughness:.3,clearcoat:.9,sheen:0,opacity:1}),[0,-2.2,0],{ns:1});
+ for(let i=0;i<6;i++)add("mach",boxy(.26,.15,.06,.3),grey,[-1.4+i*.56,1.55,2.24],{ns:1});
+ for(let i=0;i<5;i++)add("mach",boxy(.04,.5,.9,.3),MAT(0x2b3139,{roughness:.6,sheen:0,opacity:1}),[-4.32,-.2-i*.34,-.2],{ns:1});
+ add("mach",tube([c(4.3,2.4,-.5),c(4.8,2.4,-.5),c(4.8,-1.4,-.5),c(4.3,-1.4,-.5)],1,10,u=>.1),steel,[0,0,0],{ns:1});
+ [-3.2,3.2].forEach(x=>[-.6,.6].forEach(z=>add("mach",lathe([[0,-.34],[.34,-.3],[.4,0],[.34,.3],[0,.34]],20),MAT(0x1d2229,{roughness:.6,sheen:0,opacity:1}),[x,-7.35,z*1.4],{rot:[0,0,PI/2],ns:1})));
+ add("mach",boxy(2.85,1.55,.14,.1),MAT(0x0b2230,{roughness:.12,clearcoat:1,emissive:0x0f3c52,emissiveIntensity:.55,sheen:0,opacity:1}),[0,3.0,2.22],{ns:1});
+ const bars=new Wn(boxy(.1,.5,.04,.2),new bt({color:0x59e7ff}),24);bars.frustumCulled=!1;g.add(bars);
+ const led=new Wn(new it(.09,10,8),new bt({color:0x46e08a}),5);led.frustumCulled=!1;g.add(led);
+ /* blood pump */
+ const PUMPC=c(-2.5,-.7,2.3);const pump=new J;pump.position.copy(PUMPC);g.add(pump);
+ add("pump",lathe([[0,-.3],[1.2,-.3],[1.25,-.2],[1.25,.2],[1.2,.3],[0,.3]],48),grey,[0,0,.0],{parent:pump,rot:[PI/2,0,0],ns:1});
+ const rotor=new J;pump.add(rotor);rotor.position.z=.32;
+ add("pump",lathe([[0,-.12],[.62,-.12],[.62,.12],[0,.12]],30),steel,[0,0,0],{parent:rotor,rot:[PI/2,0,0]});
+ for(let k=0;k<3;k++){const a=k*TAU/3;add("pump",lathe([[0,-.16],[.16,-.16],[.16,.16],[0,.16]],14),steel,[cos(a)*.72,sin(a)*.72,0],{parent:rotor,rot:[PI/2,0,0],ns:1})}
+ /* heparin syringe pump */
+ const HEP=c(2.3,-.5,2.3);const hepM=add("hep",boxy(1.3,.9,.4,.1),white,[HEP.x,HEP.y,HEP.z-.1]);
+ add("heps",lathe([[0,-1.2],[.26,-1.2],[.26,1.2],[0,1.2]],20),clear({opacity:.35}),[HEP.x,HEP.y+.32,HEP.z+.28],{rot:[0,0,PI/2],ns:1});
+ const plunger=add("hep",lathe([[0,-.4],[.22,-.4],[.22,.4],[0,.4]],16),MAT(0xf3d44a,{roughness:.3,clearcoat:.6,sheen:0,opacity:.9}),[HEP.x,HEP.y+.32,HEP.z+.28],{rot:[0,0,PI/2],ns:1});
+ /* ---------- patient's arm (palm up, resting on a cushion) with hand, gown sleeve, fistula, needles and tape ---------- */
+ const skin=MAT(0xdca88c,{roughness:.5,clearcoat:.3,clearcoatRoughness:.35,sheen:.6,sheenColor:new we(0xffcfb4),bumpScale:.08,opacity:1});
+ const aU=x=>cl((x+20.5)/12.3,0,1),aCY=x=>-2.6+.9*aU(x),aR=x=>.78+.62*aU(x)+.06*sin(aU(x)*18),aTop=x=>aCY(x)+aR(x);
+ add("arm",tube([c(-20.5,-2.6,0),c(-17.5,-2.4,0),c(-14,-2.1,0),c(-11,-1.9,0),c(-8.2,-1.7,0)],1,28,u=>.78+.62*u+.06*sin(u*18)),skin,[0,0,0]);
+ /* hand */
+ add("arm",boxy(1.35,.46,1.05,.3,.08,5),skin,[-21.1,-2.72,0],{ns:1});
+ [[-.62,.0],[-.2,.0],[.22,0],[.62,0]].forEach(([z],i)=>{const L=2.5-.25*Math.abs(i-1.2);add("arm",tube([c(-21.9,-2.78,z*.9),c(-21.9-L*.5,-2.8,z*.9+.05*i),c(-21.9-L,-2.62,z*.9+.1)],1,12,u=>.2-.05*u),skin,[0,0,0],{ns:1})});
+ add("arm",tube([c(-20.7,-2.78,.8),c(-21.6,-2.82,1.5),c(-22.5,-2.7,1.9)],1,12,u=>.23-.06*u),skin,[0,0,0],{ns:1});
+ /* gown sleeve + cushion */
+ const gown=MAT(0x9fd3c7,{roughness:.8,sheen:.8,sheenColor:new we(0xe8fff8),clearcoat:0,bumpScale:.12,opacity:1});
+ add("arm",tube([c(-9.0,-1.78,0),c(-6.2,-1.58,0)],1,32,u=>1.5-.05*u),gown,[0,0,0],{ns:1});
+ add("arm",sph(1.45,.03,1,.55,1,1,24,32,4),gown,[-6.1,-1.58,0],{ns:1});
+ add("arm",boxy(8.8,.6,2.2,.22),MAT(0x2f4a6a,{roughness:.75,sheen:.7,sheenColor:new we(0x8ab4e8),bumpScale:.06,opacity:1}),[-14.6,-4.3,0],{ns:1});
+ /* fistula: a swollen vein standing proud of the skin, fed by an arterial branch, with small tributaries */
+ const veinM=MAT(0x6e5db3,{roughness:.32,clearcoat:.75,opacity:1,emissive:0x1d1649,emissiveIntensity:.22,sheen:.3});
+ const vp=[-17.4,-15.2,-13,-10.8,-9.2].map(x=>c(x,aTop(x)-.02,.1+.04*sin(x)));
+ add("fist",tube(vp,1,14,u=>.2+.13*sin(u*PI)+.05*sin(u*TAU*2.4)),veinM,[0,0,0],{ns:1});
+ [[-16.2,.55],[-14.4,-.6],[-12.2,.7],[-10.6,-.5]].forEach(([x,z])=>add("fist",tube([c(x,aTop(x)-.02,.08),c(x-.5,aTop(x-.5)-.05,z*.8),c(x-1.1,aTop(x-1.1)-.1,z*1.3)],1,8,u=>.09-.04*u),veinM,[0,0,0],{ns:1}));
+ add("fist",tube([c(-14.2,aTop(-14.2)-.05,.1),c(-14,aTop(-14)-.5,.5),c(-13.7,aTop(-13.7)-.9,.9)],1,10,u=>.12),MAT(0xc43b3b,{roughness:.35,clearcoat:.7,opacity:1,emissive:0x430c0c,emissiveIntensity:.25,sheen:0}),[0,0,0],{ns:1});
+ /* needles with coloured wings, tubing stubs and tape */
+ const tape=MAT(0xf6f3ea,{roughness:.8,sheen:.4,opacity:1});
+ const needle=(id,x,col)=>{const gN=new J;gN.position.set(x,aTop(x)+.01,.12);gN.rotation.z=-.36;gN.scale.setScalar(2);g.add(gN);
+  add(id,tube([c(-.95,0,0),c(.1,0,0)],1,8,u=>.04),steel,[0,0,0],{parent:gN,ns:1});
+  add(id,lathe([[0,-.3],[.11,-.3],[.11,.3],[0,.3]],12),MAT(col,{roughness:.3,clearcoat:.8,sheen:0,opacity:1}),[.2,0,0],{parent:gN,rot:[0,0,PI/2]});
+  [-1,1].forEach(sz=>add(id,boxy(.09,.02,.34,.3),MAT(col,{roughness:.3,sheen:0,opacity:1}),[.14,0,sz*.34],{parent:gN,ns:1}));
+  add(id,tube([c(.4,0,0),c(.95,.12,0)],1,8,u=>.06),clear({opacity:.5}),[0,0,0],{parent:gN,ns:1});
+  add(id,boxy(.5,.03,.28,.3),tape,[-.28,-.02,.0],{parent:gN,ns:1});return gN};
+ needle("needleA",-13.2,0xdc2626);needle("needleV",-10.2,0x2563eb);
+ add("arm",boxy(.62,.018,.9,.3),tape,[-11.7,aTop(-11.7)+.03,.0],{ns:1,rot:[0,.15,0]});
+ /* ---------- blood lines (clear PVC sheath + live blood) ---------- */
+ const PA=[c(-12.2,aTop(-13.2)+.4,.2),c(-12,.9,1.3),c(-9,2.4,2.1),c(-6,2.0,2.6),c(-4.2,.8,2.7),c(-2.5,.6,2.65),c(-1.0,.4,2.5)];     /* needle → pump (over the roller) */
+ const PA2=[c(-1.0,.4,2.5),c(.4,2.6,2.7),c(3.2,6.6,2.6),c(7,7.2,1.6),c(9.5,7.0,.4),c(9.5,5.8,0)];                                 /* pump → dialyzer top */
+ const PV=[c(9.5,-5.8,0),c(9.5,-6.9,.5),c(8,-7.1,2.2),c(5.6,-6.4,3.0),c(5.2,-4.6,3.05)];                                           /* dialyzer bottom → air trap */
+ const PV2=[c(5.2,-2.4,3.05),c(4.2,-1.8,3.0),c(1,-3.4,3.1),c(-3,-4.6,3.2),c(-6.5,-3.8,2.6),c(-9,-2.0,1.0),c(-9.4,aTop(-10.2)+.4,.2)];       /* air trap → venous needle */
+ const lineGeo=(pts,r)=>({sheath:tube(pts,r*1.34,10),blood:tube(pts,r,10)});
+ const addLine=(id,pts,r)=>{const l=lineGeo(pts,r);add(id+"s",l.sheath,clear({opacity:.22}),[0,0,0],{ns:1});add(id,l.blood,bloodM(),[0,0,0],{ns:1})};
+ addLine("lineA",PA,.16);addLine("lineA",PA2,.16);addLine("lineV",PV,.16);addLine("lineV",PV2,.16);
+ /* syringe → line junction */
+ add("hep",tube([c(HEP.x-1.2,HEP.y+.32,HEP.z+.28),c(-.3,.5,2.55)],1,8,u=>.05),clear({opacity:.5}),[0,0,0],{ns:1});
+ /* air trap */
+ const TRAPC=c(5.2,-3.5,3.05);
+ add("traps",lathe([[0,-1.35],[.5,-1.35],[.55,-1.2],[.55,1.2],[.5,1.35],[0,1.35]],30),clear({opacity:.2}),[TRAPC.x,TRAPC.y,TRAPC.z],{ns:1});
+ add("trap",lathe([[0,-1.25],[.46,-1.25],[.46,.1],[0,.1]],26),bloodM(),[TRAPC.x,TRAPC.y,TRAPC.z],{ns:1});
+ add("trap",boxy(.7,.22,.42,.12),MAT(0x2a313a,{roughness:.4,sheen:0,opacity:1}),[TRAPC.x,TRAPC.y+.4,TRAPC.z],{ns:1});
+ /* ---------- dialyzer ---------- */
+ const DC=c(9.5,0,0);const D=new J;D.position.copy(DC);g.add(D);
+ const shell=add("dial",lathe([[1.6,-4.5],[1.6,4.5]],52),clear({opacity:.17,roughness:.04}),[0,0,0],{parent:D,ns:1});shell.material.clippingPlanes=[plane];shell.material.side=vt;
+ const rim=(y)=>add("dial",tube([c(1.6,y,0),c(1.6,y+.001,0)],1,4,u=>.01),clear(),[0,0,0],{parent:D,ns:1});void rim;
+ add("pot",lathe([[0,4.28],[1.58,4.28],[1.58,4.5],[0,4.5]],40),MAT(0xe0a82e,{roughness:.55,clearcoat:.5,sheen:0,opacity:1}),[0,0,0],{parent:D,ns:1});
+ add("pot",lathe([[0,-4.5],[1.58,-4.5],[1.58,-4.28],[0,-4.28]],40),MAT(0xe0a82e,{roughness:.55,clearcoat:.5,sheen:0,opacity:1}),[0,0,0],{parent:D,ns:1});
+ const capM=col=>MAT(col,{roughness:.3,clearcoat:.9,clearcoatRoughness:.1,sheen:.2,opacity:.95,bumpScale:.02});
+ add("dial",lathe([[1.7,4.5],[1.75,4.7],[1.3,5.2],[.62,5.55],[.3,5.65],[.3,6.5]],40),capM(0xe23a3a),[0,0,0],{parent:D});
+ add("dial",lathe([[1.7,-4.5],[1.75,-4.7],[1.3,-5.2],[.62,-5.55],[.3,-5.65],[.3,-6.5]],40),capM(0x2f6fe0),[0,0,0],{parent:D});
+ [[3.6,0],[-3.6,0]].forEach(([y])=>{add("dial",tube([c(1.55,y,0),c(2.7,y,0)],1,16,u=>.3+.04*u),MAT(0xcfe6ff,{roughness:.2,clearcoat:.9,sheen:0,opacity:.9}),[0,0,0],{parent:D,ns:1});add("dial",tube([c(2.6,y,0),c(2.95,y,0)],1,16,u=>.36),capM(0x2fc0e0),[0,0,0],{parent:D,ns:1})});
+ /* hollow fibres */
+ const FIB=[[0,0]];[[6,.3],[12,.6],[18,.9],[24,1.2]].forEach(([k,r])=>{for(let i=0;i<k;i++){const a=i/k*TAU+(r*3.1);FIB.push([cos(a)*r,sin(a)*r])}});
+ const wallG=mergeG(FIB.map(([x,z])=>tube([c(x,-4.28,z),c(x,4.28,z)],.075,8)));
+ add("fibre",wallG,MAT(0xf7efe0,{roughness:.2,clearcoat:.9,opacity:.5,depthWrite:!1,sheen:0,}),[0,0,0],{parent:D,ns:1});
+ const lumenG=mergeG(FIB.map(([x,z])=>tube([c(x,-4.28,z),c(x,4.28,z)],.048,6)));
+ add("fibreB",lumenG,bloodM(),[0,0,0],{parent:D,ns:1});
+ /* dialysate supply (behind) and drain bucket */
+ const TANKC=c(17.2,-3.4,-1.6);
+ add("tank",boxy(1.9,2.7,1.4,.16),clear({opacity:.22}),[TANKC.x,TANKC.y,TANKC.z],{ns:1});
+ add("tankL",boxy(1.78,1.9,1.3,.16),MAT(0x6ec6ff,{roughness:.15,clearcoat:.9,opacity:.7,emissive:0x0a3a66,emissiveIntensity:.25,sheen:0}),[TANKC.x,TANKC.y-.35,TANKC.z],{ns:1});
+ add("tank",boxy(.5,.22,.5,.3),MAT(0x2563eb,{roughness:.4,sheen:0,opacity:1}),[TANKC.x,TANKC.y+2.8,TANKC.z],{ns:1});
+ const DS_IN=[c(15.4,-3.5,-1.4),c(13.6,-3.6,-.8),c(11.8,-3.6,-.2),c(10.6,-3.6,0),c(9.5+2.95,-3.6,0)];
+ add("dsy",tube(DS_IN,1,12,u=>.2),MAT(0x7fd0ff,{roughness:.12,clearcoat:.95,opacity:.85,emissive:0x0b4a86,emissiveIntensity:.35,sheen:0}),[0,0,0],{ns:1});
+ const DS_OUT=[c(9.5+2.95,3.6,0),c(13,3.6,.4),c(16.5,3.4,1.4),c(18.3,.6,2.0),c(18.6,-5.0,2.3)];
+ add("drain",tube(DS_OUT,1,12,u=>.2),MAT(0xe6c35a,{roughness:.12,clearcoat:.95,opacity:.85,emissive:0x5a4208,emissiveIntensity:.3,sheen:0}),[0,0,0],{ns:1});
+ add("drains",lathe([[.9,-.9],[1.2,.9],[1.1,.92],[.82,-.8],[0,-.8]],30),clear({opacity:.3}),[18.6,-6.4,2.3],{ns:1});
+ add("drain",lathe([[0,-.8],[.86,-.8],[1.0,.1],[0,.1]],30),MAT(0xe6c35a,{roughness:.15,opacity:.8,sheen:0}),[18.6,-6.4,2.3],{ns:1});
+ /* floor mat under everything */
+ add("mach",boxy(23,.12,5.6,.1),MAT(0x2a3441,{roughness:.8,sheen:0,opacity:1}),[-1.5,-7.5,.4],{ns:1});
+ /* ---------- magnified membrane panel (step 5) ---------- */
+ const slabM=MAT(0xf2e6cc,{roughness:.25,clearcoat:.8,opacity:.92,sheen:0,transmission:.2,thickness:.3});
+ add("mem",boxy(7.6,.42,2.0,.12),slabM,[0,0,0],{parent:MI,ns:1});
+ const PORES=[];for(let i=0;i<13;i++)PORES.push(-6.6+i*1.1);
+ PORES.forEach(x=>add("mem",lathe([[0,-.3],[.27,-.3],[.27,.3],[0,.3]],16),MAT(0x0c141d,{roughness:.8,sheen:0,opacity:1}),[x,0,2.0],{parent:MI,rot:[PI/2,0,0],ns:1}));
+ add("urea",boxy(8,2.2,2.2,.1),MAT(0xd54a4a,{roughness:.2,opacity:.16,depthWrite:!1,clearcoat:1,sheen:0,emissive:0x501010,emissiveIntensity:.2}),[0,1.75,0],{parent:MI,ns:1});
+ add("dsyB",boxy(8,2.2,2.2,.1),MAT(0x5ab4f0,{roughness:.2,opacity:.16,depthWrite:!1,clearcoat:1,sheen:0,emissive:0x0c3b66,emissiveIntensity:.2}),[0,-1.75,0],{parent:MI,ns:1});
+ /* ---------- animated particles ---------- */
+ const NR=64,rbc=new Wn(new it(.1,12,8),new bt({color:0xc0302b}),NR);rbc.frustumCulled=!1;D.add(rbc);
+ const NU=84,ure=new Wn(new it(.06,8,6),new bt({color:0xffd23f}),NU);ure.frustumCulled=!1;D.add(ure);
+ const ND=44,dfl=new Wn(new it(.055,8,6),new bt({color:0x6fd8ff}),ND);dfl.frustumCulled=!1;D.add(dfl);
+ const NB=40,beadA=new Wn(new it(.09,8,6),new bt({color:0x7a1210}),NB),beadV=new Wn(new it(.09,8,6),new bt({color:0xff5a46}),NB);beadA.frustumCulled=!1;beadV.frustumCulled=!1;g.add(beadA,beadV);
+ const NF=40,fluidIn=new Wn(new it(.07,8,6),new bt({color:0x8fdcff}),NF),fluidOut=new Wn(new it(.07,8,6),new bt({color:0xe8c24a}),NF);fluidIn.frustumCulled=!1;fluidOut.frustumCulled=!1;g.add(fluidIn,fluidOut);
+ const MR=7,mrb=new Wn(new it(.34,14,10),new bt({color:0xc0302b}),MR),MP=9,mpr=new Wn(new it(.2,10,8),new bt({color:0xf4f4f4}),MP),MU=46,mur=new Wn(new it(.075,8,6),new bt({color:0xffd23f}),MU),MK=26,mka=new Wn(new it(.07,8,6),new bt({color:0x59d98a}),MK);
+ [mrb,mpr,mur,mka].forEach(m=>{m.frustumCulled=!1;MI.add(m)});
+ const curA=new It([...PA,...PA2.slice(1)]).getPoints(260),curV=new It([...PV,...PV2]).getPoints(260),curIn=new It(DS_IN).getPoints(120),curOut=new It(DS_OUT).getPoints(160);
+ const FR=[],UR=[];for(let i=0;i<NR;i++)FR.push({f:i%FIB.length,o:R()});for(let i=0;i<NU;i++)UR.push({f:(i*7)%FIB.length,o:R(),qc:.12+R()*.6,a:R()*TAU});
+ const m4=new gt;const place=(im,i,x,y,z,s=1,sy=1)=>{m4.makeScale(s,s*sy,s);m4.setPosition(x,y,z);im.setMatrixAt(i,m4)};
+ const hide=(im,N)=>{m4.makeScale(0,0,0);for(let i=0;i<N;i++)im.setMatrixAt(i,m4);im.instanceMatrix.needsUpdate=!0};
+ const pathAt=(cv,q)=>cv[Math.min(cv.length-1,Math.floor(q*(cv.length-1)))];
+ const cams=[[c(-1,4,58),c(-1,-.6,0)],[c(-11.8,2.8,10.5),c(-11.6,-1.0,.3)],[c(-3.5,2.6,15.5),c(-3,.4,2.2)],[c(8,2,14),c(9.5,.2,0)],[c(34,.4,13.5),c(34,0,0)],[c(12.5,.5,21),c(11.5,-.6,0)],[c(4,-3,17),c(3,-3.4,2)],[c(0,2.4,17),c(0,1.4,2)]];
+ const camK=["Overview","Fistula","Blood out","Dialyzer","Membrane","Counter-flow","Return","Safety"];
+ const rows={arm:[1,1,1,0,0,0,1,0],fist:[1,1,0,0,0,0,1,0],needleA:[1,1,1,0,0,0,0,0],needleV:[1,1,0,0,0,0,1,0],lineA:[1,0,1,1,0,0,0,1],lineV:[1,0,0,0,0,0,1,1],pump:[1,0,1,0,0,0,0,1],hep:[1,0,1,0,0,0,0,1],trap:[1,0,0,0,0,0,1,1],mach:[1,0,0,0,0,0,0,1],
+  dial:[1,0,0,1,0,1,1,0],fibre:[1,0,0,1,0,1,1,0],pot:[1,0,0,1,0,0,0,0],dsy:[1,0,0,0,1,1,0,0],tank:[1,0,0,0,0,1,0,0],drain:[1,0,0,0,0,1,0,0],mem:[0,0,0,0,1,0,0,0],urea:[0,0,0,0,1,0,0,0],cells:[0,0,0,0,1,0,0,0]};
+ const show={...rows};["lineAs:lineA","lineVs:lineV","traps:trap","tankL:tank","drains:drain","heps:hep","dsyB:dsy","fibreB:fibre"].forEach(s=>{const[a,b]=s.split(":");show[a]=rows[b]});
+ const base={arm:1,fist:1,needleA:1,needleV:1,lineA:.96,lineV:.96,lineAs:.2,lineVs:.2,pump:1,hep:1,heps:.35,trap:.9,traps:.2,mach:1,dial:.17,fibre:.5,fibreB:.95,pot:1,dsy:.85,dsyB:.16,tank:.22,tankL:.7,drain:.85,drains:.3,mem:.92,urea:.16,cells:1};
+ const L=(par,p)=>()=>par.localToWorld(c(...p));const W=p=>()=>c(...p);
+ const labels=[
+  ["a-ar","Patient's forearm","रोगी की बाँह",W([-17.5,-1.3,0]),[1]],["a-fi","AV fistula (artery joined to vein)","AV फिस्टुला (धमनी + शिरा)",W([-15,-.2,.3]),[1]],["a-na","Arterial needle — blood OUT","धमनी-सुई — रक्त बाहर",W([-12.6,.1,.3]),[1,2]],["a-nv","Venous needle — cleaned blood IN","शिरा-सुई — साफ़ रक्त अंदर",W([-9.6,.1,.3]),[1,6]],
+  ["l-a","Arterial blood line","रक्त-नली (निर्गम)",W([-7.5,2.4,2.4]),[2]],["p-p","Blood pump (rollers)","रक्त पंप (रोलर)",W([-2.5,-.7,2.9]),[2,7]],["h-p","Heparin pump (anticlotting)","हिपेरिन पंप (थक्का-रोधी)",W([2.3,-.2,2.9]),[2,7]],
+  ["m-m","Dialysis machine","डायलिसिस मशीन",W([0,4.4,2.4]),[0,7]],["d-d","Dialyzer (artificial kidney)","डायलाइज़र (कृत्रिम वृक्क)",W([11.5,2.4,0]),[0,3,5]],["d-bi","Blood IN (urea-rich)","रक्त अंदर (यूरिया अधिक)",W([9.5,6.1,0]),[3,5]],["d-bo","Blood OUT (cleaned)","रक्त बाहर (साफ़)",W([9.5,-6.1,0]),[3,6]],["d-fi","Hollow fibres (semi-permeable)","खोखले तंतु (अर्धपारगम्य)",W([9.5,1.2,.4]),[3]],
+  ["d-di","Fresh dialysing fluid IN","ताज़ा डायलिसिस-द्रव अंदर",W([12.6,-3.6,0]),[5]],["d-do","Used fluid + urea OUT","प्रयुक्त द्रव + यूरिया बाहर",W([12.6,3.6,0]),[5]],["t-t","Dialysate supply","डायलिसिस-द्रव आपूर्ति",W([17.2,-1.4,-1.6]),[0,5]],["dr","Drain","निकास",W([18.6,-5.2,2.3]),[5]],
+  ["v-t","Air trap + bubble detector","एयर-ट्रैप + बुलबुला संसूचक",W([5.2,-1.6,3.1]),[6,7]],["l-v","Venous blood line","रक्त-नली (वापसी)",W([-3,-4.6,3.2]),[6]],
+  ["z-m","Pore in the membrane","झिल्ली का छिद्र",L(MI,[-2.2,0,2.1]),[4]],["z-u","Urea & extra salts leave","यूरिया व अतिरिक्त लवण बाहर",L(MI,[2.6,-.8,.6]),[4]],["z-c","Blood cells & proteins stay in","रक्त कोशिकाएँ व प्रोटीन अंदर",L(MI,[-3.6,2.3,.6]),[4]],["z-b","Blood side (high urea)","रक्त की ओर (यूरिया अधिक)",L(MI,[3.8,2.2,1.1]),[4]],["z-f","Dialysing fluid side (no urea)","डायलिसिस-द्रव की ओर (यूरिया नहीं)",L(MI,[3.8,-2.2,1.1]),[4]]];
+ const idMap={"a-ar":"arm","a-fi":"fist","a-na":"needleA","a-nv":"needleV","l-a":"lineA","p-p":"pump","h-p":"hep","m-m":"mach","d-d":"dial","d-bi":"dial","d-bo":"dial","d-fi":"fibre","d-di":"dsy","d-do":"drain","t-t":"tank","dr":"drain","v-t":"trap","l-v":"lineV","z-m":"mem","z-u":"urea","z-c":"cells","z-b":"cells","z-f":"dsy"};
+ void idMap;
+ return run({kinds:KIND10,n,g,org,show,base,ST:DI_ST,cams,camK,labels,plane,cutAt:.12,
+  frame:(s,t)=>{
+   rotor.rotation.z=-t*(s===2||s===7||s===0?2.4:.5);
+   const hp=((t*.01)%1);plunger.position.x=HEP.x-.7+hp*.5;
+   for(let i=0;i<24;i++){const k=.35+.65*Math.abs(Math.sin(t*1.6+i*.55))*(s>=2?1:.35);m4.makeScale(1,k*2,1);m4.setPosition(-1.3+i*.115,3.0,2.32);bars.setMatrixAt(i,m4)}bars.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<5;i++){m4.makeScale(1,1,1);m4.setPosition(-1.9+i*.28,1.9,2.32);led.setMatrixAt(i,m4)}led.instanceMatrix.needsUpdate=!0;
+   /* blood beads along the lines */
+   const lineOn=s===0||s===2||s===6||s===7;
+   for(let i=0;i<NB;i++){if(!lineOn){m4.makeScale(0,0,0);beadA.setMatrixAt(i,m4);beadV.setMatrixAt(i,m4);continue}const qa=((t*.06+i/NB)%1),pa=pathAt(curA,qa),pv=pathAt(curV,qa);const ka=(s===6?.0:1),kv=(s===2?.0:1);place(beadA,i,pa.x,pa.y,pa.z,ka);place(beadV,i,pv.x,pv.y,pv.z,kv)}beadA.instanceMatrix.needsUpdate=!0;beadV.instanceMatrix.needsUpdate=!0;
+   /* dialysate beads in the fluid lines */
+   const fluidOn=s===0||s===5;for(let i=0;i<NF;i++){if(!fluidOn){m4.makeScale(0,0,0);fluidIn.setMatrixAt(i,m4);fluidOut.setMatrixAt(i,m4);continue}const q=((t*.07+i/NF)%1),a=pathAt(curIn,q),b=pathAt(curOut,q);place(fluidIn,i,a.x,a.y,a.z);place(fluidOut,i,b.x,b.y,b.z)}fluidIn.instanceMatrix.needsUpdate=!0;fluidOut.instanceMatrix.needsUpdate=!0;
+   /* inside the dialyzer */
+   const inD=s===0||s===3||s===5||s===6;
+   for(let i=0;i<NR;i++){if(!inD){m4.makeScale(0,0,0);rbc.setMatrixAt(i,m4);continue}const p=FR[i],fb=FIB[p.f],q=((t*.07+p.o)%1);place(rbc,i,fb[0],4.2-q*8.4,fb[1],1,.55)}rbc.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<NU;i++){if(!(s===3||s===5||s===6)){m4.makeScale(0,0,0);ure.setMatrixAt(i,m4);continue}const p=UR[i],fb=FIB[p.f],q=((t*.07+p.o)%1);let x=fb[0],y=4.2-q*8.4,z=fb[1];
+    if(q>p.qc){const gq=Math.min(1,(q-p.qc)/.22),ang=Math.atan2(fb[1],fb[0]||.001)+p.a*.2,rr=lerp(Math.hypot(fb[0],fb[1]),1.45,gq);x=cos(ang)*rr;z=sin(ang)*rr;if(q>p.qc+.2){const up=Math.min(1,(q-p.qc-.2)/.5);y=lerp(4.2-(p.qc+.2)*8.4,3.6,up)}
+     if(q>p.qc+.7){const ex=(q-p.qc-.7)/.3;x=lerp(x,3.1,Math.min(1,ex*1.2));y=3.6;z=lerp(z,0,Math.min(1,ex*1.2))}}
+    place(ure,i,x,y,z,1)}ure.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<ND;i++){if(!(s===5||s===3)){m4.makeScale(0,0,0);dfl.setMatrixAt(i,m4);continue}const a=i*2.4,q=((t*.09+i/ND)%1);place(dfl,i,cos(a)*(1.25+.18*sin(i)),-3.6+q*7.2,sin(a)*(1.25+.18*cos(i)))}dfl.instanceMatrix.needsUpdate=!0;
+   /* membrane close-up */
+   for(let i=0;i<MR;i++){if(s!==4){m4.makeScale(0,0,0)}else{const x=-6.2+((i*1.77+t*.5)%12.4),y=1.7+.45*sin(t*.8+i*1.7);m4.makeScale(1,.55,1);m4.setPosition(x,y,(i%3-1)*.35)}mrb.setMatrixAt(i,m4)}mrb.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<MP;i++){if(s!==4){m4.makeScale(0,0,0)}else{const x=-6.4+((i*1.41+t*.38)%12.8),y=2.2+.5*sin(t*.7+i*2.1);m4.makeScale(1,1,1);m4.setPosition(x,y,(i%4-1.5)*.3)}mpr.setMatrixAt(i,m4)}mpr.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<MU;i++){if(s!==4){m4.makeScale(0,0,0)}else{const q=((t*.16+i/MU)%1),px=PORES[i%PORES.length];let x,y,z=((i*.37)%1-.5)*1.4;if(q<.4){x=px+(((i*.73)%1)-.5)*1.2;y=2.7-q/.4*2.0}else if(q<.6){x=px;y=.7-(q-.4)/.2*1.4;z=lerp(z,2.0,.7)}else{const w=(q-.6)/.4;x=px+w*.9*(i%2?1:-1);y=-.7-w*1.9}m4.makeScale(1,1,1);m4.setPosition(x,y,z)}mur.setMatrixAt(i,m4)}mur.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<MK;i++){if(s!==4){m4.makeScale(0,0,0)}else{const q=((t*.12+i/MK)%1),px=PORES[(i*5)%PORES.length];let x,y,z=((i*.53)%1-.5)*1.4;if(q<.4){x=px+(((i*.31)%1)-.5)*1.2;y=2.9-q/.4*2.2}else if(q<.6){x=px;y=.7-(q-.4)/.2*1.4;z=lerp(z,2.0,.7)}else{const w=(q-.6)/.4;x=px-w*.8;y=-.7-w*2.0}m4.makeScale(1,1,1);m4.setPosition(x,y,z)}mka.setMatrixAt(i,m4)}mka.instanceMatrix.needsUpdate=!0;
+  },
+  predict:{q:"Red blood cells enter the dialyzer. What happens to them?",opts:[["They pass through the membrane into the dialysing fluid",!1,"Blood cells are far too big for the pores."],["They stay inside the fibres and return to the patient",!0,"Correct — only small molecules cross the semi-permeable membrane."],["They are destroyed by the dialysing fluid",!1,"The fluid is made to match blood, so cells are not harmed."]]}})}
+Q_("ch5/dialysis3d",[["Urea leaves the blood in the dialyzer by…","डायलाइज़र में यूरिया रक्त से कैसे निकलता है?",["Diffusion through a semi-permeable membrane","Reabsorption in the tubules","Filtration in the glomerulus","Evaporation"],0,"Urea moves from the blood (high concentration) to the dialysing fluid (none) through the pores."],["Why does the dialysing fluid flow opposite to the blood?","डायलिसिस-द्रव रक्त के विपरीत क्यों बहता है?",["To keep the concentration gradient high along the whole fibre","To warm the blood","To push blood cells out","To stop the pump"],0,"Fresh fluid meets blood all along the way, so waste keeps diffusing out."],["Which of these stays inside the fibres?","इनमें से कौन तंतुओं के भीतर रहता है?",["Red blood cells","Urea","Extra potassium","Excess water only"],0,"Blood cells and big proteins cannot pass through the pores."],["Why is heparin added to the blood?","रक्त में हिपेरिन क्यों मिलाते हैं?",["To stop it clotting in the tubes","To make it red","To add oxygen","To remove urea"],0,"Heparin is an anticoagulant."],["The dialysing fluid is like blood plasma except that it has no…","डायलिसिस-द्रव रक्त-प्लाज़्मा जैसा होता है, केवल इसमें नहीं होता…",["Nitrogenous waste (urea)","Salts","Glucose","Water"],0,"It has normal levels of useful substances but no urea."],["The permanent solution to kidney failure is…","वृक्क-विफलता का स्थायी समाधान है…",["Kidney transplant","Drinking more water","A longer dialysis session","Eating less salt"],0,"Dialysis only replaces part of the kidney's work; a healthy transplanted kidney does all of it."]]);
+Px["ch5/dialysis3d"]=[["A dialysis session cleans the whole blood volume (about 5 litres) many times in about four hours, three times a week.","एक डायलिसिस सत्र में लगभग चार घंटे में पूरा रक्त (लगभग 5 लीटर) कई बार साफ़ होता है — सप्ताह में तीन बार।"],["The dialyzer is used once and thrown away; the dialysing fluid is made fresh from purified water each time.","डायलाइज़र एक बार ही उपयोग होता है; डायलिसिस-द्रव हर बार शुद्ध जल से ताज़ा बनाया जाता है।"],["Unlike a real kidney, dialysis has no reabsorption, so the fluid is made with the right salts and glucose already in it.","असली वृक्क के विपरीत, डायलिसिस में पुनरावशोषण नहीं होता, इसलिए द्रव में पहले से सही लवण व ग्लूकोज़ मिलाए जाते हैं।"]];
+{const Lq=Hi.find(h=>h.no===5).topics,i=Lq.findIndex(x=>x.id==="nephron3d");Lq.splice(i<0?Lq.length:i+1,0,{id:"dialysis3d",title:"Haemodialysis (artificial kidney) — ultra-realistic 3D",hi:"हीमोडायलिसिस (कृत्रिम वृक्क) — अति-यथार्थ 3D",build:Mdialysis,ncert:"Ch 5 · excretion · artificial kidney"})}
+
 })();

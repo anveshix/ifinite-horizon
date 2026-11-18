@@ -15,6 +15,8 @@ Keys: **N** chapters panel · **P** lesson panel · **H** home · **F** fps · �
 
 ## 3D | 2D switch (one screen)
 The app is the root `index.html`. The **3D | 2D** switch sits in its top bar and on Home (key **V**); 2D shows the labelled image for the *current* topic in the same stage, with the same chapters and lesson panel. Code + topic→image map: `assets/va-2d.js`; images: `public/2d/<class>/<subject>/images/`. Deep link: `index.html?view=2d#ch5/heart`.
+
+**Projector / classroom mode (all 114 Class IX + X 2D images):** press **📽 Present** or key **S** in 2D — in the app (`assets/va-2d.js`) and in every standalone viewer `public/2d/<class>/<subject>/viewer.html` (`public/2d/present.js`). Labels show only for the dot you tap; in Present mode Space/→ reveals one label at a time, PgDn/PgUp change image, **A** Reveal/Quiz/All, **Z** zoom, **L** laser, **B/W** blank, **E** language, **T** theme, **+/−** text size, **F** full screen, **?** help, **Esc** exit.
 Deploy the **repository root** (GitHub Pages: branch root; Vercel: `outputDirectory` is `.`). `public/index.html` and `public/science/index.html` only forward old links to the app.
 
 ## Teacher narration
