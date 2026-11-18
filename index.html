@@ -463,16 +463,44 @@ body.noen .chap .ct small{display:block}
 </div></div>
 <div id="perfReport" hidden></div>
 <div id="report" hidden></div>
-<div id="teacher" hidden><div class="hw">
- <div class="hhead"><div class="hlogo">🧑‍🏫</div><div><h1>Teacher <span>dashboard</span></h1><div class="credit" style="font-size:13px;margin-top:4px">शिक्षक डैशबोर्ड · reports stay in this browser · no internet needed</div></div></div>
- <p class="hsub">Ask students to open <b>Home → 👤 My report</b>, type their name and send you the code. Paste all the codes (or a whole WhatsApp chat export) below.<br><span class="hi">विद्यार्थी “My report” से कोड भेजें — सभी कोड यहाँ चिपकाएँ।</span></p>
- <textarea id="tIn" rows="4" placeholder="Paste report codes here (VA1.…) — one or many, any text is fine"></textarea>
- <div class="hact" style="margin:10px 0 6px"><button class="btn prim" id="tAdd">➕ Add reports</button><label class="btn">📂 Load .txt files<input id="tFiles" type="file" accept=".txt,text/plain" multiple hidden></label><button class="btn" id="tCsv">⬇ Export CSV (Excel)</button><button class="btn" id="tPrint">🖨 Print</button><button class="btn" id="tClear">Clear class</button><button class="btn" id="tClose">⌂ Home</button></div>
- <div id="tMsg" class="credit"></div>
- <div id="tSum" class="chips" style="margin:14px 0"></div>
- <div id="tWeak"></div>
- <div id="tTable" class="tt"></div>
- <div class="hfoot"><span>Developer © 2026 <b>PP Creations</b> by Paras Pranav · Vigyan Atlas</span><span>Codes are a convenience, not an exam lock — a student could edit their own.</span></div>
+<div id="teacher" hidden><div class="hw va-teacher">
+ <header class="teacher-masthead">
+  <div class="teacher-brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M7 15.5 20 8l13 7.5L20 23 7 15.5Z"/><path d="M12.5 19v7.5c4.8 3.8 10.2 3.8 15 0V19M33 16v9"/><circle cx="33" cy="27" r="1.5"/></svg></div>
+  <div class="teacher-brand-copy"><span>VIGYAN ATLAS <i>/</i> EDUCATOR SPACE</span><strong>Teacher <em>dashboard</em></strong><small lang="hi">शिक्षक डैशबोर्ड · कक्षा की प्रगति, स्पष्ट रूप से</small></div>
+  <div class="teacher-privacy"><span class="teacher-lock" aria-hidden="true">✓</span><span><b>PRIVATE BY DESIGN</b><small>Saved on this device · works offline</small></span></div>
+  <button class="teacher-back" id="tClose"><span aria-hidden="true">←</span> Back to atlas</button>
+ </header>
+ <main class="teacher-main">
+  <section class="teacher-intro" aria-labelledby="teacherIntroTitle">
+   <div><p class="teacher-kicker">CLASSROOM INSIGHTS</p><h2 id="teacherIntroTitle">Turn reports into<br><em>next steps.</em></h2></div>
+   <p>Collect student progress codes to see explored models, quiz results, and topics that may need another explanation. All records stay in this browser — nothing is sent to a server.</p>
+  </section>
+  <section class="teacher-import-grid" aria-label="Add student reports">
+   <div class="teacher-import-card">
+    <div class="teacher-card-heading"><span class="teacher-step">01</span><div><h3>Collect student reports</h3><p>Paste one or more codes, or import text files.</p></div></div>
+    <label class="teacher-input-label" for="tIn">REPORT CODES <span>VA1 · one or many</span></label>
+    <textarea id="tIn" rows="5" placeholder="Paste student report codes here — multiple codes or a WhatsApp chat export are okay.
+
+विद्यार्थियों के रिपोर्ट कोड यहाँ चिपकाएँ।" aria-label="Student report codes"></textarea>
+    <div class="teacher-import-actions"><button class="teacher-button teacher-button-primary" id="tAdd"><span aria-hidden="true">＋</span> Add reports</button><label class="teacher-button teacher-button-secondary" for="tFiles"><span aria-hidden="true">↥</span> Import .txt files<input id="tFiles" type="file" accept=".txt,text/plain" multiple hidden></label></div>
+    <p id="tMsg" class="teacher-status" role="status" aria-live="polite"></p>
+   </div>
+   <aside class="teacher-how-card">
+    <p class="teacher-kicker">A SIMPLE WORKFLOW</p><h3>From code to classroom insight</h3>
+    <ol><li><span>1</span><p><b>Students create a report</b><small>Home → My learning report</small></p></li><li><span>2</span><p><b>Collect and add codes</b><small>Paste, or import a .txt file</small></p></li><li><span>3</span><p><b>Review patterns together</b><small>Use results to guide the next lesson</small></p></li></ol>
+    <div class="teacher-local-note"><span aria-hidden="true">◉</span><p><b>Local, not uploaded.</b> Reports are stored only in this browser. Export a CSV when you need a separate copy.</p></div>
+   </aside>
+  </section>
+  <section class="teacher-results" aria-labelledby="teacherResultsTitle">
+   <div class="teacher-results-heading"><div><p class="teacher-kicker">YOUR CLASS</p><h2 id="teacherResultsTitle">Learning overview</h2><p>Progress summaries and topic-level results from the reports you add.</p></div>
+    <div class="teacher-result-actions"><button class="teacher-button teacher-button-secondary" id="tCsv"><span aria-hidden="true">↓</span> Export CSV</button><button class="teacher-button teacher-button-secondary" id="tPrint"><span aria-hidden="true">▤</span> Print</button><button class="teacher-button teacher-button-danger" id="tClear">Clear reports</button></div>
+   </div>
+   <div id="tSum" class="chips teacher-summary" style="margin:14px 0" aria-live="polite"></div>
+   <div id="tWeak" class="teacher-weak"></div>
+   <div id="tTable" class="tt teacher-table"></div>
+  </section>
+ </main>
+ <footer class="teacher-footer"><span>Vigyan Atlas <i>·</i> Teacher tools</span><span>Student reports are a learning aid, not an exam record.</span></footer>
 </div></div>
 <div id="app">
  <aside id="side">
@@ -8122,6 +8150,7 @@ paintSet();sync();
 </script>
 <link rel="stylesheet" href="assets/va-skin.css">
 <link rel="stylesheet" href="assets/va-home.css">
+<link rel="stylesheet" href="assets/va-teacher.css">
 <script src="public/2d/conditions.js"></script>
 <script src="assets/va-2d.js"></script>
 <script src="assets/va-cinema.js"></script>
