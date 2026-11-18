@@ -58,3 +58,7 @@ Guided topics now move the camera on every step (`stepCam` in `tools/guided-modu
 - **Cinema auto-play verified end-to-end** (software GL, 4-step topic): step 1→2→3→4, "Lesson complete" screen, Replay returns to step 1.
 - Every custom 3-D topic (18) builds without errors and shows its step counter.
 Still open: per-topic hand-aimed cameras (the tour is generic), adv6/spectrum panel overlap, flower soil block, underlying legacy primitive models, real-GPU / projector testing.
+
+## Primitive → custom conversion (physics/chemistry) — progress
+Batch 1 (LabKit: glass vessels, liquids, ions, flame, metals): **done** `ch1/displacement3d`, `ch2/neutralisation3d`, `ch2/ph3d` (all steps screenshot-reviewed, software GL only). Liquid colours render pastel under the contrast filter; reaction progress is time-based with per-step baselines so manual stepping shows the right state.
+Pending (batch 1): reactivity series, corrosion, combination/decomposition. Not started: remaining chemistry, mechanics, waves/sound, magnetism, light, Earth systems (~60 topics still legacy-primitive).

@@ -6028,7 +6028,7 @@ addAfter(Hi.find(h=>h.no===10).topics,"eye",{id:"eye3d",title:"Human eye — rea
 addAfter(Hj.find(h=>h.kp==="ix2").topics,"joint",{id:"joint3d",title:"Elbow joint & muscles — realistic 3D",hi:"कोहनी संधि व पेशियाँ — यथार्थ 3D",build:Mjoint,ncert:"Class IX · joints and muscles"});
 addAfter(Hi.find(h=>h.no===5).topics,"alveoli",{id:"lungs3d",title:"Lungs & airways — realistic 3D",hi:"फेफड़े व वायु मार्ग — यथार्थ 3D",build:Mlungs,ncert:"Ch 5 · respiration in human beings"});
 })();
-/* ===== Custom model sets 1-12: animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination, genetics, cell division, ionic bond, electric circuit, ray diagrams (detailed 3D) =====
+/* ===== Custom model sets 1-12 (+ chemistry lab kit): animal cell, plant cell, bacterium, atomic models, neuron/synapse/reflex, kidney/nephron/dialysis, human reproduction, flower/pollination, genetics, cell division, ionic bond, electric circuit, ray diagrams (detailed 3D) =====
    Fully procedural, hand-modelled geometry (no imported mesh): parametric surfaces for the membrane, nuclear envelope with pores, mitochondria with cristae,
    rough ER sheets with ribosomes, Golgi stack, lysosomes, vesicles, centrioles and microtubules. Source for the block injected by tools/inject-anatomy.py.
    Proportions are artistic but follow textbook organisation; sizes are NOT to scale and the protein-traffic particles are schematic (stated on screen). */
@@ -7388,6 +7388,99 @@ function Mrays(){sd=121;const n=new Ne;Ge(n,{key:1.9});Je(n,-3.6,60,.08);const g
 Q_("ch9/rays3d",[["Where must an object be placed so that a concave mirror gives a virtual, enlarged image?","अवतल दर्पण से आभासी, बड़ा प्रतिबिंब पाने हेतु वस्तु कहाँ रखें?",["Beyond C","At C","Between F and C","Between P and F"],3,"Inside the focus (u < f)."],["Which mirror always forms a virtual, upright, diminished image?","कौन-सा दर्पण सदा आभासी, सीधा, छोटा प्रतिबिंब बनाता है?",["Concave","Convex","Plane only","Both"],1,"Convex mirror."],["A convex lens forms a real, inverted image of the same size when the object is at…","उत्तल लेंस समान आकार का वास्तविक, उलटा प्रतिबिंब कब बनाता है?",["F","2F","Infinity","Between O and F"],1,"At 2F the image is also at 2F."],["A ray parallel to the principal axis, after reflection from a concave mirror, passes through…","अक्ष के समांतर किरण अवतल दर्पण से परावर्तित होकर कहाँ से गुज़रती है?",["The pole","The focus","The centre of curvature","Infinity"],1,"Through F."],["Magnification m = −2 means the image is…","m = −2 का अर्थ प्रतिबिंब…",["Upright and twice the size","Inverted and twice the size","Inverted and half the size","Upright and half the size"],1,"Negative = inverted, |m| = 2 = enlarged."]]);
 Px["ch9/rays3d"]=[["A magnifying glass is a convex lens used with the object inside its focus — that gives a virtual, upright, enlarged image.","आवर्धक लेंस उत्तल लेंस है जिसे वस्तु फ़ोकस के भीतर रखकर प्रयोग करते हैं — आभासी, सीधा, बड़ा प्रतिबिंब।"],["Car rear-view mirrors are convex: they show a wider area, but objects look smaller and farther than they are.","कार के पश्च-दर्शी दर्पण उत्तल होते हैं: अधिक क्षेत्र दिखता है, पर वस्तुएँ छोटी व दूर दिखती हैं।"]];
 {const Lr=Hi.find(h=>h.no===9).topics,i=Lr.findIndex(x=>x.id==="optics");Lr.splice(i<0?Lr.length:i+1,0,{id:"rays3d",title:"Ray diagrams: mirrors & lenses — detailed 3D",hi:"किरण-आरेख: दर्पण व लेंस — विस्तृत 3D",build:Mrays,ncert:"Ch 9 · light — reflection and refraction"})}
+/* ===================== LABKIT — shared glassware, liquids, ions, flames (chemistry batch 1) ===================== */
+const LAB={};const ease=t=>t*t*(3-2*t);
+LAB.glassM=()=>MAT(0xe6f2ff,{roughness:.04,clearcoat:1,clearcoatRoughness:.02,opacity:.2,depthWrite:!1,sheen:0,envMapIntensity:1.5,emissive:0x1a2a3a,emissiveIntensity:.05,bumpScale:0});
+LAB.liqM=col=>MAT(col,{roughness:.08,clearcoat:.9,opacity:.86,depthWrite:!1,sheen:0,envMapIntensity:.9,emissive:0x101820,emissiveIntensity:.08,bumpScale:0});
+LAB.table=g=>{const t=new N(new Xe(14,14,.5,4),MAT(0xc98d6a,{roughness:.65,sheen:0,bumpScale:.25,envMapIntensity:.35}));t.rotation.y=PI/4;t.scale.set(2.0,1,.75);t.position.y=-.3;t.receiveShadow=!0;g.add(t);const e=new N(new Xe(14.4,14.4,.1,4),MAT(0x8a5a3a,{roughness:.7,sheen:0}));e.rotation.y=PI/4;e.scale.set(2.0,1,.75);e.position.y=-.6;g.add(e)};
+LAB.vessel=(g,x,z,r,h,kind,color,level)=>{const v=new J;v.position.set(x,0,z);g.add(v);const gm=LAB.glassM();
+ const wall=kind==="flask"?new N(param(30,48,(u,w)=>{const t=u,rad=t<.55?lerp(r,r*.26,Math.pow(t/.55,1.15)):r*.26+(t>.9?.05*(t-.9)/.1*r:0),a=w*TAU;return[Math.cos(a)*rad,u*h,Math.sin(a)*rad]}),gm):new N(new Xe(r,r,h,40,1,!0),gm);if(kind!=="flask")wall.position.y=h/2;v.add(wall);
+ const base=new N(new Xe(r,r,.1,40),gm);base.position.y=.05;v.add(base); const rimT=new N(param(6,40,(u,w)=>{const a=w*TAU,rr=(kind==="flask"?r*.3:r)+.02*Math.cos(u*TAU);return[Math.cos(a)*rr,h+.02*Math.sin(u*TAU),Math.sin(a)*rr]}),gm);v.add(rimT);
+ const liqM=LAB.liqM(color);let liq;if(kind==="flask"){liq=new N(new Xe(r*.9,r*.9,1,32),liqM)}else liq=new N(new Xe(r*.94,r*.94,1,36),liqM);v.add(liq);
+ const o={v,liq,liqM,r,h,kind,level:level};
+ o.set=(lv,col)=>{o.level=lv;const hh=Math.max(.001,lv*h);liq.scale.y=hh;liq.position.y=.1+hh/2;liq.visible=lv>.01;if(kind==="flask"){const f=Math.min(1,lv*h/(h*.55));const rt=lerp(r*.9,r*.3,Math.pow(f,1.0));liq.scale.x=rt/(r*.9);liq.scale.z=rt/(r*.9)}if(col!==undefined)liqM.color.setHex(col)};o.set(level,color);return o};
+LAB.tint=(m,col)=>{m.color.copy(col);m.emissive.copy(col).multiplyScalar(.5);m.emissiveIntensity=1};
+LAB.ions=(g,n,rad)=>{const m=new Wn(new it(rad,10,8),new bt({color:0xffffff}),n);m.frustumCulled=!1;g.add(m);const P=[];for(let i=0;i<n;i++)P.push({p:c(R()-.5,R(),R()-.5),v:c((R()-.5),(R()-.5),(R()-.5)).multiplyScalar(.6),col:0xffffff});return{m,P,n,m4:new gt,cc:new we,setCol(i,hx){P[i].col=hx;m.setColorAt(i,this.cc.setHex(hx))},each(f){for(let i=0;i<n;i++)f(P[i],i)},update(t,box,sp,vis){for(let i=0;i<n;i++){const q=P[i];if(vis&&!vis(i)){this.m4.makeScale(0,0,0);m.setMatrixAt(i,this.m4);continue}q.p.x+=q.v.x*sp*.02;q.p.y+=q.v.y*sp*.02;q.p.z+=q.v.z*sp*.02;if(Math.abs(q.p.x)>.5||q.p.x*q.v.x>0&&Math.abs(q.p.x)>.48)q.v.x*=-1;if(q.p.y<0||q.p.y>1)q.v.y*=-1;if(Math.abs(q.p.z)>.5)q.v.z*=-1;q.p.x=cl(q.p.x,-.5,.5);q.p.y=cl(q.p.y,0,1);q.p.z=cl(q.p.z,-.5,.5);this.m4.makeScale(1,1,1);this.m4.setPosition(box.x+q.p.x*box.w,box.y0+q.p.y*box.h,box.z+q.p.z*box.w);m.setMatrixAt(i,this.m4)}m.instanceMatrix.needsUpdate=!0;if(m.instanceColor)m.instanceColor.needsUpdate=!0}}};
+LAB.bubbles=(g,n,rad,col)=>{const m=new Wn(new it(rad,8,6),new bt({color:col||0xffffff,transparent:!0,opacity:.7}),n);m.frustumCulled=!1;g.add(m);const o=[];for(let i=0;i<n;i++)o.push({a:R()*TAU,r:Math.sqrt(R()),ph:R(),sp:.6+R()*.8});const m4=new gt;return{m,update(t,box,rate){for(let i=0;i<n;i++){const q=o[i];if(rate<=0){m4.makeScale(0,0,0)}else{const f=(t*.35*q.sp*rate+q.ph)%1;m4.makeScale(1,1,1);m4.setPosition(box.x+Math.cos(q.a+f*3)*q.r*box.rad,box.y0+f*(box.y1-box.y0),box.z+Math.sin(q.a+f*3)*q.r*box.rad)}m.setMatrixAt(i,m4)}m.instanceMatrix.needsUpdate=!0}}};
+LAB.flame=(g,x,z)=>{const f=new J;f.position.set(x,0,z);g.add(f);const burner=new N(new Xe(.35,.5,1.3,16),MAT(0x6a707c,{roughness:.4,metal:.8,sheen:0}));burner.position.y=.65;f.add(burner);const cone=new N(new Xe(0,.38,1.6,16),new bt({color:0xffa726,transparent:!0,opacity:.75}));cone.position.y=2.1;f.add(cone);const inner=new N(new Xe(0,.2,1.0,16),new bt({color:0x3a7bff,transparent:!0,opacity:.85}));inner.position.y=1.85;f.add(inner);f.userData.upd=(on,t)=>{cone.visible=inner.visible=on;const k=1+.08*Math.sin(t*18)+.05*Math.sin(t*31);cone.scale.set(k,1+.1*Math.sin(t*22),k)};return f};
+LAB.metal=(col,rough)=>MAT(col,{roughness:rough??.3,metal:.9,clearcoat:.4,sheen:0,envMapIntensity:1.2,emissive:0x101010,emissiveIntensity:.1,bumpScale:.1});
+LAB.nail=(col)=>{const gr=new J,m=LAB.metal(col);const sh=new N(new Xe(.09,.09,3.6,12),m);sh.position.y=-1.8;gr.add(sh);const hd=new N(new Xe(.22,.22,.09,16),m);hd.position.y=.04;gr.add(hd);const pt_=new N(new Xe(.09,0,.35,12),m);pt_.position.y=-3.77;gr.add(pt_);gr.userData.m=m;return gr};
+
+/* ---- chemistry batch 1 ---- */
+const specSteps=key=>((window.__vaSpecs&&window.__vaSpecs[key])||[]).map((x,i)=>[""+(i+1),x[0],x[1],x[2],x[3],"Hand-modelled · schematic",x[5]||10]);
+const labRun=o=>run({n:o.n,g:o.g,org:[],show:{},base:{},ST:specSteps(o.key),cams:o.cams,camK:o.camK,labels:o.labels,hud:o.hud,frame:o.frame,predict:o.predict});
+const labScene=()=>{sd=131;const n=new Ne;Ge(n,{key:1.9});Je(n,-1,40,.08);const g=new J;n.add(g);LAB.table(g);return{n,g}};
+const Lb=(par,p)=>()=>par.localToWorld(c(...p));
+const mkDT=()=>{let lt=0;return t=>{const d=min(.1,max(0,t-lt));lt=t;return d}};
+const toward=(p,T,dt,r)=>T>=p?min(T,p+dt*r):max(T,p-dt*.6);
+const insAfter=(list,id,t)=>{const i=list.findIndex(x=>x.id===id);list.splice(i<0?list.length:i+1,0,t)};
+const stand=(g,x,h)=>{const m=LAB.metal(0x6a707c);const p=new N(new Xe(.12,.12,h,10),m);p.position.set(x,h/2,0);g.add(p);const b=new N(new Xe(1.4,1.4,.25,24),m);b.position.set(x,.1,0);g.add(b);const a=new N(new Xe(.1,.1,3.2,8),m);a.rotation.z=PI/2;a.position.set(x+1.6,h-.8,0);g.add(a)};
+/* 1 · displacement */
+function Mdisp(){const {n,g}=labScene();
+ const V=LAB.vessel(g,0,0,1.9,3.8,"beaker",0x2e6fd6,.72);
+ const nail=LAB.nail(0x8a909b);nail.scale.set(1.9,1,1.9);nail.position.set(.2,6.4,0);g.add(nail);
+ const dm=MAT(0xc7733a,{roughness:.5,metal:.5,sheen:0,opacity:0,depthWrite:!1});const dep=new N(new Xe(.15,.15,3.5,14),dm);dep.position.y=-1.8;nail.add(dep);
+ const ions=LAB.ions(g,70,.1);
+ const MG=new J;MG.position.set(8.2,3.2,0);g.add(MG);const ring=new N(new Xe(3.3,3.3,.12,48),MAT(0xcfe3ff,{roughness:.2,opacity:.16,depthWrite:!1,sheen:0}));ring.rotation.x=PI/2;MG.add(ring);
+ const at=(col,x,y,r)=>{const m=new N(new it(r,20,16),MAT(col,{roughness:.35,metal:.2,clearcoat:.5,sheen:0,envMapIntensity:.6}));m.position.set(x,y,.2);MG.add(m);return m};
+ for(let i=0;i<5;i++)at(0x6b7280,-2.2+i*1.1,-2.3,.45);for(let i=0;i<4;i++)at(0x6b7280,-1.65+i*1.1,-1.5,.45);
+ const fe=at(0x6b7280,-1.1,-1.5,.45),cu=at(0x3b82f6,1.3,1.9,.36);
+ const wire=new N(new Xe(.05,.05,1,6),new bt({color:0xffd23f}));MG.add(wire);wire.visible=!1;
+ const cams=[[c(2.5,6,14),c(2.2,2.6,0)],[c(2.5,6,14),c(2.2,2.6,0)],[c(2.5,6,14),c(2.2,2.6,0)],[c(8.2,3.8,15),c(8.2,3.2,0)]];
+ let p=0,ls=-1,DT=mkDT();const T_=[0,.55,1,1];
+ const labels=[["d-be","Copper sulphate solution (blue)","कॉपर सल्फ़ेट विलयन (नीला)",Lb(V.v,[1.9,2.6,0]),[0,1,2]],["d-na","Iron nail","लोहे की कील",Lb(nail,[.3,.4,0]),[0,1,2]],["d-de","Reddish-brown copper layer","लाल-भूरी ताँबे की परत",Lb(nail,[.3,-1.8,0]),[1,2]],["d-gr","Fe²⁺ — solution turns pale green","Fe²⁺ — विलयन हरा",Lb(V.v,[-1.9,1.6,0]),[2]],["m-fe","Fe atom → Fe²⁺ (loses 2 e⁻)","Fe परमाणु → Fe²⁺ (2 e⁻ खोता)",Lb(MG,[-1.1,-.3,0]),[3]],["m-cu","Cu²⁺ → Cu atom (gains 2 e⁻)","Cu²⁺ → Cu परमाणु (2 e⁻ पाता)",Lb(MG,[1.3,2.7,0]),[3]],["m-ti","Zoomed particle view","कण-दृश्य (बड़ा)",Lb(MG,[0,3.8,0]),[3]]];
+ return labRun({n,g,key:"ch1/displacement",cams,camK:["Setup","Reaction","20 min later","Particles"],labels,
+  hud:()=>`Fe + CuSO₄ → FeSO₄ + Cu · reaction ${Math.round(p*100)} %`,
+  frame:(s,t)=>{if(ls!==s){ls=s;p=max(p,[0,0,.45,.95][s])}p=toward(p,T_[s],DT(t),.045);
+   nail.position.y=lerp(nail.position.y,s===0?6.4:3.9,.05);dm.opacity=cl(p*1.2,0,.95);dm.transparent=!0;
+   LAB.tint(V.liqM,new we().setRGB(lerp(.18,.72,p),lerp(.43,.85,p),lerp(.84,.62,p)));
+   ions.update(t,{x:0,w:3.2,y0:.4,h:2.5,z:0},1);ions.each((q,i)=>{const hx=i/70<1-p?0x3b82f6:0x6fcf7a;if(q.col!==hx)ions.setCol(i,hx)});
+   MG.visible=s===3;const k=ease((t*.18)%1);fe.position.set(-1.1+k*1.2,-1.5+k*3.4,.2);fe.material.color.setHex(k>.55?0x6fcf7a:0x6b7280);cu.position.set(1.3-k*2.4,1.9-k*3.4,.2);cu.material.color.setHex(k>.9?0xc7733a:0x3b82f6);cu.scale.setScalar(k>.9?1.3:1)},
+  predict:{q:"Why does the nail turn reddish-brown in copper sulphate solution?",opts:[["Iron is more reactive and displaces copper",!0,"Correct — copper atoms deposit on the nail."],["Copper is more reactive than iron",!1,"Then nothing would happen."],["The nail melts",!1,"No melting at room temperature."]]}})}
+Q_("ch1/displacement3d",[["In Fe + CuSO₄ → FeSO₄ + Cu, which element is displaced?","Fe + CuSO₄ → FeSO₄ + Cu में कौन विस्थापित होता है?",["Iron","Copper","Sulphur","Oxygen"],1,"Copper is displaced by the more reactive iron."],["The blue colour fades because…","नीला रंग फीका क्यों?",["Cu²⁺ ions are used up","Water evaporates","The nail dissolves","Light is absorbed"],0,"Cu²⁺ becomes copper atoms."],["This is a…","यह है…",["Combination","Displacement","Decomposition","Neutralisation"],1,"A more reactive metal displaces a less reactive one."]]);
+Px["ch1/displacement3d"]=[["Iron tools left in copper-sulphate sprays turn coppery — the same reaction.","नीले थोथे के घोल में लोहे के औज़ार ताँबे जैसे हो जाते हैं — यही अभिक्रिया।"],["Copper plating of objects uses a similar idea — electrons move so Cu²⁺ deposits as metal.","वस्तुओं पर ताँबे की परत चढ़ाना भी इसी विचार पर चलता है।"]];
+insAfter(Hi.find(h=>h.no===1).topics,"displacement",{id:"displacement3d",title:"Iron nail in copper sulphate — detailed 3D",hi:"कॉपर सल्फ़ेट में लोहे की कील — विस्तृत 3D",build:Mdisp,ncert:"Ch 1 · displacement reaction"});
+/* 2 · neutralisation */
+function Mneut(){const {n,g}=labScene();
+ const F=LAB.vessel(g,0,0,2.1,4,"flask",0xff3d9a,.42);
+ const bu=LAB.vessel(g,0,0,.45,4.2,"beaker",0xffd23f,.95);bu.v.position.y=6.7;
+ const tap=new N(new Xe(.24,.24,.5,12),LAB.metal(0xbfc5cf));tap.rotation.z=PI/2;tap.position.set(0,6.5,0);g.add(tap);stand(g,-3,11.4);
+ const drop=new N(new it(.16,12,10),new bt({color:0xffd23f,transparent:!0,opacity:.95}));g.add(drop);
+ const ions=LAB.ions(g,40,.1);
+ const cams=[[c(0,6,20),c(0,5.2,0)],[c(0,6,20),c(0,5.2,0)],[c(0,5,14),c(0,3.2,0)],[c(0,6,20),c(0,5.2,0)]];
+ let p=0,ls=-1,DT=mkDT();const T_=[0,.8,1,1];
+ const labels=[["n-fl","Flask: NaOH + phenolphthalein (pink)","फ्लास्क: NaOH + फ़िनॉल्फ़थैलीन (गुलाबी)",Lb(F.v,[2.1,1.6,0]),[0,1,3]],["n-bu","Burette: HCl","ब्यूरेट: HCl",Lb(bu.v,[.5,3.5,0]),[0,1,2]],["n-oh","OH⁻ ions (red)","OH⁻ आयन (लाल)",Lb(F.v,[-2,1.4,0]),[0,1]],["n-wa","H⁺ + OH⁻ → H₂O","H⁺ + OH⁻ → H₂O",Lb(F.v,[2.1,2.4,0]),[1,2]],["n-en","End-point: pink just vanishes — pH 7","अंतिम बिंदु: गुलाबी लुप्त — pH 7",Lb(F.v,[0,4.6,0]),[2]],["n-an","Antacid · toothpaste · lime in soil","एंटैसिड · टूथपेस्ट · मिट्टी में चूना",Lb(F.v,[0,4.8,0]),[3]]];
+ return labRun({n,g,key:"ch2/neutralisation",cams,camK:["Setup","Add acid","End-point","Uses"],labels,
+  hud:()=>`HCl added: ${Math.round(p*6)} drops · pH ≈ ${(p<.99?13-6*p:7).toFixed(1)} · ${p<.99?"still BASIC (pink)":"NEUTRAL — pink gone"}`,
+  frame:(s,t)=>{if(ls!==s){ls=s;p=max(p,[0,0,.7,1][s])}p=toward(p,T_[s],DT(t),.05);
+   LAB.tint(F.liqM,new we(0xff2d8a).lerp(new we(0xeaf6ff),cl(p*1.1,0,1)));F.set(.5+.05*p);bu.set(.95-.18*p);
+   const act=(s===1||s===2)&&p<.98,ph=(t*.7)%1;drop.visible=act;if(act)drop.position.set(0,lerp(6.2,2.3,ph*ph),0);
+   ions.update(t,{x:0,w:1.5,y0:.35,h:1.1,z:0},.9);ions.each((q,i)=>{const gone=i%2===1&&i/40<p;const hx=i%2?(gone?0xeaf4ff:0xe53935):0xf5c542;if(q.col!==hx)ions.setCol(i,hx)})},
+  predict:{q:"Antacid tablets relieve acidity because they are…",opts:[["Bases that neutralise stomach acid",!0,"Correct — acid + base → salt + water."],["Acids",!1,"That would make it worse."],["Salts that cool the stomach",!1,"They work by neutralisation."]]}})}
+Q_("ch2/neutralisation3d",[["Neutralisation gives…","उदासीनीकरण से मिलता है…",["Salt and water","Acid and base","Salt and hydrogen","Oxide only"],0,"Acid + base → salt + water."],["Phenolphthalein turns colourless when the solution becomes…","फ़िनॉल्फ़थैलीन रंगहीन कब होता है?",["Basic","Neutral/acidic","Concentrated","Hot"],1,"It is colourless in acid."],["pH at the end-point of strong acid–strong base titration is…","अंतिम बिंदु पर pH…",["1","7","10","14"],1,"Neutral solution."]]);
+Px["ch2/neutralisation3d"]=[["Rubbing baking soda on an ant bite neutralises the formic acid.","चींटी के डंक पर बेकिंग सोडा फ़ॉर्मिक अम्ल को उदासीन करता है।"],["Milk of magnesia (Mg(OH)₂) is a mild base used to treat stomach acidity.","मिल्क ऑफ़ मैग्नीशिया (Mg(OH)₂) हल्का क्षार है, अम्लता में उपयोगी।"]];
+insAfter(Hi.find(h=>h.no===2).topics,"neutralisation",{id:"neutralisation3d",title:"Neutralisation — detailed 3D",hi:"उदासीनीकरण — विस्तृत 3D",build:Mneut,ncert:"Ch 2 · neutralisation"});
+/* 3 · pH */
+function Mph(){const {n,g}=labScene();
+ const PH=[[1,0xe53935],[3,0xff8f1f],[5,0xf4d21f],[7,0x2e9a54],[9,0x2a8fb0],[11,0x3a4fd6],[13,0x8a3fd6]];
+ const T=PH.map((q,i)=>LAB.vessel(g,-9+i*3,0,.75,5,"beaker",0xe4f0ff,.55));
+ const strip=PH.map((q,i)=>{const b=new N(new _e(3,.5,.3),new bt({color:q[1]}));b.position.set(-9+i*3,7.2,0);g.add(b);return b});
+ const dr=new J;g.add(dr);const db=new N(new Xe(.16,.16,1.5,12),MAT(0x2a2e38,{roughness:.5,sheen:0}));dr.add(db);const dt=new N(new Xe(.34,.34,.5,12),MAT(0xc0392b,{roughness:.6,sheen:0}));dt.position.y=1;dr.add(dt);
+ const mk=new N(new Xe(0,.4,.8,10),new bt({color:0x111111}));mk.rotation.x=PI;g.add(mk);
+ const cams=[[c(0,6.5,25),c(0,3.2,0)],[c(0,6.5,25),c(0,3.2,0)],[c(0,6,21),c(0,3.5,0)],[c(0,6.5,25),c(0,3.2,0)]];
+ let fill=0,ls=-1,DT=mkDT();
+ const lab=(id,en,hi,x,y,st)=>[id,en,hi,Lb(g,[x,y,0]),st];
+ const labels=[lab("p-ac","ACIDS · pH < 7","अम्ल · pH < 7",-9,8.4,[1,2,3]),lab("p-ne","NEUTRAL · pH 7","उदासीन · pH 7",0,8.4,[1,2,3]),lab("p-ba","BASES · pH > 7","क्षार · pH > 7",9,8.4,[1,2,3]),lab("p-hc","HCl · pH ≈ 1","HCl · pH ≈ 1",-9,6.2,[1,2]),lab("p-le","Lemon · pH 2–3","नींबू · pH 2–3",-6,6.2,[2]),lab("p-bl","Blood · pH 7.4","रक्त · pH 7.4",0,6.2,[3]),lab("p-so","Soap · pH 10–11","साबुन · pH 10–11",6,6.2,[2]),lab("p-na","NaOH · pH 14","NaOH · pH 14",9,6.2,[1,2])];
+ return labRun({n,g,key:"ch2/ph",cams,camK:["Tubes","Indicator","Strong / weak","In life"],labels,
+  hud:s=>s>=1?"Universal indicator: red/orange = acid · green = neutral · blue/violet = base":"Seven tubes of clear liquid",
+  frame:(s,t)=>{if(ls!==s){ls=s;fill=max(fill,s>=2?1:0)}fill=toward(fill,s>=1?1:0,DT(t),.12);PH.forEach((q,i)=>{const k=cl(fill*1.5-i*.1,0,1);LAB.tint(T[i].liqM,new we(0xe4f0ff).lerp(new we(q[1]),k))});
+   dr.visible=s===1&&fill<.95;if(dr.visible){const i=cl(Math.floor(fill*7.5),0,6);dr.position.set(-9+i*3,6.4+.4*Math.sin(t*5),0)}
+   const i=s>=2?Math.floor(t*.5)%7:3;mk.position.set(-9+i*3,6.6,0);mk.visible=s>=2},
+  predict:{q:"A solution turns universal indicator green. Its pH is about…",opts:[["1",!1,"Red means strong acid."],["7",!0,"Correct — green is neutral."],["14",!1,"Violet means strong base."]]}})}
+Q_("ch2/ph3d",[["pH of a neutral solution is…","उदासीन विलयन का pH…",["0","7","14","1"],1,"pH 7."],["Which has the lowest pH?","किसका pH सबसे कम?",["Lemon juice","Soap","Water","Baking soda solution"],0,"Lemon juice is acidic."],["Universal indicator in a base shows…","क्षार में सार्वत्रिक सूचक…",["Red","Green","Blue/violet","Colourless"],2,"Blue to violet."]]);
+Px["ch2/ph3d"]=[["Tooth decay begins when mouth pH falls below ~5.5 — brush after sweets.","मुँह का pH 5.5 से नीचे जाने पर दाँत सड़ते हैं — मीठे के बाद ब्रश करें।"],["Human blood is kept at pH 7.35–7.45; a small change is dangerous.","मानव रक्त का pH 7.35–7.45 रहता है; थोड़ा परिवर्तन भी ख़तरनाक।"]];
+insAfter(Hi.find(h=>h.no===2).topics,"ph",{id:"ph3d",title:"pH scale & universal indicator — detailed 3D",hi:"pH पैमाना व सार्वत्रिक सूचक — विस्तृत 3D",build:Mph,ncert:"Ch 2 · pH scale"});
+
 })();
 /* ===== Guided sequences for free-play (explore) topics =====
    Audit 2026-11 found 80 of 120 topics had NO step sequence (just a live model + toggles). This layer wraps such a topic so that it gets an ordered, bilingual

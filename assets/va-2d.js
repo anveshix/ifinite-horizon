@@ -6,8 +6,8 @@ const DATA={"class9/biology":{"cell_animal":{"title":"Animal Cell — पशु 
 const B9="class9/biology/",C9="class9/chemistry/",P9="class9/physics/",B10="class10/biology/",C10="class10/chemistry/",P10="class10/physics/";
 const DIG=[B9+"digestive_mouth",B9+"digestive_stomach",B9+"digestive_intestine",B9+"digestive_liver"];
 const MAP={
-"ch1/displacement":[C10+"displacement"],"ch1/balancing":[C10+"balancing_equation"],"ch1/combination":[C10+"combination",C10+"decomposition"],"ch1/redox":[C10+"redox_reaction"],"ch1/corrosion":[C10+"corrosion_rancidity"],
-"ch2/ph":[C10+"ph"],"ch2/indicators":[C10+"indicators"],"ch2/neutralisation":[C10+"neutralisation"],"ch2/acidrx":[C10+"metal_acid"],"ch2/salts":[C10+"important_salts"],
+"ch1/displacement":[C10+"displacement"],"ch1/displacement3d":[C10+"displacement"],"ch1/balancing":[C10+"balancing_equation"],"ch1/combination":[C10+"combination",C10+"decomposition"],"ch1/redox":[C10+"redox_reaction"],"ch1/corrosion":[C10+"corrosion_rancidity"],
+"ch2/ph":[C10+"ph"],"ch2/ph3d":[C10+"ph"],"ch2/indicators":[C10+"indicators"],"ch2/neutralisation":[C10+"neutralisation"],"ch2/neutralisation3d":[C10+"neutralisation"],"ch2/acidrx":[C10+"metal_acid"],"ch2/salts":[C10+"important_salts"],
 "ch3/physical":[C10+"metals_nonmetals"],"ch3/ionic":[C10+"ionic_bond_nacl"],"ch3/reactivity":[C10+"reactivity",C10+"metal_acid"],"ch3/extraction":[C10+"extraction_metals"],"ch3/prevent":[C10+"prevent_corrosion"],
 "ch4/covalent":[C10+"covalent"],"ch4/molecules":[C10+"carbon_homologous",C10+"covalent"],"ch4/homologous":[C10+"carbon_homologous"],"ch4/ethanol":[C10+"ethanol_esterification"],"ch4/reactions":[C10+"ethanol_esterification"],"ch4/allotropes":[C10+"allotropes_carbon"],"ch4/micelle":[C10+"micelle"],
 "ch5/heart":[B10+"circulatory_system"],"ch5/heart3d":[B10+"circulatory_system"],"ch5/digest3d":DIG,"ch5/digestion":DIG.concat(B9+"teeth"),
