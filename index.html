@@ -7481,6 +7481,91 @@ Q_("ch2/ph3d",[["pH of a neutral solution is…","उदासीन विल�
 Px["ch2/ph3d"]=[["Tooth decay begins when mouth pH falls below ~5.5 — brush after sweets.","मुँह का pH 5.5 से नीचे जाने पर दाँत सड़ते हैं — मीठे के बाद ब्रश करें।"],["Human blood is kept at pH 7.35–7.45; a small change is dangerous.","मानव रक्त का pH 7.35–7.45 रहता है; थोड़ा परिवर्तन भी ख़तरनाक।"]];
 insAfter(Hi.find(h=>h.no===2).topics,"ph",{id:"ph3d",title:"pH scale & universal indicator — detailed 3D",hi:"pH पैमाना व सार्वत्रिक सूचक — विस्तृत 3D",build:Mph,ncert:"Ch 2 · pH scale"});
 
+/* 4 · reactivity series */
+function Mreact(){const {n,g}=labScene();
+ const SER=[["K",0x8e5bd6],["Na",0xd65b8e],["Ca",0xd68a3a],["Mg",0xc9b21f],["Al",0x6fa8d6],["Zn",0x5f7a99],["Fe",0x4a4f5a],["Pb",0x3a3f4a],["H",0xffffff],["Cu",0xc7733a],["Ag",0xb8bec8],["Au",0xe0b030]];
+ const bars=SER.map((q,i)=>{const b=new N(new _e(1.6,1.0,.8),q[0]==="H"?new bt({color:0xdfeeff,transparent:!0,opacity:.7}):LAB.metal(q[1],.35));b.position.set(-9+i*1.64,9.2-i*.05,-1.5);g.add(b);return b});
+ const arrow=new N(new Xe(.08,.08,19,8),new bt({color:0x1d4ed8}));arrow.rotation.z=PI/2;arrow.position.set(0,7.9,-1.5);g.add(arrow);
+ const hdr=new N(new Xe(.5,0,.8,12),new bt({color:0x1d4ed8}));hdr.rotation.z=-PI/2;hdr.position.set(9.6,7.9,-1.5);g.add(hdr);
+ const V=LAB.vessel(g,0,0,2,3.8,"beaker",0x2e6fd6,.72);
+ const sm=LAB.metal(0x9aa5b4,.35);const strip=new N(new _e(.45,3.6,.1),sm);g.add(strip);
+ const dm=MAT(0xc7733a,{roughness:.5,metal:.5,sheen:0,opacity:0,depthWrite:!1});dm.transparent=!0;const dep=new N(new _e(.52,3.3,.18),dm);strip.add(dep);dep.position.y=-.1;
+ const bub=LAB.bubbles(g,24,.07,0xffffff);
+ /* [metal colour, solution colour before, after, deposit colour, reacts] per step */
+ const CASE=[null,[0x9aa5b4,0x2e6fd6,0xe6f2ff,0xc7733a,1],[0x6b7280,0x2e6fd6,0x9fd8a2,0xc7733a,1],[0xc7733a,0x9fd8a2,0x9fd8a2,0,0],[0xc7733a,0xe6f2ff,0x3b82f6,0xdfe6ee,1]];
+ const cams=[[c(0,8,22),c(0,5,0)],[c(0,6,15),c(0,3.5,0)],[c(0,6,15),c(0,3.5,0)],[c(0,6,15),c(0,3.5,0)],[c(0,6,15),c(0,3.5,0)]];
+ let p=0,ls=-1,DT=mkDT();const cur=new we;
+ const Lx=(i,y)=>Lb(g,[-9+i*1.64,y,-1.5]);
+ const labels=[["r-k","K — most reactive","K — सबसे अभिक्रियाशील",Lx(0,10.2),[0]],["r-au","Au — least reactive","Au — सबसे कम अभिक्रियाशील",Lx(11,10.2),[0]],["r-fe","Fe","Fe",Lx(6,10.2),[0]],["r-cu","Cu","Cu",Lx(9,10.2),[0]],["r-ag","Ag","Ag",Lx(10,10.2),[0]],["r-ar","Reactivity decreases →","अभिक्रियाशीलता घटती है →",Lb(g,[0,7.3,-1.5]),[0]],["r-st","Metal strip","धातु की पट्टी",Lb(strip,[.5,1.5,0]),[1,2,3,4]],["r-so","Salt solution","लवण विलयन",Lb(V.v,[2,2.4,0]),[1,2,3,4]],["r-no","NO reaction — Cu is below Fe","कोई अभिक्रिया नहीं — Cu, Fe से नीचे",Lb(V.v,[-2,3.2,0]),[3]],["r-de","Displaced metal deposits","विस्थापित धातु जमती है",Lb(strip,[-.5,-.8,0]),[1,2,4]]];
+ return labRun({n,g,key:"ch3/reactivity",cams,camK:["Series","Zn in CuSO₄","Fe in CuSO₄","Cu in FeSO₄","Cu in AgNO₃"],labels,
+  hud:s=>s===0?"K > Na > Ca > Mg > Al > Zn > Fe > Pb > H > Cu > Ag > Au":(CASE[s][4]?"Reaction: "+Math.round(p*100)+" %":"No reaction (0 %)"),
+  frame:(s,t)=>{bars.forEach(b=>b.visible=s===0);arrow.visible=hdr.visible=s===0;const C=CASE[s];
+   if(ls!==s){ls=s;p=C&&C[4]?.5:0}
+   const show=s>0;strip.visible=show;V.v.visible=true;
+   if(C){sm.color.setHex(C[0]);strip.position.set(.2,show?lerp(strip.position.y,3.0,.06):6,0);if(s===4)dm.color.setHex(C[3]);else dm.color.setHex(C[3]||0xc7733a);p=toward(p,C[4]?1:0,DT(t),.07);if(C[4]){dep.visible=!0;dm.opacity=cl(p*1.1,0,.95)}else{dm.opacity=0}
+    LAB.tint(V.liqM,cur.setHex(C[1]).lerp(new we(C[2]),p));V.set(.72)}
+   else{strip.position.set(.2,8,0);dm.opacity=0;LAB.tint(V.liqM,cur.setHex(0xe6f2ff));p=0}
+   bub.update(t,{x:.2,y0:.8,y1:3.3,z:0,rad:.5},C&&C[4]&&p<.98?1:0)},
+  predict:{q:"Will copper displace iron from iron sulphate solution?",opts:[["No — copper is less reactive than iron",!0,"Correct — only a more reactive metal displaces."],["Yes — copper is heavier",!1,"Weight does not matter."],["Yes — it is a shiny metal",!1,"Reactivity decides."]]}})}
+Q_("ch3/reactivity3d",[["Which is more reactive?","कौन अधिक अभिक्रियाशील?",["Cu","Zn","Ag","Au"],1,"Zn is above Cu."],["Cu + FeSO₄ →","Cu + FeSO₄ →",["Fe + CuSO₄","No reaction","Cu₂O","FeO"],1,"Cu is below Fe."],["Which metal displaces silver from AgNO₃?","AgNO₃ से चाँदी कौन विस्थापित करता है?",["Au","Cu","Pt","None"],1,"Cu is above Ag."]]);
+Px["ch3/reactivity3d"]=[["Gold stays shiny for thousands of years — it sits at the bottom of the reactivity series.","सोना हज़ारों वर्ष चमकता रहता है — वह क्रियाशीलता श्रेणी में सबसे नीचे है।"],["Sodium and potassium are stored under kerosene because they react with air and water.","सोडियम व पोटैशियम को मिट्टी के तेल में रखते हैं क्योंकि वे वायु-जल से अभिक्रिया करते हैं।"]];
+insAfter(Hi.find(h=>h.no===3).topics,"reactivity",{id:"reactivity3d",title:"Reactivity series & displacement — detailed 3D",hi:"क्रियाशीलता श्रेणी व विस्थापन — विस्तृत 3D",build:Mreact,ncert:"Ch 3 · reactivity series"});
+/* 5 · corrosion */
+function Mcorr(){const {n,g}=labScene();
+ const XS=[-6,0,6],KIND=["Dry air (CaCl₂ absorbs moisture)","Boiled water + oil layer (no air)","Moist air (water + oxygen)"],HI=["सूखी हवा (CaCl₂)","उबला जल + तेल (वायु नहीं)","नम वायु (जल + ऑक्सीजन)"];
+ const S1=new J;g.add(S1);const T=XS.map((x,i)=>{const v=LAB.vessel(g,x,0,1.0,6,"beaker",i===0?0xffffff:0xdff0ff,i===0?.05:i===1?.6:.35);const nl=LAB.nail(0x8a909b);nl.scale.set(1.8,1,1.8);nl.position.set(x,5.2,0);g.add(nl);const rm=MAT(0xa5481f,{roughness:.9,metal:0,sheen:0,opacity:0,depthWrite:!1,bumpScale:.5});rm.transparent=!0;const rust=new N(new Xe(.14,.14,3.5,14),rm);rust.position.y=-1.85;nl.add(rust);
+  if(i===1){const oil=new N(new Xe(.95,.95,.35,28),LAB.liqM(0xe8b830));oil.position.set(x,4.1+.2,0);S1.add(oil)}
+  if(i===0){const cc=new N(new Xe(.8,.8,.5,20),MAT(0xf2f2f2,{roughness:.9,sheen:0}));cc.position.set(x,.4,0);S1.add(cc)}
+  const cork=new N(new Xe(1.05,1.05,.4,24),MAT(0xc58b4b,{roughness:.9,sheen:0}));cork.position.set(x,6.1,0);if(i!==2)S1.add(cork);
+  return{v,nl,rm}});
+ const sw=(x,col)=>{const b=new N(new _e(2.2,2.2,.25),LAB.metal(col,.3));b.position.set(x,2,0);g.add(b);return b};
+ const ag=sw(-5,0xe6e9ee),cu=sw(0,0xc7733a),fe=sw(5,0x6b7280);ag.visible=cu.visible=fe.visible=!1;
+ const oilF=LAB.vessel(g,-4,0,1.3,2.6,"beaker",0xe8c040,.8),oilR=LAB.vessel(g,4,0,1.3,2.6,"beaker",0xc4a050,.8);oilF.v.visible=oilR.v.visible=!1;
+ const gas=LAB.bubbles(g,20,.09,0xd9e8ff);
+ let day=0,ls=-1,DT=mkDT();const cams=[[c(0,6,20),c(0,3.5,0)],[c(0,6,20),c(0,3.5,0)],[c(0,3.5,14),c(0,1.6,0)],[c(0,3.5,14),c(0,1.4,0)]];
+ const labels=[["c-1",KIND[0],HI[0],Lb(g,[-6,7.3,0]),[0,1]],["c-2",KIND[1],HI[1],Lb(g,[0,7.3,0]),[0,1]],["c-3",KIND[2],HI[2],Lb(g,[6,7.3,0]),[0,1]],["c-ru","Rust: hydrated iron oxide Fe₂O₃·xH₂O","जंग: जलयोजित आयरन ऑक्साइड",Lb(T[2].nl,[.4,-1.8,0]),[1]],["c-ag","Silver tarnish Ag₂S (black)","चाँदी: Ag₂S (काला)",Lb(g,[-5,3.5,0]),[2]],["c-cu","Copper patina (green)","ताँबा: हरी परत",Lb(g,[0,3.5,0]),[2]],["c-fe","Iron rust (brown)","लोहा: जंग (भूरा)",Lb(g,[5,3.5,0]),[2]],["c-ra","Rancid oil: bad smell","तेल खट्टा: दुर्गंध",Lb(g,[4,3.4,0]),[3]],["c-n2","Chips in nitrogen: no oxidation","चिप्स नाइट्रोजन में: ऑक्सीकरण नहीं",Lb(g,[-4,3.4,0]),[3]]];
+ return labRun({n,g,key:"ch1/corrosion",cams,camK:["Three tubes","Days pass","Other metals","Rancidity"],labels,
+  hud:s=>s<=1?`Day ${Math.round(day*14)}: only the tube with water AND air shows rust`:s===2?"Corrosion = slow attack on metals by air, moisture, acids":"Fats + O₂ → oxidised, rancid",
+  frame:(s,t)=>{S1.visible=s<=1;if(ls!==s){ls=s;if(s>=2)day=1;if(s===0)day=0;if(s===1)day=Math.max(day,.4)}day=toward(day,s>=1?1:0,DT(t),.07);
+   T.forEach((q,i)=>{q.rm.opacity=i===2?cl(day*1.3,0,.97):0;q.nl.visible=s<=1;q.v.v.visible=s<=1});
+   T[0].v.v.children.forEach(()=>0);
+   ag.visible=cu.visible=fe.visible=s===2;const k=s===2?cl(.45+(t%12)/14,0,1):0;ag.material.color.setHex(0xe6e9ee).lerp(new we(0x2a2d33),k);cu.material.color.setHex(0xc7733a).lerp(new we(0x4fa58c),k);fe.material.color.setHex(0x6b7280).lerp(new we(0xa5481f),k);
+   oilF.v.visible=oilR.v.visible=s===3;const r_=s===3?cl(t%10/7,0,1):0;LAB.tint(oilR.liqM,new we(0xe8c040).lerp(new we(0x6a4a1c),r_));
+   gas.update(t,{x:4,y0:2.8,y1:5,z:0,rad:.9},s===3?.8*r_:0)},
+  predict:{q:"Which nail rusts?",opts:[["Only the one in moist air (water + oxygen)",!0,"Correct — both oxygen and water are needed."],["The one in dry air",!1,"No moisture — no rust."],["All three equally",!1,"Rust needs both air and water."]]}})}
+Q_("ch1/corrosion3d",[["Rusting needs…","जंग के लिए चाहिए…",["Only air","Only water","Air and water","Only heat"],2,"Both oxygen and moisture."],["Silver tarnishes black due to…","चाँदी काली पड़ती है…",["Ag₂S","Ag₂O","AgCl","Ag₂CO₃"],0,"Reaction with sulphur compounds in air."],["Chips are packed in nitrogen to prevent…","चिप्स नाइट्रोजन में क्यों?",["Rancidity","Melting","Freezing","Rusting"],0,"Nitrogen prevents oxidation of oil."]]);
+Px["ch1/corrosion3d"]=[["Galvanising coats iron with zinc so it rusts far more slowly.","गैल्वनीकरण लोहे पर ज़िंक की परत चढ़ाकर जंग रोकता है।"],["The iron pillar of Delhi has stood for 1,600 years because of its special composition.","दिल्ली का लौह स्तंभ अपनी विशेष संरचना से 1,600 वर्ष से खड़ा है।"]];
+insAfter(Hi.find(h=>h.no===1).topics,"corrosion",{id:"corrosion3d",title:"Rusting & corrosion — detailed 3D",hi:"जंग व संक्षारण — विस्तृत 3D",build:Mcorr,ncert:"Ch 1 · corrosion & rancidity"});
+/* 6 · combination & decomposition */
+function Mcomb(){const {n,g}=labScene();
+ const A=LAB.vessel(g,-9,0,1.7,3.2,"beaker",0xdff0ff,.6);const lump=[0,1,2].map(i=>{const m=new N(sph(.42,.25,1.5,1,.8,1,12,16),MAT(0xf5f5f0,{roughness:.9,sheen:0}));m.position.set(-9.6+i*.55,.55+.15*i,.2*(i-1));g.add(m);return m});
+ const th=new N(new Xe(.08,.08,3.6,8),new bt({color:0xe8eef6}));th.position.set(-7.6,2.4,.3);g.add(th);const mer=new N(new Xe(.05,.05,1,8),new bt({color:0xe53935}));g.add(mer);
+ const stB=(x)=>stand(g,x+1.5,6);
+ const B=LAB.vessel(g,0,0,.7,3.4,"beaker",0xdfeaf5,.001);B.v.position.y=3.3;const cr=new N(new Xe(.58,.58,.7,16),MAT(0x6fcf7a,{roughness:.7,sheen:0}));cr.position.set(0,3.75,0);g.add(cr);stB(0);const fl=LAB.flame(g,0,0);
+ const fume=LAB.bubbles(g,18,.1,0x8a5a2a);
+ const E=LAB.vessel(g,9,0,1.9,3.4,"beaker",0xdff0ff,.75);
+ const el=[7.9,10.1].map(x=>{const e=new N(new Xe(.1,.1,2.6,10),LAB.metal(0x333a44));e.position.set(x,1.6,0);g.add(e);return e});
+ const tubeH=new N(new Xe(.45,.45,2.4,20,1,!0),LAB.glassM());tubeH.position.set(7.9,4.6,0);g.add(tubeH);const tubeO=new N(new Xe(.45,.45,2.4,20,1,!0),LAB.glassM());tubeO.position.set(10.1,4.6,0);g.add(tubeO);
+ const gH=new N(new Xe(.4,.4,1,16),new bt({color:0xbcd4ff,transparent:!0,opacity:.7}));const gO=new N(new Xe(.4,.4,1,16),new bt({color:0xffd1d1,transparent:!0,opacity:.7}));g.add(gH);g.add(gO);
+ const bH=LAB.bubbles(g,16,.07,0xffffff),bO=LAB.bubbles(g,10,.07,0xffffff);
+ const bat=new N(new _e(1.6,.9,.9),MAT(0x2a2e38,{roughness:.6,sheen:0}));bat.position.set(9,.5,-3);g.add(bat);
+ let p=0,ls=-1,DT=mkDT();const cams=[[c(0,6,28),c(0,3.2,0)],[c(-9,5,13),c(-9,2.2,0)],[c(0,6.5,13),c(0,3.8,0)],[c(9,4.5,15),c(9,2.6,0)],[c(0,6,28),c(0,3.2,0)]];
+ const labels=[["a-ca","CaO + H₂O → Ca(OH)₂ + heat","CaO + H₂O → Ca(OH)₂ + ऊष्मा",Lb(A.v,[1.9,2.6,0]),[0,1,4]],["a-th","Temperature rises (exothermic)","ताप बढ़ता है (ऊष्माक्षेपी)",Lb(g,[-7.6,4.5,0]),[1]],["b-fe","FeSO₄ crystals: green → brown","FeSO₄ क्रिस्टल: हरा → भूरा",Lb(g,[0,5.2,0]),[2,4]],["b-gs","SO₂ + SO₃ fumes","SO₂ + SO₃ धुआँ",Lb(g,[1,6.4,0]),[2]],["b-fl","Burner flame (heat)","बर्नर की लौ (ऊष्मा)",Lb(fl,[.6,1.4,0]),[2]],["c-h2","H₂ at cathode (2 volumes)","कैथोड पर H₂ (2 आयतन)",Lb(g,[7.4,6.2,0]),[3]],["c-o2","O₂ at anode (1 volume)","ऐनोड पर O₂ (1 आयतन)",Lb(g,[10.6,6.2,0]),[3]],["c-bt","DC supply","DC स्रोत",Lb(bat,[0,1,0]),[3]]];
+ return labRun({n,g,key:"ch1/combination",cams,camK:["Overview","Combination","Heat","Electricity","Summary"],labels,
+  hud:s=>s===1?`Quicklime + water: temperature ${Math.round(25+p*45)} °C`:s===2?`Heating FeSO₄: ${Math.round(p*100)} % decomposed`:s===3?`Electrolysis: H₂ : O₂ = 2 : 1 (${Math.round(p*100)} %)`:"Combination: A + B → AB · Decomposition: AB → A + B",
+  frame:(s,t)=>{if(ls!==s){ls=s;p=s===4?1:(s>=1?.45:0)}p=toward(p,s===0?0:1,DT(t),.07);
+   const q1=s===1?p:s>=2?1:0,q2=s===2?p:s>=3?1:0,q3=s===3?p:s>=4?1:0;
+   LAB.tint(A.liqM,new we(0xdff0ff).lerp(new we(0xffffff),q1));lump.forEach((m,i)=>{m.scale.setScalar(1-.6*q1);m.visible=q1<.95});
+   mer.scale.y=.4+q1*2.4;mer.position.set(-7.6,1.0+(.4+q1*2.4)/2,.3);
+   cr.material.color.setHex(0x6fcf7a);cr.material.color.lerp(new we(0x8b3a1a),q2);fl.userData.upd(s===2&&q2<.98,t);fume.m.visible=!0;fume.update(t,{x:0,y0:4.2,y1:7.6,z:0,rad:.4},s===2&&q2<.98?.9:0);
+   gH.scale.set(1,.1+q3*2,1);gH.position.set(7.9,4.6-1.2+(.1+q3*2)/2,0);gO.scale.set(1,.1+q3*1,1);gO.position.set(10.1,4.6-1.2+(.1+q3*1)/2,0);
+   bH.update(t,{x:7.9,y0:1.1,y1:3.2,z:0,rad:.2},s===3&&q3<.98?1:0);bO.update(t,{x:10.1,y0:1.1,y1:3.2,z:0,rad:.2},s===3&&q3<.98?.7:0);
+   if(s===1&&q1<.98)A.liq.position.y=A.liq.position.y},
+  predict:{q:"In electrolysis of water, the volume of hydrogen compared to oxygen is…",opts:[["Twice",!0,"Correct — 2H₂O → 2H₂ + O₂."],["Equal",!1,"The ratio of H : O in water is 2 : 1."],["Half",!1,"Hydrogen is double."]]}})}
+Q_("ch1/combination3d",[["CaO + H₂O → Ca(OH)₂ is a…","CaO + H₂O → Ca(OH)₂ है…",["Decomposition","Combination (exothermic)","Displacement","Double displacement"],1,"Two substances join and heat is released."],["Heating green FeSO₄ crystals gives…","हरे FeSO₄ को गर्म करने पर…",["Fe₂O₃ + SO₂ + SO₃","FeO only","Fe + S","No change"],0,"Brown Fe₂O₃ forms."],["At the cathode, electrolysis of water gives…","जल के विद्युत-अपघटन में कैथोड पर…",["O₂","H₂","CO₂","N₂"],1,"Hydrogen, double volume."]]);
+Px["ch1/combination3d"]=[["Whitewashing a wall: quicklime is slaked with water (heat!), then CaCO₃ forms on the wall.","दीवार की पुताई: चूने को जल में बुझाते हैं (ऊष्मा!), फिर दीवार पर CaCO₃ बनता है।"],["Photographic film darkens because silver bromide decomposes in light.","सिल्वर ब्रोमाइड प्रकाश में अपघटित होने से फ़िल्म काली पड़ती है।"]];
+insAfter(Hi.find(h=>h.no===1).topics,"combination",{id:"combination3d",title:"Combination & decomposition — detailed 3D",hi:"संयोजन व अपघटन — विस्तृत 3D",build:Mcomb,ncert:"Ch 1 · types of reactions"});
+
 })();
 /* ===== Guided sequences for free-play (explore) topics =====
    Audit 2026-11 found 80 of 120 topics had NO step sequence (just a live model + toggles). This layer wraps such a topic so that it gets an ordered, bilingual
