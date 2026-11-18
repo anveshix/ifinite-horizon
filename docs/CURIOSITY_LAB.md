@@ -22,7 +22,8 @@ assets/curiosity/
   shell.js                      overlay: HUD (XP, streak, level), tabs, picker, lab lifecycle, quiz host
   curiosity.css                 tokens-based styles
   labs/models.js                pure physics (lens, circuit, F = ma, pendulum) — one source of truth for 3D, 2D and marking
-  labs/kit.js                   Three.js stage + orbit camera, sliders, facts panel, sprites, 2D drawing, question helpers
+  labs/kit.js                   Three.js stage + orbit camera, sliders, facts panel, sprites, 2D drawing, question helpers; retryable loader, WebGL-loss recovery
+  tests/curiosity-fallback.js    Playwright: simulates WebGL failure; verifies all four interactive 2D fallbacks
   labs/lens.js ohm.js force.js energy.js   the four simulators
   quiz/quiz.js                  round builder + Knowledge-check UI (XP, streaks, 50:50, results, review → simulator)
   quiz/fx.js                    effects: canvas confetti / fireworks / rain, glowing floating text, CSS shake, flash, vibration, optional sounds
@@ -49,6 +50,8 @@ export default {
 };
 ```
 Rules that keep it honest: `ctx.set` snaps to `min/max/step`, records the value the student actually saw (`store.explored`), and emits `sim:change` with the derived `facts`; the **Knowledge check tab stays locked until the student has changed at least one variable** — you answer after you experiment.
+
+**Device compatibility:** if WebGL cannot initialize, the context is lost, or a 3D mount fails, the same lab automatically switches to its own 2D schematic with the same live controls and calculated facts. Browsers without `ResizeObserver` use a window-resize fallback. The lab mount is guarded against stale async completions so rapidly switching or closing a lab cannot replace the active experiment with an old error screen.
 
 ## Labs (Phase 2)
 | Lab | NCERT unit | Student changes | 3D scene | Questions (kind) |

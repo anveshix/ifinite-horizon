@@ -7,8 +7,8 @@ export { esc, fmt };
 export const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
 
 let threeP = null;
-/** Three.js is fetched once, on the first lab that needs it. */
-export const loadThree = () => threeP || (threeP = import("../../vendor/three.module.min.js"));
+/** Three.js is fetched once, on the first lab that needs it. A failed fetch is retryable. */
+export const loadThree = () => threeP || (threeP = import("../../vendor/three.module.min.js").catch(error => { threeP = null; throw error; }));
 
 /* ---------------------------------------------------------------- stage */
 /** Creates renderer + scene + camera inside ctx.stage. Returns { THREE, scene, camera, renderer, onFrame, dispose, resize, setView }. */
@@ -46,7 +46,21 @@ export function makeStage(THREE, ctx, { pos = [0, 4, 11], target = [0, 0, 0], fo
   const wheel = e => { e.preventDefault(); goal.radius = Math.min(maxDist, Math.max(minDist, goal.radius * Math.exp(e.deltaY * 0.001))); };
   canvas.addEventListener("pointerdown", down); canvas.addEventListener("pointermove", move);
   canvas.addEventListener("pointerup", up); canvas.addEventListener("pointercancel", up); canvas.addEventListener("wheel", wheel, { passive: false });
-  const ro = new ResizeObserver(resize); ro.observe(host);
+  let ro = null, windowResize = false;
+  if (typeof ResizeObserver === "function") {
+    try { ro = new ResizeObserver(resize); ro.observe(host); }
+    catch { ro = null; }
+  }
+  if (!ro) { windowResize = true; window.addEventListener("resize", resize, { passive: true }); resize(); }
+
+  const fail = error => {
+    if (dispose_) return;
+    dispose_ = true; cancelAnimationFrame(raf);
+    if (typeof ctx.fail === "function") ctx.fail(error);
+    else console.warn("[curiosity] 3D stage stopped", error);
+  };
+  const contextLost = event => { event.preventDefault(); fail(new Error("The WebGL context was lost.")); };
+  canvas.addEventListener("webglcontextlost", contextLost, false);
 
   const loop = now => {
     if (dispose_) return;
@@ -54,16 +68,18 @@ export function makeStage(THREE, ctx, { pos = [0, 4, 11], target = [0, 0, 0], fo
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     if (document.hidden || host.offsetParent === null) return;       // nothing to draw while the tab / lab is hidden
     sph.theta += (goal.theta - sph.theta) * Math.min(1, dt * 9); sph.phi += (goal.phi - sph.phi) * Math.min(1, dt * 9); sph.radius += (goal.radius - sph.radius) * Math.min(1, dt * 9);
-    place();
-    frameFns.forEach(fn => fn(dt, now / 1000));
-    renderer.render(scene, camera);
+    try {
+      place();
+      frameFns.forEach(fn => fn(dt, now / 1000));
+      renderer.render(scene, camera);
+    } catch (error) { fail(error); }
   };
   place(); resize(); raf = requestAnimationFrame(loop);
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.8));
   const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(6, 10, 8); scene.add(sun);
 
-  return {
+  const api = {
     THREE, scene, camera, renderer, canvas,
     onFrame(fn) { frameFns.add(fn); return () => frameFns.delete(fn); },
     resize,
@@ -72,13 +88,16 @@ export function makeStage(THREE, ctx, { pos = [0, 4, 11], target = [0, 0, 0], fo
     setView(p, t) { if (t) tgt.set(...t); goal.copy(new THREE.Spherical().setFromVector3(new THREE.Vector3(...p).sub(tgt))); },
     resetView() { goal.copy(home); },
     dispose() {
-      dispose_ = true; cancelAnimationFrame(raf); ro.disconnect(); frameFns.clear();
+      dispose_ = true; cancelAnimationFrame(raf); if (ro) ro.disconnect(); if (windowResize) window.removeEventListener("resize", resize); frameFns.clear();
       canvas.removeEventListener("pointerdown", down); canvas.removeEventListener("pointermove", move);
       canvas.removeEventListener("pointerup", up); canvas.removeEventListener("pointercancel", up); canvas.removeEventListener("wheel", wheel);
+      canvas.removeEventListener("webglcontextlost", contextLost);
       scene.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
       renderer.dispose(); if (renderer.forceContextLoss) renderer.forceContextLoss(); canvas.remove();
     }
   };
+  if (ctx.registerStage) ctx.registerStage(api);
+  return api;
 }
 
 /** A canvas-texture sprite with bilingual text. */
