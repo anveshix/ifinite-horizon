@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "Class IX registry in index.html (IXC)",
   "generatedAt": "2026-11-10",
   "course": {
@@ -29,17 +29,34 @@
           "id": "division",
           "title": "Mitosis & meiosis",
           "summary": "Key concepts: cellular division"
+        },
+        {
+          "id": "microscope",
+          "title": "How cells are studied · light microscope",
+          "summary": "Microscope parts, objective × eyepiece magnification, and a schematic light path; use the school instrument for practical work."
+        },
+        {
+          "id": "scale",
+          "title": "Cell size, magnification & resolution",
+          "summary": "Interactive comparison of resolving limits; the field-of-view size calculation is a separate inquiry and uses learner-measured values."
+        },
+        {
+          "id": "organelles",
+          "title": "Cell organelles · detailed animal-cell exploration",
+          "summary": "Explore a schematic eukaryotic cell and organelle functions; diagrams are not to scale."
         }
       ],
       "keyConcepts": [
-        "Discovery of the cell",
-        "Plant and animal cells",
-        "Prokaryotic and eukaryotic cells",
-        "Cell as the structural and functional unit of life",
-        "Organelles: nucleus, mitochondria, chloroplast, endoplasmic reticulum, vacuoles, plasma membrane, cell wall",
-        "Permeability of cell membranes",
-        "Cellular division and cancer",
-        "Recent advancement in cell biology"
+        "Microscopy: cell size, field of view, magnification and resolution",
+        "Discovery of the cell and development of cell theory",
+        "Unicellular and multicellular organisation; cell as structural and functional unit",
+        "Plant, animal and bacterial cells: similarities and differences",
+        "Prokaryotic and eukaryotic cells; nucleoid versus membrane-bound nucleus",
+        "Plasma membrane and cell wall; selective permeability and exchange",
+        "Diffusion and osmosis; water movement in dilute and concentrated solutions",
+        "Organelle structure and coordinated functions: nucleus, mitochondria, chloroplasts, ER, Golgi, ribosomes, lysosomes and vacuoles",
+        "Cell division: mitosis for growth/repair; meiosis for gametes and variation",
+        "Textbook enrichment: membrane models, cell culture, cancer and synthetic biology (not separate chapter marks)"
       ],
       "learningOutcomes": [
         "Differentiate plant and animal cells; prokaryotic and eukaryotic cells",
@@ -55,10 +72,19 @@
         "Design low-cost, eco-friendly models of cells and organelles",
         "Open question: can an artificial cell behave exactly like a natural living cell?"
       ],
+      "activities": [
+        "Use a light microscope to compare onion epidermis and cheek-cell mounts (Practical 4).",
+        "Estimate cell size from measured field diameter and a count across the field; record your own measurements.",
+        "Investigate osmosis with equal-sized potato pieces in water and concentrated solution; record actual before/after masses.",
+        "Compare plant, animal and bacterial cells using labelled diagrams and the interactive models."
+      ],
       "practicals": [
         4
       ],
-      "reviewFlags": []
+      "reviewFlags": [
+        "Source mapping: supplied NCERT Exploration calls this ‘Cell: The Building Block of Life’, Chapter 2 (printed pp. 8–27); the current app course remains Class IX 2026–27 Chapter 1.",
+        "NCERT-only enrichment (including fluid-mosaic detail, cell culture, cancer and synthetic biology) is not presented as separate exam outcomes or chapter marks."
+      ]
     },
     {
       "id": "ix2",
@@ -107,6 +133,7 @@
         "Discuss techniques and medical recommendations for recovery from muscular injuries",
         "Experiment: plant growth due to the apical meristem; represent data in tables/graphs"
       ],
+      "activities": [],
       "practicals": [
         5
       ],
@@ -173,6 +200,7 @@
         "Recognise improvements in assisted reproductive technologies",
         "Open questions: do heavy metals harm reproductive organs? can extreme heat affect fertility?"
       ],
+      "activities": [],
       "practicals": [
         6,
         7
@@ -215,6 +243,7 @@
         "Discuss the ecological roles of diverse organisms",
         "Recognise the three domains of classification on a molecular basis"
       ],
+      "activities": [],
       "practicals": [
         8
       ],
@@ -267,6 +296,7 @@
         "Create eco-friendly models: paperfuge, distillation unit",
         "Open question: can artificial blood work for all patients?"
       ],
+      "activities": [],
       "practicals": [
         1,
         2
@@ -316,6 +346,7 @@
         "Design element-identification games",
         "Open question: can everything inside an atom be completely understood?"
       ],
+      "activities": [],
       "practicals": [],
       "reviewFlags": [
         "Bohr’s shell diagram is the syllabus model, not the full modern quantum description."
@@ -373,6 +404,7 @@
         "Indian context: peaceful atomic energy; traditional red pigment cinnabar",
         "Open question: are there changes that do not obey conservation of mass?"
       ],
+      "activities": [],
       "practicals": [
         3
       ],
@@ -432,6 +464,7 @@
         "Draw flowcharts / concept maps; form hypotheses and predict outcomes",
         "Open question: what if Earth had no differential heating?"
       ],
+      "activities": [],
       "practicals": [],
       "reviewFlags": [
         "Albedo and spectrum values are approximate textbook figures."
@@ -470,6 +503,7 @@
         "Derive the expression for speed in uniform circular motion",
         "Analyse real-life motion, identify and control variables (practical 13)"
       ],
+      "activities": [],
       "practicals": [
         13
       ],
@@ -509,6 +543,7 @@
         "Apply the laws to everyday events",
         "Develop models, vary inputs and predict results (practical 12)"
       ],
+      "activities": [],
       "practicals": [
         12
       ],
@@ -550,6 +585,7 @@
         "Define and calculate power",
         "Identify pulley, inclined plane and lever; define and calculate M.A. (practicals 9, 11)"
       ],
+      "activities": [],
       "practicals": [
         9,
         11
@@ -599,6 +635,7 @@
         "Gol Gumbaz whispering gallery; Sir C. V. Raman",
         "Develop models, vary factors and communicate conclusions (practical 10)"
       ],
+      "activities": [],
       "practicals": [
         10
       ],
