@@ -1,1 +1,5 @@
 tools/conditions/out/
+.env
+.env.*
+!.env.example
+.vercel/
