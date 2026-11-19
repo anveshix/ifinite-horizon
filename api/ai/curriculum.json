@@ -1,0 +1,608 @@
+{
+  "schemaVersion": 1,
+  "source": "Class IX registry in index.html (IXC)",
+  "generatedAt": "2026-11-10",
+  "course": {
+    "id": "ix",
+    "title": "Class IX · Compulsory Science (086)"
+  },
+  "chapters": [
+    {
+      "id": "ix1",
+      "number": "1",
+      "title": "Cell",
+      "unit": "World of living",
+      "brief": "The cell as the unit of life: organelles, membranes, osmosis, mitosis and meiosis.",
+      "briefHi": "जीवन की इकाई कोशिका: कोशिकांग, झिल्ली, परासरण, समसूत्री व अर्धसूत्री विभाजन।",
+      "topics": [
+        {
+          "id": "cell",
+          "title": "Plant, animal & bacterial cell",
+          "summary": "Key concepts: plant/animal, prokaryotic/eukaryotic cells, organelles"
+        },
+        {
+          "id": "osmosis",
+          "title": "Diffusion & osmosis",
+          "summary": "Key concepts: permeability of cell membranes"
+        },
+        {
+          "id": "division",
+          "title": "Mitosis & meiosis",
+          "summary": "Key concepts: cellular division"
+        }
+      ],
+      "keyConcepts": [
+        "Discovery of the cell",
+        "Plant and animal cells",
+        "Prokaryotic and eukaryotic cells",
+        "Cell as the structural and functional unit of life",
+        "Organelles: nucleus, mitochondria, chloroplast, endoplasmic reticulum, vacuoles, plasma membrane, cell wall",
+        "Permeability of cell membranes",
+        "Cellular division and cancer",
+        "Recent advancement in cell biology"
+      ],
+      "learningOutcomes": [
+        "Differentiate plant and animal cells; prokaryotic and eukaryotic cells",
+        "Describe structural and functional features of cells and their role in organisms",
+        "Explain activities inside a cell and its interaction with the environment",
+        "Demonstrate osmosis; differentiate diffusion and osmosis",
+        "Prepare slides to observe cell structure (practical 4)",
+        "Explain the role of mitosis and meiosis in creating similarities and variations",
+        "Identify the role of biomolecules in cell structure and function",
+        "Case study: Leigh syndrome and mitochondrial dysfunction",
+        "Apply muscle-cell / joint structure to dance and sports",
+        "Indian contribution: Professor Arun Kumar Sharma — chromosomes and methods for their study",
+        "Design low-cost, eco-friendly models of cells and organelles",
+        "Open question: can an artificial cell behave exactly like a natural living cell?"
+      ],
+      "practicals": [
+        4
+      ],
+      "reviewFlags": []
+    },
+    {
+      "id": "ix2",
+      "number": "2",
+      "title": "Tissues",
+      "unit": "World of living",
+      "brief": "Plant and animal tissues, levels of organisation, and the musculoskeletal system.",
+      "briefHi": "पादप व जंतु ऊतक, संगठन के स्तर और अस्थि-पेशी तंत्र।",
+      "topics": [
+        {
+          "id": "tissues",
+          "title": "Plant & animal tissues",
+          "summary": "Key concepts: meristematic/permanent, epithelial/connective/muscular/nervous"
+        },
+        {
+          "id": "joint",
+          "title": "Bones, muscles & joints",
+          "summary": "Key concepts: musculoskeletal system, joints"
+        },
+        {
+          "id": "xylem",
+          "title": "Xylem & phloem at work",
+          "summary": "Learning outcome: identify xylem and phloem"
+        }
+      ],
+      "keyConcepts": [
+        "Introduction to tissues and their importance",
+        "Levels of organisation: cell → tissue → organ → organ system → organism",
+        "Plant and animal tissues",
+        "Types of plant tissues",
+        "Meristematic tissues — types and function",
+        "Permanent tissues — types, structure and function",
+        "Animal tissues: epithelial, connective, muscular and nervous — types, structure and function",
+        "Elementary idea of the musculoskeletal system",
+        "Care of the musculoskeletal system: injuries, postural care, nutrition, exercise"
+      ],
+      "learningOutcomes": [
+        "Differentiate plant and animal tissues; meristematic and permanent; simple and complex",
+        "Identify parenchyma, collenchyma, sclerenchyma; xylem and phloem",
+        "Differentiate striated, smooth and cardiac muscle",
+        "Identify different types of joints",
+        "Relate tissue structure to function; describe organisation of a multicellular organism",
+        "Correlate muscle, cartilage and bone in movement and fitness",
+        "Explain yoga’s importance for agility and correct posture",
+        "Indian contributors: Professors Sipra Guha Mukherjee and S. C. Maheshwari (plant tissue culture)",
+        "Discuss techniques and medical recommendations for recovery from muscular injuries",
+        "Experiment: plant growth due to the apical meristem; represent data in tables/graphs"
+      ],
+      "practicals": [
+        5
+      ],
+      "reviewFlags": [
+        "Meristematic tissue ‘types’ are not named in the syllabus PDF: only apical meristem is shown; confirm the other names with the prescribed textbook / teacher."
+      ]
+    },
+    {
+      "id": "ix3",
+      "number": "3",
+      "title": "Reproduction",
+      "unit": "World of living",
+      "brief": "Asexual and sexual reproduction in plants and humans, health and hygiene.",
+      "briefHi": "पादपों व मनुष्यों में अलैंगिक व लैंगिक जनन; जनन स्वास्थ्य।",
+      "topics": [
+        {
+          "id": "fission",
+          "title": "Binary fission (asexual)",
+          "summary": "Key concepts: types of asexual reproduction"
+        },
+        {
+          "id": "budding",
+          "title": "Budding in Hydra",
+          "summary": "Key concepts: types of asexual reproduction"
+        },
+        {
+          "id": "vegetative",
+          "title": "Vegetative propagation",
+          "summary": "Key concepts: types of asexual reproduction"
+        },
+        {
+          "id": "flower",
+          "title": "Flower, pollination & fertilisation",
+          "summary": "Key concepts: flower, pollination, fertilisation"
+        },
+        {
+          "id": "dispersal",
+          "title": "Seed dispersal agents",
+          "summary": "Key concepts: seed dispersal (biotic / abiotic agents)"
+        },
+        {
+          "id": "human",
+          "title": "Human reproduction",
+          "summary": "Key concepts: human reproductive systems, embryo, menstrual cycle"
+        }
+      ],
+      "keyConcepts": [
+        "Different forms of reproduction: sexual and asexual",
+        "Types of asexual reproduction with examples",
+        "Sexual reproduction in flowering plants: flower and its parts, pollination, fertilisation, seed dispersal",
+        "Sexual reproduction in humans: male and female systems, formation of gametes, sperm and egg, fertilisation, pregnancy and embryo development, menstrual cycle",
+        "Reproductive health and hygiene",
+        "Birth-control methods and their importance"
+      ],
+      "learningOutcomes": [
+        "Analyse interactions between plants and pollinators",
+        "Compare sexual and asexual reproduction",
+        "Describe male and female reproductive organs in plants and animals",
+        "Differentiate ovule and seed; ovary and fruit",
+        "Explain pollination and fertilisation; how sexual reproduction introduces variation",
+        "Identify biotic and abiotic agents in pollination and seed dispersal",
+        "Recognise the significance of contraceptive devices for population control and health",
+        "India’s contribution to understanding human anatomy; Professor Panchanan Maheshwari (plant embryology / tissue culture)",
+        "Recognise improvements in assisted reproductive technologies",
+        "Open questions: do heavy metals harm reproductive organs? can extreme heat affect fertility?"
+      ],
+      "practicals": [
+        6,
+        7
+      ],
+      "reviewFlags": [
+        "Human-reproduction content is kept neutral, non-graphic and age-appropriate."
+      ]
+    },
+    {
+      "id": "ix4",
+      "number": "4",
+      "title": "Diversity",
+      "unit": "World of living",
+      "brief": "Why we classify: five kingdoms, binomial names, viruses and ecological roles.",
+      "briefHi": "वर्गीकरण क्यों: पाँच जगत, द्विनाम पद्धति, वायरस और पारिस्थितिक भूमिकाएँ।",
+      "topics": [
+        {
+          "id": "kingdoms",
+          "title": "Five kingdoms & binomial names",
+          "summary": "Key concepts: five kingdoms, binomial nomenclature"
+        },
+        {
+          "id": "acellular",
+          "title": "Viruses, lichens & cell sizes",
+          "summary": "Key concepts: acellular entities — viruses; interactions e.g. lichens"
+        }
+      ],
+      "keyConcepts": [
+        "Importance of classification",
+        "Five kingdoms and their key features with examples",
+        "Major divisions of animals and plants",
+        "Binomial nomenclature",
+        "Acellular entities: viruses"
+      ],
+      "learningOutcomes": [
+        "Distinguish organisms by number of cells, cellular organisation and mode of nutrition",
+        "Classify organisms into five kingdoms by cellular organisation and ecological role",
+        "Explain the significance and rules of binomial nomenclature; apply it to local organisms",
+        "Analyse interactions between groups of organisms, e.g. lichens",
+        "Discuss the ecological roles of diverse organisms",
+        "Recognise the three domains of classification on a molecular basis"
+      ],
+      "practicals": [
+        8
+      ],
+      "reviewFlags": [
+        "Major divisions of plants and animals are not enumerated in the syllabus PDF: populate from the prescribed textbook / approved source (not invented here)."
+      ]
+    },
+    {
+      "id": "ix5",
+      "number": "5",
+      "title": "Exploring Mixtures and their Separation",
+      "unit": "Matter",
+      "brief": "Solutions, suspensions and colloids; concentration; six separation techniques.",
+      "briefHi": "विलयन, निलंबन, कोलॉइड; सांद्रता; पृथक्करण की छह विधियाँ।",
+      "topics": [
+        {
+          "id": "types",
+          "title": "Solution, colloid, suspension",
+          "summary": "Key concepts: homogeneous/heterogeneous; solutions, suspensions, colloids"
+        },
+        {
+          "id": "lab",
+          "title": "Separation techniques lab",
+          "summary": "Key concepts: crystallisation, distillation, chromatography, sublimation, centrifugation, coagulation"
+        },
+        {
+          "id": "conc",
+          "title": "Concentration & solubility",
+          "summary": "Key concepts: mass/mass, mass/volume, volume/volume %"
+        }
+      ],
+      "keyConcepts": [
+        "Homogeneous and heterogeneous mixtures",
+        "Solutions, suspensions and colloids and their properties",
+        "Concentration: mass by mass %, mass by volume %, volume by volume %",
+        "Separation by physical properties: crystallisation, distillation, paper chromatography, sublimation, centrifugation, coagulation"
+      ],
+      "learningOutcomes": [
+        "Differentiate homogeneous and heterogeneous mixtures",
+        "Demonstrate the six separation techniques",
+        "Classify mixtures as solutions, suspensions or colloids",
+        "Explain the scientific principle behind each technique; apply to everyday life",
+        "Define and calculate all three percentage concentrations; use standard units",
+        "Analyse solubility graphs and temperature effects",
+        "Handle common laboratory chemicals and apparatus safely",
+        "Relate separation to local environmental practices; traditional distillation",
+        "Draw labelled apparatus diagrams and flowcharts",
+        "Relate centrifugation to spinning dance",
+        "Indian scientist: Dilip Mahalanabis; micro-scale crystallisation of copper sulfate",
+        "Create eco-friendly models: paperfuge, distillation unit",
+        "Open question: can artificial blood work for all patients?"
+      ],
+      "practicals": [
+        1,
+        2
+      ],
+      "reviewFlags": []
+    },
+    {
+      "id": "ix6",
+      "number": "6",
+      "title": "Structure of an Atom",
+      "unit": "Matter",
+      "brief": "Subatomic particles, Thomson, Rutherford and Bohr models, Z, A, isotopes, isobars.",
+      "briefHi": "उप-परमाण्विक कण, थॉमसन, रदरफोर्ड, बोर मॉडल, Z, A, समस्थानिक, समभारिक।",
+      "topics": [
+        {
+          "id": "atom",
+          "title": "Atom builder (Z = 1–18)",
+          "summary": "Key concepts: subatomic particles, electron distribution, valency, isotopes, isobars"
+        },
+        {
+          "id": "models",
+          "title": "Thomson → Rutherford → Bohr",
+          "summary": "Key concepts: atomic models"
+        }
+      ],
+      "keyConcepts": [
+        "Atoms as basic units of elements",
+        "Atoms consist of subatomic particles",
+        "Thomson’s, Rutherford’s and Bohr’s models",
+        "Electron distribution in the first 18 elements",
+        "Symbols",
+        "Valency as combining capacity",
+        "Atomic number · mass number",
+        "Isotopes · isobars"
+      ],
+      "learningOutcomes": [
+        "Differentiate electrons, protons and neutrons by charge and position",
+        "Illustrate electron distribution in shells K, L, M, N (n = 1, 2, 3, 4)",
+        "Explain valence electrons, valency, atomic number, atomic mass, isotopes, isobars",
+        "Calculate electrons, protons and neutrons from Z and A",
+        "Interpret atomic-mass data and shell capacity to classify elements",
+        "Use standard notation for electron, proton, neutron and the unified atomic mass unit (u)",
+        "Apply IUPAC symbols to the first 18 elements",
+        "Draw labelled Thomson, Rutherford and Bohr models; ‘Journey Inside the Atom’ role-play",
+        "Indian contributions for peaceful purposes; Acharya Kanad — parmanu",
+        "Societal uses: isotopes in medicine, atomic energy in power",
+        "Design element-identification games",
+        "Open question: can everything inside an atom be completely understood?"
+      ],
+      "practicals": [],
+      "reviewFlags": [
+        "Bohr’s shell diagram is the syllabus model, not the full modern quantum description."
+      ]
+    },
+    {
+      "id": "ix7",
+      "number": "7",
+      "title": "Atoms and Molecules",
+      "unit": "Matter",
+      "brief": "Mass laws, Dalton’s theory, molecules, ions, formulae and molecular mass.",
+      "briefHi": "द्रव्यमान के नियम, डाल्टन सिद्धांत, अणु, आयन, सूत्र व आण्विक द्रव्यमान।",
+      "topics": [
+        {
+          "id": "conserve",
+          "title": "Conservation of mass & constant proportion",
+          "summary": "Key concepts: law of conservation of mass, law of constant proportion"
+        },
+        {
+          "id": "molecules",
+          "title": "Molecules, ions & formulae",
+          "summary": "Key concepts: molecules of elements/compounds, ions, formulae, molecular and formula-unit mass"
+        },
+        {
+          "id": "ionic",
+          "title": "Ionic bond: forming NaCl",
+          "summary": "Key concepts: ions and ionic compounds"
+        },
+        {
+          "id": "covalent",
+          "title": "Covalent bonding: sharing electrons",
+          "summary": "Key concepts: molecules of covalent compounds"
+        }
+      ],
+      "keyConcepts": [
+        "Law of conservation of mass",
+        "Law of constant proportion",
+        "Dalton’s atomic theory",
+        "Molecules of elements",
+        "Molecules of covalent compounds and their properties",
+        "Ions and ionic compounds and their properties",
+        "Writing chemical formulae",
+        "Molecular mass · formula-unit mass"
+      ],
+      "learningOutcomes": [
+        "Differentiate atoms/molecules, elements/compounds, ionic/covalent compounds, cations/anions, formula-unit/molecular mass",
+        "Plan and demonstrate activities verifying conservation of mass (practical 3)",
+        "Explain Dalton’s theory, constant proportions and ionic/covalent compound formation",
+        "Calculate ion charge, valency from atomic number, molecular mass and formula-unit mass",
+        "Write formulae of simple compounds from symbols and valencies",
+        "Recognise Lavoisier, Proust and Dalton",
+        "Draw electron-dot structures of atoms and molecules",
+        "Beneficial uses of atoms/molecules in medicine and energy; relate atomic bonding to social bonding",
+        "Design educational games for formula writing",
+        "Indian context: peaceful atomic energy; traditional red pigment cinnabar",
+        "Open question: are there changes that do not obey conservation of mass?"
+      ],
+      "practicals": [
+        3
+      ],
+      "reviewFlags": []
+    },
+    {
+      "id": "ix8",
+      "number": "8",
+      "title": "Earth as a System: Energy, Matter & Life",
+      "unit": "Earth as a system",
+      "brief": "Spheres of Earth, solar energy, differential heating, winds and biogeochemical cycles.",
+      "briefHi": "पृथ्वी के मंडल, सौर ऊर्जा, विभेदी तापन, पवन व जैव-भू-रासायनिक चक्र।",
+      "topics": [
+        {
+          "id": "spheres",
+          "title": "Earth’s five spheres",
+          "summary": "Key concepts: Earth as an interconnected system"
+        },
+        {
+          "id": "spectrum",
+          "title": "Solar radiation & EM spectrum",
+          "summary": "Key concepts: nature of solar energy, EM spectrum, speed of light"
+        },
+        {
+          "id": "heating",
+          "title": "Differential heating of Earth",
+          "summary": "Key concepts: latitude, tilt, albedo"
+        },
+        {
+          "id": "breeze",
+          "title": "Winds: sea, land, mountain, valley",
+          "summary": "Key concepts: differential warming causes winds"
+        },
+        {
+          "id": "cycles",
+          "title": "Water, carbon, nitrogen & oxygen cycles",
+          "summary": "Key concepts: biogeochemical cycles; human impact"
+        }
+      ],
+      "keyConcepts": [
+        "Earth as an interconnected system",
+        "Nature of solar energy: solar radiation, electromagnetic spectrum, speed of light",
+        "Solar energy and Earth’s surface: differential heating; roles of atmosphere and surface",
+        "Differential warming of Earth causes winds",
+        "Biogeochemical cycles: water, carbon, nitrogen, oxygen",
+        "Human impact on Earth’s system"
+      ],
+      "learningOutcomes": [
+        "Explain interconnections among biosphere, geosphere, hydrosphere, cryosphere, atmosphere",
+        "Explain solar radiation as electromagnetic waves of different frequencies",
+        "Explain differential heating by shape, latitude, tilt, absorption and reflection (albedo)",
+        "Relate heating to air movement, evaporation, mountain/valley and sea/land breezes",
+        "Explain the atmosphere’s role in weather and climate; identify reflectivity of materials from reliable sources",
+        "Describe recycling of carbon, nitrogen, oxygen and water between biotic and abiotic environments",
+        "Explain how cycles circulate matter and energy and maintain balance",
+        "Reflect on changing conditions using traditional knowledge",
+        "Draw flowcharts / concept maps; form hypotheses and predict outcomes",
+        "Open question: what if Earth had no differential heating?"
+      ],
+      "practicals": [],
+      "reviewFlags": [
+        "Albedo and spectrum values are approximate textbook figures."
+      ]
+    },
+    {
+      "id": "ix9",
+      "number": "9",
+      "title": "Motion",
+      "unit": "Motion, force, work & sound",
+      "brief": "Displacement, velocity, acceleration, graphs, equations of motion and circular motion.",
+      "briefHi": "विस्थापन, वेग, त्वरण, ग्राफ़, गति के समीकरण और वृत्तीय गति।",
+      "topics": [
+        {
+          "id": "line",
+          "title": "1-D motion with live graphs",
+          "summary": "Key concepts: displacement, velocity, acceleration, s–t and v–t graphs, kinematic equations"
+        },
+        {
+          "id": "circular",
+          "title": "Uniform circular motion",
+          "summary": "Key concepts: uniform circular motion"
+        }
+      ],
+      "keyConcepts": [
+        "Motion: displacement, velocity and acceleration",
+        "Graphs for straight-line motion at constant velocity and constant acceleration",
+        "Kinematic equations for constant acceleration, derived graphically",
+        "Elementary idea of uniform circular motion"
+      ],
+      "learningOutcomes": [
+        "Differentiate distance/displacement; speed/velocity; use SI units",
+        "Plot and interpret position–time and velocity–time graphs",
+        "Average velocity from s–t; displacement and average acceleration from v–t",
+        "Derive kinematic equations graphically; calculate unknown quantities",
+        "Derive the expression for speed in uniform circular motion",
+        "Analyse real-life motion, identify and control variables (practical 13)"
+      ],
+      "practicals": [
+        13
+      ],
+      "reviewFlags": []
+    },
+    {
+      "id": "ix10",
+      "number": "10",
+      "title": "Force and Laws of Motion",
+      "unit": "Motion, force, work & sound",
+      "brief": "Balanced and unbalanced forces, friction and Newton’s three laws.",
+      "briefHi": "संतुलित-असंतुलित बल, घर्षण और न्यूटन के तीन नियम।",
+      "topics": [
+        {
+          "id": "forces",
+          "title": "Forces, friction & Newton’s laws",
+          "summary": "Key concepts: balanced/unbalanced forces, friction, Newton’s first/second/third law"
+        },
+        {
+          "id": "trolley",
+          "title": "Trolley, pulley & hanging mass",
+          "summary": "Key concepts: Newton’s second law (practical 12)"
+        }
+      ],
+      "keyConcepts": [
+        "Force; balanced and unbalanced forces",
+        "Force of friction",
+        "Newton’s first law",
+        "Newton’s second law",
+        "Newton’s third law"
+      ],
+      "learningOutcomes": [
+        "Explain force as a vector",
+        "Identify balanced and unbalanced situations; friction’s role",
+        "Zero net force ⇒ constant velocity; net force ⇒ acceleration",
+        "State and explain all three laws; F = ma; SI unit of force",
+        "Apply the laws to everyday events",
+        "Develop models, vary inputs and predict results (practical 12)"
+      ],
+      "practicals": [
+        12
+      ],
+      "reviewFlags": []
+    },
+    {
+      "id": "ix11",
+      "number": "11",
+      "title": "Work, Energy and Simple Machines",
+      "unit": "Motion, force, work & sound",
+      "brief": "Work, energy, conservation of energy, power, lever, pulley and inclined plane.",
+      "briefHi": "कार्य, ऊर्जा, ऊर्जा संरक्षण, शक्ति, लीवर, घिरनी, आनत तल।",
+      "topics": [
+        {
+          "id": "energy",
+          "title": "Work, KE/PE, pendulum & power",
+          "summary": "Key concepts: work, work–energy theorem, KE, PE, conservation, power"
+        },
+        {
+          "id": "machines",
+          "title": "Lever, pulley & inclined plane",
+          "summary": "Key concepts: simple machines and mechanical advantage"
+        }
+      ],
+      "keyConcepts": [
+        "Work and work done by a constant force",
+        "Work–energy theorem",
+        "Mechanical energy, kinetic and potential energy, conversion",
+        "Conservation of energy",
+        "Power",
+        "Simple machines and mechanical advantage: pulley, inclined plane, lever"
+      ],
+      "learningOutcomes": [
+        "Define work and its SI unit; calculate work",
+        "State the work–energy theorem; energy and its SI unit",
+        "Forms of energy and everyday interconversions",
+        "Derive and use kinetic and gravitational potential energy expressions",
+        "PE–KE conversion in free fall; law of conservation of energy",
+        "Define and calculate power",
+        "Identify pulley, inclined plane and lever; define and calculate M.A. (practicals 9, 11)"
+      ],
+      "practicals": [
+        9,
+        11
+      ],
+      "reviewFlags": []
+    },
+    {
+      "id": "ix12",
+      "number": "12",
+      "title": "Sound",
+      "unit": "Motion, force, work & sound",
+      "brief": "Production and propagation of sound, wave characteristics, echo and reverberation.",
+      "briefHi": "ध्वनि का उत्पादन व संचरण, तरंग गुण, प्रतिध्वनि व अनुरणन।",
+      "topics": [
+        {
+          "id": "source",
+          "title": "Vibrating string, membrane & air column",
+          "summary": "Key concepts: production of sound"
+        },
+        {
+          "id": "wave",
+          "title": "Longitudinal sound wave",
+          "summary": "Key concepts: propagation, wave characteristics, media"
+        },
+        {
+          "id": "echo",
+          "title": "Echo, reverberation & echolocation",
+          "summary": "Key concepts: reflection of sound"
+        }
+      ],
+      "keyConcepts": [
+        "Production of sound",
+        "Propagation as a longitudinal wave through a medium",
+        "Graphical representation of a sound wave",
+        "Wavelength, frequency, time period, amplitude, intensity, speed",
+        "Human perception: pitch and loudness",
+        "Propagation through different media",
+        "Reflection: echo, reverberation, echolocation"
+      ],
+      "learningOutcomes": [
+        "Demonstrate sound production with strings, membranes and air columns",
+        "Explain that sound needs a medium and travels as a longitudinal wave (air, solid, liquid)",
+        "Describe and graph wavelength, frequency, period, amplitude, intensity, speed; analyse graphs",
+        "Relate time period and frequency; derive and use the speed-of-sound expression",
+        "Explain audible range, pitch and loudness",
+        "Reflection, echo, reverberation, echolocation; music through loudness and pitch",
+        "Gol Gumbaz whispering gallery; Sir C. V. Raman",
+        "Develop models, vary factors and communicate conclusions (practical 10)"
+      ],
+      "practicals": [
+        10
+      ],
+      "reviewFlags": []
+    }
+  ]
+}
