@@ -34,6 +34,12 @@ async function call(handler,req){const res=resMock();await handler(req,res);retu
   assert.equal(config({...requiredEnv,AI_TOOLS_ENABLED:'false'}).enabled,false,'explicit off switch works');
 
   const goodLesson=validateRequest(lessonRequest);assert.ok(!goodLesson.error);
+  const cellRequest=validateRequest({...lessonRequest,chapterId:'ix1'});assert.ok(!cellRequest.error);
+  const cellPrompt=require('../lib/ai').buildPrompt(cellRequest);
+  assert.match(cellPrompt,/Chapter 2 \(printed pp\. 8–27\)/,'AI chapter context preserves the supplied textbook’s printed numbering without changing the app course');
+  assert.match(cellPrompt,/cell-size|microscope/i,'AI context includes source-aligned microscopy branches');
+  assert.match(cellPrompt,/Use a light microscope to compare onion epidermis and cheek-cell mounts/,'AI receives hands-on practical context');
+  assert.match(cellPrompt,/not presented as separate exam outcomes or chapter marks/,'AI context preserves the CBSE/enrichment scope boundary');
   assert.equal(validateRequest({...lessonRequest,chapterId:'ch5/brain'}).error,'INVALID_INPUT','rejects chapters outside Class IX registry');
   const historicalRequest={...lessonRequest,course:'ix25',chapterId:'ix25_1'};const historical=validateRequest(historicalRequest);assert.ok(!historical.error);assert.match(require('../lib/ai').buildPrompt(historical),/2025–26/,'AI gets the supplied historical syllabus track, not a claim it is current');
   assert.equal(validateRequest({...historicalRequest,course:'ix',chapterId:'ix25_1'}).error,'INVALID_INPUT','cannot relabel the historical chapter as the current syllabus');
@@ -63,7 +69,7 @@ async function call(handler,req){const res=resMock();await handler(req,res);retu
     return response(200,{candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(out)}]}}]});
   };
   const success=await call(generate,reqMock(lessonRequest));
-  assert.equal(success.statusCode,200);assert.equal(success.body.result.sequence.length,3);assert.equal(success.body.reviewRequired,true);assert.equal(success.body.promptVersion,1);assert.equal(success.body.contextVersion,1);
+  assert.equal(success.statusCode,200);assert.equal(success.body.result.sequence.length,3);assert.equal(success.body.reviewRequired,true);assert.equal(success.body.promptVersion,1);assert.equal(success.body.contextVersion,2);
   assert.equal(providerHeaders['x-goog-api-key'],requiredEnv.GEMINI_API_KEY,'secret sent only in server-to-provider header');
   assert.ok(!providerPayload.contents[0].parts[0].text.includes(requiredEnv.GEMINI_API_KEY));
   assert.ok(!providerPayload.contents[0].parts[0].text.includes('"models/'), 'model is not embedded in prompt');

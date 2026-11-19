@@ -2,15 +2,16 @@ const assert=require('node:assert/strict');
 const {SIMS,calculate}=require('../assets/va-simulator-core.js');
 const {modules}=require('../docs/class9-coverage.json');
 
-assert.equal(SIMS.length,8,'seven current-track investigations plus one separately labelled 2025–26 Matter inquiry');
+assert.equal(SIMS.length,9,'eight current-track investigations plus one separately labelled 2025–26 Matter inquiry');
 assert.equal(new Set(SIMS.map(s=>s.id)).size,SIMS.length,'simulator ids are unique');
 assert.equal(SIMS.filter(s=>s.subject==='Physics').length,4);
 assert.equal(SIMS.filter(s=>s.subject==='Chemistry').length,3);
 assert.equal(SIMS.filter(s=>s.subject==='Matter').length,1);
+assert.equal(SIMS.filter(s=>s.subject==='Biology').length,1);
 assert.equal(SIMS.find(s=>s.id==='matter').set,'ix25');
 assert.match(SIMS.find(s=>s.id==='matter').limit,/1 atm/);
 assert.match(SIMS.find(s=>s.id==='matter').limit,/not a replacement/i);
-const chapterKeys=['ix9/line','ix10/forces','ix11/energy','ix12/source','ix5/lab','ix6/atom','ix7/molecules'];
+const chapterKeys=['ix1/scale','ix9/line','ix10/forces','ix11/energy','ix12/source','ix5/lab','ix6/atom','ix7/molecules'];
 assert.deepEqual(SIMS.filter(s=>s.id!=='matter').map(s=>s.related),chapterKeys,'current-track activities retain their exact links');
 assert.equal(SIMS.find(s=>s.id==='matter').related,'ix25_1/states');
 for(const s of SIMS.filter(x=>x.set!=='ix25')){
@@ -28,6 +29,8 @@ assert.deepEqual(calculate('matter',{temperature:0}),{temperature:0,state:'melti
 assert.deepEqual(calculate('matter',{temperature:22}),{temperature:22,state:'liquid'});
 assert.deepEqual(calculate('matter',{temperature:100}),{temperature:100,state:'boiling point'});
 assert.deepEqual(calculate('matter',{temperature:110}),{temperature:110,state:'gas'});
+assert.deepEqual(calculate('cell-size',{fieldDiameter:5,cellsAcross:25,objective:'10',eyepiece:'10'}),{sizeMicrometres:200,totalMagnification:100,fieldMicrometres:5000,cellsAcross:25});
+assert.equal(SIMS.find(s=>s.id==='cell-size').limit.includes('not observations'),true);
 assert.equal(calculate('force',{F:12,m:4}).acceleration,3);
 assert.deepEqual(calculate('lever',{load:60,effortArm:1,loadArm:.5}),{effort:30,load:60,mechanicalAdvantage:2});
 assert.equal(calculate('sound',{frequency:440,amplitude:.5,medium:'water'}).wavelength,1480/440);
@@ -37,4 +40,4 @@ assert.equal(calculate('mixtures',{case:'salt-water-water',method:'distillation'
 assert.deepEqual(calculate('atom',{p:8,n:8,e:10}),{symbol:'O',element:'Oxygen',atomicNumber:8,massNumber:16,charge:-2,shells:[2,8,0]});
 const water=calculate('molecules',{formula:'water',count:3});
 assert.equal(water.formula,'H₂O');assert.equal(water.mass,18);assert.equal(water.totalAtoms,9);assert.equal(water.totalRelativeMass,54);
-console.log(`Simulator core OK · ${SIMS.length} Class IX activities · ${SIMS.filter(s=>s.subject==='Physics').length} Physics · ${SIMS.filter(s=>s.subject==='Chemistry').length} Chemistry`);
+console.log(`Simulator core OK · ${SIMS.length} activities · ${SIMS.filter(s=>s.subject==='Physics').length} Physics · ${SIMS.filter(s=>s.subject==='Chemistry').length} Chemistry · ${SIMS.filter(s=>s.subject==='Biology').length} Biology`);

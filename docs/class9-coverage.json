@@ -101,19 +101,25 @@
    "title": "Cell",
    "periods": 12,
    "sourcePages": null,
-   "unit": "World of living · 27 marks",
-   "keyConcepts": 8,
+   "unit": "World of living · unit allocation 27 marks (not chapter-specific)",
+   "keyConcepts": 10,
    "learningOutcomes": 12,
-   "activities": 0,
+   "activities": 4,
    "practicals": [
     4
    ],
    "models": [
     "ix1/cell",
     "ix1/osmosis",
-    "ix1/division"
+    "ix1/division",
+    "ix1/microscope",
+    "ix1/scale",
+    "ix1/organelles"
    ],
-   "teacherValidationFlags": []
+   "teacherValidationFlags": [
+    "Source mapping: supplied NCERT Exploration ‘Cell: The Building Block of Life’ is printed as Chapter 2 (pp. 8–27); the current app course remains Class IX 2026–27 Chapter 1.",
+    "NCERT-only enrichment (including fluid-mosaic detail, cell culture, cancer and synthetic biology) is not presented as separate exam outcomes or chapter marks."
+   ]
   },
   {
    "track": "compulsory_086",
@@ -122,7 +128,7 @@
    "title": "Tissues",
    "periods": 13,
    "sourcePages": null,
-   "unit": "World of living · 27 marks",
+   "unit": "World of living · unit allocation 27 marks (not chapter-specific)",
    "keyConcepts": 9,
    "learningOutcomes": 10,
    "activities": 0,
@@ -145,7 +151,7 @@
    "title": "Reproduction",
    "periods": 13,
    "sourcePages": null,
-   "unit": "World of living · 27 marks",
+   "unit": "World of living · unit allocation 27 marks (not chapter-specific)",
    "keyConcepts": 6,
    "learningOutcomes": 10,
    "activities": 0,
@@ -172,7 +178,7 @@
    "title": "Diversity",
    "periods": 12,
    "sourcePages": null,
-   "unit": "World of living · 27 marks",
+   "unit": "World of living · unit allocation 27 marks (not chapter-specific)",
    "keyConcepts": 5,
    "learningOutcomes": 6,
    "activities": 0,

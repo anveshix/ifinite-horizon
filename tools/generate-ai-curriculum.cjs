@@ -16,8 +16,8 @@ const refs=new Proxy({
 const modules=vm.runInNewContext(`(()=>{return (${literal})})()`,refs,{timeout:1000});
 const legacy=vm.runInNewContext(`(()=>{return (${legacyLiteral})})()`,refs,{timeout:1000});
 const coverage=JSON.parse(fs.readFileSync(path.join(root,'docs/class9-coverage.json'),'utf8'));
-const snapshot={schemaVersion:1,source:'Class IX registry in index.html (IXC)',generatedAt:coverage.generated||'unknown',course:{id:'ix',title:'Class IX · Compulsory Science (086)'},chapters:modules.map(ch=>({
-  id:ch.kp,number:String(ch.no),title:ch.title,unit:ch.unit,brief:ch.brief||'',briefHi:ch.briefHi||'',topics:(ch.topics||[]).map(t=>({id:t.id,title:t.title,summary:t.summary||''})),keyConcepts:ch.kc||[],learningOutcomes:ch.lo||[],practicals:ch.prac||[],reviewFlags:ch.flags||[]
+const snapshot={schemaVersion:2,source:'Class IX registry in index.html (IXC)',generatedAt:coverage.generated||'unknown',course:{id:'ix',title:'Class IX · Compulsory Science (086)'},chapters:modules.map(ch=>({
+  id:ch.kp,number:String(ch.no),title:ch.title,unit:ch.unit,brief:ch.brief||'',briefHi:ch.briefHi||'',topics:(ch.topics||[]).map(t=>({id:t.id,title:t.title,summary:t.summary||''})),keyConcepts:ch.kc||[],learningOutcomes:ch.lo||[],activities:ch.act||[],practicals:ch.prac||[],reviewFlags:ch.flags||[]
 }))};
 const out=path.join(root,'api/ai/curriculum.json');
 fs.mkdirSync(path.dirname(out),{recursive:true});
