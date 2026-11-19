@@ -1,0 +1,40 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const content=require('../assets/va-tissues-content.js');
+const coverage=require('../docs/class9-coverage.json');
+const curriculum=require('../api/ai/curriculum.json');
+const app=fs.readFileSync(require.resolve('../index.html'),'utf8');
+const {normalize,filter}=require('../assets/va-mindmap-core.js');
+const chapter=coverage.modules.find(x=>x.id==='ix2');
+const aiChapter=curriculum.chapters.find(x=>x.id==='ix2');
+
+assert.match(content.source,/Tissues in Action/);
+assert.match(content.source,/printed Chapter 3/);
+assert.match(content.source,/app labels Tissues as Chapter 2/);
+assert.equal(content.sections.length,8);
+assert.ok(content.sections.every(x=>x.title&&x.hi&&x.en&&x.hiText&&x.pages));
+for(const term of ['apical meristem','parenchyma','collenchyma','sclerenchyma','xylem','phloem','epithelial','tendon','ligament','neuron'])
+  assert.ok(content.sections.some(x=>(x.en+' '+x.points.join(' ')).toLowerCase().includes(term)),`lesson covers ${term}`);
+assert.match(content.scope,/lateral and intercalary meristems/);
+assert.match(content.scope,/do not collect or compare learners’ personal weight data/);
+assert.match(content.practical.source,/Activity 3\.1/);
+assert.match(content.practical.procedure[2],/after recording day 3/i);
+assert.ok(content.practical.safety.some(x=>/never a knife or scalpel/.test(x)));
+assert.ok(content.practical.procedure.some(x=>/days 4–7/.test(x)));
+assert.equal(chapter.no,'2');
+assert.equal(chapter.periods,13);
+assert.equal(chapter.activities,4);
+assert.equal(chapter.practicals[0],5);
+assert.match(chapter.unit,/not chapter-specific/);
+for(const id of ['ix2/organisation','ix2/meristem','ix2/plant-support','ix2/epithelial','ix2/connective','ix2/muscle-nerve','ix2/growth'])
+ assert.ok(chapter.models.includes(id),`coverage has expanded mind-map route ${id}`);
+assert.ok(aiChapter.reviewFlags.some(x=>/Chapter 3/.test(x)));
+assert.ok(aiChapter.activities.some(x=>/onion-root length/.test(x)));
+assert.ok(aiChapter.topics.length>=10);
+const routes=aiChapter.topics.map(x=>`ix2/${x.id}`);
+const mapped=normalize([{ch:{kp:'ix2',set:'ix',no:2,title:'Tissues',unit:'World of living',topics:aiChapter.topics}}],routes);
+assert.equal(filter(mapped,'ix').find(x=>x.id==='ix2').models.length,aiChapter.topics.length,'mind map exposes the expanded Tissues topic branches');
+assert.ok(filter(mapped,'ix').find(x=>x.id==='ix2').models.every(x=>x.available),'each mapped mind-map leaf has a real route');
+assert.match(app,/Investigate onion-root growth and apical meristem/);
+assert.doesNotMatch(app,/Identify plant and animal tissues[\s\S]{0,300}Prepared slides, microscope/);
+console.log('Tissues chapter content OK · source/syllabus mapping, 8 bilingual sections, practical safety, graph inquiry and AI context checked');

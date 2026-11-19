@@ -129,19 +129,28 @@
    "periods": 13,
    "sourcePages": null,
    "unit": "World of living · unit allocation 27 marks (not chapter-specific)",
-   "keyConcepts": 9,
+   "keyConcepts": 10,
    "learningOutcomes": 10,
-   "activities": 0,
+   "activities": 4,
    "practicals": [
     5
    ],
    "models": [
     "ix2/tissues",
     "ix2/joint",
-    "ix2/xylem"
+    "ix2/xylem",
+    "ix2/organisation",
+    "ix2/meristem",
+    "ix2/plant-support",
+    "ix2/epithelial",
+    "ix2/connective",
+    "ix2/muscle-nerve",
+    "ix2/growth"
    ],
    "teacherValidationFlags": [
-    "Meristematic tissue ‘types’ are not named in the syllabus PDF: only apical meristem is shown; confirm the other names with the prescribed textbook / teacher."
+    "Source mapping: supplied NCERT Exploration ‘Tissues in Action’ is printed Chapter 3 (pp. 28–47); the current app course remains Class IX 2026–27 Chapter 2.",
+    "Current course emphasis is apical meristem. Lateral/intercalary meristem and additional plant tissue-system detail in the source are flagged as enrichment rather than separate assumed exam outcomes.",
+    "Do not collect or compare learners’ personal body-weight, age, sex or health data; the source’s optional body-composition activity is not required."
    ]
   },
   {
