@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "source": "CBSE Science (086), Class IX 2025–26 syllabus + NCERT 2024–25 Chapter 1; separate historical track",
+  "generatedAt": "2026-11-10",
+  "course": {
+    "id": "ix25",
+    "title": "Class IX · CBSE Science (086), 2025–26"
+  },
+  "chapters": [
+    {
+      "id": "ix25_1",
+      "number": "1",
+      "title": "Matter in Our Surroundings",
+      "unit": "Unit I · Matter — Nature and Behaviour · 25 marks",
+      "brief": "Matter as particles; particle motion, spacing and attraction; states and their changes, including evaporation and cooling.",
+      "briefHi": "कणों के रूप में पदार्थ; कणों की गति, दूरी व आकर्षण; अवस्थाएँ, परिवर्तन और वाष्पीकरण।",
+      "topics": [
+        {
+          "id": "states",
+          "title": "Particles, states & state changes",
+          "summary": ""
+        },
+        {
+          "id": "diffusion",
+          "title": "Diffusion & particle motion",
+          "summary": ""
+        },
+        {
+          "id": "evaporation",
+          "title": "Evaporation & cooling",
+          "summary": ""
+        }
+      ],
+      "keyConcepts": [
+        "Matter has mass and occupies space; it is particulate",
+        "Particles have spaces between them, move continuously, and attract one another; heating generally increases particle kinetic energy",
+        "Diffusion: spontaneous mixing of particles; it is generally faster at higher temperature",
+        "Solids: closely packed particles vibrate about positions; liquids: particles remain close but move past one another; gases: particles are far apart and move freely",
+        "Melting / fusion and freezing; latent heat of fusion changes state at the melting point without a temperature rise during the change",
+        "Boiling throughout a liquid at its boiling point versus evaporation at the surface below boiling; latent heat of vaporisation",
+        "Evaporation rate is affected by exposed surface area, temperature, humidity and wind speed; evaporative cooling",
+        "Condensation and sublimation (solid directly to gas; deposition is the reverse); heating and pressure can change a substance’s state",
+        "NCERT chapter temperature conversion: K = °C + 273 (school-level rounded convention); pure water boils near 100 °C at 1 atm"
+      ],
+      "learningOutcomes": [
+        "Describe evidence for the particulate nature of matter and explain diffusion using particle motion",
+        "Compare the arrangement, motion and qualitative spacing of particles in solids, liquids and gases",
+        "Explain state changes by heating or cooling; distinguish evaporation from boiling",
+        "Relate evaporation rate and cooling qualitatively to surface area, temperature, humidity and wind speed",
+        "Use the school-level Celsius–Kelvin conversion stated in the NCERT chapter"
+      ],
+      "practicals": [],
+      "reviewFlags": [
+        "Track: CBSE Class IX Science (086), 2025–26. Unit I is 25 marks overall; this is not a chapter-wise mark allotment. This is a separate historical syllabus track and does not replace Class IX 2026–27 Chapter 1 (Cell).",
+        "NCERT 2024–25 Chapter 1 covers pressure and latent heat in more depth than the short CBSE 2025–26 outline. They are identified as source enrichment, not separately claimed as exam weightage. NCERT school-level conversion uses K = °C + 273; the precise ice melting point is 273.15 K.",
+        "The simulator is an idealised particle model at school level and supports, but cannot replace, NCERT activities and practical 6 (determining the melting point of ice and boiling point of water)."
+      ]
+    }
+  ]
+}

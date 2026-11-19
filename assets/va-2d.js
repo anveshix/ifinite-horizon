@@ -21,6 +21,7 @@ const MAP={
 "ch11/ohm":[P10+"ohm",P10+"circuit"],"ch11/resistance":[P10+"circuit"],"ch11/series":[P10+"circuit"],"ch11/heating":[P10+"joule_heating"],
 "ch12/magnet":[P10+"magnetic_field_lines"],"ch12/field":[P10+"magnetic_field_lines"],"ch12/solenoid":[P10+"electromagnet"],"ch12/flhr":[P10+"motor"],"ch12/motor":[P10+"motor"],"ch12/induction":[P10+"electromagnetic_induction"],"ch12/domestic":[P10+"domestic_circuit"],
 "ch13/pyramid":[B10+"food_pyramid"],"ch13/web":[B10+"food_web"],"ch13/ozone":[B10+"pollution"],"ch13/waste":[B10+"pollution",B10+"population"],
+"ix25_1/states":[C9+"states"],"ix25_1/diffusion":[C9+"diffusion"],"ix25_1/evaporation":[C9+"evaporation"],
 "ix1/cell":[B9+"cell_animal",B9+"cell_plant",B9+"cell_nucleus",B9+"cell_mitochondria",B9+"cell_membrane",B9+"cell_organelles"],
 "ix1/osmosis":[B9+"cell_membrane",C9+"diffusion"],"ix1/division":[B10+"cell_cycle_division",B10+"chromosome_structure"],
 "ix2/tissues":[B9+"tissue_epithelial",B9+"tissue_muscular",B9+"tissue_connective",B9+"tissue_nervous",B9+"skin"],

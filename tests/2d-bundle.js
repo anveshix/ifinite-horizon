@@ -58,7 +58,8 @@ for (let i = 0; i < moduleStarts.length; i++) {
   const module = ixModules.slice(m.index, moduleStarts[i + 1]?.index ?? ixModules.length);
   for (const id of module.matchAll(/TP\("([^"]+)"/g)) expectedTopics.add(`${m[1]}/${id[1]}`);
 }
-const advancedEnd = app.indexOf('Hj.push', advancedStart);
+const pushEnd=app.indexOf('Hj.push',advancedStart),legacyStart=app.indexOf('const IX25=[',advancedStart);
+const advancedEnd=legacyStart>advancedStart?Math.min(pushEnd>advancedStart?pushEnd:Infinity,legacyStart):pushEnd;
 const advanced = app.slice(advancedStart, advancedEnd > advancedStart ? advancedEnd : advancedStart + 100000);
 const advancedStarts = [...advanced.matchAll(/AD\("(adv\d+)"/g)];
 for (let i = 0; i < advancedStarts.length; i++) {
@@ -66,6 +67,7 @@ for (let i = 0; i < advancedStarts.length; i++) {
   const module = advanced.slice(m.index, advancedStarts[i + 1]?.index ?? advanced.length);
   for (const id of module.matchAll(/TP\("([^"]+)"/g)) expectedTopics.add(`${m[1]}/${id[1]}`);
 }
+for(const topic of ['ix25_1/states','ix25_1/diffusion','ix25_1/evaporation']) assert.ok(Object.hasOwn(MAP,topic),`${topic}: 2025–26 Matter chapter needs an accurate 2D link`);
 const unmappedTopics = [...expectedTopics].filter(topic => !Object.hasOwn(MAP, topic));
 assert.deepEqual(unmappedTopics, [], `App topics missing exact 2D mappings: ${unmappedTopics.join(', ')}`);
 

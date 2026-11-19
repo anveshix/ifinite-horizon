@@ -4,11 +4,14 @@ const records=[
  {key:'ix5/types',ch:{kp:'ix5',no:5,set:'ix',title:'Mixtures',hi:'मिश्रण',unit:'Matter',brief:'Solutions and separation',color:'#627f82',kc:['Solution','Suspension'],lo:['Classify mixtures'],topics:[{id:'types',title:'Types',hi:'प्रकार'},{id:'lab',title:'Separation lab'}]}},
  {key:'ix6/atom',ch:{kp:'ix6',no:6,set:'ix',title:'Atoms',unit:'Matter',kc:['Protons'],topics:[{id:'atom',title:'Atom builder'}]}},
  {key:'ix9/line',ch:{kp:'ix9',no:9,set:'ix',title:'Motion',unit:'Physics',topics:[{id:'line',title:'Motion graph'}]}},
+ {key:'ix25_1/states',ch:{kp:'ix25_1',set:'ix25',no:1,title:'Matter in Our Surroundings',unit:'Unit I · Matter',topics:[{id:'states',title:'Particles and states'}]}},
  {key:'ch1/reaction',ch:{no:1,title:'Reactions',unit:'Chemistry',topics:[{id:'reaction',title:'Reaction model'}]}},
 ];
-const chapters=normalize(records,['ix5/types','ix6/atom','ix9/line','ch1/reaction']);
-assert.equal(chapters.length,4,'one chapter per registry key, not one per model entry');
-assert.deepEqual(chapters.map(c=>c.id),['ch1','ix5','ix6','ix9']);
+const chapters=normalize(records,['ix5/types','ix6/atom','ix9/line','ix25_1/states','ch1/reaction']);
+assert.equal(chapters.length,5,'one chapter per registry key, not one per model entry');
+assert.deepEqual(chapters.map(c=>c.id),['ix25_1','ch1','ix5','ix6','ix9']);
+assert.equal(chapters.find(c=>c.id==='ix25_1').course,'ix25','historical syllabus is not normalised into current IX compulsory course');
+assert.deepEqual(filter(chapters,'ix25').map(c=>c.id),['ix25_1']);
 assert.equal(chapters.find(c=>c.id==='ix5').models[1].available,false,'unbuilt topics remain identified as unavailable');
 assert.equal(chapters.find(c=>c.id==='ix5').models[0].available,true);
 assert.deepEqual(filter(chapters,'ix').map(c=>c.id),['ix5','ix6','ix9']);

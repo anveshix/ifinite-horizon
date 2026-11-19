@@ -2,13 +2,18 @@ const assert=require('node:assert/strict');
 const {SIMS,calculate}=require('../assets/va-simulator-core.js');
 const {modules}=require('../docs/class9-coverage.json');
 
-assert.equal(SIMS.length,7,'initial Class IX simulator slice has seven investigations');
+assert.equal(SIMS.length,8,'seven current-track investigations plus one separately labelled 2025–26 Matter inquiry');
 assert.equal(new Set(SIMS.map(s=>s.id)).size,SIMS.length,'simulator ids are unique');
 assert.equal(SIMS.filter(s=>s.subject==='Physics').length,4);
 assert.equal(SIMS.filter(s=>s.subject==='Chemistry').length,3);
+assert.equal(SIMS.filter(s=>s.subject==='Matter').length,1);
+assert.equal(SIMS.find(s=>s.id==='matter').set,'ix25');
+assert.match(SIMS.find(s=>s.id==='matter').limit,/1 atm/);
+assert.match(SIMS.find(s=>s.id==='matter').limit,/not a replacement/i);
 const chapterKeys=['ix9/line','ix10/forces','ix11/energy','ix12/source','ix5/lab','ix6/atom','ix7/molecules'];
-assert.deepEqual(SIMS.map(s=>s.related),chapterKeys,'every activity links to its Class IX chapter context');
-for(const s of SIMS){
+assert.deepEqual(SIMS.filter(s=>s.id!=='matter').map(s=>s.related),chapterKeys,'current-track activities retain their exact links');
+assert.equal(SIMS.find(s=>s.id==='matter').related,'ix25_1/states');
+for(const s of SIMS.filter(x=>x.set!=='ix25')){
   const chapter=modules.find(m=>m.track==='compulsory_086'&&m.id===s.key.split('/')[0]);
   assert.ok(chapter,`${s.id}: belongs to a compulsory Class IX 086 chapter`);
   assert.equal(chapter.title,s.chapter,`${s.id}: chapter title matches the registry`);
@@ -18,6 +23,11 @@ for(const s of SIMS){
   for(const f of s.fields) if(f.type!=='select') assert.ok(f.min<f.max&&f.step>0&&f.value>=f.min&&f.value<=f.max,`${s.id}.${f.id}: valid initial range`);
 }
 assert.deepEqual(calculate('motion',{u:4,a:1,t:4}),{displacement:24,velocity:8});
+assert.deepEqual(calculate('matter',{temperature:-4}),{temperature:-4,state:'solid'});
+assert.deepEqual(calculate('matter',{temperature:0}),{temperature:0,state:'melting / freezing point'});
+assert.deepEqual(calculate('matter',{temperature:22}),{temperature:22,state:'liquid'});
+assert.deepEqual(calculate('matter',{temperature:100}),{temperature:100,state:'boiling point'});
+assert.deepEqual(calculate('matter',{temperature:110}),{temperature:110,state:'gas'});
 assert.equal(calculate('force',{F:12,m:4}).acceleration,3);
 assert.deepEqual(calculate('lever',{load:60,effortArm:1,loadArm:.5}),{effort:30,load:60,mechanicalAdvantage:2});
 assert.equal(calculate('sound',{frequency:440,amplitude:.5,medium:'water'}).wavelength,1480/440);
