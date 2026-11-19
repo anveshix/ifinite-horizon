@@ -1,0 +1,24 @@
+const assert=require('node:assert/strict');
+const {normalize,filter,layout}=require('../assets/va-mindmap-core.js');
+const records=[
+ {key:'ix5/types',ch:{kp:'ix5',no:5,set:'ix',title:'Mixtures',hi:'मिश्रण',unit:'Matter',brief:'Solutions and separation',color:'#627f82',kc:['Solution','Suspension'],lo:['Classify mixtures'],topics:[{id:'types',title:'Types',hi:'प्रकार'},{id:'lab',title:'Separation lab'}]}},
+ {key:'ix6/atom',ch:{kp:'ix6',no:6,set:'ix',title:'Atoms',unit:'Matter',kc:['Protons'],topics:[{id:'atom',title:'Atom builder'}]}},
+ {key:'ix9/line',ch:{kp:'ix9',no:9,set:'ix',title:'Motion',unit:'Physics',topics:[{id:'line',title:'Motion graph'}]}},
+ {key:'ch1/reaction',ch:{no:1,title:'Reactions',unit:'Chemistry',topics:[{id:'reaction',title:'Reaction model'}]}},
+];
+const chapters=normalize(records,['ix5/types','ix6/atom','ix9/line','ch1/reaction']);
+assert.equal(chapters.length,4,'one chapter per registry key, not one per model entry');
+assert.deepEqual(chapters.map(c=>c.id),['ch1','ix5','ix6','ix9']);
+assert.equal(chapters.find(c=>c.id==='ix5').models[1].available,false,'unbuilt topics remain identified as unavailable');
+assert.equal(chapters.find(c=>c.id==='ix5').models[0].available,true);
+assert.deepEqual(filter(chapters,'ix').map(c=>c.id),['ix5','ix6','ix9']);
+assert.deepEqual(filter(chapters,'ix','proton').map(c=>c.id),['ix6']);
+assert.deepEqual(filter(chapters,'ix','', 'Matter').map(c=>c.id),['ix5','ix6']);
+const allLayout=layout(filter(chapters,'ix'),'');
+assert.equal(allLayout.nodes.length,3);
+assert.equal(allLayout.units.length,2);
+assert.ok(allLayout.height>0&&allLayout.root.y===allLayout.height/2);
+const expanded=layout(filter(chapters,'ix'),'ix5');
+assert.equal(expanded.topics.length,2);
+assert.ok(expanded.nodes.find(n=>n.chapter.id==='ix5').h>expanded.nodes.find(n=>n.chapter.id==='ix6').h);
+console.log(`Mind map core OK · ${chapters.length} unique chapters · hierarchy and filtering checked`);

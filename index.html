@@ -435,7 +435,7 @@ body.noen .chap .ct small{display:block}
     <h1 id="vaHeroTitle">Make the invisible<br><em>understandable.</em></h1>
     <p class="va-hero-lede">A science atlas built for curious minds. Explore living 3D models, follow each process, and test what you understand — one idea at a time.</p>
     <div class="va-dynamic-copy" id="homeSub"></div>
-    <div class="va-hero-actions"><button class="va-primary" id="homeGo">Begin exploring <span aria-hidden="true">→</span></button><button class="va-secondary" id="homeSimulator">Class IX simulator lab · कक्षा 9 सिम्युलेटर <span aria-hidden="true">↗</span></button><button class="va-secondary" id="myReport">My learning report <span aria-hidden="true">↗</span></button><button class="va-secondary va-install" id="install" hidden>Install atlas <span aria-hidden="true">↓</span></button></div>
+    <div class="va-hero-actions"><button class="va-primary" id="homeGo">Begin exploring <span aria-hidden="true">→</span></button><button class="va-secondary" id="homeSimulator">Class IX simulator lab · कक्षा 9 सिम्युलेटर <span aria-hidden="true">↗</span></button><button class="va-secondary" id="homeMindMap">Mind Map · विषय मानचित्र <span aria-hidden="true">↗</span></button><button class="va-secondary" id="myReport">My learning report <span aria-hidden="true">↗</span></button><button class="va-secondary va-install" id="install" hidden>Install atlas <span aria-hidden="true">↓</span></button></div>
     <p class="va-hero-note"><span>↻</span> Rotate · inspect · predict <i></i> Designed for desktop, tablet and mobile</p>
    </div>
    <aside class="va-specimen" aria-label="Scientific illustration: an atom in a 3D field">
@@ -508,7 +508,7 @@ body.noen .chap .ct small{display:block}
   <div class="brand" id="brandHome" title="Home" role="button" tabindex="0"><b>Vigyan <span>Atlas</span></b><small>Science in 3D · Class IX &amp; X · 2026–27</small></div>
   <div class="settabs" role="tablist" aria-label="Course"></div>
   <div class="setnote" id="setnote"></div>
-  <div class="sidelinks" id="sidelinks"><button id="openLab">🧪 Virtual practical lab<br><span class="hi" lang="hi">प्रायोगिक प्रयोगशाला</span></button><button id="openCg">🎯 Competency reference<br><span class="hi" lang="hi">योग्यता संदर्भ</span></button><button id="simOpen">⚗ Interactive simulator<br><span class="hi" lang="hi">इंटरैक्टिव सिम्युलेटर</span></button></div>
+  <div class="sidelinks" id="sidelinks"><button id="openLab">🧪 Virtual practical lab<br><span class="hi" lang="hi">प्रायोगिक प्रयोगशाला</span></button><button id="openCg">🎯 Competency reference<br><span class="hi" lang="hi">योग्यता संदर्भ</span></button><button id="simOpen">⚗ Interactive simulator<br><span class="hi" lang="hi">इंटरैक्टिव सिम्युलेटर</span></button><button id="mindMapOpen">🧠 Mind Map<br><span class="hi" lang="hi">विषय मानचित्र</span></button></div>
   <input id="search" type="search" placeholder="Search topics… (e.g. heart, lens)">
   <nav id="toc"></nav>
   <div class="foot">Drag to explore · tap parts · works offline<br><span class="credit">Copyright © 2026 <b>PP Creations — Paras Pranav</b></span></div>
@@ -518,7 +518,7 @@ body.noen .chap .ct small{display:block}
   <div id="stage">
    <svg id="leaders"></svg><div id="labels"></div>
    <div id="stagebar"><button class="ib" id="menu" title="Show / hide chapters (N)" aria-label="Show or hide chapters">☰ Chapters</button><button class="ib" id="thome" title="Home (H)" aria-label="Home">⌂</button><span id="crumb"></span><span class="sp"></span>
-    <button class="ib" id="tlab" title="Show every label (default: a label appears only when you tap its part)">All labels</button><button class="ib on" id="thi" title="Language">EN + हिं</button><button class="ib" id="resetv">⟲ View</button><button class="ib on" id="ptog" title="Show / hide lesson panel (P)">▤ Panel</button><button class="ib" id="simOpenStage" title="Class IX interactive simulators">⚗ Sim</button>
+    <button class="ib" id="tlab" title="Show every label (default: a label appears only when you tap its part)">All labels</button><button class="ib on" id="thi" title="Language">EN + हिं</button><button class="ib" id="resetv">⟲ View</button><button class="ib on" id="ptog" title="Show / hide lesson panel (P)">▤ Panel</button><button class="ib" id="simOpenStage" title="Class IX interactive simulators">⚗ Sim</button><button class="ib" id="mindMapOpenStage" title="Open the syllabus mind map">🧠 Map</button>
     <details id="more"><summary class="ib" aria-label="More options" title="More">⋯</summary><div class="pop">
      <div class="mi"><button class="ib" id="tsnd" aria-label="Sound">🔊</button><span>Sound · ध्वनि</span></div>
      <div class="mi"><button class="ib" id="size" aria-label="Text size">A</button><span>Text size · अक्षर आकार</span></div>
@@ -8153,10 +8153,13 @@ paintSet();sync();
 <link rel="stylesheet" href="assets/va-home.css">
 <link rel="stylesheet" href="assets/va-teacher.css">
 <link rel="stylesheet" href="assets/va-simulator.css">
+<link rel="stylesheet" href="assets/va-mindmap.css">
 <script src="public/2d/conditions.js"></script>
 <script src="assets/va-2d.js"></script>
 <script src="assets/va-simulator-core.js"></script>
 <script src="assets/va-simulator.js"></script>
+<script src="assets/va-mindmap-core.js"></script>
+<script src="assets/va-mindmap.js"></script>
 <script src="assets/va-cinema.js"></script>
 <script src="assets/va-voice-data.js"></script>
 <script src="assets/va-voice.js"></script>
