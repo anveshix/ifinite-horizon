@@ -28,12 +28,15 @@ async function call(handler,req){const res=resMock();await handler(req,res);retu
   assert.deepEqual(disabledStatus.body.tools,[]);
   for(const [k,v] of Object.entries(requiredEnv))process.env[k]=v;
   assert.equal(config().enabled,true,'complete server config enables AI');
-  assert.equal(listChapters().length,12,'AI scope is the 12 current Class IX compulsory chapters');
+  assert.equal(listChapters().filter(c=>c.course==='ix').length,12,'AI current course remains the 12 current Class IX compulsory chapters');
+  assert.equal(listChapters().filter(c=>c.course==='ix25').length,1,'the historical track is separately labelled for teacher-tool context');
   assert.equal(config({...requiredEnv,GEMINI_API_KEY:''}).enabled,false,'missing provider key fails closed');
   assert.equal(config({...requiredEnv,AI_TOOLS_ENABLED:'false'}).enabled,false,'explicit off switch works');
 
   const goodLesson=validateRequest(lessonRequest);assert.ok(!goodLesson.error);
   assert.equal(validateRequest({...lessonRequest,chapterId:'ch5/brain'}).error,'INVALID_INPUT','rejects chapters outside Class IX registry');
+  const historicalRequest={...lessonRequest,course:'ix25',chapterId:'ix25_1'};const historical=validateRequest(historicalRequest);assert.ok(!historical.error);assert.match(require('../lib/ai').buildPrompt(historical),/2025–26/,'AI gets the supplied historical syllabus track, not a claim it is current');
+  assert.equal(validateRequest({...historicalRequest,course:'ix',chapterId:'ix25_1'}).error,'INVALID_INPUT','cannot relabel the historical chapter as the current syllabus');
   assert.equal(validateRequest({...lessonRequest,inputs:{...lessonRequest.inputs,durationMinutes:120}}).error,'INVALID_INPUT','bounds lesson duration');
   assert.equal(validateRequest({...worksheetRequest,inputs:{...worksheetRequest.inputs,questionCount:50}}).error,'INVALID_INPUT','bounds worksheet size');
   assert.equal(validateOutput(goodLesson,lessonOutput()).sequence.reduce((n,s)=>n+s.minutes,0),40,'validates lesson timing');
@@ -48,7 +51,7 @@ async function call(handler,req){const res=resMock();await handler(req,res);retu
   assert.ok(validateOutput(mixedRequest,mixedOutput),'mixed worksheets require both question forms');
 
   const statusResponse=await call(status,{method:'GET',headers:{}});
-  assert.equal(statusResponse.statusCode,200);assert.equal(statusResponse.body.enabled,true);assert.equal(statusResponse.body.course.chapters.length,12);
+  assert.equal(statusResponse.statusCode,200);assert.equal(statusResponse.body.enabled,true);assert.equal(statusResponse.body.course.chapters.length,13);assert.equal(statusResponse.body.course.chapters.find(c=>c.id==='ix25_1').course,'ix25');
   const wrongMethod=await call(status,{method:'POST',headers:{}});assert.equal(wrongMethod.statusCode,405);
 
   let providerCalls=0,redisCounts=[1,1,1],providerPayload=null,providerHeaders=null;
@@ -81,7 +84,7 @@ async function call(handler,req){const res=resMock();await handler(req,res);retu
   redisCounts=[1,1,1];global.fetch=async()=>response(503,{});
   const redisDown=await call(generate,reqMock(lessonRequest));assert.equal(redisDown.statusCode,503);assert.equal(redisDown.body.error,'RATE_LIMIT_UNAVAILABLE');
 
-  console.log('AI tools OK · 12 Class IX chapters · configuration, request/output schemas, same-origin, Gemini proxy, privacy and shared rate-limit cases');
+  console.log('AI tools OK · 12 current plus 1 historical Class IX chapter · configuration, request/output schemas, same-origin, Gemini proxy, privacy and shared rate-limit cases');
  }catch(error){console.error(error);process.exitCode=1;}
  finally{global.fetch=oldFetch;for(const [k,v] of Object.entries(oldEnv)){if(v===undefined)delete process.env[k];else process.env[k]=v;}}
 })();

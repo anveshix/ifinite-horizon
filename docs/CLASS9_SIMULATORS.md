@@ -1,7 +1,8 @@
 # Class IX simulator lab — scope and learning map
 
-**Release slice:** first Class IX simulator module (Science 086), CBSE 2026–27.  
-**Course scope:** four Physics chapters and three Chemistry chapters. Class X is not implemented in this release.  
+**Release slice:** seven 2026–27 Class IX activities plus one separately tagged 2025–26 Matter inquiry (Science 086).
+
+**Course scope:** The 2026–27 slice covers four Physics chapters and three Chemistry chapters. A separate 2025–26 track adds one Matter inquiry; it does not alter the current course. Class X is not implemented in this release.
 **Curriculum authority:** [CBSE Science (086), Class IX, 2026–27](https://cbseacademic.nic.in/web_material/CurriculumMain27/SecPart1/ScienceSt_SecP1_2026-27.pdf). The app's Class IX registry and chapter keys are in `docs/class9-coverage.json` and `index.html`.
 
 This is an **initial, chapter-linked inquiry slice**, not evidence that every official learning outcome, practical, or examination demand is covered. Outcomes below are short teaching goals for the individual models, not official CBSE quotations. The simulator does not claim teacher validation. The visualisations are idealised and must support, not replace, hands-on practical work.
@@ -15,9 +16,11 @@ This is an **initial, chapter-linked inquiry slice**, not evidence that every of
 | Chemistry | Exploring Mixtures and their Separation | Separation decision lab | Choose a mixture, a recovery goal, and a separation technique; compare the choice with the physical-property rationale. This is a conceptual chooser, not a lab protocol. | `ix5/lab` |
 | Chemistry | Structure of an Atom | Atomic number / isotope / ion explorer | Change protons, neutrons, and electrons; inspect element identity, mass number, net charge, and simplified 2,8,8 shell filling for the first 18 elements. | `ix6/atom` |
 | Chemistry | Atoms and Molecules | Formula and relative-mass builder | Select a common molecule/formula unit and vary particle count; count atoms and calculate relative formula mass using school-level values. | `ix7/molecules` |
+| 2025–26 historical track | Matter in Our Surroundings | Water particle-state inquiry | At about 1 atm, vary temperature around school-level 0 °C and 100 °C thresholds; predict particle arrangement and state. | `ix25_1/states` |
 
 ## Model limitations that are surfaced in the interface
 
+- Matter (2025–26 only) is a qualitative pure-water particle sketch at approximately 1 atm; the interface surfaces assumptions and the practical-work caveat. It does not calculate pressure-dependent phase boundaries, latent heat, evaporation rate or actual particle trajectories.
 - Motion assumes one-dimensional uniformly accelerated motion; its chart is schematic.
 - The force model uses **net** force and omits friction, air resistance, and variable mass.
 - The lever is ideal: no friction, beam mass, or energy loss. It must not imply that a real machine creates energy.
