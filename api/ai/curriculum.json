@@ -96,30 +96,66 @@
       "topics": [
         {
           "id": "tissues",
-          "title": "Plant & animal tissues",
-          "summary": "Key concepts: meristematic/permanent, epithelial/connective/muscular/nervous"
+          "title": "Plant & animal tissue atlas",
+          "summary": "3D overview: compare plant meristematic/permanent tissues and the four broad animal tissue groups."
         },
         {
           "id": "joint",
           "title": "Bones, muscles & joints",
-          "summary": "Key concepts: musculoskeletal system, joints"
+          "summary": "3D joint models: hinge, ball-and-socket, pivot and fixed; schematic classroom categories."
         },
         {
           "id": "xylem",
           "title": "Xylem & phloem at work",
-          "summary": "Learning outcome: identify xylem and phloem"
+          "summary": "Linked transport model; xylem carries water/minerals, phloem translocates sugars between sources and sinks."
+        },
+        {
+          "id": "organisation",
+          "title": "Cells → tissues → organs",
+          "summary": "Organisation and division of labour; simple versus complex tissues."
+        },
+        {
+          "id": "meristem",
+          "title": "Apical meristem & plant growth",
+          "summary": "Syllabus emphasis: apical meristem. Compare source-only lateral/intercalary detail as enrichment."
+        },
+        {
+          "id": "plant-support",
+          "title": "Plant protective & supporting tissues",
+          "summary": "Epidermis; parenchyma, collenchyma and sclerenchyma; structure-function comparisons."
+        },
+        {
+          "id": "epithelial",
+          "title": "Epithelial tissue",
+          "summary": "Closely packed covering/lining tissue; NCERT examples of exchange, protection, secretion, sensation and absorption."
+        },
+        {
+          "id": "connective",
+          "title": "Connective tissue",
+          "summary": "Blood, bone, cartilage, tendon and ligament; distinguish matrix, support and connections."
+        },
+        {
+          "id": "muscle-nerve",
+          "title": "Muscular & nervous tissue",
+          "summary": "Skeletal, smooth and cardiac muscle; neuron structure and coordination."
+        },
+        {
+          "id": "growth",
+          "title": "Onion-root apical-growth investigation",
+          "summary": "Record real day-by-day measurements before/after the supervised day-3 root-tip cut; graph the evidence."
         }
       ],
       "keyConcepts": [
-        "Introduction to tissues and their importance",
-        "Levels of organisation: cell → tissue → organ → organ system → organism",
-        "Plant and animal tissues",
-        "Types of plant tissues",
-        "Meristematic tissues — types and function",
-        "Permanent tissues — types, structure and function",
-        "Animal tissues: epithelial, connective, muscular and nervous — types, structure and function",
-        "Elementary idea of the musculoskeletal system",
-        "Care of the musculoskeletal system: injuries, postural care, nutrition, exercise"
+        "Tissue as an organised group of cells; division of labour and levels of organisation",
+        "Plant and animal tissue diversity; structure relates to function",
+        "Meristematic tissue and apical meristem (syllabus emphasis); differentiation into permanent tissue",
+        "Simple permanent tissues: parenchyma, collenchyma and sclerenchyma",
+        "Protective tissue: epidermis, cuticle, root hairs and stomata",
+        "Complex conducting tissues: xylem and phloem; cooperating cell types and transport",
+        "Animal tissues: epithelial, connective, muscular and nervous",
+        "Musculoskeletal system: bones, muscles, cartilage, tendons, ligaments and types of joints",
+        "Practical 5: investigate onion-root growth and apical meristem; record measurements and represent data in a graph",
+        "Source enrichment: lateral/intercalary meristems, tissue systems, epithelial subtypes, annual rings, totipotency and plant tissue culture"
       ],
       "learningOutcomes": [
         "Differentiate plant and animal tissues; meristematic and permanent; simple and complex",
@@ -133,12 +169,20 @@
         "Discuss techniques and medical recommendations for recovery from muscular injuries",
         "Experiment: plant growth due to the apical meristem; represent data in tables/graphs"
       ],
-      "activities": [],
+      "activities": [
+        "Measure onion-root length in two labelled jars for days 1–3; after the day-3 reading, trim about 1 cm from roots in Jar B under teacher supervision, then continue measurements through day 7.",
+        "Plot your own intact-root and tip-cut-root measurements against day; mark when the cut was made and interpret only the data collected.",
+        "Use the plant-tissue 3D atlas and 2D diagrams to compare simple support tissues, conducting tissue and animal tissues.",
+        "Compare joint models without forcing or testing anyone’s range of motion; relate tendons, ligaments and cartilage to their functions."
+      ],
       "practicals": [
         5
       ],
       "reviewFlags": [
-        "Meristematic tissue ‘types’ are not named in the syllabus PDF: only apical meristem is shown; confirm the other names with the prescribed textbook / teacher."
+        "Source mapping: supplied NCERT Exploration ‘Tissues in Action’ is printed Chapter 3 (pp. 28–47); the current app course remains Class IX 2026–27 Chapter 2.",
+        "Current course emphasis is apical meristem. Lateral/intercalary meristem and additional plant tissue-system detail appear in the source chapter and are identified as enrichment, not silently promoted to separate exam requirements.",
+        "Do not collect or compare students’ body-weight, age, sex or health data; the textbook’s optional body-composition activity is excluded from the required lesson.",
+        "World of living 27 marks is the unit allocation only, not a Tissues chapter mark value."
       ]
     },
     {

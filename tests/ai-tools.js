@@ -40,6 +40,12 @@ async function call(handler,req){const res=resMock();await handler(req,res);retu
   assert.match(cellPrompt,/cell-size|microscope/i,'AI context includes source-aligned microscopy branches');
   assert.match(cellPrompt,/Use a light microscope to compare onion epidermis and cheek-cell mounts/,'AI receives hands-on practical context');
   assert.match(cellPrompt,/not presented as separate exam outcomes or chapter marks/,'AI context preserves the CBSE/enrichment scope boundary');
+  const tissueRequest=validateRequest({...lessonRequest,chapterId:'ix2'});assert.ok(!tissueRequest.error);
+  const tissuePrompt=require('../lib/ai').buildPrompt(tissueRequest);
+  assert.match(tissuePrompt,/Chapter 3 \(pp\. 28–47\)/,'AI preserves the source/app Tissues chapter-number difference');
+  assert.match(tissuePrompt,/onion-root length/,'AI context includes the correct hands-on Practical 5');
+  assert.match(tissuePrompt,/Do not collect or compare students’ body-weight/,'AI context excludes personal body-composition data');
+  assert.match(tissuePrompt,/lateral\/intercalary meristem/,'AI context includes a meristem syllabus-scope caveat');
   assert.equal(validateRequest({...lessonRequest,chapterId:'ch5/brain'}).error,'INVALID_INPUT','rejects chapters outside Class IX registry');
   const historicalRequest={...lessonRequest,course:'ix25',chapterId:'ix25_1'};const historical=validateRequest(historicalRequest);assert.ok(!historical.error);assert.match(require('../lib/ai').buildPrompt(historical),/2025–26/,'AI gets the supplied historical syllabus track, not a claim it is current');
   assert.equal(validateRequest({...historicalRequest,course:'ix',chapterId:'ix25_1'}).error,'INVALID_INPUT','cannot relabel the historical chapter as the current syllabus');
