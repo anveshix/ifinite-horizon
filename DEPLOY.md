@@ -19,6 +19,9 @@ The app is the root `index.html`. The **3D | 2D** switch sits in its top bar and
 **Projector / classroom mode (the complete Class IX + X 2D image set):** press **📽 Present** or key **S** in 2D — in the app (`assets/va-2d.js`) and in every standalone viewer `public/2d/<class>/<subject>/viewer.html` (`public/2d/present.js`). Labels show only for the dot you tap; in Present mode Space/→ reveals one label at a time, PgDn/PgUp change image, **A** Reveal/Quiz/All, **Z** zoom, **L** laser, **B/W** blank, **E** language, **T** theme, **+/−** text size, **F** full screen, **?** help, **Esc** exit.
 Deploy the **repository root** (GitHub Pages: branch root; Vercel: `outputDirectory` is `.`). `public/index.html` and `public/science/index.html` only forward old links to the app.
 
+## Syllabus Mind Map
+Open **Mind Map** from Home, the sidebar, or the stage bar. It supports the Class IX, Class X, and IX Advanced registries, with unit filters, search, expandable chapter/topic branches, and links to existing 2D/3D lessons. Class IX Physics/Chemistry chapters also link to the IX simulator lab. It uses native SVG—no graph plugin or added runtime dependency—so it remains compatible with the static site. Scope and implementation notes: `docs/MIND_MAP.md`.
+
 ## Class IX interactive simulator lab
 Open **Class IX simulator lab** from Home, **Interactive simulator** in the Class IX sidebar, or **⚗ Sim** in the stage bar. The first release provides seven chapter-linked inquiry models (four Physics, three Chemistry); model limits and a curriculum map are in `docs/CLASS9_SIMULATORS.md`. Controls float over a full-screen canvas and can be hidden. Related chapter links return to the existing 3D or mapped 2D topic view. This is an initial supported slice—not complete Class IX/X outcome coverage or a replacement for hands-on lab work.
 
