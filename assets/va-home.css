@@ -273,3 +273,50 @@ body.light #home #homeGrid>.hc:hover{transform:translateY(-3px);border-color:#85
  #homeStats span{font-size:11px}
  .va-tools-grid{grid-template-columns:1fr}.va-tool-card{min-height:0;flex-direction:row}.va-tool-arrow{position:static}
 }
+
+/* ===== ui-unify · Home · laptop & smart board (≥1024px) =====
+   Fills the full content width, row-fit grids, larger type and touch targets for projectors and boards. */
+@media(min-width:1024px){
+ #home .hw.va-home{padding-left:clamp(40px,4.4vw,72px);padding-right:clamp(40px,4.4vw,72px)}
+ .va-hero{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(40px,5vw,80px)}
+ .va-specimen{max-width:600px}
+ .va-specimen-art{height:clamp(300px,31vw,420px)}
+ .va-specimen-head,.va-specimen-foot,.va-caption-index,.va-scale{font-size:12px}
+ .va-specimen-caption b{font-size:20px}
+ .va-hero-lede{font-size:clamp(18px,1.5vw,21px)}
+ .va-dynamic-copy{font-size:15px}
+ /* big touch targets */
+ .va-hero-actions button{min-height:52px;font-size:16px}
+ .va-primary{padding:0 26px}
+ .va-hero-actions .va-secondary:not(.clBtn){min-height:52px;font-size:15px}
+ #home .settabs.home{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+ #home .settabs.home button{min-height:76px;font-size:17px;padding:14px 18px}
+ #home .settabs.home button small{font-size:13px}
+ /* tools: each group fills its own row, no empty slots */
+ .va-tools-grid{gap:14px}
+ .va-tools-section>.va-tools-group:nth-of-type(2) .va-tools-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .va-tools-section>.va-tools-group:nth-of-type(3) .va-tools-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .va-tools-section>.va-tools-group:nth-of-type(4) .va-tools-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .va-tool-card{min-height:156px;padding:20px 20px;gap:16px}
+ .va-tool-icon{width:44px;height:44px;font-size:22px}
+ .va-tool-copy{gap:7px}
+ .va-tool-meta{font-size:12px}
+ .va-tool-copy b{font-size:21px}
+ .va-tool-copy small{font-size:15px;line-height:1.5}
+ .va-tools-group-head h3{font-size:24px}
+ .va-tools-group-head p{font-size:15px}
+ .va-tools-heading>p,.va-course-top>p,.va-section-heading>p{font-size:15px}
+ /* chapters: larger cards, same 4-column rhythm (rows already follow subjects: Chemistry, Biology, Physics, Environment) */
+ #homeGrid{gap:14px}
+ #home .hc{min-height:220px;padding:20px 20px 18px}
+ #home .hc>b{font-size:21px}
+ #home .hc .hb,#home .hc .hb .hi,#home .hc>small.hi{font-size:14px}
+ #home .hc .hu,#home .hm{font-size:12px}
+ .va-section-heading h2,.va-course-top h2{font-size:clamp(34px,3vw,44px)}
+ .va-footer{font-size:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+}
+/* large boards (≥1600px): use the extra width instead of stretching the cards */
+@media(min-width:1600px){
+ #home .hw.va-home{max-width:1600px}
+ #homeGrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
