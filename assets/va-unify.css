@@ -1,0 +1,69 @@
+/* Vigyan Atlas · one system across every page (loaded last).
+   Tokens match the Home page: paper, ink, deep teal, copper accent, Source Serif 4 headings, Inter text.
+   Dark simulator lab is intentionally excluded here. */
+:root{
+ --u-paper:#f2f0e8;--u-card:#faf9f4;--u-surface:#ebe9df;--u-ink:#17252a;--u-ink2:#33443f;--u-mute:#5c6a66;
+ --u-line:#d5d8cf;--u-deep:#13252a;--u-copper:#9a5628;--u-copper-soft:#f3e7dc;--u-r:8px;
+}
+button,input,select,textarea{font-family:inherit}
+body.light{background:var(--u-paper)!important;color:var(--u-ink)}
+
+/* ---- app shell (lesson viewer, sidebar, panels) ---- */
+body.light #side h1 span,body.light .brand span,body.light #brand span,body.light #homeTitle span{color:var(--u-copper)}
+body.light #side,body.light #panel{background:var(--u-card)}
+body.light .btn,body.light .ib,body.light #stagebar button:not(.vseg button){border-color:var(--u-line);border-radius:var(--u-r)}
+body.light .btn:hover,body.light .ib:hover,body.light #stagebar button:hover{border-color:var(--u-copper);color:var(--u-copper);background:var(--u-card)}
+body.light .btn.prim{background:var(--u-deep)!important;border-color:var(--u-deep);box-shadow:none}
+body.light .btn.prim:hover{background:#24444a!important}
+body.light .ib.on,body.light button.on{background:var(--u-copper-soft);border-color:var(--u-copper);color:var(--u-ink)}
+body.light .vseg button[aria-pressed="true"]{background:var(--u-deep)}
+body.light .chap .badge{background:var(--u-deep)}
+body.light .tp.cur{background:var(--u-copper-soft);color:var(--u-ink);box-shadow:inset 3px 0 0 var(--u-copper)}
+body.light .tp:hover,body.light .chap summary:hover{background:var(--u-surface)}
+body.light :focus-visible{outline-color:var(--u-copper)}
+body.light .card,body.light #info,body.light details.sec,body.light .sec{border-color:var(--u-line);border-radius:var(--u-r);box-shadow:none}
+body.light .tag.tE{color:var(--u-copper);border-color:var(--u-copper);background:var(--u-copper-soft)}
+/* sidebar: no mid-word breaks, track chips in a readable 2-column grid */
+#side .tp,#side .chap summary,#side .tp *{overflow-wrap:break-word;word-break:normal;hyphens:manual}
+#side .settabs{grid-template-columns:1fr;gap:6px}
+#side .settabs button{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;column-gap:8px;border:1px solid var(--u-line);border-radius:var(--u-r);padding:8px 12px;min-width:0;text-align:left}
+#side .settabs button[aria-selected="true"]{background:var(--u-deep);color:#f5f1e7;border-color:var(--u-deep)}
+#side .settabs button small{font-size:11px;line-height:1.35;white-space:nowrap}
+
+/* ---- Virtual practical lab & Competency reference (full-page overlays) ---- */
+#vlab,#vcg{background:var(--u-paper)!important;color:var(--u-ink)}
+#vlab .hw,#vcg .hw{max-width:980px;margin:0 auto;padding:28px 24px 48px}
+#vlab .hhead,#vcg .hhead{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+#vlab .hlogo,#vcg .hlogo{width:12px;height:12px;flex:none;border-radius:50%;background:var(--u-copper);font-size:0;box-shadow:0 0 0 4px var(--u-copper-soft)}
+#vlab h1,#vcg h1{margin:0;font:500 clamp(28px,3.4vw,38px)/1.1 "Source Serif 4",Georgia,serif;letter-spacing:-.02em;color:var(--u-ink)}
+#vlab h1 span,#vcg h1 span{color:var(--u-copper)}
+#vlab .credit,#vcg .credit{color:var(--u-mute);font-size:14px!important;margin-top:6px!important}
+#vlab .notice,#vcg .notice{background:var(--u-surface);border:1px solid var(--u-line);border-left:3px solid var(--u-copper);border-radius:var(--u-r);color:var(--u-ink2);font-size:14px;line-height:1.55;box-shadow:none}
+#vlab .lead,#vcg .lead{margin:14px 0 20px}
+#vlab .btn,#vcg .btn{min-height:40px;padding:0 16px;font-size:14px;font-weight:600}
+#vlab .pc,#vcg .cgc{background:var(--u-card);border:1px solid var(--u-line);border-radius:var(--u-r);box-shadow:none;margin-bottom:12px}
+#vlab .pc summary{padding:14px 16px;gap:14px}
+#vlab .pc .n{width:28px;height:28px;border-radius:var(--u-r);background:var(--u-surface);color:var(--u-ink);font-weight:600}
+#vlab .pc .t .en{font-family:"Source Serif 4",Georgia,serif;font-size:18px;font-weight:500;color:var(--u-ink)}
+#vlab .pc .t .hi{color:var(--u-copper);font-size:14px}
+#vlab .pc .ch{background:var(--u-surface);border:1px solid var(--u-line);border-radius:999px;color:var(--u-mute);font-size:12px;font-weight:500}
+#vcg .cgc{padding:18px 20px}
+#vcg .cgc h3{font:500 20px/1.25 "Source Serif 4",Georgia,serif;color:var(--u-ink);margin:0 0 6px}
+#vcg .cgc h3 span{color:var(--u-copper);font:600 14px/1 Inter,sans-serif;margin-right:8px}
+#vcg .cgc ul{color:var(--u-ink2);font-size:14px;line-height:1.6;padding-left:20px}
+#vcg table.mk{width:100%;border-collapse:collapse;font-size:14px}
+#vcg table.mk th,#vcg table.mk td{border-bottom:1px solid var(--u-line);padding:10px 8px;text-align:left}
+
+/* ---- My report modal ---- */
+#report{background:rgba(23,37,42,.28)!important}
+#report>div,#report .rp,#report [role="dialog"]{background:var(--u-card);border:1px solid var(--u-line);border-radius:12px;box-shadow:0 20px 48px rgba(23,37,42,.14)}
+#report h2{font:500 26px/1.2 "Source Serif 4",Georgia,serif;color:var(--u-ink)}
+#report button{border-radius:var(--u-r)}
+
+/* ---- Mind map ---- */
+#vaMindMap{background:var(--u-paper)}
+/* practical rows: long source labels wrap under the title instead of squeezing it */
+#vlab .pc summary{display:flex;flex-wrap:wrap;align-items:center}
+#vlab .pc .t{flex:1 1 200px;min-width:0}
+#vlab .pc .ch{margin-left:auto}
+@media(max-width:600px){#vlab .pc .ch{margin-left:42px;margin-top:6px;order:4}}
