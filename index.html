@@ -11,6 +11,7 @@
 <meta property="og:description" content="Every chapter of CBSE Class X Science as a live 3D model you can drag, explore and test yourself on. English + हिंदी.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1220'/%3E%3Cg fill='none' stroke='%23ffd54f' stroke-width='3'%3E%3Cellipse cx='32' cy='32' rx='24' ry='9'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' transform='rotate(60 32 32)'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' transform='rotate(120 32 32)'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='5' fill='%233b8ced'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/va-fonts.css">
 <style>
 :root{--fs:1.15;--ws:1.05;--bg:#10262b;--side:#152e34;--panel:#183840;--line:#2f5660;--ink:#f6f1e3;--ink2:#e3ece9;--mute:#b9cfd3;--acc:#ffd36b;--hi:#ffc98a;--blue:#2a79b8;
 --s1:#1f434c;--s2:#25505a;--s3:#235563;--bd:#4a7a86;--inset:#0e2024;--card2:#1a3a43;--glass:rgba(14,36,42,.9);--scrim:rgba(6,16,19,.72);--glow:rgba(70,170,160,.22);--accg:rgba(255,211,107,.35);
@@ -423,7 +424,7 @@ body.noen .chap .ct small{display:block}
  <header class="va-masthead">
   <div class="va-brand">
    <span class="va-brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="2.5"/><ellipse cx="20" cy="20" rx="16" ry="6.5"/><ellipse cx="20" cy="20" rx="16" ry="6.5" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="16" ry="6.5" transform="rotate(120 20 20)"/></svg></span>
-   <span class="va-brand-copy"><b>Vigyan <i>Atlas</i></b><small>SCIENCE · VISUALISED</small></span>
+   <span class="va-brand-copy"><b>Vigyan <i>Atlas</i></b><small>Science, visualised</small></span>
   </div>
   <div class="va-top-meta"><span class="va-live-dot"></span> CBSE · 2026–27 <span class="va-meta-sep">/</span> EN + हिंदी</div>
   <button class="va-teacher-link" id="teacherBtn">Teacher dashboard <span aria-hidden="true">↗</span></button>
@@ -431,53 +432,52 @@ body.noen .chap .ct small{display:block}
  <main>
   <section class="va-hero" aria-labelledby="vaHeroTitle">
    <div class="va-hero-copy">
-    <p class="va-eyebrow"><span>FIELD GUIDE</span><span class="va-eyebrow-rule"></span><span>IX — X / SCIENCE</span></p>
-    <h1 id="vaHeroTitle">Make the invisible<br><em>understandable.</em></h1>
+    <p class="va-eyebrow"><span>Field guide</span><span class="va-eyebrow-rule"></span><span>Class IX–X science</span></p>
+    <h1 id="vaHeroTitle">Make the invisible<br><em>understandable</em></h1>
     <p class="va-hero-lede">A science atlas built for curious minds. Explore living 3D models, follow each process, and test what you understand — one idea at a time.</p>
     <div class="va-dynamic-copy" id="homeSub"></div>
     <div class="va-hero-actions"><button class="va-primary" id="homeGo">Begin exploring <span aria-hidden="true">→</span></button><button class="va-secondary" id="homeSimulator">Class IX simulator lab · कक्षा 9 सिम्युलेटर <span aria-hidden="true">↗</span></button><button class="va-secondary" id="homeMindMap">Mind Map · विषय मानचित्र <span aria-hidden="true">↗</span></button><button class="va-secondary" id="myReport">My learning report <span aria-hidden="true">↗</span></button><button class="va-secondary va-install" id="install" hidden>Install atlas <span aria-hidden="true">↓</span></button></div>
     <p class="va-hero-note"><span>↻</span> Rotate · inspect · predict <i></i> Designed for desktop, tablet and mobile</p>
    </div>
    <aside class="va-specimen" aria-label="Scientific illustration: an atom in a 3D field">
-    <div class="va-specimen-head"><span>VISUAL STUDY · 001</span><span>3D LAB / WEBGL</span></div>
+    <div class="va-specimen-head"><span>Visual study 001</span><span>3D lab · WebGL</span></div>
     <div class="va-specimen-art" aria-hidden="true">
      <div class="va-orbit va-orbit-a"></div><div class="va-orbit va-orbit-b"></div><div class="va-orbit va-orbit-c"></div>
      <div class="va-atom-core"><span>+</span><span>+</span><span>+</span></div>
      <i class="va-electron va-electron-a"></i><i class="va-electron va-electron-b"></i><i class="va-electron va-electron-c"></i>
      <span class="va-specimen-cross va-cross-a"></span><span class="va-specimen-cross va-cross-b"></span>
     </div>
-    <div class="va-specimen-caption"><div><span class="va-caption-index">FIG. 01</span><b>Atomic structure</b></div><span class="va-scale">NOT TO SCALE</span></div>
-    <div class="va-specimen-foot"><span><i></i> 3D STUDY</span><span>OPEN MODEL IN LAB <b>↗</b></span></div>
+    <div class="va-specimen-caption"><div><span class="va-caption-index">Fig. 01</span><b>Atomic structure</b></div><span class="va-scale">Not to scale</span></div>
+    <div class="va-specimen-foot"><span><i></i> 3D study</span><span>Open model in lab <b>↗</b></span></div>
    </aside>
   </section>
   <section class="va-tools-section" aria-labelledby="vaToolsTitle">
-   <div class="va-tools-heading"><div><p class="va-eyebrow va-eyebrow-small">YOUR TOOLKIT</p><h2 id="vaToolsTitle">Tools for every step</h2></div><p>Explore, assess, and plan with the learning tools already in Vigyan Atlas.</p></div>
-   <p class="va-ai-unavailable" id="vaAiAvailability" role="status">AI draft tools are not enabled on this deployment. Existing Atlas tools remain available. · इस परिनियोजन में AI ड्राफ़्ट उपकरण चालू नहीं हैं।</p>
+   <div class="va-tools-heading"><div><p class="va-eyebrow va-eyebrow-small">Your toolkit</p><h2 id="vaToolsTitle">Tools for every step</h2></div><p>Explore, assess, and plan with the learning tools already in Vigyan Atlas.</p></div>
    <div class="va-tools-group"><div class="va-tools-group-head"><span class="va-tools-index">01</span><div><h3>Smart Teaching</h3><p>Make science visible and interactive.</p></div></div><div class="va-tools-grid">
-    <button class="va-tool-card" type="button" data-va-tool="lessons"><span class="va-tool-icon" aria-hidden="true">◉</span><span class="va-tool-copy"><span class="va-tool-meta">3D EXPLORATION</span><b>Explore 3D lessons</b><small>Guided, bilingual chapter models with interactive steps.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card va-ai-tool" type="button" data-ai-tool="lesson-plan" hidden><span class="va-tool-icon" aria-hidden="true">✎</span><span class="va-tool-copy"><span class="va-tool-meta">AI DRAFT · CLASS IX</span><b>Lesson planner</b><small>Create an editable lesson outline from a chapter and your goals.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card" type="button" data-va-tool="simulator"><span class="va-tool-icon" aria-hidden="true">⚗</span><span class="va-tool-copy"><span class="va-tool-meta">CLASS IX · 7 MODELS</span><b>Interactive simulator lab</b><small>Change parameters and observe simplified science models.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card" type="button" data-va-tool="mindmap"><span class="va-tool-icon" aria-hidden="true">⌘</span><span class="va-tool-copy"><span class="va-tool-meta">CURRICULUM MAP</span><b>Syllabus Mind Map</b><small>Browse units, chapters, concepts, and linked visuals.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card" type="button" data-va-tool="curiosity"><span class="va-tool-icon" aria-hidden="true">✳</span><span class="va-tool-copy"><span class="va-tool-meta">INTERACTIVE LAB</span><b>Curiosity Lab</b><small>Try exploratory science activities and knowledge checks.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="lessons"><span class="va-tool-icon" aria-hidden="true">◉</span><span class="va-tool-copy"><span class="va-tool-meta">3D exploration</span><b>Explore 3D lessons</b><small>Guided, bilingual chapter models with interactive steps.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card va-ai-tool" type="button" data-ai-tool="lesson-plan" hidden><span class="va-tool-icon" aria-hidden="true">✎</span><span class="va-tool-copy"><span class="va-tool-meta">AI draft · Class IX</span><b>Lesson planner</b><small>Create an editable lesson outline from a chapter and your goals.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="simulator"><span class="va-tool-icon" aria-hidden="true">⚗</span><span class="va-tool-copy"><span class="va-tool-meta">Class IX · 7 models</span><b>Interactive simulator lab</b><small>Change parameters and observe simplified science models.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="mindmap"><span class="va-tool-icon" aria-hidden="true">⌘</span><span class="va-tool-copy"><span class="va-tool-meta">Curriculum map</span><b>Syllabus Mind Map</b><small>Browse units, chapters, concepts, and linked visuals.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="curiosity"><span class="va-tool-icon" aria-hidden="true">✳</span><span class="va-tool-copy"><span class="va-tool-meta">Interactive lab</span><b>Curiosity Lab</b><small>Try exploratory science activities and knowledge checks.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
    </div></div>
    <div class="va-tools-group"><div class="va-tools-group-head"><span class="va-tools-index">02</span><div><h3>Continuous Assessment</h3><p>Check understanding and follow learning progress.</p></div></div><div class="va-tools-grid">
-    <button class="va-tool-card" type="button" data-va-tool="checks"><span class="va-tool-icon" aria-hidden="true">✓</span><span class="va-tool-copy"><span class="va-tool-meta">TOPIC QUIZZES</span><b>Quick topic checks</b><small>Open a chapter to use its prediction prompts and quizzes.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card va-ai-tool" type="button" data-ai-tool="worksheet-builder" hidden><span class="va-tool-icon" aria-hidden="true">▤</span><span class="va-tool-copy"><span class="va-tool-meta">AI DRAFT · CLASS IX</span><b>Quiz &amp; worksheet builder</b><small>Draft chapter-scoped questions and an answer key for review.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card" type="button" data-va-tool="report"><span class="va-tool-icon" aria-hidden="true">▤</span><span class="va-tool-copy"><span class="va-tool-meta">YOUR PROGRESS</span><b>My learning report</b><small>Review explored topics and quiz results saved on this device.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="checks"><span class="va-tool-icon" aria-hidden="true">✓</span><span class="va-tool-copy"><span class="va-tool-meta">Topic quizzes</span><b>Quick topic checks</b><small>Open a chapter to use its prediction prompts and quizzes.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card va-ai-tool" type="button" data-ai-tool="worksheet-builder" hidden><span class="va-tool-icon" aria-hidden="true">▤</span><span class="va-tool-copy"><span class="va-tool-meta">AI draft · Class IX</span><b>Quiz &amp; worksheet builder</b><small>Draft chapter-scoped questions and an answer key for review.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="report"><span class="va-tool-icon" aria-hidden="true">▤</span><span class="va-tool-copy"><span class="va-tool-meta">Your progress</span><b>My learning report</b><small>Review explored topics and quiz results saved on this device.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
    </div></div>
    <div class="va-tools-group"><div class="va-tools-group-head"><span class="va-tools-index">03</span><div><h3>Teacher Productivity</h3><p>Keep classroom references, practicals, and reports together.</p></div></div><div class="va-tools-grid">
-    <button class="va-tool-card" type="button" data-va-tool="teacher"><span class="va-tool-icon" aria-hidden="true">▥</span><span class="va-tool-copy"><span class="va-tool-meta">CLASS INSIGHTS</span><b>Teacher dashboard</b><small>Import student report codes, review class progress, and export summaries.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card" type="button" data-va-tool="practicals"><span class="va-tool-icon" aria-hidden="true">⌬</span><span class="va-tool-copy"><span class="va-tool-meta">13 CLASS IX PRACTICALS</span><b>Virtual practical lab</b><small>Review procedures, record observations, and open linked 3D models.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
-    <button class="va-tool-card" type="button" data-va-tool="competency"><span class="va-tool-icon" aria-hidden="true">◎</span><span class="va-tool-copy"><span class="va-tool-meta">CBSE REFERENCE</span><b>Competency reference</b><small>Browse curricular goals and the published assessment breakdown.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="teacher"><span class="va-tool-icon" aria-hidden="true">▥</span><span class="va-tool-copy"><span class="va-tool-meta">Class insights</span><b>Teacher dashboard</b><small>Import student report codes, review class progress, and export summaries.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="practicals"><span class="va-tool-icon" aria-hidden="true">⌬</span><span class="va-tool-copy"><span class="va-tool-meta">13 Class IX practicals</span><b>Virtual practical lab</b><small>Review procedures, record observations, and open linked 3D models.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
+    <button class="va-tool-card" type="button" data-va-tool="competency"><span class="va-tool-icon" aria-hidden="true">◎</span><span class="va-tool-copy"><span class="va-tool-meta">CBSE reference</span><b>Competency reference</b><small>Browse curricular goals and the published assessment breakdown.</small></span><span class="va-tool-arrow" aria-hidden="true">↗</span></button>
    </div></div>
   </section>
   <section class="va-course-section" id="course-selector" aria-label="Choose a course">
-   <div class="va-course-top"><div><p class="va-eyebrow va-eyebrow-small">YOUR STUDY PATH</p><h2>Choose your syllabus</h2></div><p>Three clearly separated learning tracks.<br>Pick one to see its chapters and models.</p></div>
+   <div class="va-course-top"><div><p class="va-eyebrow va-eyebrow-small">Your study path</p><h2>Choose your syllabus</h2></div><p>Three clearly separated learning tracks.<br>Pick one to see its chapters and models.</p></div>
    <div class="settabs home" role="tablist" aria-label="Course"></div>
    <div id="homeStats" aria-live="polite"></div>
   </section>
   <section class="va-topics-section" aria-labelledby="vaTopicsTitle">
-   <div class="va-section-heading"><div><p class="va-eyebrow va-eyebrow-small">THE ATLAS</p><h2 id="vaTopicsTitle">Explore by chapter</h2></div><p>Board-aligned science, brought into focus.<br>Choose a chapter to continue into the 3D lab.</p></div>
+   <div class="va-section-heading"><div><p class="va-eyebrow va-eyebrow-small">The atlas</p><h2 id="vaTopicsTitle">Explore by chapter</h2></div><p>Board-aligned science, brought into focus.<br>Choose a chapter to continue into the 3D lab.</p></div>
    <div id="homeGrid"></div>
   </section>
  </main>
@@ -493,6 +493,7 @@ body.noen .chap .ct small{display:block}
   <button class="teacher-back" id="tClose"><span aria-hidden="true">←</span> Back to atlas</button>
  </header>
  <main class="teacher-main">
+  <p class="va-ai-unavailable" id="vaAiAvailability" role="status">AI draft tools are not enabled on this deployment. Existing Atlas tools remain available. · इस परिनियोजन में AI ड्राफ़्ट उपकरण चालू नहीं हैं।</p>
   <section class="teacher-intro" aria-labelledby="teacherIntroTitle">
    <div><p class="teacher-kicker">CLASSROOM INSIGHTS</p><h2 id="teacherIntroTitle">Turn reports into<br><em>next steps.</em></h2></div>
    <p>Collect student progress codes to see explored models, quiz results, and topics that may need another explanation. All records stay in this browser — nothing is sent to a server.</p>
