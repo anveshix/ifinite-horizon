@@ -13,9 +13,9 @@ async function open(labId){
   try{const m=await load();m.open(labId)}
   catch(e){console.error("[curiosity] could not load",e);alert("Curiosity Lab could not load. Check your connection and try again. · क्यूरियॉसिटी लैब लोड नहीं हो सकी।")}
   finally{btns.forEach(b=>{b.disabled=false;if(b.dataset.t)b.innerHTML=b.dataset.t})}}
-function mk(cls,home){const b=document.createElement("button");b.type="button";b.className=cls+" clBtn";b.textContent="🧪 Curiosity Lab";b.title="3D simulator + visual knowledge check (K)";b.onclick=()=>open();return b}
+function mk(cls,home){const b=document.createElement("button");b.type="button";b.className=cls+" clBtn";b.textContent="Curiosity Lab";b.title="3D simulator + visual knowledge check (K)";b.onclick=()=>open();return b}
 if(bar)bar.insertBefore(mk("ib"),$("#tlab")||null);
-const hero=$("#home .va-hero-actions");if(hero){const b=mk("va-secondary");b.innerHTML="🧪 Curiosity Lab <span aria-hidden=\"true\">→</span>";const go=$("#homeGo");hero.insertBefore(b,go?go.nextSibling:hero.firstChild)}
+const hero=$("#home .va-hero-actions");if(hero){const b=mk("va-secondary");b.innerHTML="Curiosity Lab <span aria-hidden=\"true\">→</span>";const go=$("#homeGo");hero.insertBefore(b,go?go.nextSibling:hero.firstChild)}
 addEventListener("keydown",e=>{if((e.key==="k"||e.key==="K")&&!(e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|TEXTAREA|SELECT)$/.test((e.target||{}).tagName||""))){if(document.body.classList.contains("cl-open"))return;e.preventDefault();open()}});
 
 /* ---------- progress → the atlas (student report, teacher dashboard, home) — works without loading the lab ---------- */
@@ -40,7 +40,7 @@ function classSummary(list){const w=(list||[]).filter(x=>x&&x.cl);if(!w.length)r
 
 /* ---------- Home: the button shows the student's level ---------- */
 function badge(){const b=$("#home .clBtn.va-secondary");if(!b||b.disabled)return;const s=rd(),x=s&&s.xp|0;
- b.innerHTML=x?`🧪 Curiosity Lab · Lv ${lvl(x)} · ${x} XP <span aria-hidden="true">→</span>`:`🧪 Curiosity Lab <span aria-hidden="true">→</span>`}
+ b.innerHTML=x?`Curiosity Lab · Lv ${lvl(x)} · ${x} XP <span aria-hidden="true">→</span>`:`Curiosity Lab <span aria-hidden="true">→</span>`}
 badge();addEventListener("va-cl-progress",badge);addEventListener("storage",e=>{if(e.key==="va.cl.v1")badge()});
 
 /* ---------- Lesson panel: "try it in the lab" on the topics a lab belongs to ---------- */

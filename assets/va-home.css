@@ -208,3 +208,68 @@ body.light #home #homeGrid>.hc:hover{transform:translateY(-3px);border-color:#85
 @media(prefers-reduced-motion:reduce){
  #home *,#home *:before,#home *:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* ===== ui-unify · Home =====
+   Direction: exact, calm, a little warm · world: field guide / lab notebook
+   One scale: 4px grid, radius 8 (controls, cards) / 12 (specimen), text 12/14/16, no tracked caps, no italics. */
+#home{--va-r:8px;--va-r-lg:12px;--va-muted:#5c6a66;--va-line:#d5d8cf;--va-surface:#ebe9df}
+/* type */
+#home .va-eyebrow,#home .va-eyebrow-small,.va-brand-copy small,.va-top-meta,.va-tool-meta,#home .hc .hu,
+.va-specimen-head,.va-specimen-foot,.va-caption-index,.va-scale,.va-hero-note,#home .va-footer,.va-tools-index{text-transform:none;letter-spacing:0;font-family:Inter,"Segoe UI",system-ui,"Noto Sans Devanagari",sans-serif}
+.va-eyebrow,.va-eyebrow-small{font-size:12px;font-weight:500;color:var(--va-muted)}
+.va-brand-copy small{font-size:11px;font-weight:500;color:var(--va-muted)}
+.va-top-meta{font-size:12px;font-weight:500;color:var(--va-muted)}
+.va-hero h1{letter-spacing:-.03em;font-weight:500}.va-hero h1 em{font-style:normal}
+.va-hero-lede{color:#33443f}
+.va-dynamic-copy{font-size:14px;color:var(--va-muted)}
+.va-hero-note{font-size:12px;color:var(--va-muted)}
+.va-tool-meta{font-size:11px;font-weight:500;color:var(--va-muted)}
+.va-tool-copy small{font-size:12px;line-height:1.5;color:#4b5a56}
+.va-tools-group-head p,.va-course-top>p,.va-section-heading>p,.va-tools-heading>p{font-size:13px;color:var(--va-muted)}
+.va-tools-index{font-size:11px;font-weight:600}
+#home .hc .hu{font-size:11px;font-weight:500;color:var(--va-muted)}
+#home .hc .hb{font-size:12px;color:#4b5a56}#home .hc .hb .hi,#home .hc>small.hi{font-size:12px}
+#home .hm{font-size:11px;color:var(--va-muted)}
+#home .settabs.home button small{font-size:11px;letter-spacing:0;color:var(--va-muted)}
+#homeStats span{font-size:12px;border-radius:var(--va-r)}
+#home .va-footer,#home .hmore>summary{font-size:12px;color:var(--va-muted)}
+.va-specimen-head,.va-specimen-foot{font-size:11px;font-weight:500}
+.va-caption-index,.va-scale{font-size:11px;font-weight:500}
+/* controls: one radius, one height */
+.va-hero-actions{gap:8px 16px}
+.va-hero-actions button{min-height:44px;border-radius:var(--va-r);font:600 14px/1.2 Inter,"Segoe UI",system-ui,sans-serif}
+.va-hero-actions button:hover{transform:none}
+.va-primary{padding:0 20px;gap:12px}
+.va-secondary.clBtn{padding:0 16px;gap:10px;background:transparent;border:1px solid #b9c1b8}
+/* demote duplicates of the toolkit to quiet text links */
+.va-hero-actions .va-secondary:not(.clBtn){min-height:44px;padding:0 4px;border:0;background:transparent;color:var(--va-ink);font-weight:500;text-decoration:underline;text-decoration-color:#b9c1b8;text-underline-offset:4px}
+.va-hero-actions .va-secondary:not(.clBtn):hover{background:transparent;text-decoration-color:var(--va-copper)}
+.va-teacher-link{font:600 13px/1.2 Inter,"Segoe UI",system-ui,sans-serif}
+#home .settabs.home{gap:8px}
+#home .settabs.home button{border-radius:var(--va-r);min-height:56px;font-size:14px}
+/* cards: one radius, one padding, one hover */
+.va-tool-card,#home .hc,body.light #home #homeGrid>.hc{border-radius:var(--va-r);border-color:var(--va-line);background:var(--va-surface);padding:16px;overflow:hidden}
+.va-tool-card:hover,#home .hc:hover,body.light #home #homeGrid>.hc:hover{transform:none;border-color:#7d8c85;background:#f5f3ea}
+.va-tool-icon{border-radius:var(--va-r);width:36px;height:36px}
+.va-tools-grid,#homeGrid{gap:12px}
+.va-tool-copy b{font-size:17px}
+.va-ai-unavailable{border-radius:var(--va-r);font-size:12px}
+.va-specimen{border-radius:var(--va-r-lg)}
+#home .hp{border-radius:2px}
+#home .hmore[open]>div{border-radius:var(--va-r)}
+/* mobile: no text under 11px, tools stay readable */
+@media(max-width:700px){
+ .va-top-meta{font-size:11px}
+ .va-hero-actions button{font-size:14px}
+ .va-tool-copy small{font-size:12px}.va-tool-copy b{font-size:16px}
+ #home .settabs.home button{font-size:13px;padding:10px}
+ #home .settabs.home button small{font-size:11px}
+ #homeStats span{font-size:11px;padding:6px 8px}
+}
+@media(max-width:440px){
+ .va-eyebrow{font-size:12px}
+ .va-hero-actions button{min-height:44px;font-size:14px}
+ #home .settabs.home button{font-size:12px;padding:10px 6px}#home .settabs.home button small{font-size:11px}
+ #homeStats span{font-size:11px}
+ .va-tools-grid{grid-template-columns:1fr}.va-tool-card{min-height:0;flex-direction:row}.va-tool-arrow{position:static}
+}
