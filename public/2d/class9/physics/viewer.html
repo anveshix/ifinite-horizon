@@ -60,6 +60,7 @@
     <div class="sub" data-sub="energy" onclick="selectSub('energy')">Swinging Pendulum — दोलन करता पेंडुलम</div>
     <div class="topic" data-topic="sound" onclick="selectTopic('sound')">ध्वनि · Sound <span class="hi">ध्वनि</span></div>
     <div class="sub" data-sub="sound" onclick="selectSub('sound')">Vibrating Tuning Fork — कंपन करता ट्यूनिंग फोर्क</div>
+    <div class="sub" data-sub="echo_sonar" onclick="selectSub('echo_sonar')">Echo &amp; SONAR — प्रतिध्वनि व सोनार</div>
     <div class="topic" data-topic="circular" onclick="selectTopic('circular')">वृत्तीय गति · Circular Motion <span class="hi">एकसमान वृत्तीय गति</span></div>
     <div class="sub" data-sub="circular" onclick="selectSub('circular')">Centripetal Force & Tangential Velocity</div>
     <div class="topic" data-topic="machines" onclick="selectTopic('machines')">सरल मशीनें · Simple Machines <span class="hi">सरल मशीनें</span></div>
@@ -153,6 +154,20 @@ const DATA={
     {x:87,y:43,en:'Sound Waves',hi:'ध्वनि तरंगें'},
     {x:75,y:42,en:'Compression',hi:'संपीडन'},
     {x:95,y:43,en:'Rarefaction',hi:'विरलन'}
+  ]
+ },
+ echo_sonar:{
+  title:'प्रतिध्वनि व सोनार · Echo Reflection & SONAR', desc:'कठोर सतह से ध्वनि परावर्तन (स्पष्ट प्रतिध्वनि ≥ 0.1 s, न्यूनतम दूरी 17.2 m) तथा समुद्री सोनार द्वारा गहराई मापन (d = v·t/2)। Acoustic reflection from rigid surfaces and ultrasonic marine SONAR depth ranging.',
+  img:'images/echo_sonar.webp',
+  marks:[
+    {x:25.5,y:34,en:'SONAR Transmitter & Detector',hi:'सोनार प्रेषित्र व संसूचक'},
+    {x:25.5,y:46,en:'Transmitted Sound Pulse',hi:'प्रेषित ध्वनि तरंग'},
+    {x:33.5,y:63,en:'Reflected Seabed Echo',hi:'समुद्र तल से परावर्तित प्रतिध्वनि'},
+    {x:22,y:84,en:'Ocean Seabed (d = v·t/2)',hi:'समुद्री तल गहराई'},
+    {x:60,y:52,en:'Acoustic Sound Source',hi:'ध्वनि स्रोत (स्पीकर)'},
+    {x:78,y:51,en:'Reflected Echo (≥ 0.1 s)',hi:'परावर्तित प्रतिध्वनि (≥ 0.1 s)'},
+    {x:72,y:27,en:'Parabolic Echo Receiver',hi:'परवलयिक प्रतिध्वनि ग्राही'},
+    {x:89,y:44,en:'Rigid Reflecting Wall (d ≥ 17.2 m)',hi:'कठोर परावर्तक सतह'}
   ]
  },
  circular:{
