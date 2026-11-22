@@ -4,7 +4,7 @@
 import { bus } from "../core.js";
 import { PLANETS, freeFall, fmt } from "./models.js";
 import { sound as sfx } from "../quiz/fx.js";
-import { loadThree, makeStage, labelSprite, sliders, factsView, note, actionButton, el, C2, ask, seen, withDistractors } from "./kit.js";
+import { loadThree, loadCannon, makeStage, labelSprite, sliders, factsView, note, actionButton, el, C2, ask, seen, withDistractors } from "./kit.js";
 
 const view = v => freeFall({ planet: v.planet, h: v.h, m: v.m });
 
@@ -67,9 +67,18 @@ export default {
   ],
 
   async mount(ctx) {
-    const THREE = await loadThree();
+    const [THREE, CANNON] = await Promise.all([loadThree(), loadCannon()]);
     const st = makeStage(THREE, ctx, { pos: [3.2, 3.6, 10.5], target: [0, 2.5, 0], bg: 0x0b1424, minDist: 4.5, maxDist: 22 });
     const { scene } = st;
+    const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.8, 0) });
+    const matBall = new CANNON.Material("ball"), matPad = new CANNON.Material("pad");
+    world.addContactMaterial(new CANNON.ContactMaterial(matBall, matPad, { restitution: 0.58, friction: 0.2 }));
+    const padBody = new CANNON.Body({ mass: 0, material: matPad, shape: new CANNON.Plane() });
+    padBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
+    world.addBody(padBody);
+    const bBody1 = new CANNON.Body({ mass: 4, material: matBall, shape: new CANNON.Sphere(0.3) });
+    const bBody2 = new CANNON.Body({ mass: 0.1, material: matBall, shape: new CANNON.Sphere(0.13) });
+    world.addBody(bBody1); world.addBody(bBody2);
 
     const padMat = new THREE.MeshStandardMaterial({ color: 0x1e3a5f, roughness: 0.75 });
     const pad = new THREE.Mesh(new THREE.BoxGeometry(7, 0.25, 4), padMat); pad.position.set(0, -0.125, 0); scene.add(pad);
@@ -94,7 +103,7 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const ht = el("span"), hv = el("span"), hs = el("span"); hud.append(ht, hv, hs);
 
-    let t = 0, running = false, landed = false, tagM = -1;
+    let t = 0, running = false, landed = false, bouncing = false, tagM = -1;
 
     const placeAt = tc => {
       const F = view(ctx.vars), stAt = F.at(tc);
@@ -113,7 +122,7 @@ export default {
     };
 
     const reset = () => {
-      running = false; landed = false; t = 0;
+      running = false; landed = false; bouncing = false; t = 0;
       btnGo.textContent = "▶ Drop Both · दोनों गिराओ";
       const F = view(ctx.vars);
       ballMat.color.set(PLANETS[F.planet].color);
@@ -127,12 +136,28 @@ export default {
     };
 
     const stopFrame = st.onFrame(dt => {
-      if (!running) return;
       const F = view(ctx.vars);
+      if (bouncing) {
+        world.step(1 / 60, dt, 3);
+        const r = 0.16 + Math.cbrt(F.m) * 0.09;
+        ball.position.y = Math.max(r, bBody1.position.y - 0.3 + r);
+        pebble.position.y = Math.max(0.13, bBody2.position.y);
+        mTag.position.y = ball.position.y + r + 0.35;
+        pTag.position.y = pebble.position.y + 0.38;
+        if (Math.abs(bBody1.velocity.y) < 0.06 && bBody1.position.y < 0.38) bouncing = false;
+        return;
+      }
+      if (!running) return;
       t += dt;
       if (t >= F.tFall) {
         t = F.tFall; running = false;
-        if (!landed) { landed = true; sfx.play("thud"); btnGo.textContent = "↺ Reset · फिर से"; }
+        if (!landed) {
+          landed = true; bouncing = true; sfx.play("thud"); btnGo.textContent = "↺ Reset · फिर से";
+          world.gravity.set(0, -F.g * 0.65, 0);
+          const vUp = Math.min(8, Math.sqrt(F.vImpact) * 0.68);
+          bBody1.position.set(-0.35, 0.32, 0); bBody1.velocity.set(0, vUp, 0);
+          bBody2.position.set(0.85, 0.15, 0); bBody2.velocity.set(0, vUp, 0);
+        }
       }
       placeAt(t);
     });

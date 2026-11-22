@@ -17,6 +17,13 @@ import cell from "../assets/curiosity/labs/cell.js";
 import tissues from "../assets/curiosity/labs/tissues.js";
 import heart from "../assets/curiosity/labs/heart.js";
 import genetics from "../assets/curiosity/labs/genetics.js";
+import reactions from "../assets/curiosity/labs/reactions.js";
+import molecules from "../assets/curiosity/labs/molecules.js";
+import organs from "../assets/curiosity/labs/organs.js";
+import nervous from "../assets/curiosity/labs/nervous.js";
+import repro from "../assets/curiosity/labs/repro.js";
+import climate from "../assets/curiosity/labs/climate.js";
+import ecology from "../assets/curiosity/labs/ecology.js";
 import { rng } from "../assets/curiosity/labs/kit.js";
 
 let n = 0, bad = 0; const seenIds = {};
@@ -112,9 +119,9 @@ run(energy, 400, 51, (q) => {
   if (q.id === "energy-law") ok(/conservation of energy/.test(c), "energy-law");
 });
 
-/* ---------------- contract registration for all 15 labs ---------------- */
+/* ---------------- contract registration for all 22 labs ---------------- */
 _resetLabs();
-for (const lab of [lens, eye, ohm, magnet, force, energy, sound, gravity, ph, atom, matter, cell, tissues, heart, genetics]) {
+for (const lab of [lens, eye, ohm, magnet, force, energy, sound, gravity, ph, atom, matter, reactions, molecules, cell, tissues, heart, organs, nervous, repro, genetics, climate, ecology]) {
   try { registerLab(lab); ok(true, `register ${lab.id}`); }
   catch (e) { fail(`registerLab(${lab.id}) threw: ${e.message}`); }
 }
@@ -249,6 +256,84 @@ run(genetics, 300, 163, (q) => {
     ok(c === `${tall * 25}% Tall`, `gen-pct ${GC[iv.p1]}x${GC[iv.p2]} expected ${tall * 25}% Tall got "${c}"`);
   }
   if (q.id === "gen-predict") ok(/50% Tall.*50% Dwarf/.test(c), `gen-predict got "${c}"`);
+});
+
+/* ---------------- reactions ---------------- */
+run(reactions, 200, 173, (q) => {
+  const c = correct(q);
+  if (q.id === "rxn-disp") ok(/pale green.*reddish-brown copper/.test(c), `rxn-disp got "${c}"`);
+  if (q.id === "rxn-ddisp") ok(/BaSO₄/.test(c), `rxn-ddisp got "${c}"`);
+  if (q.id === "rxn-redox") ok(/CuO is reduced.*H₂ is oxidised/.test(c), `rxn-redox got "${c}"`);
+  if (q.id === "rxn-balance") ok(/Law of Conservation of Mass/.test(c), `rxn-balance got "${c}"`);
+  if (q.id === "rxn-ionic") ok(/Sodium donates 1 electron/.test(c), `rxn-ionic got "${c}"`);
+  if (q.id === "rxn-predict") ok(/NO reaction/.test(c), `rxn-predict got "${c}"`);
+});
+
+/* ---------------- molecules ---------------- */
+run(molecules, 200, 181, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  const MM = [18, 16, 44, 46, 58.5, 12, 12, 306];
+  if (q.id === "mol-mass") ok(c === `${+(MM[iv.mol] * iv.count).toFixed(1)} u`, `mol-mass mol=${iv.mol} cnt=${iv.count} got "${c}"`);
+  if (q.id === "mol-graphite") ok(/Graphite/.test(c), `mol-graphite got "${c}"`);
+  if (q.id === "mol-micelle") ok(/Hydrophobic/.test(c), `mol-micelle got "${c}"`);
+  if (q.id === "mol-carbon") ok(/Catenation/.test(c), `mol-carbon got "${c}"`);
+  if (q.id === "mol-ethanol") ok(/–OH/.test(c), `mol-ethanol got "${c}"`);
+  if (q.id === "mol-predict") ok(/Conservation of Mass/.test(c), `mol-predict got "${c}"`);
+});
+
+/* ---------------- organs ---------------- */
+run(organs, 200, 191, (q) => {
+  const c = correct(q);
+  if (q.id === "org-villi") ok(/Small Intestine/.test(c), `org-villi got "${c}"`);
+  if (q.id === "org-alveoli") ok(/Alveoli/.test(c), `org-alveoli got "${c}"`);
+  if (q.id === "org-nephron") ok(/Nephron/.test(c), `org-nephron got "${c}"`);
+  if (q.id === "org-joint") ok(/Ball-and-socket/i.test(c), `org-joint got "${c}"`);
+  if (q.id === "org-reabsorb") ok(/Glucose/.test(c), `org-reabsorb got "${c}"`);
+  if (q.id === "org-predict") ok(/Bile/.test(c) || /emulsify/i.test(c) || /fat/i.test(c), `org-predict got "${c}"`);
+});
+
+/* ---------------- nervous ---------------- */
+run(nervous, 200, 199, (q) => {
+  const c = correct(q);
+  if (q.id === "ner-synapse") ok(/neurotransmitter/.test(c), `ner-synapse got "${c}"`);
+  if (q.id === "ner-reflex") ok(/Spinal Cord/.test(c), `ner-reflex got "${c}"`);
+  if (q.id === "ner-cerebellum") ok(/Cerebellum/.test(c), `ner-cerebellum got "${c}"`);
+  if (q.id === "ner-medulla") ok(/Medulla/.test(c), `ner-medulla got "${c}"`);
+  if (q.id === "ner-auxin") ok(/Auxin/.test(c), `ner-auxin got "${c}"`);
+  if (q.id === "ner-predict") ok(/Insulin/.test(c) || /Adrenaline/.test(c) || /Thyroxine/.test(c), `ner-predict got "${c}"`);
+});
+
+/* ---------------- repro ---------------- */
+run(repro, 200, 211, (q) => {
+  const c = correct(q);
+  if (q.id === "rep-fruit") ok(/Ovule becomes Seed/.test(c), `rep-fruit got "${c}"`);
+  if (q.id === "rep-amoeba") ok(/Binary Fission/.test(c), `rep-amoeba got "${c}"`);
+  if (q.id === "rep-hydra") ok(/Budding/.test(c), `rep-hydra got "${c}"`);
+  if (q.id === "rep-poll") ok(/transfer of pollen/.test(c), `rep-poll got "${c}"`);
+  if (q.id === "rep-disp") ok(/overcrowding/.test(c), `rep-disp got "${c}"`);
+  if (q.id === "rep-predict") ok(/variations/.test(c), `rep-predict got "${c}"`);
+});
+
+/* ---------------- climate ---------------- */
+run(climate, 200, 223, (q) => {
+  const c = correct(q);
+  if (q.id === "cli-seabreeze") ok(/Land heats faster/.test(c), `cli-seabreeze got "${c}"`);
+  if (q.id === "cli-greenhouse") ok(/CO₂/.test(c), `cli-greenhouse got "${c}"`);
+  if (q.id === "cli-spectrum") ok(/Gamma < X-ray/.test(c), `cli-spectrum got "${c}"`);
+  if (q.id === "cli-nitrogen") ok(/Rhizobium/.test(c), `cli-nitrogen got "${c}"`);
+  if (q.id === "cli-spheres") ok(/Troposphere/.test(c), `cli-spheres got "${c}"`);
+  if (q.id === "cli-predict") ok(/Land Breeze/.test(c), `cli-predict got "${c}"`);
+});
+
+/* ---------------- ecology ---------------- */
+run(ecology, 200, 229, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  if (q.id === "eco-tenpct") ok(c === `${+(iv.producerE * 0.01).toFixed(1)} J`, `eco-tenpct P=${iv.producerE} got "${c}"`);
+  if (q.id === "eco-ddt") ok(/Biomagnification/.test(c), `eco-ddt got "${c}"`);
+  if (q.id === "eco-ozone") ok(/Chlorofluorocarbons/.test(c), `eco-ozone got "${c}"`);
+  if (q.id === "eco-flow") ok(/Unidirectional/.test(c), `eco-flow got "${c}"`);
+  if (q.id === "eco-kingdoms") ok(/Monera/.test(c), `eco-kingdoms got "${c}"`);
+  if (q.id === "eco-predict") ok(/nutrients stop recycling/.test(c), `eco-predict got "${c}"`);
 });
 
 const ids = Object.keys(seenIds).sort();

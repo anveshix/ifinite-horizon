@@ -2,6 +2,7 @@
    Student sets the battery voltage and the resistors; an ammeter, a voltmeter, a glowing resistor and moving electrons show what happens. */
 import { bus } from "../core.js";
 import { circuit, MODE_NAME, fmt } from "./models.js";
+import { sound as sfx } from "../quiz/fx.js";
 import { loadThree, makeStage, labelSprite, tube, disposeObject, sliders, factsView, note, actionButton, el, C2, ask, seen, withDistractors } from "./kit.js";
 
 const VMAX = 12, IMAX = 12;
@@ -120,6 +121,14 @@ export default {
       const tag = labelSprite(THREE, name, "", { scale: 0.9, size: 28 }); tag.position.set(x + (vertical ? 1.2 : 0), 1.25, z); scene.add(tag); g.userData = { mat, tag }; return g;
     };
     const r1 = resistor(2.3, -2.6, false, "R₁"), r2 = resistor(2.3, -0.3, false, "R₂"), r2v = resistor(4.4, 0.1, true, "R₂");
+    /* 3D Safety Fuse on top wire (rated 6.5 A — blows open on overload!) */
+    const fuseGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.9, 16), new THREE.MeshPhysicalMaterial({ color: 0xe0f2fe, transparent: true, opacity: 0.35 }));
+    fuseGlass.rotation.z = Math.PI / 2; fuseGlass.position.set(-0.35, 0.34, -2.6); scene.add(fuseGlass);
+    const fuseWireMat = new THREE.MeshStandardMaterial({ color: 0xfacc15, emissive: 0xff4500, emissiveIntensity: 0 });
+    const fuseWire = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.85, 8), fuseWireMat);
+    fuseWire.rotation.z = Math.PI / 2; fuseWire.position.set(-0.35, 0.34, -2.6); scene.add(fuseWire);
+    const fuseTag = labelSprite(THREE, "Fuse (6.5 A max)", "फ़्यूज़", { scale: 0.72, size: 22, color: "#fde68a" }); fuseTag.position.set(-0.35, 1.05, -2.6); scene.add(fuseTag);
+    let wasBlown = false;
     const arrow = new THREE.Group(); for (let i = 0; i < 2; i++) { const a = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.42, 14), new THREE.MeshBasicMaterial({ color: 0xff6b9d })); a.rotation.z = -Math.PI / 2; a.position.set(-3.9 + i * 0.5, 0.78, -2.6); arrow.add(a); } scene.add(arrow);
     const arrTag = labelSprite(THREE, "Current I (+ → −)", "धारा की दिशा", { scale: 0.9, size: 26, color: "#ff9fbf" }); arrTag.position.set(-3.6, 1.45, -3.3); scene.add(arrTag);
     const eTag = labelSprite(THREE, "Electrons (− → +)", "इलेक्ट्रॉन", { scale: 0.9, size: 26, color: "#8fd8ff" }); eTag.position.set(0.2, 1.1, 3.55); scene.add(eTag);
@@ -149,16 +158,25 @@ export default {
       r1.visible = true; r2.visible = C.mode === 2; r2v.visible = C.mode === 1; r1.userData.tag.visible = true; r2.userData.tag.visible = C.mode === 2; r2v.userData.tag.visible = C.mode === 1;
       const nLive = Math.ceil(v.V / 1.5 - 1e-9); cells.forEach((c, i) => { c.material.color.setHex(i < nLive ? 0x16a34a : 0x334155); c.material.emissive.setHex(i < nLive ? 0x0b5d2a : 0); });
       volTag.material.map.dispose(); const t2 = labelSprite(THREE, `${fmt(v.V, 1)} V`, "बैटरी", { scale: 1.05, size: 30 }); volTag.material.map = t2.material.map; volTag.scale.copy(t2.scale);
-      setNeedle(am, C.I); setNeedle(vm, C.V1);
+      const blown = C.I > 6.5;
+      if (blown && !wasBlown) sfx.play("zap");
+      wasBlown = blown;
+      fuseWire.visible = !blown;
+      fuseTag.material.map.dispose();
+      const ft = labelSprite(THREE, blown ? "FUSE BLOWN! (>6.5 A)" : "Fuse OK (6.5 A max)", blown ? "अतिभार से फ़्यूज़ टूटा!" : "फ़्यूज़ ठीक", { scale: 0.72, size: 22, color: blown ? "#fca5a5" : "#fde68a" });
+      fuseTag.material.map = ft.material.map; fuseTag.scale.copy(ft.scale);
+      setNeedle(am, blown ? 0 : C.I); setNeedle(vm, blown ? 0 : C.V1);
     };
 
     const stopFrame = st.onFrame((dt, t) => {
       [am, vm].forEach(m => { m.ang += (m.goal - m.ang) * Math.min(1, dt * 5); m.needle.rotation.y = (-m.ang * Math.PI) / 180; });
-      const glow = (body, p) => { body.userData.mat.emissiveIntensity = Math.min(1, Math.sqrt(p / 40)); body.userData.mat.color.setHSL(0.09 - 0.06 * Math.min(1, p / 60), 0.4 + 0.4 * Math.min(1, p / 60), 0.7 - 0.25 * Math.min(1, p / 60)); };
+      const blown = cur.I > 6.5;
+      const glow = (body, p) => { const eff = blown ? 0 : p; body.userData.mat.emissiveIntensity = Math.min(1, Math.sqrt(eff / 40)); body.userData.mat.color.setHSL(0.09 - 0.06 * Math.min(1, eff / 60), 0.4 + 0.4 * Math.min(1, eff / 60), 0.7 - 0.25 * Math.min(1, eff / 60)); };
       glow(r1, cur.P1); glow(r2, cur.P2); glow(r2v, cur.P2);
+      fuseWireMat.emissiveIntensity = blown ? 0 : Math.min(1, cur.I / 6.5);
       if (!pos) return;
       flows.forEach(f => {
-        const I = f.k === "I" ? cur.I : f.k === "I1" ? cur.I1 : cur.I2, speed = Math.min(5, I * 0.42);
+        const I = blown ? 0 : (f.k === "I" ? cur.I : f.k === "I1" ? cur.I1 : cur.I2), speed = Math.min(5, I * 0.42);
         for (let i = 0; i < f.n; i++) { f.phase[i] = (f.phase[i] - speed * dt + f.len * 10) % f.len; const p = at(f.pts, f.phase[i]); const o = (f.off + i) * 3; pos[o] = p.x; pos[o + 1] = p.y + 0.02; pos[o + 2] = p.z; }
       });
       geo.attributes.position.needsUpdate = true;

@@ -4,19 +4,29 @@
 
 /* ---------- NCERT alignment: only units that already exist in Vigyan Atlas (see docs/CLASS9_COVERAGE.md) ---------- */
 export const SYLLABUS = Object.freeze({
-  /* Class X (NCERT, 2023-24 rationalised): app keys ch2, ch5, ch8…ch12 */
+  /* Class X (NCERT, 2023-24 rationalised): app keys ch1…ch13 */
+  "x/ch1":  { cls: 10, no: 1,  title: { en: "Chemical Reactions and Equations", hi: "रासायनिक अभिक्रियाएँ एवं समीकरण" } },
   "x/ch2":  { cls: 10, no: 2,  title: { en: "Acids, Bases and Salts", hi: "अम्ल, क्षारक एवं लवण" } },
+  "x/ch3":  { cls: 10, no: 3,  title: { en: "Metals and Non-metals", hi: "धातु एवं अधातु" } },
+  "x/ch4":  { cls: 10, no: 4,  title: { en: "Carbon and its Compounds", hi: "कार्बन एवं उसके यौगिक" } },
   "x/ch5":  { cls: 10, no: 5,  title: { en: "Life Processes", hi: "जैव प्रक्रम" } },
+  "x/ch6":  { cls: 10, no: 6,  title: { en: "Control and Coordination", hi: "नियंत्रण एवं समन्वय" } },
+  "x/ch7":  { cls: 10, no: 7,  title: { en: "How do Organisms Reproduce?", hi: "जीव जनन कैसे करते हैं?" } },
   "x/ch8":  { cls: 10, no: 8,  title: { en: "Heredity", hi: "आनुवंशिकता" } },
   "x/ch9":  { cls: 10, no: 9,  title: { en: "Light – Reflection and Refraction", hi: "प्रकाश – परावर्तन तथा अपवर्तन" } },
   "x/ch10": { cls: 10, no: 10, title: { en: "The Human Eye and the Colourful World", hi: "मानव नेत्र तथा रंगबिरंगा संसार" } },
   "x/ch11": { cls: 10, no: 11, title: { en: "Electricity", hi: "विद्युत" } },
   "x/ch12": { cls: 10, no: 12, title: { en: "Magnetic Effects of Electric Current", hi: "विद्युत धारा के चुंबकीय प्रभाव" } },
-  /* Class IX Science 2026-27 (Compulsory 086): app keys ix1, ix2, ix5, ix6, ix9…ix12 */
+  "x/ch13": { cls: 10, no: 13, title: { en: "Our Environment", hi: "हमारा पर्यावरण" } },
+  /* Class IX Science 2026-27 (Compulsory 086): app keys ix1…ix12 */
   "ix/ix1":  { cls: 9, no: 1,  title: { en: "The Fundamental Unit of Life (Cell)", hi: "जीवन की मौलिक इकाई (कोशिका)" } },
   "ix/ix2":  { cls: 9, no: 2,  title: { en: "Tissues", hi: "ऊतक" } },
+  "ix/ix3":  { cls: 9, no: 3,  title: { en: "Reproduction & Dispersal", hi: "जनन एवं प्रकीर्णन" } },
+  "ix/ix4":  { cls: 9, no: 4,  title: { en: "Diversity in Living Organisms", hi: "जीवों में विविधता" } },
   "ix/ix5":  { cls: 9, no: 5,  title: { en: "Is Matter Around Us Pure?", hi: "क्या हमारे आस-पास के पदार्थ शुद्ध हैं?" } },
   "ix/ix6":  { cls: 9, no: 6,  title: { en: "Structure of the Atom", hi: "परमाणु की संरचना" } },
+  "ix/ix7":  { cls: 9, no: 7,  title: { en: "Atoms and Molecules", hi: "परमाणु एवं अणु" } },
+  "ix/ix8":  { cls: 9, no: 8,  title: { en: "Earth Systems, Atmosphere & Cycles", hi: "पृथ्वी तंत्र, वायुमंडल एवं चक्र" } },
   "ix/ix9":  { cls: 9, no: 9,  title: { en: "Motion", hi: "गति" } },
   "ix/ix10": { cls: 9, no: 10, title: { en: "Force and Laws of Motion", hi: "बल तथा गति के नियम" } },
   "ix/ix11": { cls: 9, no: 11, title: { en: "Work, Energy and Power", hi: "कार्य, ऊर्जा और शक्ति" } },

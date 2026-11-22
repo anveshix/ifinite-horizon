@@ -69,6 +69,16 @@ export default {
       scene.add(o); ohIons.push({ m: o, ang: i * 0.9 + 1, y: -0.9 + (i % 5) * 0.36, r: 0.45 + (i % 4) * 0.25 });
     }
 
+    const znStrip = new THREE.Mesh(new THREE.BoxGeometry(0.28, 1.4, 0.14), new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.75, roughness: 0.25 }));
+    znStrip.position.set(0.55, -0.45, 0); znStrip.rotation.z = -0.2; znStrip.visible = false; scene.add(znStrip);
+    const h2Bubbles = [];
+    for (let i = 0; i < 18; i++) {
+      const b = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 6), new THREE.MeshBasicMaterial({ color: 0xf8fafc, transparent: true, opacity: 0.85 }));
+      b.visible = false; scene.add(b);
+      h2Bubbles.push({ m: b, x: 0.35 + (Math.random() - 0.5) * 0.45, y: -0.9 + Math.random() * 1.9, z: (Math.random() - 0.5) * 0.4 });
+    }
+    let zincIn = false;
+
     const tag = labelSprite(THREE, "Neutral · Green", "उदासीन", { scale: 0.9, size: 26 });
     tag.position.set(0, 2.45, 0); scene.add(tag);
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
@@ -93,6 +103,16 @@ export default {
       const spd = 0.7 + Math.abs(ctx.vars.pH - 7) * 0.14;
       hIons.forEach((p, i) => p.m.position.set(Math.cos(p.ang + t * spd) * p.r, p.y + Math.sin(t * 2 + i) * 0.08, Math.sin(p.ang + t * spd) * p.r));
       ohIons.forEach((p, i) => p.m.position.set(Math.cos(p.ang - t * spd) * p.r, p.y + Math.cos(t * 2 + i) * 0.08, Math.sin(p.ang - t * spd) * p.r));
+      const fizzing = zincIn && ctx.vars.pH <= 4;
+      znStrip.visible = zincIn;
+      h2Bubbles.forEach((b, i) => {
+        b.m.visible = fizzing;
+        if (fizzing) {
+          b.y += dt * (1.2 + (4 - ctx.vars.pH) * 0.45);
+          if (b.y > 1.15) b.y = -0.95;
+          b.m.position.set(b.x + Math.sin(t * 5 + i) * 0.05, b.y, b.z);
+        }
+      });
     });
 
     const side = ctx.side; side.replaceChildren();
@@ -109,6 +129,12 @@ export default {
     actionButton(btns, "🫧 Neutralise to pH 7 · उदासीन करो", () => {
       ctx.set("pH", 7); sfx.play("fizz"); ctx.run();
     }, "cl-act");
+    const btnZn = actionButton(btns, "⚗️ Drop Zinc (Zn + Acid → H₂↑)", () => {
+      zincIn = !zincIn;
+      if (zincIn && ctx.vars.pH > 4) ctx.set("pH", 2);
+      btnZn.textContent = zincIn ? "⚗️ Remove Zinc Strip" : "⚗️ Drop Zinc (Zn + Acid → H₂↑)";
+      sfx.play("fizz");
+    }, "cl-chipb");
 
     const facts = factsView(ctx, side);
     note(side, "Every 1-step drop in pH means 10× MORE H⁺ ions! Neutralisation (Acid + Base → Salt + Water) brings pH toward 7.", "pH में 1 इकाई की कमी से H⁺ आयन 10 गुना बढ़ जाते हैं! उदासीनीकरण (अम्ल + क्षार → लवण + जल) से pH 7 की ओर आता है।");

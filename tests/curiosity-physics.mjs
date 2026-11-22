@@ -1,5 +1,5 @@
 // Physics models vs NCERT textbook results. Run: node tests/curiosity-physics.mjs
-import { lens, lensNature, lensRays, circuit, motion, pendulumStart, pendulumEnergy, pendulumStep, G, PEND_L, soundWave, freeFall, osmosisModel, tissueModel, eyeModel, magnetModel, phModel, atomModel, matterModel, heartModel, geneticsModel } from "../assets/curiosity/labs/models.js";
+import { lens, lensNature, lensRays, slabModel, circuit, motion, pendulumStart, pendulumEnergy, pendulumStep, G, PEND_L, soundWave, freeFall, osmosisModel, tissueModel, eyeModel, magnetModel, phModel, atomModel, matterModel, heartModel, geneticsModel, reactionModel, moleculeModel, organModel, nervousModel, reproModel, climateModel, ecologyModel } from "../assets/curiosity/labs/models.js";
 let n = 0, bad = 0;
 const ok = (c, m) => { n++; if (!c) { bad++; console.log(" ✗", m); } };
 const near = (a, b, e = 1e-6) => Math.abs(a - b) <= e * Math.max(1, Math.abs(b));
@@ -123,6 +123,48 @@ ok(GN.tallPct === 75 && GN.dwarfPct === 25 && /1 TT : 2 Tt : 1 tt/.test(GN.ratio
 GN = geneticsModel({ p1: 1, p2: 2, cross: 0 });
 ok(GN.tallPct === 50 && GN.dwarfPct === 50, "Tt x tt test cross = 50:50");
 ok(geneticsModel({ p1: 0, p2: 0, cross: 1 }).tallPct === 50 && /XX.*XY/.test(geneticsModel({ p1: 0, p2: 0, cross: 1 }).ratioText), "XX x XY = 50/50");
+
+/* Snell's Law Glass Slab (NCERT Class X Ch 9) */
+let SL = slabModel({ angleI: 45, n: 1.5, thickness: 4 });
+ok(near(Math.sin((45 * Math.PI) / 180) / Math.sin((SL.angleR * Math.PI) / 180), 1.5, 1e-2) && SL.lateralShift > 0, "Snell's Law n = sin(i)/sin(r) = 1.5");
+ok(slabModel({ angleI: 0, n: 1.5 }).angleR === 0 && slabModel({ angleI: 0, n: 1.5 }).lateralShift === 0, "normal incidence zero deviation");
+
+/* Chemical Reactions & Redox (NCERT Class X Ch 1 & 3) */
+let RX = reactionModel({ rxn: 2, progress: 100, temp: 50 });
+ok(RX.done && RX.id === "disp" && RX.exo, "Fe + CuSO4 displacement done & exothermic");
+ok(!reactionModel({ rxn: 0, progress: 40, temp: 50 }).done && reactionModel({ rxn: 0, progress: 90, temp: 50 }).done, "Mg + O2 progress threshold");
+ok(reactionModel({ rxn: 4, progress: 100, temp: 200 }).id === "redox", "CuO + H2 redox");
+
+/* 3D Molecules & Allotropes (NCERT Class IX Ch 7 & Class X Ch 4) */
+let MO = moleculeModel({ mol: 1, count: 3 });
+ok(MO.formula === "CH₄" && MO.mass === 16 && MO.totalMass === 48 && /Covalent/.test(MO.bond), "3 moles CH4 = 48 g");
+ok(moleculeModel({ mol: 4, count: 1 }).formula === "NaCl" && /Ionic/.test(moleculeModel({ mol: 4, count: 1 }).bond), "NaCl ionic crystal");
+
+/* Organs, Digestion & Joints (NCERT Class X Ch 5 & Class IX Ch 2) */
+let OG = organModel({ mode: 0, explode: 1, rate: 2 });
+ok(/Digestive/.test(OG.name) && /Pepsin/.test(OG.keyFact), "stomach pepsin in HCl");
+ok(/Synovial Joints/.test(organModel({ mode: 3, explode: 0, rate: 2 }).name), "ball and socket joint");
+
+/* Nervous & Plant Hormones (NCERT Class X Ch 6) */
+let NV = nervousModel({ mode: 0, stim: 80 });
+ok(NV.fires && NV.impulseSpeed === 80 && /Neuron/.test(NV.name), "neuron fires above threshold 30%");
+ok(!nervousModel({ mode: 0, stim: 20 }).fires, "sub-threshold stimulus does not fire");
+ok(/Auxin/.test(nervousModel({ mode: 3, stim: 70 }).pathway), "phototropism auxin bend");
+
+/* Reproduction & Flower (NCERT Class X Ch 7 & Class IX Ch 3) */
+let RP = reproModel({ mode: 1, step: 4 });
+ok(RP.clones === 16 && RP.generations === 4, "4 binary fission divisions = 16 clones");
+ok(reproModel({ mode: 0, step: 4 }).mode === 0, "flower pollination mode");
+
+/* Earth Systems & Convection Breeze (NCERT Class IX Ch 8) */
+let CL = climateModel({ mode: 0, sun: 85, co2: 400 });
+ok(CL.landTemp > CL.seaTemp && /Sea Breeze/.test(CL.breezeDir), "daytime sea breeze");
+let CLN = climateModel({ mode: 0, sun: 0, co2: 400 });
+ok(CLN.landTemp < CLN.seaTemp && /Land Breeze/.test(CLN.breezeDir), "nighttime land breeze");
+
+/* Ecology 10% Law & Biomagnification (NCERT Class X Ch 13 & Class IX Ch 4) */
+let EC = ecologyModel({ producerE: 10000, ddt: 2, ozonePct: 95 });
+ok(EC.t1 === 10000 && EC.t2 === 1000 && EC.t3 === 100 && EC.t4 === 10 && EC.hawkDDT === 2000, "Lindeman 10% law & 1000x DDT biomagnification");
 
 console.log(`physics models · checks ${n} · failures ${bad}`);
 process.exit(bad ? 1 : 0);

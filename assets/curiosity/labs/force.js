@@ -2,7 +2,8 @@
    Student sets the pull (F) and the load (m), presses Run and watches speed, distance and the v–t graph build — and can keep changing F and m mid-run. */
 import { bus } from "../core.js";
 import { motion, fmt } from "./models.js";
-import { loadThree, makeStage, labelSprite, disposeObject, sliders, factsView, note, actionButton, el, C2, ask, seen, withDistractors } from "./kit.js";
+import { sound as sfx } from "../quiz/fx.js";
+import { loadThree, loadCannon, makeStage, labelSprite, disposeObject, sliders, factsView, note, actionButton, el, C2, ask, seen, withDistractors } from "./kit.js";
 
 const TRACK = 26;                                          // metres of track in front of the trolley
 const view = v => motion({ F: v.F, m: v.m });
@@ -59,9 +60,29 @@ export default {
   ],
 
   async mount(ctx) {
-    const THREE = await loadThree();
+    const [THREE, CANNON] = await Promise.all([loadThree(), loadCannon()]);
     const st = makeStage(THREE, ctx, { pos: [3.5, 2.6, 8.2], target: [2.5, 0.7, 0], bg: 0x0b1424, minDist: 4, maxDist: 20 });
     const { scene } = st;
+    /* cannon-es 3D rigid-body world for realistic momentum-transfer crash crates at finish */
+    const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.8, 0) });
+    const groundBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane() });
+    groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
+    world.addBody(groundBody);
+    const crates = [];
+    const crateCoords = [[0, 0.25, -0.4], [0, 0.25, 0.4], [0, 0.75, -0.4], [0, 0.75, 0.4], [0.48, 0.25, 0], [0, 1.25, 0]];
+    const crateGeo = new THREE.BoxGeometry(0.46, 0.46, 0.46);
+    const crateMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.45 });
+    crateCoords.forEach(([dx, dy, dz]) => {
+      const mesh = new THREE.Mesh(crateGeo, crateMat);
+      const body = new CANNON.Body({ mass: 0.8, shape: new CANNON.Box(new CANNON.Vec3(0.23, 0.23, 0.23)) });
+      body.linearDamping = 0.25; body.angularDamping = 0.25;
+      scene.add(mesh); world.addBody(body);
+      crates.push({ mesh, body, home: [TRACK + 1.0 + dx, dy, dz] });
+    });
+    const resetCrates = () => crates.forEach(c => {
+      c.body.position.set(...c.home); c.body.velocity.set(0, 0, 0); c.body.angularVelocity.set(0, 0, 0); c.body.quaternion.set(0, 0, 0, 1);
+      c.mesh.position.copy(c.body.position); c.mesh.quaternion.copy(c.body.quaternion);
+    });
     /* ground, posts and distance boards */
     const ground = new THREE.Mesh(new THREE.BoxGeometry(TRACK + 40, 0.2, 3.2), new THREE.MeshStandardMaterial({ color: 0x23334f, roughness: 0.9 })); ground.position.set(TRACK / 2 - 8, -0.1, 0); scene.add(ground);
     const rail = new THREE.Mesh(new THREE.BoxGeometry(TRACK + 40, 0.05, 0.1), new THREE.MeshStandardMaterial({ color: 0x8aa0c4 })); rail.position.set(TRACK / 2 - 8, 0.03, 0.55); scene.add(rail); const rail2 = rail.clone(); rail2.position.z = -0.55; scene.add(rail2);
@@ -95,17 +116,26 @@ export default {
       info.textContent = `a = ${fmt(view(x).a, 2)} m/s²`;
     };
     const paintHud = () => { speedEl.textContent = `v = ${fmt(v, 2)} m/s`; distEl.textContent = `s = ${fmt(s, 1)} m · t = ${fmt(t, 1)} s`; };
-    const reset = () => { running = false; done = false; t = 0; v = 0; s = 0; trail = [[0, 0]]; trolley.position.x = 0; paintHud(); drawGraph(); btnRun.textContent = "▶ Run · चलाओ"; };
+    const reset = () => { running = false; done = false; t = 0; v = 0; s = 0; trail = [[0, 0]]; trolley.position.x = 0; resetCrates(); paintHud(); drawGraph(); btnRun.textContent = "▶ Run · चलाओ"; };
 
     const stopFrame = st.onFrame(dt => {
       if (running) {
         const a = view(ctx.vars).a;                        // F and m may be changed while it runs
         v += a * dt; s += v * dt; t += dt;
-        if (s >= TRACK) { s = TRACK; running = false; done = true; btnRun.textContent = "↻ Run again · फिर चलाओ"; }
+        if (s >= TRACK) {
+          s = TRACK; running = false; done = true; btnRun.textContent = "↻ Run again · फिर चलाओ";
+          sfx.play("thud");
+          const pBoost = Math.min(24, (ctx.vars.m * v) * 0.22);
+          crates.forEach((c, idx) => {
+            c.body.applyImpulse(new CANNON.Vec3(pBoost * (0.85 + 0.1 * idx), pBoost * 0.35, (idx % 2 ? 1 : -1) * pBoost * 0.2));
+          });
+        }
         trolley.position.x = s; wheels.forEach(w => { w.rotation.z -= (v * dt) / 0.22; });
         if (!trail.length || t - trail[trail.length - 1][0] > 0.05) trail.push([t, v]);
         paintHud(); drawGraph();
       }
+      world.step(1 / 60, dt, 3);
+      crates.forEach(c => { c.mesh.position.copy(c.body.position); c.mesh.quaternion.copy(c.body.quaternion); });
       st.target(trolley.position.x + 2.2, 0.7, 0);
     });
 

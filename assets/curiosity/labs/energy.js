@@ -2,7 +2,8 @@
    Student sets the bob's mass and release height, lets it swing, and watches potential energy turn into kinetic energy and back — with the total never changing. */
 import { bus } from "../core.js";
 import { G, PEND_L, pendulumStart, pendulumEnergy, pendulumStep, fmt } from "./models.js";
-import { loadThree, makeStage, labelSprite, tube, sliders, factsView, note, actionButton, el, C2, ask, seen, withDistractors } from "./kit.js";
+import { sound as sfx } from "../quiz/fx.js";
+import { loadThree, loadCannon, makeStage, labelSprite, tube, sliders, factsView, note, actionButton, el, C2, ask, seen, withDistractors } from "./kit.js";
 
 const PIVOT_Y = 3.4, BOTTOM_Y = PIVOT_Y - PEND_L;          // scene units = metres; the bob's lowest point is at BOTTOM_Y
 const start = v => pendulumStart({ m: v.m, h: v.h });
@@ -60,12 +61,21 @@ export default {
   ],
 
   async mount(ctx) {
-    const THREE = await loadThree();
+    const [THREE, CANNON] = await Promise.all([loadThree(), loadCannon()]);
     const st = makeStage(THREE, ctx, { pos: [0, 2.9, 6.4], target: [0, 2.35, 0], bg: 0x0b1424, minDist: 3.5, maxDist: 16 });
     const { scene } = st;
     const floor = new THREE.Mesh(new THREE.BoxGeometry(12, 0.2, 5), new THREE.MeshStandardMaterial({ color: 0x23334f, roughness: 0.9 })); floor.position.set(0, BOTTOM_Y - 0.65, 0); scene.add(floor);
     const beam = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.18, 0.5), new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.5, roughness: 0.4 })); beam.position.set(0, PIVOT_Y + 0.1, 0); scene.add(beam);
     [-1.2, 1.2].forEach(x => { const leg = new THREE.Mesh(new THREE.BoxGeometry(0.12, PIVOT_Y - BOTTOM_Y + 0.5, 0.12), new THREE.MeshStandardMaterial({ color: 0x64748b })); leg.position.set(x, (PIVOT_Y + BOTTOM_Y - 0.5) / 2 - 0.1, -0.2); scene.add(leg); });
+    /* cannon-es rigid-body impact target block on the floor (work W = F·d demo) */
+    const cWorld = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.82, 0) });
+    const floorBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane() });
+    floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); floorBody.position.set(0, BOTTOM_Y - 0.55, 0);
+    cWorld.addBody(floorBody);
+    const puckMesh = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.36, 0.45), new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.4 }));
+    const puckBody = new CANNON.Body({ mass: 1.5, linearDamping: 0.35, shape: new CANNON.Box(new CANNON.Vec3(0.225, 0.18, 0.225)) });
+    puckBody.position.set(0, BOTTOM_Y - 0.37, 0); cWorld.addBody(puckBody); scene.add(puckMesh);
+    puckMesh.visible = false; let impactTest = false, impactHit = false;
     /* reference rulers: lowest point and the release height */
     scene.add(tube(THREE, [[-2.2, BOTTOM_Y, 0], [2.2, BOTTOM_Y, 0]], 0x7f93b5, 0.012));
     const lowTag = labelSprite(THREE, "Lowest point · h = 0", "निम्नतम बिंदु", { scale: 0.9, size: 26 }); lowTag.position.set(2.35, BOTTOM_Y - 0.3, 0); scene.add(lowTag);
@@ -104,15 +114,31 @@ export default {
     };
 
     const stopFrame = st.onFrame(dt => {
+      if (impactTest) {
+        cWorld.step(1 / 60, dt, 3);
+        puckMesh.position.copy(puckBody.position); puckMesh.quaternion.copy(puckBody.quaternion);
+      }
       if (!running) return;
       let rem = dt; while (rem > 0) { const h = Math.min(rem, 1 / 240); pendulumStep(s, h); rem -= h; }
+      if (impactTest && !impactHit && Math.abs(s.theta) < 0.08 && Math.abs(s.omega) > 0.2) {
+        impactHit = true;
+        const speed = Math.sqrt(2 * G * ctx.vars.h);
+        puckBody.velocity.set(Math.sign(s.omega) * speed * (ctx.vars.m / 2), 1.4, 0);
+        sfx.play("thud");
+      }
       place(); paintEnergy();
     });
 
     /* side panel */
     const side = ctx.side; side.replaceChildren();
     const sl = sliders(ctx, side), btns = el("div", "cl-btns"); side.appendChild(btns);
-    const btnGo = actionButton(btns, "▶ Release · छोड़ो", () => { if (running) { running = false; btnGo.textContent = "▶ Release · छोड़ो"; hold(); return; } running = true; btnGo.textContent = "■ Catch · पकड़ो"; ctx.run(); }, "cl-act");
+    const btnGo = actionButton(btns, "▶ Release · छोड़ो", () => { if (running) { running = false; btnGo.textContent = "▶ Release · छोड़ो"; hold(); return; } running = true; impactHit = false; btnGo.textContent = "■ Catch · पकड़ो"; ctx.run(); }, "cl-act");
+    const btnPuck = actionButton(btns, "🧱 Work Puck Test (W=F·d)", () => {
+      impactTest = !impactTest; puckMesh.visible = impactTest; impactHit = false;
+      puckBody.position.set(0, BOTTOM_Y - 0.37, 0); puckBody.velocity.set(0, 0, 0); puckBody.angularVelocity.set(0, 0, 0);
+      btnPuck.textContent = impactTest ? "🧱 Hide Puck" : "🧱 Work Puck Test (W=F·d)";
+      sfx.play("pop");
+    }, "cl-chipb");
     const bars = el("canvas", "cl-graph"); bars.width = 340; bars.height = 190; bars.setAttribute("role", "img"); bars.setAttribute("aria-label", "Energy bars: potential, kinetic and total");
     side.appendChild(el("h3", "cl-h", "Energy bars · ऊर्जा आलेख")); side.appendChild(bars);
     const facts = factsView(ctx, side);

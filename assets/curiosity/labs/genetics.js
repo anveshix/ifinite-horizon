@@ -92,10 +92,28 @@ export default {
       dna.add(b1, b2, rung);
     }
 
+    let evoMode = false;
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();
         c.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
+      }
+      if (evoMode) {
+        /* Evolution & Natural Selection: Homologous (Common Ancestor -> Divergent) vs Analogous (Convergent) */
+        const comps = [
+          [-0.8, 0.85, 0x38bdf8, "Homologous: Human Arm & Whale Flipper", "Same pentadactyl bone plan → divergent evolution"],
+          [1.6, 0.85, 0x4ade80, "Homologous: Bird Wing & Lizard Forelimb", "Inherited from common tetrapod ancestor"],
+          [0.4, -0.85, 0xf97316, "Analogous: Bird Wing vs Butterfly Wing", "Different origin, same flight function → convergent"]
+        ];
+        comps.forEach(([x, y, col, t1, t2]) => {
+          const box = new THREE.Mesh(new THREE.BoxGeometry(2.1, 1.15, 0.25), new THREE.MeshStandardMaterial({ color: col, roughness: 0.4 }));
+          box.position.set(x, y, 0); dyn.add(box);
+          const lb = labelSprite(THREE, t1, t2, { scale: 0.56, size: 18, color: "#fff" });
+          lb.position.set(x, y, 0.32); dyn.add(lb);
+        });
+        h1.textContent = "Evolution: Homologous vs Analogous";
+        h2.textContent = "Darwin's Natural Selection & Fossils";
+        return;
       }
       const G = view(ctx.vars);
       const coords = [[-0.2, 1.1], [1.7, 1.1], [-0.2, -0.7], [1.7, -0.7]];
@@ -134,8 +152,9 @@ export default {
     const sl = sliders(ctx, side);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Crosses · संकरण"));
     [["F₁ (TT×tt)", 0, 2, 0], ["F₂ (Tt×Tt)", 1, 1, 0], ["Test (Tt×tt)", 1, 2, 0], ["Human XX×XY", 1, 1, 1]].forEach(([lbl, a, b, c]) => {
-      actionButton(presets, lbl, () => { ctx.set("p1", a); ctx.set("p2", b); ctx.set("cross", c); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
+      actionButton(presets, lbl, () => { evoMode = false; ctx.set("p1", a); ctx.set("p2", b); ctx.set("cross", c); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
     });
+    actionButton(presets, "🦴 Evolution & Fossils", () => { evoMode = !evoMode; sfx.play("pop"); rebuild(); }, "cl-chipb");
     side.insertBefore(presets, sl.root.nextSibling);
 
     const facts = factsView(ctx, side);

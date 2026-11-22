@@ -311,5 +311,119 @@ export function geneticsModel({ p1 = 1, p2 = 1, cross = 0 }) {
   };
 }
 
+/* ============ Class X · Ch 9 · Snell's Law & Glass Slab Lateral Shift ============ */
+export function slabModel({ angleI = 40, n = 1.5, thickness = 4 }) {
+  const radI = (angleI * Math.PI) / 180;
+  const sinR = Math.sin(radI) / n;
+  const radR = Math.asin(Math.min(1, sinR));
+  const angleR = +((radR * 180) / Math.PI).toFixed(1);
+  const lateralShift = +(thickness * Math.sin(radI - radR) / Math.cos(radR)).toFixed(2);
+  const criticalAngle = n > 1 ? +((Math.asin(1 / n) * 180) / Math.PI).toFixed(1) : 90;
+  return { angleI, n, thickness, angleR, lateralShift, criticalAngle };
+}
+
+/* ============ Class X · Ch 1 & Ch 3 · Chemical Reactions & Reactivity Series ============ */
+export const REACTION_TYPES = [
+  { id: "comb", name: "Combination (Mg + O₂)", hi: "संयोजन अभिक्रिया", eq: "2Mg + O₂ → 2MgO (White ash)", exo: true, obs: "Dazzling white flame + MgO powder" },
+  { id: "decomp", name: "Thermal Decomp (Pb(NO₃)₂)", hi: "ऊष्मीय वियोजन", eq: "2Pb(NO₃)₂ → 2PbO + 4NO₂↑ + O₂↑", exo: false, obs: "Brown NO₂ fumes + yellow PbO" },
+  { id: "disp", name: "Displacement (Fe + CuSO₄)", hi: "विस्थापन अभिक्रिया", eq: "Fe + CuSO₄(blue) → FeSO₄(green) + Cu↓", exo: true, obs: "Blue turns pale green + brown Cu coats nail" },
+  { id: "ddisp", name: "Double Disp (BaCl₂ + Na₂SO₄)", hi: "द्विविस्थापन", eq: "Na₂SO₄ + BaCl₂ → BaSO₄↓ + 2NaCl", exo: false, obs: "Instant white BaSO₄ precipitate" },
+  { id: "redox", name: "Redox (CuO + H₂)", hi: "रेडॉक्स अभिक्रिया", eq: "CuO(black) + H₂ → Cu(brown) + H₂O", exo: false, obs: "CuO reduced to Cu; H₂ oxidised to H₂O" },
+  { id: "ionic", name: "Ionic Bond (Na + Cl)", hi: "आयनिक बंधन", eq: "Na(2,8,1) + Cl(2,8,7) → Na⁺Cl⁻", exo: true, obs: "Electron transfer forms crystal lattice" }
+];
+export function reactionModel({ rxn = 2, progress = 100, temp = 30 }) {
+  const R = REACTION_TYPES[rxn] || REACTION_TYPES[2];
+  const rate = +(0.5 + (temp - 20) * 0.025).toFixed(2);
+  const done = progress >= 85;
+  return { rxn, ...R, progress, temp, rate, done };
+}
+
+/* ============ Class IX Ch 7 & Class X Ch 4 · Molecules, Carbon Allotropes & Conservation ============ */
+export const MOLECULES_LIST = [
+  { id: "h2o", formula: "H₂O", name: "Water", hi: "जल", mass: 18, geom: "Bent (104.5°)", atoms: { H: 2, O: 1 }, bond: "Polar Covalent" },
+  { id: "ch4", formula: "CH₄", name: "Methane", hi: "मीथेन", mass: 16, geom: "Tetrahedral (109.5°)", atoms: { C: 1, H: 4 }, bond: "Covalent (Alkane)" },
+  { id: "co2", formula: "CO₂", name: "Carbon Dioxide", hi: "कार्बन डाइऑक्साइड", mass: 44, geom: "Linear (180°)", atoms: { C: 1, O: 2 }, bond: "Double Covalent" },
+  { id: "ethanol", formula: "C₂H₅OH", name: "Ethanol", hi: "एथेनॉल", mass: 46, geom: "Alcohol (-OH group)", atoms: { C: 2, H: 6, O: 1 }, bond: "Covalent" },
+  { id: "nacl", formula: "NaCl", name: "Ionic Lattice", hi: "आयनिक क्रिस्टल", mass: 58.5, geom: "Cubic 3D Lattice", atoms: { Na: 1, Cl: 1 }, bond: "Ionic (Electrovalent)" },
+  { id: "diamond", formula: "C (Diamond)", name: "Diamond Allotrope", hi: "हीरा (चतुष्फलकीय)", mass: 12, geom: "3D Rigid Tetrahedral", atoms: { C: 5 }, bond: "4 C–C bonds (Hardest)" },
+  { id: "graphite", formula: "C (Graphite)", name: "Graphite Allotrope", hi: "ग्रेफाइट (षट्कोणीय)", mass: 12, geom: "Hexagonal Layered Sheets", atoms: { C: 6 }, bond: "Free e⁻ (Conducts!)" },
+  { id: "micelle", formula: "Soap Micelle", name: "Soap Micelle", hi: "साबुन मिसेल", mass: 306, geom: "Hydrophobic tail + Ionic head", atoms: { C: 17, H: 35 }, bond: "Emulsifies oil/dirt" }
+];
+export function moleculeModel({ mol = 1, count = 2 }) {
+  const M = MOLECULES_LIST[mol] || MOLECULES_LIST[1];
+  const atomPerUnit = Object.values(M.atoms).reduce((a, b) => a + b, 0);
+  return { mol, ...M, count, atomPerUnit, totalAtoms: atomPerUnit * count, totalMass: +(M.mass * count).toFixed(1) };
+}
+
+/* ============ Class X Ch 5 & Class IX Ch 2 · Organs, Digestion, Alveoli, Nephron & Joints ============ */
+export const ORGAN_MODES = [
+  { id: "digest", name: "Digestive System", hi: "पाचन तंत्र", keyFact: "Mouth (Amylase) → Stomach (Pepsin+HCl) → Small Intestine (Villi absorb)" },
+  { id: "alveoli", name: "Alveoli Gas Exchange", hi: "कूपिका गैस विनिमय", keyFact: "O₂ diffuses into Hb (RBC); CO₂ diffuses out to alveoli (~80 m² surface)" },
+  { id: "nephron", name: "Nephron & Dialysis", hi: "नेफ्रॉन व डायलिसिस", keyFact: "Bowman's Capsule ultrafiltration + PCT selective glucose/water reabsorption" },
+  { id: "joint", name: "Synovial Joints", hi: "श्लेषक संधि (जोड़)", keyFact: "Ball & Socket (360° shoulder/hip) vs Hinge (180° knee/elbow)" }
+];
+export function organModel({ mode = 0, explode = 0, rate = 2 }) {
+  const O = ORGAN_MODES[mode] || ORGAN_MODES[0];
+  const filtrationMlMin = +(60 * rate).toFixed(0);
+  const o2SatPct = Math.min(99, Math.round(88 + rate * 2.5));
+  return { mode, ...O, explode, rate, filtrationMlMin, o2SatPct };
+}
+
+/* ============ Class X Ch 6 · Control & Coordination (Neuron, Reflex, Brain, Tropism) ============ */
+export const NERVOUS_MODES = [
+  { id: "neuron", name: "Neuron & Synapse", hi: "न्यूरॉन व सिनेप्स", pathway: "Dendrite → Cell Body → Axon → Nerve Ending (Neurotransmitter)" },
+  { id: "reflex", name: "Reflex Arc", hi: "प्रतिवर्ती चाप", pathway: "Hot Pan → Receptor → Sensory → Spinal Cord → Motor → Muscle" },
+  { id: "brain", name: "Human Brain Lobes", hi: "मानव मस्तिष्क", pathway: "Forebrain (Thinking) · Midbrain · Hindbrain (Cerebellum+Medulla)" },
+  { id: "tropism", name: "Plant Phototropism", hi: "प्रकाशानुवर्तन (ऑक्सिन)", pathway: "Auxin moves to shaded side → cells elongate → stem bends toward light" }
+];
+export function nervousModel({ mode = 0, stim = 60 }) {
+  const N = NERVOUS_MODES[mode] || NERVOUS_MODES[0];
+  const impulseSpeed = mode === 1 ? 100 : 80; // m/s myelinated
+  const fires = stim >= 30;
+  const reflexMs = fires ? Math.max(25, Math.round(110 - stim * 0.6)) : 0;
+  return { mode, ...N, stim, fires, impulseSpeed, reflexMs };
+}
+
+/* ============ Class X Ch 7 & Class IX Ch 3 · Reproduction & Dispersal ============ */
+export const REPRO_MODES = [
+  { id: "flower", name: "Flower Pollination", hi: "पुष्प परागण व निषेचन", summary: "Pollen on Stigma → Pollen Tube → Double Fertilisation in Ovule → Seed/Fruit" },
+  { id: "fission", name: "Binary Fission (Amoeba)", hi: "द्विखंडन (अमीबा)", summary: "Nucleus divides first (karyokinesis) → Cytoplasm splits → 2 identical clones" },
+  { id: "budding", name: "Budding (Hydra / Yeast)", hi: "मुकुलन (हाइड्रा)", summary: "Regenerative cells form a bud → grows → detaches as new organism" },
+  { id: "dispersal", name: "Seed Dispersal & Vegetative", hi: "बीज प्रकीर्णन व कायिक", summary: "Wind (wings), Water (coconut), Animals (hooks), Explosion (balsam)" }
+];
+export function reproModel({ mode = 0, step = 2 }) {
+  const R = REPRO_MODES[mode] || REPRO_MODES[0];
+  const generations = Math.max(1, step);
+  const clones = mode === 1 ? Math.pow(2, generations) : generations + 1;
+  return { mode, ...R, step, generations, clones };
+}
+
+/* ============ Class IX Ch 8 · Earth Systems, Breeze Convection, Greenhouse & Cycles ============ */
+export const CLIMATE_MODES = [
+  { id: "breeze", name: "Land & Sea Breeze (Convection)", hi: "समुद्री व स्थलीय समीर", summary: "Day: Land heats faster → warm air rises → cool Sea Breeze blows toward land" },
+  { id: "greenhouse", name: "Greenhouse & Atmosphere", hi: "ग्रीनहाउस प्रभाव", summary: "CO₂ & CH₄ trap outgoing IR heat; Troposphere weather, Stratosphere O₃" },
+  { id: "spectrum", name: "EM Spectrum & Solar Energy", hi: "विद्युत-चुंबकीय स्पेक्ट्रम", summary: "Gamma < X-ray < UV < Visible (400–700 nm) < IR < Microwave < Radio" },
+  { id: "cycles", name: "Water, Carbon & Nitrogen Cycles", hi: "जैव-भूरासायनिक चक्र", summary: "Rhizobium fixes N₂ → nitrates; photosynthesis fixes CO₂; transpiration cycles H₂O" }
+];
+export function climateModel({ mode = 0, sun = 70, co2 = 420 }) {
+  const C = CLIMATE_MODES[mode] || CLIMATE_MODES[0];
+  const landTemp = +(15 + sun * 0.25 + (co2 - 280) * 0.008).toFixed(1);
+  const seaTemp = +(18 + sun * 0.08).toFixed(1);
+  const breezeDir = landTemp >= seaTemp ? "Sea → Land (Sea Breeze)" : "Land → Sea (Land Breeze)";
+  return { mode, ...C, sun, co2, landTemp, seaTemp, breezeDir };
+}
+
+/* ============ Class X Ch 13 & Class IX Ch 4 · Ecology, 10% Law, Ozone & 5 Kingdoms ============ */
+export function ecologyModel({ producerE = 10000, ddt = 2, ozonePct = 95 }) {
+  const t1 = producerE;
+  const t2 = +(t1 * 0.1).toFixed(1);
+  const t3 = +(t2 * 0.1).toFixed(1);
+  const t4 = +(t3 * 0.1).toFixed(2);
+  const hawkDDT = +(ddt * 1000).toFixed(0); // biomagnification ~1000x
+  const uvBlockPct = ozonePct;
+  return { producerE, t1, t2, t3, t4, ddt, hawkDDT, ozonePct, uvBlockPct };
+}
+
 /* ============ small shared helpers ============ */
 export const fmt = (x, d = 2) => !Number.isFinite(x) ? "∞" : (Math.abs(x) >= 1000 ? x.toFixed(0) : +x.toFixed(d)).toString();
+

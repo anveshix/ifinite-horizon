@@ -18,10 +18,17 @@ const LAB_FILES = [
   "./labs/ph.js",
   "./labs/atom.js",
   "./labs/matter.js",
+  "./labs/reactions.js",
+  "./labs/molecules.js",
   "./labs/cell.js",
   "./labs/tissues.js",
   "./labs/heart.js",
-  "./labs/genetics.js"
+  "./labs/organs.js",
+  "./labs/nervous.js",
+  "./labs/repro.js",
+  "./labs/genetics.js",
+  "./labs/climate.js",
+  "./labs/ecology.js"
 ];
 
 let booted = null;

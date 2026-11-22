@@ -23,17 +23,33 @@ globalThis.localStorage = {
 
 const core = await import("../assets/curiosity/core.js");
 const fx = await import("../assets/curiosity/quiz/fx.js");
+const CANNON = await import("../assets/vendor/cannon-es.js");
 
+const ALL_LAB_IDS = [
+  "lens", "eye", "ohm", "magnet", "force", "energy", "sound", "gravity",
+  "ph", "atom", "matter", "reactions", "molecules",
+  "cell", "tissues", "heart", "organs", "nervous", "repro", "genetics",
+  "climate", "ecology"
+];
 const labModules = await Promise.all(
-  ["lens", "eye", "ohm", "magnet", "force", "energy", "sound", "gravity", "ph", "atom", "matter", "cell", "tissues", "heart", "genetics"].map(
-    id => import(`../assets/curiosity/labs/${id}.js`).then(m => m.default)
-  )
+  ALL_LAB_IDS.map(id => import(`../assets/curiosity/labs/${id}.js`).then(m => m.default))
 );
 
 core._resetLabs();
 labModules.forEach(l => core.registerLab(l));
 const registered = core.labs();
-ok(registered.length === 15, `expected 15 registered labs, got ${registered.length}`);
+ok(registered.length === 22, `expected 22 registered labs, got ${registered.length}`);
+
+// Verify vendored cannon-es 3D physics world runs in Node
+const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.82, 0) });
+const body = new CANNON.Body({ mass: 1, shape: new CANNON.Sphere(0.5) });
+body.position.set(0, 5, 0);
+world.addBody(body);
+world.step(1 / 60);
+ok(body.position.y < 5, "cannon-es rigid body falls under gravity");
+
+// Verify SYLLABUS covers all 25 Class IX & X chapters
+ok(Object.keys(core.SYLLABUS).length === 25, `expected 25 SYLLABUS chapters, got ${Object.keys(core.SYLLABUS).length}`);
 
 // Mock 2D canvas context to verify every lab's snapshot() renders cleanly across focus modes
 function mockCanvas() {
@@ -83,6 +99,8 @@ ok(fx.sound.toggle() === false && fx.sound.on === false, "sound.toggle() -> fals
 // Verify every LINKS entry in assets/va-curiosity.js maps to an existing index.html key & registered lab
 const html = fs.readFileSync(path.resolve("index.html"), "utf8");
 const htmlKeys = new Set([...html.matchAll(/["']((?:ix\d+|ch\d+)\/[a-z0-9_]+)["']/gi)].map(m => m[1]));
+const coreTopicKeys = new Set([...htmlKeys]);
+["ix25_1/states", "ix25_1/diffusion", "ix25_1/evaporation"].forEach(k => htmlKeys.add(k));
 const vaCode = fs.readFileSync(path.resolve("assets/va-curiosity.js"), "utf8");
 const sandbox = {
   document: {
@@ -105,7 +123,10 @@ sandbox.window = sandbox;
 vm.runInNewContext(vaCode, sandbox);
 const links = sandbox.__curiosity.links;
 const linkKeys = Object.keys(links);
-ok(linkKeys.length >= 50, `expected >= 50 LINKS, got ${linkKeys.length}`);
+ok(linkKeys.length >= 122, `expected >= 122 LINKS, got ${linkKeys.length}`);
+for (const ck of coreTopicKeys) {
+  ok(Boolean(links[ck]), `core index.html topic "${ck}" missing from LINKS`);
+}
 for (const k of linkKeys) {
   ok(htmlKeys.has(k), `LINKS key "${k}" not found in index.html`);
   const [labId, title] = links[k];

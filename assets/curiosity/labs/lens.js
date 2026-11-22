@@ -1,7 +1,8 @@
 /* Curiosity Lab · Lens Lab — convex & concave lenses (NCERT Class X, Ch 9 Light – Reflection and Refraction).
    Student moves the object (u) and changes the focal length (f); the 3D bench shows the three principal rays and the image forming live. */
 import { bus } from "../core.js";
-import { lens, lensNature, lensRays, fmt } from "./models.js";
+import { lens, lensNature, lensRays, slabModel, fmt } from "./models.js";
+import { sound as sfx } from "../quiz/fx.js";
 import { loadThree, makeStage, labelSprite, tube, disposeObject, sliders, factsView, note, actionButton, el, esc, C2, ask, seen, withDistractors, shuffle } from "./kit.js";
 
 const S = 0.1;                                          // scene units per cm
@@ -155,14 +156,50 @@ export default {
       farTag.position.y = 1.6 + Math.sin(t * 2.2) * 0.08;
     });
 
+    let slabMode = false, slabI = 45, slabN = 1.5;
+    const slabGrp = new THREE.Group(); slabGrp.visible = false; scene.add(slabGrp);
+    const drawSlab3D = () => {
+      disposeObject(slabGrp); slabGrp.clear();
+      const sm = slabModel({ angleI: slabI, n: slabN, thickness: 4 });
+      const block = new THREE.Mesh(new THREE.BoxGeometry(3.2, 2.2, 2.2), new THREE.MeshPhysicalMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.28, roughness: 0.08 }));
+      block.position.set(0, 1.1, 0); slabGrp.add(block);
+      const radI = (slabI * Math.PI) / 180, radR = (sm.angleR * Math.PI) / 180;
+      const inY = 1.1 + Math.tan(radI) * 2.5, pEnter = [-1.6, 1.1, 0], pExit = [1.6, 1.1 - Math.tan(radR) * 3.2, 0];
+      const pOut = [pExit[0] + 2.5, pExit[1] - Math.tan(radI) * 2.5, 0];
+      slabGrp.add(tube(THREE, [[-1.6 - 2.5, inY, 0], pEnter], 0xfde047, 0.032));
+      slabGrp.add(tube(THREE, [pEnter, pExit], 0x4ade80, 0.032));
+      slabGrp.add(tube(THREE, [pExit, pOut], 0xfde047, 0.032));
+      slabGrp.add(tube(THREE, [[-2.6, 1.1, 0], [0.2, 1.1, 0]], 0x94a3b8, 0.015, { dashed: true }));
+      const lbl = labelSprite(THREE, `i = ${slabI}° → r = ${sm.angleR}° (n = ${slabN})`, `Lateral shift d = ${sm.lateralShift} cm`, { scale: 0.85, size: 24, color: "#fef08a" });
+      lbl.position.set(0, 2.75, 0); slabGrp.add(lbl);
+    };
+    const setOpticMode = onSlab => {
+      slabMode = onSlab;
+      if (lensMesh) lensMesh.visible = !onSlab;
+      obj.visible = !onSlab; objTag.visible = !onSlab; dyn.visible = !onSlab;
+      if (onSlab) { img.visible = false; imgTag.visible = false; screen.visible = false; farTag.visible = false; drawSlab3D(); }
+      slabGrp.visible = onSlab;
+      slabBox.hidden = !onSlab;
+      bSlab.classList.toggle("on", onSlab);
+      if (!onSlab) update();
+    };
+
     /* side panel */
     const side = ctx.side; side.replaceChildren();
     const sl = sliders(ctx, side, { skip: ["type"] }), facts = factsView(ctx, side);
     const row = el("div", "cl-seg"); row.setAttribute("role", "group"); row.setAttribute("aria-label", "Lens type");
-    const bC = actionButton(row, "Convex · उत्तल", () => pickType(1), "cl-opt"), bV = actionButton(row, "Concave · अवतल", () => pickType(-1), "cl-opt");
-    const paintType = () => { bC.classList.toggle("on", ctx.vars.type === 1); bV.classList.toggle("on", ctx.vars.type === -1); bC.setAttribute("aria-pressed", String(ctx.vars.type === 1)); bV.setAttribute("aria-pressed", String(ctx.vars.type === -1)); };
+    const bC = actionButton(row, "Convex · उत्तल", () => { setOpticMode(false); pickType(1); }, "cl-opt"),
+      bV = actionButton(row, "Concave · अवतल", () => { setOpticMode(false); pickType(-1); }, "cl-opt"),
+      bSlab = actionButton(row, "Glass Slab · स्लैब", () => setOpticMode(!slabMode), "cl-opt");
+    const paintType = () => { bC.classList.toggle("on", !slabMode && ctx.vars.type === 1); bV.classList.toggle("on", !slabMode && ctx.vars.type === -1); bC.setAttribute("aria-pressed", String(!slabMode && ctx.vars.type === 1)); bV.setAttribute("aria-pressed", String(!slabMode && ctx.vars.type === -1)); };
     const pickType = t => { ctx.set("type", t); paintType(); };
     side.insertBefore(row, sl.root);
+    const slabBox = el("div", "cl-presets"); slabBox.hidden = true;
+    slabBox.innerHTML = `<span class="cl-lab">Snell's Law · n₁ sin i = n₂ sin r</span>`;
+    [["i = 30°", 30, 1.5], ["i = 55°", 55, 1.5], ["Water n=1.33", 45, 1.33], ["Diamond n=2.42", 45, 2.42]].forEach(([lbl, ii, nn]) => {
+      actionButton(slabBox, lbl, () => { slabI = ii; slabN = nn; sfx.play("pop"); drawSlab3D(); }, "cl-chipb");
+    });
+    side.insertBefore(slabBox, sl.root);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Try · आज़माओ"));
     const jump = (txt, fn) => actionButton(presets, txt, () => { fn(); sl.sync(); }, "cl-chipb");
     jump("u = 2f", () => ctx.set("u", Math.min(70, Math.max(5, 2 * ctx.vars.f))));
