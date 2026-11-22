@@ -68,7 +68,25 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    let electrons = [], t = 0;
+    let electrons = [], alphas = [], t = 0, rutherfordMode = ctx.preset?.sub === "rutherford";
+    const rGrp = new THREE.Group(); rGrp.visible = false; scene.add(rGrp);
+    const foil = new THREE.Mesh(new THREE.BoxGeometry(0.08, 4.2, 4.2), new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.7, transparent: true, opacity: 0.35 }));
+    rGrp.add(foil);
+    const goldNuc = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 16), new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0xb91c1c, emissiveIntensity: 0.6 }));
+    rGrp.add(goldNuc);
+    const rLbl = labelSprite(THREE, "Rutherford α-Scattering (1911)", "Most pass straight · 1 in 12,000 bounces back!", { scale: 0.85, size: 22, color: "#fef08a" });
+    rLbl.position.set(0, 2.55, 0); rGrp.add(rLbl);
+    for (let i = 0; i < 18; i++) {
+      const a = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 8), new THREE.MeshBasicMaterial({ color: 0x4ade80 }));
+      const y = ((i % 6) - 2.5) * 0.55, z = (Math.floor(i / 6) - 1) * 0.6;
+      const bounce = i === 8;
+      a.position.set(-4.5 + i * 0.45, y, z); rGrp.add(a);
+      alphas.push({ m: a, y: bounce ? 0 : y, z: bounce ? 0 : z, bounce, dir: 1 });
+    }
+    const setRutherford = on => {
+      rutherfordMode = on; dyn.visible = !on; rGrp.visible = on; btnRuth.classList.toggle("on", on);
+      if (on) { h1.textContent = "Rutherford Gold Foil Experiment"; h2.textContent = "Dense positive nucleus · mostly empty space"; }
+    };
 
     const rebuild = () => {
       while (dyn.children.length) {
@@ -110,6 +128,15 @@ export default {
 
     const stopFrame = st.onFrame(dt => {
       t += dt;
+      if (rutherfordMode) {
+        alphas.forEach(a => {
+          a.m.position.x += a.dir * dt * 3.8;
+          if (a.bounce && a.dir > 0 && a.m.position.x >= -0.35) a.dir = -1;
+          if (a.m.position.x > 4.5 || a.m.position.x < -4.8) { a.m.position.x = -4.6; a.dir = 1; }
+          a.m.position.y = a.y; a.m.position.z = a.z;
+        });
+        return;
+      }
       electrons.forEach(e => {
         const a = e.ang + t * e.spd;
         e.m.position.set(Math.cos(a) * e.r, 0, Math.sin(a) * e.r);
@@ -118,9 +145,10 @@ export default {
 
     const side = ctx.side; side.replaceChildren();
     const sl = sliders(ctx, side);
+    const btnRuth = actionButton(side, "☢️ Rutherford α-Scattering", () => { setRutherford(!rutherfordMode); sfx.play("pop"); }, "cl-chipb");
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Jump to · चुनें"));
     [["H (1)", 1], ["C (6)", 6], ["O (8)", 8], ["Ne (10)", 10], ["Na (11)", 11], ["Cl (17)", 17], ["Ca (20)", 20]].forEach(([lbl, z]) => {
-      actionButton(presets, lbl, () => { ctx.set("Z", z); sfx.play("pop"); sl.sync(); }, "cl-chipb");
+      actionButton(presets, lbl, () => { setRutherford(false); ctx.set("Z", z); sfx.play("pop"); sl.sync(); }, "cl-chipb");
     });
     side.insertBefore(presets, sl.root.nextSibling);
 
@@ -131,7 +159,7 @@ export default {
       if (e.labId !== "atom") return;
       rebuild(); facts.update(); sl.sync();
     });
-    rebuild(); facts.update(); ctx.stage.dataset.ready = "1";
+    rebuild(); setRutherford(rutherfordMode); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

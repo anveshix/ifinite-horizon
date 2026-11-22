@@ -58,7 +58,8 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    /* 4-tier 3D Trophic Energy Pyramid */
+    /* 4-tier 3D Trophic Energy Pyramid (Mode 0) */
+    const pyrGrp = new THREE.Group(); scene.add(pyrGrp);
     const tiers = [
       { y: -1.35, w: 3.6, h: 0.72, col: 0x22c55e, lbl: "T₁ Producers" },
       { y: -0.52, w: 2.6, h: 0.72, col: 0xfacc15, lbl: "T₂ Herbivores" },
@@ -67,21 +68,48 @@ export default {
     ];
     const meshes = tiers.map(tr => {
       const m = new THREE.Mesh(new THREE.BoxGeometry(tr.w, tr.h, tr.w * 0.75), new THREE.MeshStandardMaterial({ color: tr.col, roughness: 0.4 }));
-      m.position.y = tr.y; scene.add(m);
+      m.position.y = tr.y; pyrGrp.add(m);
       const lb = labelSprite(THREE, tr.lbl, null, { scale: 0.56, size: 20, color: "#f8fafc" });
-      lb.position.set(tr.w * 0.5 + 1.0, tr.y, 0); scene.add(lb);
+      lb.position.set(tr.w * 0.5 + 1.0, tr.y, 0); pyrGrp.add(lb);
       return m;
     });
 
     /* Stratospheric Ozone Shield arc overhead */
     const ozMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.45, side: THREE.DoubleSide });
     const ozShield = new THREE.Mesh(new THREE.BoxGeometry(6.8, 0.16, 3.2), ozMat);
-    ozShield.position.set(0, 2.15, 0); scene.add(ozShield);
+    ozShield.position.set(0, 2.15, 0); pyrGrp.add(ozShield);
     const uvRays = [];
     for (let i = 0; i < 6; i++) {
       const r = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 3.8, 8), new THREE.MeshBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 0.7 }));
-      r.position.set(-2.5 + i * 1.0, 0.7, -0.8); scene.add(r); uvRays.push(r);
+      r.position.set(-2.5 + i * 1.0, 0.7, -0.8); pyrGrp.add(r); uvRays.push(r);
     }
+
+    /* Mode 1: Whittaker 5 Kingdoms & Acellular Bacteriophage Virus */
+    const bioGrp = new THREE.Group(); bioGrp.visible = false; scene.add(bioGrp);
+    [
+      [-2.4, 0.9, 0x38bdf8, "Monera (Prokaryote)"], [-1.2, -0.8, 0xa855f7, "Protista (1-cell Euk)"],
+      [0, 1.1, 0xfacc15, "Fungi (Chitin wall)"], [1.2, -0.8, 0x22c55e, "Plantae (Autotroph)"], [2.4, 0.9, 0xef4444, "Animalia (No wall)"]
+    ].forEach(([kx, ky, col, txt]) => {
+      const m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.45, 1), new THREE.MeshStandardMaterial({ color: col, roughness: 0.35 }));
+      m.position.set(kx, ky, 0); bioGrp.add(m);
+      const lb = labelSprite(THREE, txt, "", { scale: 0.55, size: 19, color: "#f8fafc" });
+      lb.position.set(kx, ky - 0.72, 0); bioGrp.add(lb);
+    });
+    const phage = new THREE.Group(); phage.position.set(0, -0.1, 1.4); bioGrp.add(phage);
+    const pHead = new THREE.Mesh(new THREE.IcosahedronGeometry(0.42, 0), new THREE.MeshStandardMaterial({ color: 0xf43f5e, wireframe: false, roughness: 0.3 }));
+    pHead.position.y = 0.75; phage.add(pHead);
+    const pTail = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.85, 8), new THREE.MeshStandardMaterial({ color: 0x94a3b8 }));
+    pTail.position.y = 0.15; phage.add(pTail);
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * Math.PI * 2;
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.55, 6), new THREE.MeshBasicMaterial({ color: 0xfda4af }));
+      leg.position.set(Math.cos(a) * 0.25, -0.35, Math.sin(a) * 0.25); leg.rotation.z = Math.cos(a) * 0.5; leg.rotation.x = Math.sin(a) * 0.5; phage.add(leg);
+    }
+    const pLbl = labelSprite(THREE, "Virus (Acellular)", "Outside 5 Kingdoms!", { scale: 0.65, size: 20, color: "#fda4af" });
+    pLbl.position.set(0, 1.4, 0); phage.add(pLbl);
+
+    let ecoView = (ctx.preset?.sub === "kingdoms" || ctx.preset?.sub === "virus") ? 1 : 0;
+    const setEcoView = v => { ecoView = v; pyrGrp.visible = v === 0; bioGrp.visible = v === 1; btnEco0.classList.toggle("on", v === 0); btnEco1.classList.toggle("on", v === 1); };
 
     let tag = null;
     const sync = () => {
@@ -91,25 +119,32 @@ export default {
       const leak = 1 - E.ozonePct / 100;
       uvRays.forEach(r => { r.material.opacity = 0.12 + leak * 0.85; r.position.y = E.ozonePct < 55 ? 0.5 : 2.3; r.scale.y = E.ozonePct < 55 ? 1.0 : 0.4; });
       if (tag) scene.remove(tag);
-      tag = labelSprite(THREE, `T₁: ${E.t1} J → T₄: ${E.t4} J`, `Ozone ${E.ozonePct}% · Top DDT: ${E.hawkDDT} ppb`, { scale: 0.84, size: 22, color: "#bbf7d0" });
+      tag = labelSprite(THREE, ecoView === 1 ? "Whittaker 5 Kingdoms + Virus" : `T₁: ${E.t1} J → T₄: ${E.t4} J`, ecoView === 1 ? "Monera · Protista · Fungi · Plantae · Animalia" : `Ozone ${E.ozonePct}% · Top DDT: ${E.hawkDDT} ppb`, { scale: 0.84, size: 22, color: "#bbf7d0" });
       tag.position.set(0, 2.65, 0); scene.add(tag);
-      h1.textContent = `10% Law: ${E.t1}→${E.t2}→${E.t3}→${E.t4} J`;
+      h1.textContent = ecoView === 1 ? "5 Kingdoms + Acellular Virus" : `10% Law: ${E.t1}→${E.t2}→${E.t3}→${E.t4} J`;
       h2.textContent = `DDT Top: ${E.hawkDDT} ppb · O₃: ${E.ozonePct}%`;
     };
 
-    const stopFrame = st.onFrame((dt, t) => { meshes.forEach((m, i) => { m.rotation.y = Math.sin(t * 0.5 + i * 0.2) * 0.12; }); });
+    const stopFrame = st.onFrame((dt, t) => {
+      meshes.forEach((m, i) => { m.rotation.y = Math.sin(t * 0.5 + i * 0.2) * 0.12; });
+      phage.rotation.y = t * 0.8;
+    });
     const side = ctx.side; side.replaceChildren();
+    const viewSeg = el("div", "cl-seg"); viewSeg.setAttribute("role", "group");
+    const btnEco0 = actionButton(viewSeg, "🔺 Pyramid & Ozone", () => { setEcoView(0); sync(); sfx.play("pop"); }, "cl-opt");
+    const btnEco1 = actionButton(viewSeg, "🦠 5 Kingdoms & Virus", () => { setEcoView(1); sync(); sfx.play("pop"); }, "cl-opt");
+    side.appendChild(viewSeg);
     const sl = sliders(ctx, side);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Scenarios · स्थितियाँ"));
     [["Healthy (95% O₃)", 10000, 1, 95], ["DDT Biohazard", 10000, 8, 90], ["CFC Ozone Hole", 10000, 2, 30]].forEach(([lbl, p, d, o]) => {
-      actionButton(presets, lbl, () => { ctx.set("producerE", p); ctx.set("ddt", d); ctx.set("ozonePct", o); sfx.play("pop"); sl.sync(); sync(); }, "cl-chipb");
+      actionButton(presets, lbl, () => { setEcoView(0); ctx.set("producerE", p); ctx.set("ddt", d); ctx.set("ozonePct", o); sfx.play("pop"); sl.sync(); sync(); }, "cl-chipb");
     });
     side.insertBefore(presets, sl.root.nextSibling);
     const facts = factsView(ctx, side);
     note(side, "Only ~10% of energy passes from one trophic level to the next (90% lost as heat/life processes), limiting food chains to 3–4 levels. Non-biodegradable DDT does the opposite—concentrating at the top!", "केवल 10% ऊर्जा अगले पोषी स्तर तक जाती है (शेष ऊष्मा में खर्च)। इसके विपरीत, DDT जैसे अजैव-निम्नीकरणीय रसायन शीर्ष जीव में 1000 गुना तक संचित हो जाते हैं!");
 
     const off = bus.on("sim:change", e => { if (e.labId !== "ecology") return; sync(); facts.update(); sl.sync(); });
-    sync(); facts.update(); ctx.stage.dataset.ready = "1";
+    setEcoView(ecoView); sync(); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

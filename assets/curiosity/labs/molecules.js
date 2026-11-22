@@ -89,10 +89,19 @@ export default {
         const a = (104.5 * Math.PI) / 360, d = 1.4;
         const p1 = [-Math.sin(a) * d, 0.2 - Math.cos(a) * d, 0], p2 = [Math.sin(a) * d, 0.2 - Math.cos(a) * d, 0];
         bond([0, 0.2, 0], p1); bond([0, 0.2, 0], p2); sphere(0.28, 0xf8fafc, p1); sphere(0.28, 0xf8fafc, p2);
-      } else if (M.id === "ch4" || M.id === "diamond") {
+      } else if (M.id === "ch4") {
         const pts = [[1, 1, 1], [1, -1, -1], [-1, 1, -1], [-1, -1, 1]].map(v => v.map(c => c * 0.95));
-        sphere(0.42, M.id === "diamond" ? 0x38bdf8 : 0x475569, [0, 0, 0]);
-        pts.forEach(p => { bond([0, 0, 0], p); sphere(M.id === "diamond" ? 0.36 : 0.25, M.id === "diamond" ? 0x7dd3fc : 0xf8fafc, p); });
+        sphere(0.42, 0x475569, [0, 0, 0]);
+        pts.forEach(p => { bond([0, 0, 0], p); sphere(0.25, 0xf8fafc, p); });
+      } else if (M.id === "diamond") {
+        /* 3D Diamond tetrahedral crystal network: central C + 4 tetrahedral C + 12 outer C bonds */
+        const pts = [[1, 1, 1], [1, -1, -1], [-1, 1, -1], [-1, -1, 1]].map(v => v.map(c => c * 0.95));
+        sphere(0.32, 0x38bdf8, [0, 0, 0]);
+        pts.forEach((p, idx) => {
+          bond([0, 0, 0], p, 0x7dd3fc, 0.08); sphere(0.3, 0x7dd3fc, p);
+          const sub = [p[0] * 1.65, p[1] * 1.65 + (idx % 2 ? 0.45 : -0.45), p[2] * 1.65];
+          bond(p, sub, 0x38bdf8, 0.055); sphere(0.22, 0xbae6fd, sub);
+        });
       } else if (M.id === "co2") {
         sphere(0.42, 0x475569, [0, 0, 0]);
         [-1.6, 1.6].forEach(x => { bond([0, 0.1, 0], [x, 0.1, 0], 0xcbd5e1, 0.06); bond([0, -0.1, 0], [x, -0.1, 0], 0xcbd5e1, 0.06); sphere(0.38, 0xef4444, [x, 0, 0]); });
@@ -113,7 +122,10 @@ export default {
             const a = (i / 6) * Math.PI * 2, b = ((i + 1) / 6) * Math.PI * 2;
             const p1 = [Math.cos(a) * 1.4, y, Math.sin(a) * 1.4], p2 = [Math.cos(b) * 1.4, y, Math.sin(b) * 1.4];
             sphere(0.25, 0x64748b, p1); bond(p1, p2, 0x94a3b8, 0.06);
+            if (i % 2 === 0 && y > 0) bond(p1, [p1[0], -0.85, p1[2]], 0x334155, 0.025);
           }
+          sphere(0.12, 0xfacc15, [0.4, y + 0.12, -0.3]);
+          sphere(0.12, 0xfacc15, [-0.5, y + 0.12, 0.4]);
         });
       } else {
         /* Soap micelle: yellow oil droplet center + radial hydrophobic tails + blue ionic heads */

@@ -156,8 +156,9 @@ export default {
       farTag.position.y = 1.6 + Math.sin(t * 2.2) * 0.08;
     });
 
-    let slabMode = false, slabI = 45, slabN = 1.5;
+    let opticMode = ctx.preset?.sub === "slab" ? "slab" : ctx.preset?.sub === "mirror" ? "mirror" : "lens", slabI = 45, slabN = 1.5, mirrorType = 1; // mirrorType: 1 concave, -1 convex
     const slabGrp = new THREE.Group(); slabGrp.visible = false; scene.add(slabGrp);
+    const mirrorGrp = new THREE.Group(); mirrorGrp.visible = false; scene.add(mirrorGrp);
     const drawSlab3D = () => {
       disposeObject(slabGrp); slabGrp.clear();
       const sm = slabModel({ angleI: slabI, n: slabN, thickness: 4 });
@@ -173,33 +174,83 @@ export default {
       const lbl = labelSprite(THREE, `i = ${slabI}° → r = ${sm.angleR}° (n = ${slabN})`, `Lateral shift d = ${sm.lateralShift} cm`, { scale: 0.85, size: 24, color: "#fef08a" });
       lbl.position.set(0, 2.75, 0); slabGrp.add(lbl);
     };
-    const setOpticMode = onSlab => {
-      slabMode = onSlab;
-      if (lensMesh) lensMesh.visible = !onSlab;
-      obj.visible = !onSlab; objTag.visible = !onSlab; dyn.visible = !onSlab;
-      if (onSlab) { img.visible = false; imgTag.visible = false; screen.visible = false; farTag.visible = false; drawSlab3D(); }
-      slabGrp.visible = onSlab;
-      slabBox.hidden = !onSlab;
-      bSlab.classList.toggle("on", onSlab);
-      if (!onSlab) update();
+    const drawMirror3D = () => {
+      disposeObject(mirrorGrp); mirrorGrp.clear();
+      const u = ctx.vars.u, f = ctx.vars.f * mirrorType, us = -u, fs = -f; // mirror sign convention: real F on object side (-x) for concave
+      const denom = (1 / fs) - (1 / us);
+      const v = Math.abs(denom) < 1e-6 ? Infinity : 1 / denom;
+      const m = Number.isFinite(v) ? -v / us : Infinity;
+      const hObj = 8 * S, hImg = Number.isFinite(m) ? Math.max(-3.2, Math.min(3.2, m * hObj)) : 0;
+      /* Curved spherical mirror dish at x = 0 facing -x */
+      const dish = new THREE.Mesh(
+        new THREE.CylinderGeometry(2.1, 2.1, 0.18, 32, 1, false, -0.55, 1.1),
+        new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.85, roughness: 0.15, side: THREE.DoubleSide })
+      );
+      dish.rotation.z = mirrorType === 1 ? 0 : Math.PI;
+      dish.position.set(mirrorType === 1 ? -1.85 : 1.85, 0, 0);
+      mirrorGrp.add(dish);
+      const ox = -u * S, fx = fs * S, cx = 2 * fs * S;
+      [fx, cx].forEach((px, idx) => {
+        const dot = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 8), new THREE.MeshBasicMaterial({ color: idx === 0 ? 0xffe066 : 0xb8c7e6 }));
+        dot.position.set(px, 0, 0); mirrorGrp.add(dot);
+        const lb = labelSprite(THREE, idx === 0 ? "F" : "C", "", { scale: 0.72, size: 24 }); lb.position.set(px, -0.42, 0.4); mirrorGrp.add(lb);
+      });
+      const oArr = arrow(0xff9f43); oArr.scale.y = hObj; oArr.position.set(ox, 0, 0); mirrorGrp.add(oArr);
+      if (Number.isFinite(v)) {
+        const ix = Math.max(-8.5, Math.min(8.5, v * S));
+        const real = v < 0;
+        const iArr = arrow(real ? 0x5ce1ff : 0x7cf7c1, real ? 1 : 0.55); iArr.scale.y = hImg || 0.01; iArr.position.set(ix, 0, 0); mirrorGrp.add(iArr);
+        /* Two principal mirror rays: (1) parallel -> F, (2) through P (pole) symmetric reflection */
+        mirrorGrp.add(tube(THREE, [[ox, hObj, 0], [0, hObj, 0], [ix, hImg, 0]], 0xff5d5d, 0.022));
+        mirrorGrp.add(tube(THREE, [[ox, hObj, 0], [0, 0, 0], [ix, hImg, 0]], 0xfde047, 0.022));
+        if (!real) {
+          mirrorGrp.add(tube(THREE, [[0, hObj, 0], [ix, hImg, 0]], 0xff5d5d, 0.015, { dashed: true }));
+          mirrorGrp.add(tube(THREE, [[0, 0, 0], [ix, hImg, 0]], 0xfde047, 0.015, { dashed: true }));
+        }
+      }
+      const lbl = labelSprite(THREE, mirrorType === 1 ? "Concave Mirror (1/v + 1/u = 1/f)" : "Convex Mirror (Rear-view)", Number.isFinite(v) ? `v = ${fmt(v, 1)} cm · m = ${fmt(m, 2)}` : "Image at ∞ (Parallel beam!)", { scale: 0.85, size: 22, color: "#93c5fd" });
+      lbl.position.set(0, 2.75, 0); mirrorGrp.add(lbl);
+    };
+    const setOpticMode = mode => {
+      opticMode = mode;
+      const onLens = mode === "lens";
+      if (lensMesh) lensMesh.visible = onLens;
+      obj.visible = onLens; objTag.visible = onLens; dyn.visible = onLens;
+      if (!onLens) { img.visible = false; imgTag.visible = false; screen.visible = false; farTag.visible = false; }
+      slabGrp.visible = mode === "slab";
+      mirrorGrp.visible = mode === "mirror";
+      slabBox.hidden = mode !== "slab";
+      mirrorBox.hidden = mode !== "mirror";
+      bSlab.classList.toggle("on", mode === "slab");
+      bMir.classList.toggle("on", mode === "mirror");
+      if (mode === "slab") drawSlab3D();
+      else if (mode === "mirror") drawMirror3D();
+      else update();
     };
 
     /* side panel */
     const side = ctx.side; side.replaceChildren();
     const sl = sliders(ctx, side, { skip: ["type"] }), facts = factsView(ctx, side);
-    const row = el("div", "cl-seg"); row.setAttribute("role", "group"); row.setAttribute("aria-label", "Lens type");
-    const bC = actionButton(row, "Convex · उत्तल", () => { setOpticMode(false); pickType(1); }, "cl-opt"),
-      bV = actionButton(row, "Concave · अवतल", () => { setOpticMode(false); pickType(-1); }, "cl-opt"),
-      bSlab = actionButton(row, "Glass Slab · स्लैब", () => setOpticMode(!slabMode), "cl-opt");
-    const paintType = () => { bC.classList.toggle("on", !slabMode && ctx.vars.type === 1); bV.classList.toggle("on", !slabMode && ctx.vars.type === -1); bC.setAttribute("aria-pressed", String(!slabMode && ctx.vars.type === 1)); bV.setAttribute("aria-pressed", String(!slabMode && ctx.vars.type === -1)); };
+    const row = el("div", "cl-seg"); row.setAttribute("role", "group"); row.setAttribute("aria-label", "Lens & Optics mode");
+    const bC = actionButton(row, "Convex · उत्तल", () => { setOpticMode("lens"); pickType(1); }, "cl-opt"),
+      bV = actionButton(row, "Concave · अवतल", () => { setOpticMode("lens"); pickType(-1); }, "cl-opt"),
+      bMir = actionButton(row, "Mirror · दर्पण", () => setOpticMode(opticMode === "mirror" ? "lens" : "mirror"), "cl-opt"),
+      bSlab = actionButton(row, "Slab · स्लैब", () => setOpticMode(opticMode === "slab" ? "lens" : "slab"), "cl-opt");
+    const paintType = () => { bC.classList.toggle("on", opticMode === "lens" && ctx.vars.type === 1); bV.classList.toggle("on", opticMode === "lens" && ctx.vars.type === -1); bC.setAttribute("aria-pressed", String(opticMode === "lens" && ctx.vars.type === 1)); bV.setAttribute("aria-pressed", String(opticMode === "lens" && ctx.vars.type === -1)); };
     const pickType = t => { ctx.set("type", t); paintType(); };
     side.insertBefore(row, sl.root);
-    const slabBox = el("div", "cl-presets"); slabBox.hidden = true;
+    const slabBox = el("div", "cl-presets"); slabBox.hidden = opticMode !== "slab";
     slabBox.innerHTML = `<span class="cl-lab">Snell's Law · n₁ sin i = n₂ sin r</span>`;
     [["i = 30°", 30, 1.5], ["i = 55°", 55, 1.5], ["Water n=1.33", 45, 1.33], ["Diamond n=2.42", 45, 2.42]].forEach(([lbl, ii, nn]) => {
       actionButton(slabBox, lbl, () => { slabI = ii; slabN = nn; sfx.play("pop"); drawSlab3D(); }, "cl-chipb");
     });
     side.insertBefore(slabBox, sl.root);
+    const mirrorBox = el("div", "cl-presets"); mirrorBox.hidden = opticMode !== "mirror";
+    mirrorBox.innerHTML = `<span class="cl-lab">Spherical Mirrors · गोलीय दर्पण</span>`;
+    [["Concave Mirror", 1], ["Convex Rear-View", -1]].forEach(([lbl, mt]) => {
+      actionButton(mirrorBox, lbl, () => { mirrorType = mt; sfx.play("pop"); drawMirror3D(); }, "cl-chipb");
+    });
+    side.insertBefore(mirrorBox, sl.root);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Try · आज़माओ"));
     const jump = (txt, fn) => actionButton(presets, txt, () => { fn(); sl.sync(); }, "cl-chipb");
     jump("u = 2f", () => ctx.set("u", Math.min(70, Math.max(5, 2 * ctx.vars.f))));
@@ -208,8 +259,8 @@ export default {
     jump("🎲 Random", () => { ctx.set("u", 5 + Math.floor(Math.random() * 66)); ctx.set("f", 8 + Math.floor(Math.random() * 23)); });
     side.insertBefore(presets, sl.root.nextSibling);
     note(side, "Rays: red = parallel to axis · yellow = through the optical centre · green = through the focus. Dashed lines show where a virtual image appears to be.", "लाल किरण अक्ष के समानांतर, पीली प्रकाशिक केंद्र से, हरी फोकस से। बिंदीदार रेखा काल्पनिक प्रतिबिंब दिखाती है।");
-    const off = bus.on("sim:change", e => { if (e.labId !== "lens") return; update(); facts.update(); sl.sync(); paintType(); });
-    paintType(); update(); facts.update(); ctx.stage.dataset.ready = "1";
+    const off = bus.on("sim:change", e => { if (e.labId !== "lens") return; if (opticMode === "mirror") drawMirror3D(); else if (opticMode === "lens") update(); facts.update(); sl.sync(); paintType(); });
+    setOpticMode(opticMode); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

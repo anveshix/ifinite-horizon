@@ -98,7 +98,21 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const ht = el("span"), hz = el("span"); hud.append(ht, hz);
 
-    let animItems = [], t = 0;
+    let animItems = [], t = 0, meristemMode = ctx.preset?.sub === "meristem";
+    const merGrp = new THREE.Group(); merGrp.visible = false; scene.add(merGrp);
+    const jarA = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 2.2, 20, 1, true), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.25, side: THREE.DoubleSide }));
+    jarA.position.set(-1.7, -0.3, 0); merGrp.add(jarA);
+    const jarB = jarA.clone(); jarB.position.set(1.7, -0.3, 0); merGrp.add(jarB);
+    const rootA = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.04, 1.8, 12), new THREE.MeshStandardMaterial({ color: 0x4ade80 }));
+    rootA.position.set(-1.7, -0.1, 0); merGrp.add(rootA);
+    const rootB = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.75, 12), new THREE.MeshStandardMaterial({ color: 0xfb7185 }));
+    rootB.position.set(1.7, 0.35, 0); merGrp.add(rootB);
+    const mLblA = labelSprite(THREE, "Jar A: Intact Tip", "Apical Meristem grows!", { scale: 0.8, size: 22, color: "#86efac" }); mLblA.position.set(-1.7, 1.45, 0); merGrp.add(mLblA);
+    const mLblB = labelSprite(THREE, "Jar B: Tip Cut (Day 4)", "Growth stops!", { scale: 0.8, size: 22, color: "#fda4af" }); mLblB.position.set(1.7, 1.45, 0); merGrp.add(mLblB);
+    const setMeristemMode = on => {
+      meristemMode = on; dyn.visible = !on; merGrp.visible = on;
+      if (on) { ht.textContent = "Activity 6.1 · Onion Root Tip Meristem"; hz.textContent = "Jar A grows · Jar B stops when apical tip is cut"; }
+    };
 
     function rebuild() {
       while (dyn.children.length) {
@@ -184,6 +198,11 @@ export default {
     const stopFrame = st.onFrame(dt => {
       const T = view(ctx.vars);
       t += dt * T.speed;
+      if (meristemMode) {
+        const g = 0.55 + ((Math.sin(t * 0.7) + 1) * 0.5) * 0.85;
+        rootA.scale.y = g; rootA.position.y = 0.75 - g * 0.9;
+        return;
+      }
       animItems.forEach(item => {
         if (item.kind === "flow") {
           item.m.position.y += item.dir * dt * T.speed * 0.9;
@@ -206,12 +225,14 @@ export default {
     const grid = el("div", "cl-presets"); grid.appendChild(el("span", "cl-lab", "Select Tissue · ऊतक"));
     const tBtns = TISSUE_TYPES.map((tt, idx) => {
       const b = actionButton(grid, tt.name.split(" ")[0], () => {
+        setMeristemMode(false);
         ctx.set("tissue", idx);
         sfx.play(idx === 5 ? "zap" : "pop");
         tBtns.forEach((x, j) => x.classList.toggle("on", j === idx));
       }, "cl-chipb" + (ctx.vars.tissue === idx ? " on" : ""));
       return b;
     });
+    const btnMer = actionButton(grid, "🌱 Meristem Tip", () => { setMeristemMode(!meristemMode); btnMer.classList.toggle("on", meristemMode); sfx.play("pop"); }, "cl-chipb" + (meristemMode ? " on" : ""));
     side.appendChild(grid);
 
     const sl = sliders(ctx, side, { skip: ["tissue"] });
@@ -223,7 +244,7 @@ export default {
       rebuild(); facts.update(); sl.sync();
       tBtns.forEach((b, j) => b.classList.toggle("on", j === ctx.vars.tissue));
     });
-    rebuild(); facts.update(); ctx.stage.dataset.ready = "1";
+    rebuild(); setMeristemMode(meristemMode); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

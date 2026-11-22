@@ -112,7 +112,7 @@ export default {
     };
 
     const lifeGrp = new THREE.Group(); scene.add(lifeGrp);
-    let lifeMode = 0; // 0=Heart, 1=Alveoli Gas Exchange, 2=Kidney Nephron
+    let lifeMode = ctx.preset?.sub === "alveoli" ? 1 : ctx.preset?.sub === "nephron" ? 2 : 0; // 0=Heart, 1=Alveoli Gas Exchange, 2=Kidney Nephron
     const rebuildLife = () => {
       while (lifeGrp.children.length) lifeGrp.remove(lifeGrp.children.pop());
       heartGrp.visible = lifeMode === 0;
@@ -197,7 +197,7 @@ export default {
       if (e.labId !== "heart") return;
       sync(); facts.update(); sl.sync();
     });
-    sync(); facts.update(); ctx.stage.dataset.ready = "1";
+    sync(); if (lifeMode !== 0) rebuildLife(); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

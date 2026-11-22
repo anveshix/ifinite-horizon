@@ -39,6 +39,6 @@ async function boot() {
   }
   return labs().length;
 }
-export function open(labId) { (booted = booted || boot()).then(() => shell.open(labId)); }
+export function open(labId, preset = null) { (booted = booted || boot()).then(() => shell.open(labId, preset)); }
 export const close = shell.close, isOpen = shell.isOpen;
 export { shell };

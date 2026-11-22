@@ -129,10 +129,39 @@ for (const ck of coreTopicKeys) {
 }
 for (const k of linkKeys) {
   ok(htmlKeys.has(k), `LINKS key "${k}" not found in index.html`);
-  const [labId, title] = links[k];
+  const [labId, title, , , preset] = links[k];
   const lab = core.getLab(labId);
   ok(!!lab, `LINKS["${k}"] points to unknown lab "${labId}"`);
   ok(lab && lab.title.en.includes(title.split(" ")[0]), `LINKS["${k}"] label "${title}" must match lab.title.en "${lab?.title.en}"`);
+  ok(preset && typeof preset === "object", `LINKS["${k}"] missing topic-aware preset object`);
+  if (lab && preset) {
+    const validVarIds = new Set(lab.vars.map(v => v.id));
+    for (const pk of Object.keys(preset)) {
+      if (pk !== "sub") ok(validVarIds.has(pk), `LINKS["${k}"] preset key "${pk}" not in ${labId}.vars`);
+    }
+  }
+}
+
+// Verify deep-link preset support & bespoke 3D sub-modes across upgraded files
+const checks = [
+  ["assets/curiosity/shell.js", "preset: preset || {}"],
+  ["assets/curiosity/boot.js", "shell.open(labId, preset)"],
+  ["assets/curiosity/labs/lens.js", "drawMirror3D"],
+  ["assets/curiosity/labs/energy.js", "drawPhase"],
+  ["assets/curiosity/labs/energy.js", "drawLever3D"],
+  ["assets/curiosity/labs/force.js", "setCollisionMode"],
+  ["assets/curiosity/labs/gravity.js", "setOrbitMode"],
+  ["assets/curiosity/labs/atom.js", "setRutherford"],
+  ["assets/curiosity/labs/tissues.js", "setMeristemMode"],
+  ["assets/curiosity/labs/climate.js", "specGrp"],
+  ["assets/curiosity/labs/climate.js", "cycleGrp"],
+  ["assets/curiosity/labs/ecology.js", "bioGrp"],
+  ["assets/curiosity/labs/ohm.js", "probeHud"],
+  ["assets/curiosity/labs/reactions.js", "extraBox"]
+];
+for (const [rel, marker] of checks) {
+  const txt = fs.readFileSync(path.resolve(rel), "utf8");
+  ok(txt.includes(marker), `${rel} missing expected upgrade marker "${marker}"`);
 }
 
 // Verify reportString & parseReport round-trip with mission XP

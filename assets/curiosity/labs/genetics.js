@@ -92,7 +92,7 @@ export default {
       dna.add(b1, b2, rung);
     }
 
-    let evoMode = false;
+    let evoMode = ctx.preset?.sub === "evolution";
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();

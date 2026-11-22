@@ -132,12 +132,19 @@ export default {
     REACTION_TYPES.forEach((r, i) => {
       actionButton(presets, r.name.split(" ")[0], () => { ctx.set("rxn", i); ctx.set("progress", 90); sfx.play(i === 1 || i === 3 ? "fizz" : "pop"); sl.sync(); sync(); }, "cl-chipb");
     });
+    const extraBox = el("div", "cl-presets"); extraBox.appendChild(el("span", "cl-lab", "Metals & Corrosion · धातु एवं संक्षारण"));
+    actionButton(extraBox, "🛡️ Galvanised Fe (Zn coat)", () => { rodMat.color.setHex(0xcbd5e1); liqMat.color.setHex(0x38bdf8); h1.textContent = "Galvanisation: Zn protects Iron from Rusting"; h2.textContent = "Zn is more reactive → sacrifices itself!"; sfx.play("pop"); }, "cl-chipb");
+    actionButton(extraBox, "🔥 Thermite (Fe₂O₃ + 2Al)", () => { rodMat.color.setHex(0xf97316); liqMat.color.setHex(0xef4444); h1.textContent = "Thermite: Fe₂O₃ + 2Al → 2Fe (molten) + Al₂O₃"; h2.textContent = "Exothermic welding of railway tracks!"; sfx.play("fizz"); }, "cl-chipb");
     side.insertBefore(presets, sl.root.nextSibling);
+    side.insertBefore(extraBox, presets.nextSibling);
     const facts = factsView(ctx, side);
     note(side, "Reactivity Series: K > Na > Ca > Mg > Al > Zn > Fe > Pb > [H] > Cu > Ag > Au. Iron displaces Copper from CuSO₄ because Fe is more reactive than Cu!", "सक्रियता श्रेणी में लोहा (Fe) ताँबे (Cu) से अधिक अभिक्रियाशील है, इसलिए यह CuSO₄ से Cu को विस्थापित कर देता है।");
 
     const off = bus.on("sim:change", e => { if (e.labId === "reactions") { sync(); facts.update(); sl.sync(); } });
-    sync(); facts.update(); ctx.stage.dataset.ready = "1";
+    sync();
+    if (ctx.preset?.sub === "corrosion") { rodMat.color.setHex(0xcbd5e1); h1.textContent = "Galvanisation & Rusting Prevention"; }
+    if (ctx.preset?.sub === "extraction") { rodMat.color.setHex(0xf97316); h1.textContent = "Thermite & Ore Reduction (Fe₂O₃ + 2Al)"; }
+    facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

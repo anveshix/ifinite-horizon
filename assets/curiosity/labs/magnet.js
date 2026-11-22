@@ -80,7 +80,7 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    let magnetGrp = null, needle = null, particles = [], t = 0, domesticMode = false;
+    let magnetGrp = null, needle = null, particles = [], t = 0, domesticMode = ctx.preset?.sub === "domestic";
 
     const rebuild = () => {
       while (dyn.children.length) {

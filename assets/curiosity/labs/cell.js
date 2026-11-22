@@ -154,7 +154,7 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const hc = el("span"), hf = el("span"); hud.append(hc, hf);
 
-    let spot = null, t = 0, divMode = 0; // 0=Osmosis, 1=Mitosis (2×2n), 2=Meiosis (4×n)
+    let spot = null, t = 0, divMode = ctx.preset?.sub === "division" ? 1 : 0; // 0=Osmosis, 1=Mitosis (2×2n), 2=Meiosis (4×n)
     const divCloneGrp = new THREE.Group(); scene.add(divCloneGrp);
     const refresh = () => {
       while (divCloneGrp.children.length) divCloneGrp.remove(divCloneGrp.children.pop());
