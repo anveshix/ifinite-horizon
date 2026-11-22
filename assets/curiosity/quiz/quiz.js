@@ -167,8 +167,9 @@ export function renderQuiz(host, ctx) {
     if (/^[1-5]$/.test(e.key)) { const vis = [...box.querySelectorAll(".cq-opt:not(.gone)")], b = vis[+e.key - 1]; if (b && !b.disabled) { e.preventDefault(); answer(b.dataset.id); } }
     else if ((e.key === "Enter" || e.key === "ArrowRight") && R && R.answered && box.querySelector("#cqNext")) { e.preventDefault(); box.querySelector("#cqNext").click(); }
   };
-  box.addEventListener("click", onClick); document.addEventListener("keydown", onKey);
+  const syncQuizSnd = () => { const b = $("#cqSnd"); if (b) { const on = fx.sound.on; b.textContent = on ? "🔊" : "🔇"; b.setAttribute("aria-pressed", String(on)); } };
+  box.addEventListener("click", onClick); document.addEventListener("keydown", onKey); window.addEventListener("va-cl-snd", syncQuizSnd);
   box.__round = () => R;                                  // test hook
   if (R && R.qs.length) paint(); else start();
-  return () => { document.removeEventListener("keydown", onKey); fx.stopAll(); };
+  return () => { document.removeEventListener("keydown", onKey); window.removeEventListener("va-cl-snd", syncQuizSnd); fx.stopAll(); };
 }

@@ -52,6 +52,11 @@ export default {
     ];
   },
   snapshot,
+  missions: [
+    { id: "force-fast", en: "Reach acceleration a ≥ 5 m/s² (big F, small m)", hi: "त्वरण a ≥ 5 m/s² तक पहुँचाओ (अधिक F, कम m)", check: v => view(v).a >= 5 },
+    { id: "force-heavy", en: "Load heavy mass (m ≥ 8 kg) and feel inertia resist", hi: "भारी द्रव्यमान (m ≥ 8 kg) रखो और जड़त्व का असर देखो", check: v => v.m >= 8 },
+    { id: "force-run", en: "Release the trolley for a full timed run", hi: "ट्रॉली को चलाकर एक पूरा रन पूरा करो", check: (_v, _f, meta) => meta.runs >= 1 }
+  ],
 
   async mount(ctx) {
     const THREE = await loadThree();

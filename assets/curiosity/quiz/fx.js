@@ -90,20 +90,82 @@ export function countUp(el, to, ms = 600) {
   const t0 = performance.now(); const step = now => { const k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step);
 }
 
-/* ---------- sounds (off by default so a classroom stays quiet) ---------- */
-let ac = null;
-const tone = (f, t0, d, type = "sine", vol = 0.12) => { const o = ac.createOscillator(), v = ac.createGain(); o.type = type; o.frequency.value = f; v.gain.setValueAtTime(0.0001, ac.currentTime + t0); v.gain.exponentialRampToValueAtTime(vol, ac.currentTime + t0 + 0.02); v.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + t0 + d); o.connect(v).connect(ac.destination); o.start(ac.currentTime + t0); o.stop(ac.currentTime + t0 + d + 0.05); };
+/* ---------- sounds (off by default so a classroom stays quiet; Sound Lab acoustic demos run on explicit click) ---------- */
+let ac = null, activeNodes = [];
+const audioCtx = () => {
+  ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+  if (ac.state === "suspended") ac.resume();
+  return ac;
+};
+const tone = (f, t0, d, type = "sine", vol = 0.12, fEnd = null) => {
+  const ctx = audioCtx(), t = ctx.currentTime + t0;
+  const o = ctx.createOscillator(), v = ctx.createGain();
+  o.type = type; o.frequency.setValueAtTime(Math.max(30, f), t);
+  if (fEnd) o.frequency.exponentialRampToValueAtTime(Math.max(30, fEnd), t + d);
+  v.gain.setValueAtTime(0.0001, t);
+  v.gain.exponentialRampToValueAtTime(Math.max(0.0002, vol), t + Math.min(0.02, d * 0.25));
+  v.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  o.connect(v).connect(ctx.destination);
+  o.start(t); o.stop(t + d + 0.05);
+  return o;
+};
+const noiseBurst = (t0, d, freq = 1100, q = 1.6, vol = 0.25, fEnd = null) => {
+  const ctx = audioCtx(), t = ctx.currentTime + t0;
+  const len = Math.max(1, Math.floor(ctx.sampleRate * d));
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate), ch = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * Math.exp((-i / len) * 6);
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const filt = ctx.createBiquadFilter(); filt.type = "bandpass"; filt.frequency.setValueAtTime(freq, t); filt.Q.value = q;
+  if (fEnd) filt.frequency.exponentialRampToValueAtTime(Math.max(80, fEnd), t + d);
+  const g = ctx.createGain(); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  src.connect(filt).connect(g).connect(ctx.destination);
+  src.start(t); src.stop(t + d + 0.03);
+  return src;
+};
 export const sound = {
   get on() { return LS.get("va.cl.snd") === "1"; },
-  toggle() { const v = !this.on; LS.set("va.cl.snd", v ? "1" : "0"); if (v) this.play("tick"); return v; },
+  toggle() {
+    const v = !this.on; LS.set("va.cl.snd", v ? "1" : "0");
+    try { window.dispatchEvent(new CustomEvent("va-cl-snd", { detail: { on: v } })); } catch { /* ignore */ }
+    if (v) this.play("tick");
+    return v;
+  },
   play(kind) {
-    if (!this.on) return; try {
-      ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === "suspended") ac.resume();
-      if (kind === "right") [523, 659, 784].forEach((f, i) => tone(f, i * 0.07, 0.22, "triangle"));
-      else if (kind === "wrong") { tone(196, 0, 0.28, "sawtooth", 0.08); tone(147, 0.12, 0.3, "sawtooth", 0.08); }
-      else if (kind === "streak") [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.06, 0.25, "triangle", 0.13));
-      else if (kind === "level") [392, 523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, i * 0.09, 0.34, "triangle", 0.14));
-      else tone(660, 0, 0.08, "square", 0.05);
+    if (!this.on) return;
+    try {
+      if (kind === "right") [523, 659, 784].forEach((f, i) => tone(f, i * 0.07, 0.22, "triangle", 0.12));
+      else if (kind === "wrong") { tone(210, 0, 0.22, "triangle", 0.09, 130); tone(155, 0.1, 0.26, "sawtooth", 0.06, 110); }
+      else if (kind === "streak") [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.06, 0.26, "triangle", 0.13));
+      else if (kind === "level") [392, 523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, i * 0.08, 0.34, "triangle", 0.14));
+      else if (kind === "mission") { [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, i * 0.055, 0.28, "sine", 0.12)); }
+      else if (kind === "whoosh") noiseBurst(0, 0.35, 360, 0.9, 0.14, 1400);
+      else if (kind === "thud") tone(125, 0, 0.18, "sine", 0.18, 44);
+      else if (kind === "zap") { tone(760, 0, 0.08, "sawtooth", 0.05, 1140); tone(1520, 0.03, 0.09, "sine", 0.05, 920); }
+      else if (kind === "pop") tone(480, 0, 0.09, "sine", 0.09, 820);
+      else tone(660, 0, 0.07, "triangle", 0.06);
     } catch { /* audio blocked: silently ignore */ }
+  },
+  /** Synthesizes a pure tuning-fork tone (+ gentle 2nd harmonic) for Sound Lab on direct user click. */
+  playTone(freq = 440, amp = 0.6, dur = 0.85) {
+    try {
+      activeNodes.forEach(n => { try { n.stop(); } catch { /* stopped */ } });
+      activeNodes = [];
+      const vol = Math.min(0.26, Math.max(0.03, amp * 0.22));
+      activeNodes.push(tone(freq, 0, dur, "sine", vol));
+      activeNodes.push(tone(freq * 2, 0, dur * 0.7, "sine", vol * 0.16));
+      return true;
+    } catch { return false; }
+  },
+  /** Synthesizes a hand clap + physically delayed echo (tEcho in seconds) for Sound Lab on direct user click. */
+  playClapEcho(delaySec = 0.15, echoGain = 0.65) {
+    try {
+      noiseBurst(0, 0.085, 1250, 1.4, 0.28);
+      noiseBurst(0.008, 0.06, 2400, 1.8, 0.14);
+      const d = Math.min(1.5, Math.max(0.005, delaySec));
+      const g = Math.min(0.85, Math.max(0.15, echoGain));
+      noiseBurst(d, 0.095, 1050, 1.5, 0.26 * g);
+      if (d < 0.1) noiseBurst(d + 0.025, 0.12, 850, 1.2, 0.12 * g);   // reverberation tail
+      return true;
+    } catch { return false; }
   }
 };

@@ -71,6 +71,11 @@ export default {
     ];
   },
   snapshot,
+  missions: [
+    { id: "lens-2f", en: "Make a real, same-size inverted image (set u = 2f)", hi: "उल्टा और वस्तु के बराबर वास्तविक प्रतिबिंब बनाओ (u = 2f)", check: v => v.type === 1 && Math.abs(v.u - 2 * v.f) < 1e-6 },
+    { id: "lens-mag", en: "Create a magnified virtual image (magnifying glass: u < f)", hi: "आवर्धक लेंस से बड़ा आभासी प्रतिबिंब बनाओ (u < f)", check: v => v.type === 1 && v.u < v.f },
+    { id: "lens-concave", en: "Switch to a concave lens and observe virtual diminished image", hi: "अवतल लेंस चुनकर हमेशा छोटा आभासी प्रतिबिंब देखो", check: v => v.type === -1 }
+  ],
 
   async mount(ctx) {
     const THREE = await loadThree();

@@ -86,5 +86,89 @@ export function pendulumStep(s, dt) {
   return s;
 }
 
+/* ============ Class IX · Ch 12 · Sound — waves, medium & echo ============ */
+export const SOUND_MEDIA = [
+  { id: "air", name: "Air (22 °C)", hi: "वायु (22 °C)", v: 344 },
+  { id: "water", name: "Water", hi: "जल", v: 1498 },
+  { id: "steel", name: "Steel", hi: "इस्पात (स्टील)", v: 5960 }
+];
+/** f in Hz, A in 0.2..1.0, medium 0|1|2, dist in m. */
+export function soundWave({ f = 440, A = 0.6, medium = 0, dist = 25 }) {
+  const m = SOUND_MEDIA[medium] || SOUND_MEDIA[0];
+  const v = m.v;
+  const T = 1 / f;
+  const Tms = 1000 / f;
+  const lambda = v / f;
+  const tEcho = (2 * dist) / v;
+  const dMin = (0.1 * v) / 2;
+  const distinctEcho = tEcho >= 0.1 - EPS;
+  const intensity = A * A;
+  return { f, A, medium, mediaName: m.name, mediaHi: m.hi, v, T, Tms, lambda, dist, tEcho, dMin, distinctEcho, intensity };
+}
+
+/* ============ Class IX · Ch 9 / 10 · Motion & Free-Fall Gravity ============ */
+export const PLANETS = [
+  { id: "moon", name: "Moon", hi: "चन्द्रमा", g: 1.63, color: "#cbd5e1" },
+  { id: "earth", name: "Earth", hi: "पृथ्वी", g: 9.8, color: "#38bdf8" },
+  { id: "jupiter", name: "Jupiter", hi: "बृहस्पति", g: 24.8, color: "#fb923c" }
+];
+/** Vacuum free fall from rest: planet 0|1|2, drop height h (m), mass m (kg). */
+export function freeFall({ planet = 1, h = 40, m = 2 }) {
+  const P = PLANETS[planet] || PLANETS[1];
+  const g = P.g;
+  const tFall = Math.sqrt((2 * h) / g);
+  const vImpact = Math.sqrt(2 * g * h);
+  const weight = m * g;
+  const at = t => {
+    const tc = Math.min(Math.max(0, t), tFall);
+    const s = 0.5 * g * tc * tc;
+    const y = Math.max(0, h - s);
+    const v = g * tc;
+    return { t: tc, s, y, v, pe: m * g * y, ke: 0.5 * m * v * v };
+  };
+  return { planet, planetName: P.name, planetHi: P.hi, g, h, m, tFall, vImpact, weight, at };
+}
+
+/* ============ Class IX · Ch 1 · Cell & Osmosis ============ */
+export const CELL_TYPES = [
+  { id: "animal", name: "Animal Cell (RBC)", hi: "जंतु कोशिका (RBC)", wall: false, nucleus: true, chloroplast: false },
+  { id: "plant", name: "Plant Cell (Onion)", hi: "पादप कोशिका (प्याज़)", wall: true, nucleus: true, chloroplast: true },
+  { id: "prokaryote", name: "Prokaryote (Bacterium)", hi: "प्रोकैरियोट (जीवाणु)", wall: true, nucleus: false, chloroplast: false }
+];
+export function osmosisModel({ cellType = 1, tonicity = 0, temp = 20 }) {
+  const ct = CELL_TYPES[cellType] || CELL_TYPES[1];
+  const flux = tonicity < 0 ? "inward" : tonicity > 0 ? "outward" : "balanced";
+  const rate = +(0.6 + (temp - 10) * 0.03).toFixed(2);
+  let state, stateHi, volScale;
+  if (tonicity < 0) {
+    if (cellType === 0) { state = "Swollen → Lysis (bursts)"; stateHi = "फूलकर फट जाती है"; volScale = 1.28; }
+    else { state = "Turgid (wall prevents bursting)"; stateHi = "स्फीत (कोशिका भित्ति फटने से रोकती है)"; volScale = 1.12; }
+  } else if (tonicity === 0) {
+    state = cellType === 1 ? "Flaccid (dynamic equilibrium)" : "Normal (dynamic equilibrium)";
+    stateHi = "सामान्य (संतुलित जल प्रवाह)";
+    volScale = 1.0;
+  } else {
+    if (cellType === 0) { state = "Crenated (shrunken)"; stateHi = "सिकुड़ी हुई (बहिःपरासरण)"; volScale = 0.72; }
+    else { state = "Plasmolysed (membrane shrinks away from wall)"; stateHi = "जीवद्रव्यकुंचित (झिल्ली भित्ति से अलग)"; volScale = 0.75; }
+  }
+  return { cellType, cellName: ct.name, cellHi: ct.hi, hasCellWall: ct.wall, hasNucleus: ct.nucleus, hasChloroplast: ct.chloroplast, tonicity, temp, flux, rate, state, stateHi, volScale };
+}
+
+/* ============ Class IX · Ch 2 · Tissues ============ */
+export const TISSUE_TYPES = [
+  { id: "parenchyma", name: "Parenchyma", hi: "पैरेन्काइमा", living: true, group: "Plant · Simple", role: "Storage & photosynthesis", roleHi: "भोजन संग्रह व प्रकाश-संश्लेषण" },
+  { id: "collenchyma", name: "Collenchyma", hi: "कॉलेन्काइमा", living: true, group: "Plant · Simple", role: "Flexible mechanical support", roleHi: "लचीलापन व यांत्रिक सहारा" },
+  { id: "sclerenchyma", name: "Sclerenchyma", hi: "स्क्लेरेन्काइमा", living: false, group: "Plant · Simple", role: "Rigid lignified strength (dead)", roleHi: "कठोर लिग्निन युक्त मज़बूती (मृत)" },
+  { id: "xylem", name: "Xylem & Phloem", hi: "जाइलम व फ्लोएम", living: false, group: "Plant · Complex", role: "Unidirectional water (xylem) & bidirectional food (phloem)", roleHi: "एकदिशीय जल (जाइलम) व द्विदिशीय भोजन (फ्लोएम)" },
+  { id: "muscle", name: "Striated Muscle", hi: "रेखित पेशी", living: true, group: "Animal · Muscular", role: "Voluntary contraction (multinucleated)", roleHi: "ऐच्छिक संकुचन (बहुकेंद्रकीय)" },
+  { id: "neuron", name: "Neuron", hi: "तंत्रिका कोशिका (न्यूरॉन)", living: true, group: "Animal · Nervous", role: "Rapid electrical impulse transmission", roleHi: "तीव्र विद्युत आवेग संचरण" }
+];
+export function tissueModel({ tissue = 0, zoom = 200, transp = 3 }) {
+  const T = TISSUE_TYPES[tissue] || TISSUE_TYPES[0];
+  const speed = +(0.6 * transp).toFixed(2);      // relative flow / contraction / impulse velocity
+  const fieldUm = Math.round(40000 / zoom);      // field of view in µm
+  return { ...T, tissue, zoom, transp, speed, fieldUm };
+}
+
 /* ============ small shared helpers ============ */
 export const fmt = (x, d = 2) => !Number.isFinite(x) ? "∞" : (Math.abs(x) >= 1000 ? x.toFixed(0) : +x.toFixed(d)).toString();

@@ -1,5 +1,5 @@
 // Physics models vs NCERT textbook results. Run: node tests/curiosity-physics.mjs
-import { lens, lensNature, lensRays, circuit, motion, pendulumStart, pendulumEnergy, pendulumStep, G, PEND_L } from "../assets/curiosity/labs/models.js";
+import { lens, lensNature, lensRays, circuit, motion, pendulumStart, pendulumEnergy, pendulumStep, G, PEND_L, soundWave, freeFall, osmosisModel, tissueModel } from "../assets/curiosity/labs/models.js";
 let n = 0, bad = 0;
 const ok = (c, m) => { n++; if (!c) { bad++; console.log(" ✗", m); } };
 const near = (a, b, e = 1e-6) => Math.abs(a - b) <= e * Math.max(1, Math.abs(b));
@@ -50,6 +50,33 @@ for (const [m, h] of [[1, 0.3], [5, 0.3], [2, 1.0], [0.5, 0.05]]) {
 }
 ok(near(pendulumStart({ m: 1, h: 0.4 }).vMax, pendulumStart({ m: 9, h: 0.4 }).vMax), "speed at the bottom is independent of mass");
 ok(near(pendulumStart({ m: 2, h: 0.4 }).PE0, 2 * G * 0.4) && PEND_L === 2, "PE = mgh");
+
+/* Sound wave & echo (NCERT Class IX Ch 12: 344 m/s in air at 22°C, min echo d = 17.2 m) */
+let SW = soundWave({ f: 400, A: 0.6, medium: 0, dist: 25 });
+ok(SW.v === 344 && near(SW.lambda, 344 / 400) && near(SW.tEcho, 50 / 344) && SW.distinctEcho === true && near(SW.dMin, 17.2), "sound air 25m distinct echo");
+SW = soundWave({ f: 400, A: 0.6, medium: 0, dist: 15 });
+ok(SW.distinctEcho === false && SW.tEcho < 0.1, "sound air 15m reverberation");
+SW = soundWave({ f: 500, A: 0.8, medium: 2, dist: 30 });
+ok(SW.v === 5960 && near(SW.lambda, 5960 / 500) && !SW.distinctEcho, "sound steel 5960 m/s");
+
+/* Gravity free fall (NCERT Class IX Ch 9/10) */
+let FF = freeFall({ planet: 1, h: 40, m: 4 });
+ok(FF.g === 9.8 && near(FF.tFall, Math.sqrt(80 / 9.8)) && near(FF.vImpact, Math.sqrt(2 * 9.8 * 40)) && near(FF.weight, 4 * 9.8), "free fall earth");
+ok(near(freeFall({ planet: 1, h: 40, m: 1 }).tFall, freeFall({ planet: 1, h: 40, m: 10 }).tFall), "free fall time independent of mass");
+ok(near(freeFall({ planet: 1, h: 80, m: 2 }).vImpact / freeFall({ planet: 1, h: 20, m: 2 }).vImpact, 2), "4x height doubles impact speed");
+ok(freeFall({ planet: 0, h: 40, m: 6 }).weight < freeFall({ planet: 1, h: 40, m: 6 }).weight, "moon weight < earth weight");
+
+/* Cell osmosis & Tissue models (NCERT Class IX Ch 1 & Ch 2) */
+let OM = osmosisModel({ cellType: 1, tonicity: 1, temp: 20 });
+ok(OM.hasCellWall && OM.hasNucleus && OM.hasChloroplast && OM.flux === "outward" && /Plasmolysed/.test(OM.state), "plant cell hypertonic plasmolysis");
+OM = osmosisModel({ cellType: 0, tonicity: -1, temp: 30 });
+ok(!OM.hasCellWall && OM.flux === "inward" && /Lysis/.test(OM.state), "animal cell hypotonic lysis");
+OM = osmosisModel({ cellType: 2, tonicity: 0, temp: 20 });
+ok(OM.hasCellWall && !OM.hasNucleus && OM.flux === "balanced", "prokaryote nucleoid");
+let TM = tissueModel({ tissue: 2, zoom: 400, transp: 3 });
+ok(!TM.living && TM.fieldUm === 100 && /Sclerenchyma/.test(TM.name), "sclerenchyma dead");
+TM = tissueModel({ tissue: 3, zoom: 200, transp: 5 });
+ok(TM.speed === 3 && TM.fieldUm === 200 && /Xylem/.test(TM.name), "xylem speed scales with transp");
 
 console.log(`physics models · checks ${n} · failures ${bad}`);
 process.exit(bad ? 1 : 0);
