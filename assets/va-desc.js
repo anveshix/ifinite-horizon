@@ -733,6 +733,23 @@ digital weighing scale|Shows mass before and after to check conservation.
 electrostatic deflection plates|Charged plates bend the beam of charged particles.
 shared covalent electron pair|Two electrons shared between atoms form a covalent bond.
 sodium chloride|Table salt; ionic compound made of Na⁺ and Cl⁻.
+hypotonic solution/hypotonic solution pure water|Higher water concentration outside: water enters the cell by endosmosis.
+turgid plant cell/turgid plant cell wall pressure|Vacuole swells and pushes against the rigid cell wall without bursting.
+swollen rbc/swollen rbc endosmosis|Without a cell wall, an animal cell swells in pure water and may burst (lysis).
+isotonic solution/isotonic solution 0 9 salt|Equal water concentration inside and out: water crosses equally in both directions.
+flaccid plant cell/flaccid plant cell equilibrium|No net water flow; cell keeps its normal relaxed shape.
+normal biconcave rbc|Healthy disc-shaped red blood cell in balanced 0.9% saline.
+hypertonic solution/hypertonic solution strong salt|Lower water concentration outside: water leaves the cell by exosmosis.
+plasmolysed cell/plasmolysed cell shrunken protoplast|Plasma membrane and cytoplasm shrink away from the rigid cell wall.
+crenated rbc/crenated rbc exosmosis|Animal cell loses water and shrinks into a spiky shape in salty water.
+sonar transmitter & detector|Sends ultrasonic waves (> 20 kHz) underwater and times the returning echo.
+transmitted sound pulse|High-frequency pulse travelling downward at ~1531 m/s in seawater.
+reflected seabed echo|Sound pulse bounced back off the ocean floor to calculate depth d = v·t/2.
+ocean seabed/ocean seabed d v t 2|Total distance is 2d, so seabed depth equals half of speed × echo time.
+acoustic sound source|Emits sound wavefronts across air at ~344 m/s (at 22 °C).
+reflected echo/reflected echo 0 1 s|Our ear hears a distinct echo only if it arrives at least 0.1 s after the original sound.
+parabolic echo receiver|Curved dish focuses reflected sound waves onto a microphone sensor.
+rigid reflecting wall/rigid reflecting wall d 17 2 m|Hard flat cliff/wall reflects sound clearly when at least 17.2 m away in air.
 `;
 const norm=s=>String(s).toLowerCase().replace(/\([^)]*\)/g," $& ").replace(/[^a-z0-9²₂₃₄₆⁴αλ₀-₉½\s]/g," ").replace(/\s+/g," ").trim();
 const plain=s=>norm(String(s).replace(/\([^)]*\)/g,""));

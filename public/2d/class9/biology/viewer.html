@@ -56,6 +56,7 @@
     <div class="sub" data-sub="cell_nucleus" onclick="selectSub('cell_nucleus')">Nucleus — नाभिक</div>
     <div class="sub" data-sub="cell_mitochondria" onclick="selectSub('cell_mitochondria')">Mitochondria — माइटोकॉन्ड्रिया</div>
     <div class="sub" data-sub="cell_membrane" onclick="selectSub('cell_membrane')">Cell Membrane — कोशिका झिल्ली</div>
+    <div class="sub" data-sub="osmosis_tonicity" onclick="selectSub('osmosis_tonicity')">Osmosis &amp; Tonicity — परासरण व विलयन सांद्रता</div>
     <div class="sub" data-sub="cell_organelles" onclick="selectSub('cell_organelles')">All Organelles — सभी ऑर्गेनेल्स</div>
     <div class="topic" data-topic="tissues" onclick="selectTopic('tissues')">ऊतक · Tissues <span class="hi">ऊतक</span></div>
     <div class="sub" data-sub="tissue_epithelial" onclick="selectSub('tissue_epithelial')">Epithelial Tissue — उपकला ऊतक</div>
@@ -172,6 +173,21 @@ const DATA={
     {x:65,y:50,en:'Protein Channel',hi:'प्रोटीन चैनल'},
     {x:17,y:55,en:'Cholesterol',hi:'कोलेस्ट्रॉल'},
     {x:45,y:15,en:'Carbohydrate Chain',hi:'कार्बोहाइड्रेट श्रृंखला'}
+  ]
+ },
+ osmosis_tonicity:{
+  title:'Osmosis & Tonicity — परासरण व विलयन सांद्रता', desc:'अल्पपरासारी (स्फीत), समपरासारी (संतुलित) व अतिपरासारी (जीवद्रव्यकुंचित/सिकुड़ी) अवस्था में पादप व लाल रक्त कोशिकाएँ। Plant and red blood cells in hypotonic, isotonic and hypertonic solutions.',
+  img:'images/osmosis_tonicity.webp',
+  marks:[
+    {x:19,y:18,en:'Hypotonic Solution (Pure Water)',hi:'अल्पपरासारी विलयन (शुद्ध जल)'},
+    {x:19,y:37,en:'Turgid Plant Cell (Wall Pressure)',hi:'स्फीत पादप कोशिका (कोशिका भित्ति दाब)'},
+    {x:19,y:74,en:'Swollen RBC (Endosmosis)',hi:'फूली RBC (अंतःपरासरण)'},
+    {x:50,y:18,en:'Isotonic Solution (0.9% Salt)',hi:'समपरासारी विलयन (0.9% लवण)'},
+    {x:50,y:38,en:'Normal Plant Cell (Equilibrium)',hi:'सामान्य पादप कोशिका (संतुलन)'},
+    {x:50,y:74,en:'Normal Biconcave RBC',hi:'सामान्य द्विअवतल RBC'},
+    {x:81,y:18,en:'Hypertonic Solution (Strong Salt)',hi:'अतिपरासारी विलयन (गाढ़ा लवण)'},
+    {x:81,y:38,en:'Plasmolysed Cell (Shrunken Protoplast)',hi:'जीवद्रव्यकुंचित कोशिका (सिकुड़ा जीवद्रव्य)'},
+    {x:81,y:74,en:'Crenated RBC (Exosmosis)',hi:'सिकुड़ी RBC (बहिःपरासरण)'}
   ]
  },
  cell_organelles:{
