@@ -6067,21 +6067,106 @@ const eyeStyle=id=>({sclera:{color:0xf4efe6,rough:.55,clear:.3,op:.9,bump:.15},c
  retina:{color:0xcc4b34,rough:.6,clear:.15,op:1,bump:.3},vitreous:{color:0xbfe2ff,rough:.05,clear:1,op:.18,bump:0,noShadow:1},zonular:{color:0xffffff,rough:.5,clear:0,op:.8,bump:0},"anterior-chamber":{color:0xaed8ff,rough:.05,clear:1,op:.15,bump:0,noShadow:1},
  "optic-nerve":{color:0xf3e3b5,rough:.5,clear:.3,op:1,bump:.2}}[id]||{color:0xb23a3a,rough:.5,clear:.4,op:1,bump:.35,sheen:.6});
 const EYE_FB=()=>topicBuild(()=>Hi.find(h=>h.no===10),"eye");
+const eyeParam=(nu,nv,f)=>{const P=new Float32Array((nu+1)*(nv+1)*3),U=new Float32Array((nu+1)*(nv+1)*2),I=[];
+ for(let i=0;i<=nu;i++)for(let j=0;j<=nv;j++){const u=i/nu,v=j/nv,p=f(u,v),k=i*(nv+1)+j;P[k*3]=p[0];P[k*3+1]=p[1];P[k*3+2]=p[2];U[k*2]=u;U[k*2+1]=v}
+ for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const a=i*(nv+1)+j,b=a+nv+1;I.push(a,b,a+1,b,b+1,a+1)}
+ const g=new zt;g.setAttribute("position",new dn(P,3));g.setAttribute("uv",new dn(U,2));g.setIndex(I);g.computeVertexNormals();return g};
+const eyeTex=(w,h,fn)=>{const cv=document.createElement("canvas");cv.width=w;cv.height=h;const ctx=cv.getContext("2d");fn(ctx,w,h);const tx=new fi(cv);tx.needsUpdate=!0;return tx};
+const eyeCvdRGB=(r,g,b,m)=>{if(m===0)return[r,g,b];if(m===1)return[.567*r+.433*g,.558*r+.442*g,.242*g+.758*b];if(m===2)return[.625*r+.375*g,.7*r+.3*g,.3*g+.7*b];if(m===3)return[.95*r+.05*g,.433*g+.567*b,.475*g+.525*b];const y=.299*r+.587*g+.114*b;return[y,y,y]};
+const EYE_COND_NOTES=[
+ ["Normal (Emmetropia)","सामान्य दृष्टि","Parallel rays refract through the cornea and crystalline lens to focus sharply right on the retina.","समानांतर किरणें कॉर्निया और नेत्र लेंस से अपवर्तित होकर ठीक रेटिना पर केंद्रित होती हैं।"],
+ ["Myopia (Near-sightedness)","निकट-दृष्टि दोष (मायोपिया)","The eyeball is too long (or lens too curved), so distant light focuses IN FRONT of the retina. A concave lens diverges rays back onto the retina.","नेत्रगोलक लंबा (या लेंस अधिक वक्र) होने से दूर की किरणें रेटिना से पहले केंद्रित होती हैं। अवतल लेंस इन्हें पुनः रेटिना पर लाता है।"],
+ ["Hyperopia (Far-sightedness)","दूर-दृष्टि दोष (हाइपरोपिया)","The eyeball is too short (or lens too weak), so near light focuses BEHIND the retina. A convex lens converges rays onto the retina.","नेत्रगोलक छोटा (या लेंस कमज़ोर) होने से किरणें रेटिना के पीछे केंद्रित होती हैं। उत्तल लेंस इन्हें रेटिना पर लाता है।"],
+ ["Presbyopia (Age-related)","जरा-दूरदृष्टि (प्रेसबायोपिया)","Ciliary muscles weaken and the crystalline lens stiffens with age, reducing accommodation for near reading. A convex/bifocal lens restores near focus.","आयु के साथ पक्ष्माभी पेशियाँ कमज़ोर व लेंस कठोर हो जाता है, जिससे पास की वस्तुएँ धुँधली दिखती हैं। उत्तल/द्विफोकसी लेंस सहायक है।"],
+ ["Astigmatism (Toric cornea)","दृष्टि-वैषम्य (एस्टिग्मैटिज़्म)","An unevenly curved cornea bends vertical and horizontal rays to two separate focal points, blurring lines. A cylindrical lens equalises both axes.","असमान वक्र कॉर्निया ऊर्ध्वाधर व क्षैतिज किरणों को दो अलग बिंदुओं पर फ़ोकस करती है। बेलनाकार लेंस इसे सुधारता है।"],
+ ["Cataract (Clouded lens)","मोतियाबिंद (धुँधला लेंस)","Protein clumping turns the crystalline lens milky and opaque, scattering light and dimming vision. Surgical IOL replacement restores clarity.","प्रोटीन जमने से नेत्र लेंस दूधिया व अपारदर्शी हो जाता है, जिससे प्रकाश बिखरता है। कृत्रिम लेंस प्रत्यारोपण से दृष्टि लौटती है।"]];
+const EYE_CVD_NOTES=[
+ ["Normal Trichromatic Vision","सामान्य त्रिवर्णी दृष्टि","L (red), M (green), and S (blue) cone cells all respond normally across the visible spectrum.","L (लाल), M (हरा) व S (नीला) शंकु कोशिकाएँ सामान्य रूप से कार्य करती हैं।"],
+ ["Protanopia (Red-blind)","प्रोटैनोपिया (लाल-अंधता)","L-cones (long-wavelength red photopigment) are absent; reds look dark olive-brown and merge with greens.","लाल-संवेदी L-शंकु अनुपस्थित; लाल रंग गहरा भूरा-हरा प्रतीत होता है।"],
+ ["Deuteranopia (Green-blind)","ड्यूटेरैनोपिया (हरा-अंधता)","M-cones (medium-wavelength green photopigment) are absent; greens and reds appear as shades of yellow-brown.","हरा-संवेदी M-शंकु अनुपस्थित; हरा व लाल पीले-भूरे रंगों में मिल जाते हैं।"],
+ ["Tritanopia (Blue-yellow blind)","ट्राइटैनोपिया (नीला-पीला अंधता)","S-cones (short-wavelength blue photopigment) are absent; blues look greenish-teal and yellows look pale pink-grey.","नीला-संवेदी S-शंकु अनुपस्थित; नीला हरा-नीला और पीला हल्का गुलाबी दिखता है।"],
+ ["Achromatopsia (Monochrome)","एक्रोमैटोप्सिया (पूर्ण वर्णांधता)","Cone cells do not function; vision relies solely on rod cells in shades of grey, sensitive to bright light.","शंकु कोशिकाएँ निष्क्रिय; केवल शलाका कोशिकाओं से श्वेत-श्याम दृष्टि होती है।"]];
 const Meye=factory({key:"ch10/eye3d",slot:"eye",dir:"eye",scale:120,c:[.0305,1.591,.0635],floor:-2.5,fallback:()=>EYE_FB()(),style:eyeStyle,info:EYE_INFO,kind:eyeKind,
  cam:{front:[c(2.2,1.2,8.2),c(0,0,0)],side:[c(8.8,1.2,1.6),c(0,0,-.4)],back:[c(-3.6,1,-8),c(0,0,0)]},camNames:{front:"Front",side:"Side",back:"Back"},
  stageCam:["front","front","front","side","side","back","side"],steps:EYE_ST,clipIds:id=>/^(sclera|cornea|vitreous|anterior-chamber)$/.test(id),
- credit:"Light rays and the pupil/lens motion are schematic.",
+ credit:"Sculpted eye + optical defect & colour-vision simulation (light rays schematic).",
  op:(id,s,x)=>{const m=/rectus|oblique/.test(id);const T={sclera:[.9,.8,.5,.3,.3,.3,.9],cornea:[.35,.7,.35,.35,.3,.3,.4],iris:[.5,.5,1,.8,.6,.4,1],lens:[.5,.3,.5,1,.7,.3,1],retina:[.4,.2,.2,.4,1,.6,1],vitreous:[.12,.08,.1,.12,.2,.1,.35],zonular:[0,0,.4,1,.2,0,.9],"anterior-chamber":[.1,.15,.2,.1,.1,.08,.25],"optic-nerve":[1,.35,.35,.35,.7,1,1]};
-  return m?(s===0?1:.18):T[id][s]*(id==="sclera"&&x.cut?.7:1)},
+  let v=m?(s===0?1:.18):T[id][s]*(id==="sclera"&&x.cut?.7:1);if(id==="lens"&&x.cond===5)v=max(v,.92);return v},
  hot:(id,s)=>({1:/^(cornea|sclera)$/,2:/^iris$/,3:/^(lens|zonular)$/,4:/^retina$/,5:/^optic/}[s]||/^$/).test(id),
  group:id=>id==="iris"?"iris":id==="lens"?"lens":null,pivot:{iris:[.0315,1.5915,.0735],lens:[.0315,1.5915,.0715]},
- extra:x=>{const NP=40,sph=new Wn(new it(.0007,8,6),new bt({color:0xffe27a}),NP);sph.frustumCulled=!1;x.root.add(sph);const m4=new gt;
-  const zf=.112,zl=.0715,zr=x.BB.retina.mn[2]+.0016,cx=.0315,cy=1.5915;return{sph,m4,zf,zl,zr,cx,cy,NP}},
+ tools:x=>{const setC=i=>{x.cond=i;const n=EYE_COND_NOTES[i];note(n[0],n[1],n[2],n[3])};
+  const setV=i=>{x.cvd=i;x.drawChart();const n=EYE_CVD_NOTES[i];note(n[0],n[1],n[2],n[3])};
+  return[
+   {label:"👁 Normal",group:"cond",on:!0,act:()=>setC(0)},{label:"🔍 Myopia",group:"cond",act:()=>setC(1)},{label:"🔎 Hyperopia",group:"cond",act:()=>setC(2)},
+   {label:"📖 Presbyopia",group:"cond",act:()=>setC(3)},{label:"〰 Astigmatism",group:"cond",act:()=>setC(4)},{label:"☁ Cataract",group:"cond",act:()=>setC(5)},
+   {label:"👓 Corrective lens",toggle:()=>(x.corr=x.corr?0:1,!!x.corr)},
+   {label:"🎨 Normal cones",group:"cvd",on:!0,act:()=>setV(0)},{label:"Protanopia",group:"cvd",act:()=>setV(1)},{label:"Deuteranopia",group:"cvd",act:()=>setV(2)},{label:"Tritanopia",group:"cvd",act:()=>setV(3)},{label:"Achromatopsia",group:"cvd",act:()=>setV(4)}]},
+ extra:x=>{const NP=48,sph=new Wn(new it(.00065,8,6),new bt({color:0xffe27a}),NP);sph.frustumCulled=!1;x.root.add(sph);const m4=new gt;
+  const zf=.112,zl=.0715,zr=x.BB.retina.mn[2]+.0016,cx=.0315,cy=1.5915;
+  /* compute anatomical UVs on iris, sclera and retina for procedural biological CanvasTextures */
+  const mapUV=(id,mode)=>{const m=x.M[id],bb=x.BB[id];if(!m||!bb)return;const pos=m.geometry.attributes.position.array,N_=pos.length/3,U=new Float32Array(N_*2);
+   const rMax=Math.max(1e-4,(bb.mx[0]-bb.mn[0])*.5,(bb.mx[1]-bb.mn[1])*.5);
+   for(let i=0;i<N_;i++){const px=pos[i*3]-bb.c.x,py=pos[i*3+1]-bb.c.y,pz=pos[i*3+2]-bb.c.z;
+    if(mode===0){U[i*2]=.5+px/(2.1*rMax);U[i*2+1]=.5+py/(2.1*rMax)}
+    else{U[i*2]=.5+Math.atan2(px,pz)/(2*Math.PI);U[i*2+1]=.5+py/(2.2*rMax)}}
+   m.geometry.setAttribute("uv",new dn(U,2))};
+  mapUV("iris",0);mapUV("sclera",1);mapUV("retina",0);
+  if(x.Mt.iris){const itx=eyeTex(256,256,(q,w,h)=>{const g=q.createRadialGradient(w/2,h/2,18,w/2,h/2,w*.48);
+    g.addColorStop(0,"#1c1208");g.addColorStop(.18,"#9c6b35");g.addColorStop(.45,"#5a3b1e");g.addColorStop(.82,"#3b2412");g.addColorStop(1,"#18100a");
+    q.fillStyle=g;q.fillRect(0,0,w,h);for(let k=0;k<180;k++){const a=k/180*Math.PI*2,r0=28+(k%5)*5,r1=w*.46;
+     q.strokeStyle=k%3?"rgba(218,162,92,0.28)":"rgba(42,24,10,0.45)";q.lineWidth=1+(k%2);q.beginPath();q.moveTo(w/2+Math.cos(a)*r0,h/2+Math.sin(a)*r0);q.lineTo(w/2+Math.cos(a+.03)*r1,h/2+Math.sin(a+.03)*r1);q.stroke()}
+    q.strokeStyle="rgba(255,215,140,0.35)";q.lineWidth=3;q.beginPath();q.arc(w/2,h/2,w*.22,0,Math.PI*2);q.stroke()});
+   x.Mt.iris.map=itx;x.Mt.iris.color.setHex(0xffffff);x.Mt.iris.needsUpdate=!0}
+  if(x.Mt.sclera){const stx=eyeTex(256,256,(q,w,h)=>{q.fillStyle="#f7f2e9";q.fillRect(0,0,w,h);
+    for(let k=0;k<22;k++){q.strokeStyle="rgba(195,62,62,0.24)";q.lineWidth=.8+(k%2)*.5;q.beginPath();let px=(k*37)%w,py=(k*61)%h;q.moveTo(px,py);
+     for(let s=0;s<5;s++){px+=(Math.sin(k+s)*22);py+=(Math.cos(k*2+s)*18);q.lineTo(px,py)}q.stroke()}});
+   x.Mt.sclera.map=stx;x.Mt.sclera.color.setHex(0xffffff);x.Mt.sclera.needsUpdate=!0}
+  if(x.Mt.retina){const rtx=eyeTex(256,256,(q,w,h)=>{const g=q.createRadialGradient(w*.52,h*.5,8,w*.5,h*.5,w*.5);
+    g.addColorStop(0,"#9e2d1b");g.addColorStop(.3,"#cc4b34");g.addColorStop(1,"#8c2416");q.fillStyle=g;q.fillRect(0,0,w,h);
+    const ox=w*.34,oy=h*.52;const og=q.createRadialGradient(ox,oy,1,ox,oy,16);og.addColorStop(0,"#fff4c2");og.addColorStop(.7,"#f4ba72");og.addColorStop(1,"rgba(244,186,114,0)");
+    q.fillStyle=og;q.beginPath();q.arc(ox,oy,16,0,Math.PI*2);q.fill();
+    for(let k=0;k<10;k++){const a=(k/10)*Math.PI*2;q.strokeStyle=k%2?"rgba(155,18,18,0.65)":"rgba(220,45,35,0.6)";q.lineWidth=1.8;q.beginPath();q.moveTo(ox,oy);
+     q.quadraticCurveTo(ox+Math.cos(a+.3)*36,oy+Math.sin(a+.3)*36,ox+Math.cos(a-.2)*95,oy+Math.sin(a-.2)*95);q.stroke()}});
+   x.Mt.retina.map=rtx;x.Mt.retina.color.setHex(0xffffff);x.Mt.retina.needsUpdate=!0}
+  /* Corrective physical lens mesh in front of the cornea */
+  const cLensGeo=(kind)=>{const R_=.013;return eyeParam(18,28,(u,v)=>{const r=u*R_,a=v*Math.PI*2,q=u*u;
+   const zOff=kind===1?(1-q)*.0014-.0026:kind===2?-(1-q)*.0024+.0006:0;return[Math.cos(a)*r,Math.sin(a)*r,zOff]})};
+  const cLensMat=Me(0x9ce0ff,{roughness:.04,clearcoat:1,clearcoatRoughness:.04,transmission:.82,ior:1.52,thickness:.35,transparent:!0,opacity:.68,side:vt});
+  const cConcave=new N(cLensGeo(1),cLensMat),cConvex=new N(cLensGeo(2),cLensMat);
+  cConcave.position.set(cx,cy,.097);cConvex.position.set(cx,cy,.097);cConcave.visible=!1;cConvex.visible=!1;
+  x.root.add(cConcave);x.root.add(cConvex);
+  /* Floating Ishihara/Cone stimulus target in front of eye */
+  const chCv=document.createElement("canvas");chCv.width=256;chCv.height=256;const chTx=new fi(chCv);
+  const drawChart=()=>{const q=chCv.getContext("2d"),m=x.cvd||0;const rgb=(r,g,b)=>{const[rr,gg,bb]=eyeCvdRGB(r,g,b,m);return`rgb(${rr|0},${gg|0},${bb|0})`};
+   q.fillStyle=rgb(245,244,238);q.fillRect(0,0,256,256);q.strokeStyle="rgba(30,45,75,.28)";q.lineWidth=6;q.strokeRect(4,4,248,248);
+   const discs=[[82,82,220,56,48],[174,82,46,168,78],[82,174,50,118,232],[174,174,238,185,38]];
+   discs.forEach(([px,py,r,g,b])=>{q.fillStyle=rgb(r,g,b);q.beginPath();q.arc(px,py,34,0,Math.PI*2);q.fill()});
+   q.fillStyle=rgb(24,32,48);q.font="bold 40px sans-serif";q.textAlign="center";q.textBaseline="middle";q.fillText("E",128,128);
+   chTx.needsUpdate=!0};
+  const chart=new N(eyeParam(2,2,(u,v)=>[(.5-u)*.024,(v-.5)*.024,0]),new bt({map:chTx,side:vt,transparent:!0,opacity:.95}));
+  chart.position.set(cx,cy,.124);x.root.add(chart);
+  const res={sph,m4,zf,zl,zr,cx,cy,NP,cond:0,corr:0,cvd:0,cConcave,cConvex,chart,drawChart,c0:x.root.position.clone()};
+  drawChart();return res},
  frame:(x,s,t)=>{const bright=.5+.5*sin(t*.8);if(x.G.iris){const f=s===2?1.22-.5*bright:1;x.G.iris.scale.set(f,f,1)}
-  if(x.G.lens){const th=s===3?1+.22*(.5+.5*sin(t*1.2)):1;x.G.lens.scale.set(1,1,th)}
-  const on=s>=3&&s<=4;for(let i=0;i<x.NP;i++){if(!on){x.m4.makeScale(0,0,0);x.sph.setMatrixAt(i,x.m4);continue}
-   const r=i%5,h=(r-2)*.0042,f=((i/5|0)/8+t*.35)%1;let z,y;if(f<.5){const q=f/.5;z=lerp(x.zf,x.zl,q);y=h*lerp(1,.55,q)}else{const q=(f-.5)/.5;z=lerp(x.zl,x.zr,q);y=h*.55*(1-q)}
-   x.m4.makeScale(1,1,1);x.m4.setPosition(x.cx,x.cy+y,z);x.sph.setMatrixAt(i,x.m4)}x.sph.instanceMatrix.needsUpdate=!0},
+  const isPres=x.cond===3;if(x.G.lens){const th=s===3?1+(isPres?.05:.24)*(.5+.5*sin(t*1.2)):1;x.G.lens.scale.set(1,1,th)}
+  /* Axial eyeball length & corneal curvature according to optical condition */
+  const zStretch=x.cond===1?1.15:x.cond===2?.86:1;x.root.scale.set(x.S,x.S,x.S*zStretch);
+  if(x.M.cornea)x.M.cornea.scale.set(x.cond===4?1.08:1,x.cond===4?.91:1,1);
+  if(x.Mt.lens){const cat=x.cond===5;x.Mt.lens.color.setHex(cat?0xead08c:0xfff0b8);x.Mt.lens.roughness=cat?.62:.08;x.Mt.lens.transmission=cat?.08:.5}
+  x.cConcave.visible=!!(x.corr&&(x.cond===1||x.cond===4));x.cConvex.visible=!!(x.corr&&(x.cond===2||x.cond===3));
+  x.chart.visible=s>=1&&s<=5;
+  /* Compute focal target Z along optical axis for animated photon rays */
+  let zFocus=x.zr;
+  if(x.cond===1&&!x.corr)zFocus=lerp(x.zl,x.zr,.64);
+  else if((x.cond===2||x.cond===3)&&!x.corr)zFocus=x.zr-.016;
+  const on=s>=3&&s<=4||x.cond>0;
+  for(let i=0;i<x.NP;i++){if(!on){x.m4.makeScale(0,0,0);x.sph.setMatrixAt(i,x.m4);continue}
+   const r=i%6,h=((r%5)-2)*.004,f=((i/6|0)/8+t*.34)%1,isHoriz=x.cond===4&&r===5;
+   const z0=x.corr&&x.cond>0&&x.cond<5?.097:x.zf;let z,y,dx=0;
+   if(f<.45){const q=f/.45;z=lerp(z0,x.zl,q);y=isHoriz?0:h*lerp(1,.62,q);dx=isHoriz?.006*lerp(1,.62,q):0}
+   else{const q=(f-.45)/.55,zfEnd=isHoriz&&!x.corr?lerp(x.zl,x.zr,.78):zFocus;z=lerp(x.zl,x.zr,q);const qF=(z-x.zl)/(zfEnd-x.zl||1e-4);
+    const scatter=x.cond===5?((i%3)-1)*.0045*q:0;y=(isHoriz?0:h*.62*(1-qF))+scatter;dx=isHoriz?.006*(1-qF):0}
+   x.m4.makeScale(1,1,1);x.m4.setPosition(x.cx+dx,x.cy+y,z);x.sph.setMatrixAt(i,x.m4)}x.sph.instanceMatrix.needsUpdate=!0},
  labels:x=>[["e-cornea","Cornea","कॉर्निया","cornea",[1,6]],["e-sclera","Sclera","श्वेतपटल","sclera",[0,1]],["e-iris","Iris","आइरिस","iris",[2,6]],["e-pupil","Pupil (opening in the iris)","पुतली",()=>x.toW(c(.0315,1.5915,.0735)),[2]],["e-lens","Lens","लेंस","lens",[3,6]],["e-zon","Ciliary / suspensory fibres","पक्ष्माभी / निलंबन तंतु","zonular",[3]],
   ["e-ret","Retina (image forms here)","रेटिना (प्रतिबिंब यहाँ)","retina",[4,6]],["e-vit","Vitreous humour","काचाभ द्रव","vitreous",[6]],["e-aq","Aqueous humour","नेत्रोद","anterior-chamber",[6]],["e-on","Optic nerve → brain","दृक् तंत्रिका → मस्तिष्क","optic-nerve",[5]],["e-mu","Eye muscle","नेत्र पेशी","rectus-sup",[0]]],
  predict:{q:"Which part of the eye controls how much light enters?",opts:[["Cornea",!1,"The cornea bends light but cannot change the amount entering."],["Iris",!0,"Correct — the iris changes the size of the pupil."],["Retina",!1,"The retina is the screen that detects light."]]}});
@@ -6199,7 +6284,7 @@ function tube(pts,r,seg=10,rf=null){const cur=new It(pts),N=Math.max(8,pts.lengt
 /* cap of a sphere (curved cisterna), centred on direction d, half-angle a, radius r */
 function cap(r,a,fl=.25,wob=.02,seed=0){return param(24,48,(u,v)=>{const th=u*a*(1+fl*u*u),ph=v*TAU,k=r*(1+wob*(fbm(u*3+seed,v*3,seed)-.5)+(u>.82?.05*(u-.82)/.18:0));return[sin(th)*cos(ph)*k,cos(th)*k-r,sin(th)*sin(ph)*k]})}
 /* cell body */
-const MAT=(col,o={})=>Me(col,{roughness:.4,clearcoat:.6,clearcoatRoughness:.25,sheen:.4,sheenColor:new we(0xffffff),side:vt,transparent:!0,opacity:1,emissive:0x000000,bumpMap:$t,bumpScale:.12,envMapIntensity:1.2,...o});
+const MAT=(col,o={})=>{const{sheenC,...rest}=o;return Me(col,{roughness:.4,clearcoat:.6,clearcoatRoughness:.25,sheen:.4,sheenColor:new we(sheenC!=null?sheenC:0xffffff),side:vt,transparent:!0,opacity:1,emissive:0x000000,bumpMap:$t,bumpScale:.12,envMapIntensity:1.2,...rest});};
 const KINDS={
  mem:["Plasma membrane","कोशिका झिल्ली","Phospholipid bilayer with proteins. Selectively permeable: it decides what enters and leaves the cell.","प्रोटीन युक्त फ़ॉस्फ़ोलिपिड द्विस्तर; वरणात्मक पारगम्य — तय करती है कि क्या अंदर आए, क्या बाहर जाए।"],
  nuc:["Nucleus","केंद्रक","Control room: holds DNA as chromatin and is wrapped in a double envelope with pores.","नियंत्रण कक्ष: DNA को क्रोमैटिन के रूप में रखता है; दोहरी झिल्ली व छिद्रों से घिरा।"],
@@ -7478,6 +7563,432 @@ function Mdialysis(){sd=101;const n=new Ne;Ge(n,{key:1.9});Je(n,-7.4,60,.08);Vt.
 Q_("ch5/dialysis3d",[["Urea leaves the blood in the dialyzer by…","डायलाइज़र में यूरिया रक्त से कैसे निकलता है?",["Diffusion through a semi-permeable membrane","Reabsorption in the tubules","Filtration in the glomerulus","Evaporation"],0,"Urea moves from the blood (high concentration) to the dialysing fluid (none) through the pores."],["Why does the dialysing fluid flow opposite to the blood?","डायलिसिस-द्रव रक्त के विपरीत क्यों बहता है?",["To keep the concentration gradient high along the whole fibre","To warm the blood","To push blood cells out","To stop the pump"],0,"Fresh fluid meets blood all along the way, so waste keeps diffusing out."],["Which of these stays inside the fibres?","इनमें से कौन तंतुओं के भीतर रहता है?",["Red blood cells","Urea","Extra potassium","Excess water only"],0,"Blood cells and big proteins cannot pass through the pores."],["Why is heparin added to the blood?","रक्त में हिपेरिन क्यों मिलाते हैं?",["To stop it clotting in the tubes","To make it red","To add oxygen","To remove urea"],0,"Heparin is an anticoagulant."],["The dialysing fluid is like blood plasma except that it has no…","डायलिसिस-द्रव रक्त-प्लाज़्मा जैसा होता है, केवल इसमें नहीं होता…",["Nitrogenous waste (urea)","Salts","Glucose","Water"],0,"It has normal levels of useful substances but no urea."],["The permanent solution to kidney failure is…","वृक्क-विफलता का स्थायी समाधान है…",["Kidney transplant","Drinking more water","A longer dialysis session","Eating less salt"],0,"Dialysis only replaces part of the kidney's work; a healthy transplanted kidney does all of it."]]);
 Px["ch5/dialysis3d"]=[["A dialysis session cleans the whole blood volume (about 5 litres) many times in about four hours, three times a week.","एक डायलिसिस सत्र में लगभग चार घंटे में पूरा रक्त (लगभग 5 लीटर) कई बार साफ़ होता है — सप्ताह में तीन बार।"],["The dialyzer is used once and thrown away; the dialysing fluid is made fresh from purified water each time.","डायलाइज़र एक बार ही उपयोग होता है; डायलिसिस-द्रव हर बार शुद्ध जल से ताज़ा बनाया जाता है।"],["Unlike a real kidney, dialysis has no reabsorption, so the fluid is made with the right salts and glucose already in it.","असली वृक्क के विपरीत, डायलिसिस में पुनरावशोषण नहीं होता, इसलिए द्रव में पहले से सही लवण व ग्लूकोज़ मिलाए जाते हैं।"]];
 {const Lq=Hi.find(h=>h.no===5).topics,i=Lq.findIndex(x=>x.id==="nephron3d");Lq.splice(i<0?Lq.length:i+1,0,{id:"dialysis3d",title:"Haemodialysis (artificial kidney) — ultra-realistic 3D",hi:"हीमोडायलिसिस (कृत्रिम वृक्क) — अति-यथार्थ 3D",build:Mdialysis,ncert:"Ch 5 · excretion · artificial kidney"})}
+
+/* ---------- Custom model set 10: Ultra-Realistic Class X Biology (Xylem/Phloem/Stomata, Brain, Plant Tropism, Endocrine Hormones, Evolution, Ecosystem & Ozone) ---------- */
+const paramUV=(nu,nv,f)=>{const P=new Float32Array((nu+1)*(nv+1)*3),U=new Float32Array((nu+1)*(nv+1)*2),I=[];
+ for(let i=0;i<=nu;i++)for(let j=0;j<=nv;j++){const u=i/nu,v=j/nv,p=f(u,v),k=i*(nv+1)+j;P[k*3]=p[0];P[k*3+1]=p[1];P[k*3+2]=p[2];U[k*2]=u;U[k*2+1]=v}
+ for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const a=i*(nv+1)+j,b=a+nv+1;I.push(a,b,a+1,b,b+1,a+1)}
+ const g=new zt;g.setAttribute("position",new dn(P,3));g.setAttribute("uv",new dn(U,2));g.setIndex(I);g.computeVertexNormals();return g};
+const mkTex=(w,h,fn)=>{const cv=document.createElement("canvas");cv.width=w;cv.height=h;fn(cv.getContext("2d"),w,h);const tx=new fi(cv);tx.needsUpdate=!0;return tx};
+const pathAt=(cur,q)=>cur.getPoint(cl(q,0,1));
+
+/* ============================== 1. TRANSPORT IN PLANTS & STOMATA (Ch 5) ============================== */
+const K_XY={
+ soil:["Soil & water film","मृदा व जल परत","Moist soil particles rich in mineral ions (NO₃⁻, K⁺, Mg²⁺) surround the root hairs.","खनिज आयनों (NO₃⁻, K⁺, Mg²⁺) से भरपूर नम मिट्टी के कण जड़-रोमों को घेरे रहते हैं।"],
+ roothair:["Root hair (epidermal cell)","मूल रोम (बाह्यत्वचा कोशिका)","Single-celled tubular outgrowth with huge surface area; water enters by osmosis and minerals by active transport.","एककोशिकीय नलिकाकार प्रवर्ध जो सतह बढ़ाता है; जल परासरण से और खनिज सक्रिय परिवहन से अंदर आते हैं।"],
+ cortex:["Root cortex & endodermis","जड़ कॉर्टेक्स व अंतस्त्वचा","Water moves cell-to-cell across the cortex into the central xylem cylinder (root pressure).","जल कॉर्टेक्स की कोशिकाओं से होता हुआ केंद्रीय जाइलम में पहुँचता है (मूल दाब)।"],
+ xylem:["Xylem vessels (lignified)","जाइलम वाहिकाएँ (लिग्निन युक्त)","Dead hollow tubes reinforced with spiral/annular lignin rings. Transpiration pull lifts water one way: roots → leaves.","मृत खोखली नलिकाएँ जिन पर लिग्निन के सर्पिल वलय होते हैं। वाष्पोत्सर्जन खिंचाव से जल एक दिशा में ऊपर जाता है।"],
+ phloem:["Phloem sieve tubes & companion cells","फ्लोएम चालनी नलिका व सहचर कोशिका","Living sieve-tube elements with perforated sieve plates + nucleated companion cells; translocate sucrose bidirectionally using ATP.","छिद्रिल चालनी पट्टिकाओं वाली जीवित चालनी नलिकाएँ व सहचर कोशिकाएँ; ATP से सुक्रोज़ को ऊपर-नीचे (द्विदिश) ले जाती हैं।"],
+ mesophyll:["Leaf mesophyll & chloroplasts","पर्णमध्योतक व हरितलवक","Palisade & spongy cells packed with green chloroplasts capture sunlight to make glucose (sucrose) by photosynthesis.","हरितलवक-युक्त पर्णमध्योतक कोशिकाएँ सूर्य-प्रकाश में प्रकाश-संश्लेषण से ग्लूकोज़ (सुक्रोज़) बनाती हैं।"],
+ guard:["Guard cells & stoma","रक्षक कोशिकाएँ व रंध्र","Bean-shaped cells flanking the stomatal pore. When K⁺ + water enter (turgid), they curve apart to open the stoma; when flaccid, it closes.","सेम के आकार की कोशिकाएँ जो रंध्र छिद्र को घेरती हैं। स्फीत होने पर रंध्र खुलता है और शिथिल होने पर बंद होता है।"]};
+const XY_ST=[
+["1","Root hairs absorb water & minerals","मूल रोम जल व खनिज सोखते हैं","Root hairs extend between soil grains. Water enters by osmosis (high to low water potential) while mineral ions are pumped in using ATP.","मूल रोम मिट्टी के कणों के बीच फैलते हैं। जल परासरण से और खनिज आयन ATP द्वारा अंदर जाते हैं।","Sculpted 3D · osmosis & active uptake",9],
+["2","Xylem: spiral-lignified water pipeline","जाइलम: लिग्निन-युक्त जल नली","Xylem vessels are dead hollow tubes strengthened by spiral lignin rings so they don't collapse under suction. Water moves strictly upward.","जाइलम वाहिकाएँ मृत खोखली नलियाँ हैं जिन्हें लिग्निन के वलय मज़बूती देते हैं; जल केवल ऊपर जाता है।","Sculpted 3D cut-away",10],
+["3","Phloem: living sieve tubes & companion cells","फ्लोएम: चालनी नलिका व सहचर कोशिका","Phloem has living sieve tubes with perforated sieve plates, powered by companion cells. Sucrose moves BOTH up (to buds/fruits) and down (to roots).","फ्लोएम की जीवित चालनी नलिकाओं में छिद्रिल पट्टिकाएँ होती हैं; सहचर कोशिकाओं के ATP से सुक्रोज़ ऊपर व नीचे दोनों ओर जाता है।","Animated bidirectional flow",10],
+["4","Leaf mesophyll: sugar factory","पर्णमध्योतक: शर्करा कारखाना","Sunlight hits palisade chloroplasts, converting CO₂ and water into sugar (loaded into phloem) and releasing oxygen through air spaces.","सूर्य-प्रकाश में हरितलवक CO₂ व जल से शर्करा बनाते हैं जो फ्लोएम में लोड होती है, और ऑक्सीजन बाहर निकलती है।","Sculpted leaf cross-section",9],
+["5","Guard cells & stomatal transpiration","रक्षक कोशिकाएँ व रंध्र वाष्पोत्सर्जन","In daylight, guard cells swell (turgid) and open the stoma. Water vapour escapes (transpiration), creating suction pull up the xylem.","दिन में रक्षक कोशिकाएँ फूलकर रंध्र खोलती हैं; जलवाष्प बाहर निकलने (वाष्पोत्सर्जन) से जाइलम में ऊपर खिंचाव बनता है।","Interactive Day / Night / Drought",10],
+["6","Day vs Night & Drought response","दिन बनाम रात व सूखा प्रतिक्रिया","Switch Day, Night, or Drought: at night or in water stress (ABA hormone), guard cells turn flaccid, closing stomata to save water.","दिन, रात या सूखा चुनिए: रात या जल-कमी (ABA हार्मोन) में रक्षक कोशिकाएँ शिथिल होकर रंध्र बंद कर लेती हैं।","Interactive control",9]];
+function Mxylem3d(){
+ sd=21;const n=new Ne;Ge(n,{key:1.95});Je(n,-5.4,24,.09);Vt.localClippingEnabled=!0;const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const plane=new Zt(c(0,0,-1),99);
+ const soilTex=mkTex(256,256,(q,w,h)=>{q.fillStyle="#3f2c1d";q.fillRect(0,0,w,h);for(let i=0;i<700;i++){q.fillStyle=i%3?"rgba(95,66,40,0.45)":"rgba(28,18,10,0.5)";q.beginPath();q.arc((i*73)%w,(i*137)%h,1.5+(i%4),0,TAU);q.fill()}});
+ const leafTex=mkTex(256,256,(q,w,h)=>{const gr=q.createLinearGradient(0,0,0,h);gr.addColorStop(0,"#2c7a36");gr.addColorStop(1,"#469e4a");q.fillStyle=gr;q.fillRect(0,0,w,h);q.strokeStyle="rgba(195,235,145,0.45)";q.lineWidth=3;q.beginPath();q.moveTo(w/2,0);q.lineTo(w/2,h);q.stroke();q.lineWidth=1.4;for(let k=1;k<10;k++){const y=k*h/10;q.beginPath();q.moveTo(w/2,y);q.lineTo(0,y-22);q.moveTo(w/2,y);q.lineTo(w,y-22);q.stroke()}});
+ /* Root & Soil bed */
+ const soilM=MAT(0xffffff,{map:soilTex,roughness:.92,clearcoat:0,bumpScale:.45,opacity:.65,depthWrite:!1});soilM.clippingPlanes=[plane];
+ add("soil",boxy(3.6,1.1,2.6,.18,.04,2),soilM,[0,-3.8,0],{ns:1});
+ const rootM=MAT(0xd9b88c,{roughness:.62,clearcoat:.15,bumpScale:.35,opacity:.82});rootM.clippingPlanes=[plane];
+ add("cortex",lathe([[.25,-2.6],[.95,-2.8],[.88,-4.1],[.5,-4.8],[.08,-5.1]],32),rootM,[0,0,0]);
+ const rhM=MAT(0xf2e4c4,{roughness:.45,clearcoat:.35,opacity:.95});
+ [[-1,.1],[-1,-.6],[1,.2],[1,-.5],[0,.95],[0,-.95],[-.8,.7],[.8,-.7]].forEach(([dx,dz],i)=>{const y=-3.2-(i%4)*.45;const l=Math.hypot(dx,dz)||1;
+  add("roothair",tube([c(dx*.75/l,y,dz*.75/l),c(dx*1.55/l,y-.15,dz*1.55/l),c(dx*2.45/l,y-.35,dz*2.45/l)],.085,10,u=>1-.5*u),rhM,[0,0,0],{ns:1})});
+ /* Stem outer bark / cortex (cut-away) */
+ const stemM=MAT(0x5b8f42,{roughness:.5,clearcoat:.3,sheen:.3,sheenC:0xb8e89a,opacity:.42,depthWrite:!1,bumpScale:.25});stemM.clippingPlanes=[plane];
+ add("cortex",lathe([[1.08,-2.6],[.98,0],[.92,2.4]],36),stemM,[0,0,0],{ns:1});
+ /* Sculpted Xylem vessels with spiral lignin ridges */
+ const xyM=MAT(0x2878c8,{roughness:.25,clearcoat:.75,opacity:.55,depthWrite:!1,emissive:0x0a2e5c,emissiveIntensity:.2});
+ const ligM=MAT(0xc79248,{roughness:.5,clearcoat:.4,opacity:.96});
+ [-0.36, -0.14].forEach((x0,k)=>{
+  add("xylem",tube([c(x0,-4.4,.08*k),c(x0,-1.5,0),c(x0,1.2,0),c(x0,2.75,.1)],.18,16),xyM,[0,0,0],{ns:1});
+  const sp=[];for(let i=0;i<=44;i++){const u=i/44,y=-2.6+u*5.1,a=u*TAU*7.5+k;sp.push(c(x0+cos(a)*.19,y,sin(a)*.19))}
+  add("xylem",tube(sp,.032,6),ligM,[0,0,0],{ns:1});
+ });
+ /* Sculpted Phloem sieve tubes + sieve plates + companion cells */
+ const phM=MAT(0xd99b26,{roughness:.3,clearcoat:.7,opacity:.55,depthWrite:!1,emissive:0x543604,emissiveIntensity:.2});
+ const spM=MAT(0xf5d67b,{roughness:.45,opacity:.95});
+ const compM=MAT(0x88b84c,{roughness:.4,clearcoat:.5,opacity:.95});
+ [0.22, 0.46].forEach((x0,k)=>{
+  add("phloem",tube([c(x0,-4.2,0),c(x0,-1.5,0),c(x0,1.2,0),c(x0,2.75,.08)],.15,16),phM,[0,0,0],{ns:1});
+  [-1.6, -.1, 1.4].forEach(yp=>{add("phloem",torus(.13,.028),spM,[x0,yp,0],{ns:1});add("phloem",sph(.1,.02,2,.6,2.2,.6,14,16),compM,[x0+.21,yp+.35,0],{ns:1})});
+ });
+ /* Sculpted Leaf Blade + Cross-Section + Mesophyll Chloroplasts + Animated Guard Cells */
+ const leafG=new J;leafG.position.set(0,2.85,0);g.add(leafG);
+ const leafTopM=MAT(0xffffff,{map:leafTex,roughness:.35,clearcoat:.65,sheen:.4,sheenC:0xa8f0a8,opacity:.88});leafTopM.clippingPlanes=[plane];
+ add("mesophyll",paramUV(28,28,(u,v)=>{const x=(u-.5)*5.6,z=(v-.5)*3.1,arch=.35*cos(x*.42)-.12*(z*z);return[x,.38+arch,z*(1-.18*Math.abs(u-.5))]}),leafTopM,[0,0,0],{parent:leafG,ns:1});
+ const chlM=MAT(0x2eb840,{roughness:.3,clearcoat:.75,emissive:0x0a4a16,emissiveIntensity:.25});
+ for(let i=0;i<18;i++){const x=(i%6-2.5)*.78,z=((i/6|0)-1)*.65;add("mesophyll",sph(.18,.04,2,1.3,.7,.7,14,16,i),chlM,[x,.08+.12*cos(x*.4),z],{parent:leafG,ns:1})}
+ /* Guard cell pair on underside of leaf */
+ const guardG=new J;guardG.position.set(0,-.28,.95);leafG.add(guardG);
+ const gcM=MAT(0x5bd44e,{roughness:.28,clearcoat:.8,sheen:.4,emissive:0x104a10,emissiveIntensity:.25});
+ const gcL=add("guard",tube([c(-.16,0,-.45),c(-.32,0,0),c(-.16,0,.45)],.14,14,u=>.55+.55*sin(u*PI)),gcM,[0,0,0],{parent:guardG,ns:1});
+ const gcR=add("guard",tube([c(.16,0,-.45),c(.32,0,0),c(.16,0,.45)],.14,14,u=>.55+.55*sin(u*PI)),gcM,[0,0,0],{parent:guardG,ns:1});
+ /* Animated particles: H2O (blue, up xylem), Sucrose (gold, bidirectional phloem), Vapour/O2 (cyan, out stoma) */
+ const NW=42,wat=new Wn(new it(.065,8,6),new bt({color:0x4fc3ff}),NW);wat.frustumCulled=!1;g.add(wat);
+ const NS=30,suc=new Wn(new it(.065,8,6),new bt({color:0xffd54f}),NS);suc.frustumCulled=!1;g.add(suc);
+ const NV=24,vap=new Wn(new it(.055,8,6),new bt({color:0xa8f5ff}),NV);vap.frustumCulled=!1;guardG.add(vap);
+ const m4=new gt;let mode=0; // 0=day, 1=night, 2=drought
+ const cams=[[c(0,.4,12.5),c(0,-.3,0)],[c(0,-3.4,7.5),c(0,-3.6,0)],[c(0,.3,6.8),c(0,.2,0)],[c(0,.3,6.8),c(0,.2,0)],[c(0,3.2,6.2),c(0,2.8,.4)],[c(0,1.4,6.4),c(0,2.4,.9)]];
+ const camK=["Whole plant","Root hairs","Xylem","Phloem","Leaf & stoma","Guard cells"];
+ const show={soil:[1,0,0,0,0,0],roothair:[1,0,0,0,0,0],cortex:[1,1,1,0,0,0],xylem:[1,1,1,0,1,1],phloem:[0,0,1,1,0,0],mesophyll:[0,0,0,1,1,1],guard:[0,0,0,0,1,1]};
+ const base={soil:.65,roothair:.95,cortex:.6,xylem:.9,phloem:.9,mesophyll:.9,guard:1};
+ const L=p=>()=>c(...p);
+ const labels=[["x-rh","Root hair (osmosis)","मूल रोम (परासरण)",L([-1.9,-3.3,0]),[0]],["x-so","Soil water + minerals","मृदा जल + खनिज",L([1.5,-4.1,.8]),[0]],
+  ["x-xy","Xylem (water ↑, lignified)","जाइलम (जल ↑, लिग्निन)",L([-1.1,.4,.3]),[1,2,4]],["x-ph","Phloem (sucrose ↕, living)","फ्लोएम (सुक्रोज़ ↕, जीवित)",L([1.1,.2,.3]),[2,3]],
+  ["x-me","Mesophyll + chloroplasts","पर्णमध्योतक + हरितलवक",L([-1.6,3.2,.4]),[3]],["x-gc","Guard cells & stoma","रक्षक कोशिकाएँ व रंध्र",L([0,2.3,1.2]),[4,5]]];
+ return run({kinds:K_XY,n,g,org,show,base,ST:XY_ST,cams,camK,labels,plane,cutAt:.05,
+  tools2:[{label:"☀ Day (Open)",group:"env",on:!0,act:()=>{mode=0}},{label:"🌙 Night (Closed)",group:"env",act:()=>{mode=1}},{label:"🌵 Drought (ABA)",group:"env",act:()=>{mode=2}}],
+  hud:()=>mode===0?"Daylight: Guard cells turgid → Stoma OPEN → High transpiration pull":mode===1?"Night: K⁺ exits guard cells → Stoma CLOSED → Minimal transpiration":"Drought (ABA): Stoma sealed to conserve water; Phloem keeps translocating",
+  frame:(s,t)=>{
+   const open=mode===0?1:0;const spd=mode===0?1:mode===1?.18:.08;
+   gcL.position.x=lerp(-.02,-.15,open);gcR.position.x=lerp(.02,.15,open);
+   for(let i=0;i<NW;i++){const f=((i/NW)+t*.18*spd)%1;const x0=i%2?-.36:-.14;
+    let x=x0,y=-4.4+f*7.2,z=0;if(f<.18){const q=f/.18;x=lerp(i%2?-2.1:2.1,x0,q);y=lerp(-3.5,-3.2,q)}
+    m4.makeScale(1,1,1);m4.setPosition(x,y,z);wat.setMatrixAt(i,m4)}wat.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<NS;i++){const down=i%2===0,f=((i/NS)+t*.14)%1,q=down?1-f:f;
+    m4.makeScale(1,1,1);m4.setPosition(i%3===0?.46:.22,-4.0+q*6.7,0);suc.setMatrixAt(i,m4)}suc.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<NV;i++){if(!open&&s<4){m4.makeScale(0,0,0)}else{const f=((i/NV)+t*.28*(open?1:.15))%1,a=i*2.1;
+    m4.makeScale(open?1:.25,open?1:.25,open?1:.25);m4.setPosition(cos(a)*.12*f,-f*1.4,sin(a)*.12*f+.15*f)}vap.setMatrixAt(i,m4)}vap.instanceMatrix.needsUpdate=!0},
+  predict:{q:"How does water reach the top of a tall tree through xylem?",opts:[["Active pumping by xylem cells",!1,"Xylem vessels are dead cells without cytoplasm."],["Transpiration pull + root pressure",!0,"Correct — evaporation from stomata pulls the continuous water column upward."],["Pushed down by phloem",!1,"Phloem carries dissolved sugars, not the main water stream."]]}})}
+Q_("ch5/xylem3d",[["Which plant tissue transports water and minerals upward?","पौधों में जल व खनिजों का ऊर्ध्व परिवहन कौन-सा ऊतक करता है?",["Xylem","Phloem","Parenchyma","Epidermis"],0,"Xylem vessels carry water and minerals one way from roots to leaves."],["Translocation of food in phloem requires…","फ्लोएम में भोजन के स्थानांतरण में क्या लगता है?",["Energy (ATP)","Sunlight directly","Chlorophyll","Lignin rings"],0,"Living sieve tubes use ATP from companion cells for bidirectional translocation."],["Guard cells open the stoma when they become…","रक्षक कोशिकाएँ रंध्र कब खोलती हैं?",["Turgid (full of water)","Flaccid","Dead","Plasmolysed"],0,"Water enters guard cells, making them swell and curve apart."]]);
+Px["ch5/xylem3d"]=[["Giant redwood trees over 100 m tall lift water purely by transpiration pull and water cohesion — without any mechanical pump!","100 मीटर से ऊँचे विशाल वृक्ष बिना किसी पंप के वाष्पोत्सर्जन खिंचाव से जल ऊपर खींचते हैं।"],["During drought, abscisic acid (ABA) signals guard cells to close stomata so the plant doesn't wilt.","सूखे में एब्सिसिक अम्ल (ABA) रक्षक कोशिकाओं को रंध्र बंद करने का संकेत देता है।"]];
+{const Lx=Hi.find(h=>h.no===5).topics,i=Lx.findIndex(x=>x.id==="xylem");Lx.splice(i<0?Lx.length:i+1,0,{id:"xylem3d",title:"Plant transport & stomata — ultra-realistic 3D",hi:"पादप परिवहन व रंध्र — अति-यथार्थ 3D",build:Mxylem3d,ncert:"Ch 5 · transportation in plants"})}
+
+/* ============================== 2. HUMAN BRAIN & CRANIUM (Ch 6) ============================== */
+const K_BR={
+ frontal:["Frontal lobe (Fore-brain)","ललाट खंड (अग्र-मस्तिष्क)","Controls voluntary muscle movement, reasoning, speech, planning, and decision-making.","ऐच्छिक पेशी गति, तर्क, वाणी, योजना व निर्णय लेने का नियंत्रण करता है।"],
+ parietal:["Parietal lobe (Fore-brain)","भित्तीय खंड (अग्र-मस्तिष्क)","Processes touch, temperature, pain, pressure, and spatial awareness.","स्पर्श, ताप, दर्द, दाब व स्थानिक बोध की सूचना संसाधित करता है।"],
+ temporal:["Temporal lobe (Fore-brain)","शंख खंड (अग्र-मस्तिष्क)","Processes hearing (auditory cortex), language comprehension, and memory.","श्रवण, भाषा समझ व स्मृति का केंद्र है।"],
+ occipital:["Occipital lobe (Fore-brain)","पश्चकपाल खंड (अग्र-मस्तिष्क)","Visual cortex at the back of the brain — decodes signals from the optic nerve.","मस्तिष्क के पीछे स्थित दृष्टि क्षेत्र — दृक् तंत्रिका के संकेतों को पढ़ता है।"],
+ corpus:["Corpus callosum","कॉर्पस कैलोसम","Thick white-matter nerve bridge linking left and right cerebral hemispheres.","बाएँ और दाएँ प्रमस्तिष्क गोलार्धों को जोड़ने वाला श्वेत तंत्रिका-पुल।"],
+ thalamus:["Thalamus & Hypothalamus","थैलेमस व हाइपोथैलेमस","Relay station for senses + master regulator of body temperature, hunger, thirst, and pituitary hormones.","संवेदनाओं का रिले केंद्र तथा ताप, भूख, प्यास व पीयूष ग्रंथि का नियामक।"],
+ cerebellum:["Cerebellum (Hind-brain)","अनुमस्तिष्क (पश्च-मस्तिष्क)","Coordinates smooth voluntary movement, posture, and balance; shows branched white matter ('arbor vitae').","ऐच्छिक गतियों का समन्वय, मुद्रा व संतुलन बनाए रखता है; भीतर वृक्ष-समान श्वेत पदार्थ दिखता है।"],
+ pons:["Pons & Medulla (Brainstem)","पोन्स व मेडुला (मस्तिष्क स्तंभ)","Medulla controls involuntary vital actions: heartbeat, breathing rate, blood pressure, swallowing, and vomiting.","मेडुला अनैच्छिक जीवन-क्रियाएँ जैसे हृदय-धड़कन, श्वसन, रक्तचाप व निगलना नियंत्रित करता है।"],
+ cranium:["Skull & Meninges (CSF)","खोपड़ी व मस्तिष्कावरण (CSF)","Bony cranium, three protective meninges, and cerebrospinal fluid cushion the brain against shocks.","अस्थिल खोपड़ी, तीन सुरक्षात्मक झिल्लियाँ व CSF तरल मस्तिष्क को आघात से बचाते हैं।"]};
+const BR_ST=[
+["1","The protected human brain","सुरक्षित मानव मस्तिष्क","Inside the bony skull, three membranes (meninges) and cerebrospinal fluid cushion the ~1.4 kg brain.","खोपड़ी के भीतर तीन झिल्लियाँ (मस्तिष्कावरण) व प्रमस्तिष्कीय द्रव ~1.4 kg मस्तिष्क की रक्षा करते हैं।","Sculpted 3D cranium + gyri",8],
+["2","Fore-brain: Cerebral hemispheres & gyri","अग्र-मस्तिष्क: प्रमस्तिष्क व वलन","Deep folds (gyri & sulci) pack vast surface area of grey-matter neurons into the skull for thinking, memory, and voluntary control.","गहरे वलन (गायरी व सल्काई) खोपड़ी में अत्यधिक सतह क्षेत्र समाहित करते हैं — सोच, स्मृति व ऐच्छिक क्रियाओं हेतु।","Procedural vascular cortex",9],
+["3","Four specialised lobes","चार विशिष्ट खंड","Frontal (thinking/motor), Parietal (touch), Temporal (hearing/memory), and Occipital (vision) divide labour across the cortex.","ललाट (विचार/गति), भित्तीय (स्पर्श), शंख (श्रवण/स्मृति) व पश्चकपाल (दृष्टि) खंड कार्य बाँटते हैं।","Toggle Functional Lobes",10],
+["4","Cut open: Corpus callosum & hypothalamus","काटकर देखें: कॉर्पस कैलोसम व हाइपोथैलेमस","Sagittal cut-away exposes the C-shaped corpus callosum linking hemispheres, plus thalamus, hypothalamus, and pituitary.","अनुदैर्ध्य काट में गोलार्धों को जोड़ता कॉर्पस कैलोसम, थैलेमस, हाइपोथैलेमस व पीयूष ग्रंथि दिखती हैं।","✂ Cut-away view",10],
+["5","Hind-brain: Cerebellum & balance","पश्च-मस्तिष्क: अनुमस्तिष्क व संतुलन","Behind the pons sits the finely folded cerebellum. Its tree-like white matter (arbor vitae) coordinates posture and precision movement.","पोन्स के पीछे बारीक वलन वाला अनुमस्तिष्क मुद्रा, संतुलन व सटीक गति का समन्वय करता है।","Sculpted folia & arbor vitae",9],
+["6","Brainstem: Medulla & involuntary control","मस्तिष्क स्तंभ: मेडुला व अनैच्छिक नियंत्रण","The medulla oblongata regulates heartbeat, breathing, and reflexes continuously, connecting down into the spinal cord.","मेडुला ऑब्लांगेटा हृदय-धड़कन, श्वसन व प्रतिवर्त को निरंतर नियंत्रित कर मेरुरज्जु से जुड़ता है।","Animated vital pulses",9]];
+function Mbrain3d(){
+ sd=33;const n=new Ne;Ge(n,{key:1.95});Je(n,-3.6,18,.09);Vt.localClippingEnabled=!0;const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const plane=new Zt(c(-1,0,0),99);
+ const cortTex=mkTex(256,256,(q,w,h)=>{q.fillStyle="#e7b2a6";q.fillRect(0,0,w,h);for(let k=0;k<34;k++){q.strokeStyle=k%3?"rgba(155,48,48,0.28)":"rgba(110,32,32,0.22)";q.lineWidth=1.5;q.beginPath();let x=(k*43)%w,y=(k*71)%h;q.moveTo(x,y);for(let s=0;s<6;s++){x+=sin(k+s)*28;y+=cos(k*2+s)*24;q.lineTo(x,y)}q.stroke()}});
+ const folTex=mkTex(256,256,(q,w,h)=>{q.fillStyle="#c9857d";q.fillRect(0,0,w,h);for(let y=0;y<h;y+=9){q.strokeStyle="rgba(85,28,28,0.45)";q.lineWidth=2.5;q.beginPath();q.moveTo(0,y);q.lineTo(w,y);q.stroke()}});
+ const lobeCols={frontal:0xe89c8a,parietal:0xd6a678,temporal:0x8eb8d6,occipital:0xa996d4};
+ let lobeView=0;
+ const mkCortexMat=(col)=>MAT(0xffffff,{map:cortTex,color:col,roughness:.48,clearcoat:.55,clearcoatRoughness:.25,sheen:.35,sheenC:0xffd8d8,bumpScale:.45,opacity:.96});
+ const hemis=[[-1],[1]];const lobeMeshes=[];
+ /* Sculpted cerebral hemispheres split into 4 anatomical lobes with gyri/sulci folds */
+ const mkLobe=(id,side,u0,u1,v0,v1,col)=>{
+  const geo=paramUV(22,22,(u,v)=>{const th=lerp(u0,u1,u)*PI,ph=lerp(v0,v1,v)*PI;
+   const x0=sin(th)*sin(ph)*side,y0=cos(th),z0=sin(th)*cos(ph);
+   const fold=.065*(sin(x0*16+z0*11)+cos(y0*15-z0*12))+.07*(fbm(x0*5,y0*5,z0*5)-.5);
+   const r=1.82+fold;const x=x0*r*.78+side*.12,y=y0*r*.84+.45,z=z0*r*1.12;return[x,y,z]});
+  const m=add(id,geo,mkCortexMat(0xefc0b5),[0,0,0]);m.material.clippingPlanes=side>0?[plane]:null;lobeMeshes.push({m,id,col});return m};
+ hemis.forEach(([sd_])=>{
+  mkLobe("frontal",sd_,.14,.62,.05,.48,lobeCols.frontal);
+  mkLobe("parietal",sd_,.12,.52,.48,.82,lobeCols.parietal);
+  mkLobe("temporal",sd_,.52,.86,.32,.76,lobeCols.temporal);
+  mkLobe("occipital",sd_,.44,.84,.76,.98,lobeCols.occipital);
+ });
+ /* Internal white matter, Corpus Callosum, Thalamus, Hypothalamus & Pituitary */
+ add("corpus",tube([c(0,.42,.78),c(0,.82,.42),c(0,.88,-.15),c(0,.52,-.72)],.24,14,u=>.75+.3*sin(u*PI)),MAT(0xf8efe0,{roughness:.38,clearcoat:.5,opacity:1}),[0,0,0]);
+ add("thalamus",sph(.42,.04,2,1.15,.85,1.25,24,32,2),MAT(0xd99278,{roughness:.45,clearcoat:.5}),[0,.25,-.1]);
+ add("thalamus",sph(.22,.03,2,1,1.1,.9,18,22,4),MAT(0xe8a85a,{roughness:.4,clearcoat:.6,emissive:0x5a2800,emissiveIntensity:.25}),[0,-.32,.38]); /* pituitary */
+ /* Cerebellum with foliated texture */
+ const cblM=MAT(0xffffff,{map:folTex,color:0xd89c94,roughness:.5,clearcoat:.4,bumpScale:.4,opacity:.96});
+ [-.62,.62].forEach(sx=>{const cm=add("cerebellum",sph(.68,.04,3,1,.88,1.02,28,36,sx),cblM,[sx,-.92,-1.15]);if(sx>0)cm.material.clippingPlanes=[plane]});
+ /* Pons, Medulla & Spinal cord */
+ add("pons",sph(.52,.03,2,1.1,.95,1.0,24,28),MAT(0xf0ded0,{roughness:.45,clearcoat:.45}),[0,-.82,-.22]);
+ add("pons",tube([c(0,-1.15,-.32),c(0,-1.95,-.52),c(0,-2.95,-.68)],.3,16,u=>1-.32*u),MAT(0xede0d0,{roughness:.45,clearcoat:.4}),[0,0,0]);
+ /* Translucent Cranium / Meninges dome */
+ const skullM=MAT(0xdfe8f5,{roughness:.12,clearcoat:1,transmission:.65,ior:1.4,thickness:.4,opacity:.22,depthWrite:!1});skullM.clippingPlanes=[plane];
+ add("cranium",sph(2.22,.02,1.5,.86,.94,1.2,40,56),skullM,[0,.38,-.06],{ns:1});
+ /* Animated synaptic cortical impulses */
+ const NI=36,imp=new Wn(new it(.055,8,6),new bt({color:0xffe66d}),NI);imp.frustumCulled=!1;g.add(imp);const m4=new gt;
+ const cams=[[c(5.4,1.5,5.8),c(0,.1,0)],[c(0,1.6,7.6),c(0,.1,0)],[c(6.2,1.0,1.2),c(0,.1,0)],[c(6.0,.5,1.8),c(0,0,0)],[c(4.2,-1.4,-5.4),c(0,-.8,-.8)],[c(4.4,-1.8,3.6),c(0,-1.4,-.3)]];
+ const camK=["3/4 View","Front","Side","Cut-away","Cerebellum","Brainstem"];
+ const show={frontal:[1,1,1,1,0,0],parietal:[1,1,1,1,0,0],temporal:[1,1,1,1,0,0],occipital:[1,1,1,1,0,0],corpus:[0,0,0,1,0,0],thalamus:[0,0,0,1,0,0],cerebellum:[1,0,0,1,1,0],pons:[1,0,0,1,0,1],cranium:[1,0,0,0,0,0]};
+ const base={frontal:.96,parietal:.96,temporal:.96,occipital:.96,corpus:1,thalamus:1,cerebellum:.96,pons:1,cranium:.22};
+ const L=p=>()=>c(...p);
+ const labels=[["b-fr","Frontal lobe (thinking/motor)","ललाट खंड (विचार/गति)",L([0,1.4,1.5]),[1,2]],["b-pa","Parietal lobe (touch)","भित्तीय खंड (स्पर्श)",L([0,2.0,-.2]),[2]],
+  ["b-te","Temporal lobe (hearing)","शंख खंड (श्रवण)",L([1.5,.2,.2]),[2]],["b-oc","Occipital lobe (vision)","पश्चकपाल खंड (दृष्टि)",L([0,.6,-2.0]),[2]],
+  ["b-cc","Corpus callosum","कॉर्पस कैलोसम",L([0,.95,.1]),[3]],["b-th","Thalamus & Pituitary","थैलेमस व पीयूष",L([0,-.2,.4]),[3]],
+  ["b-cb","Cerebellum (balance)","अनुमस्तिष्क (संतुलन)",L([.8,-1.0,-1.5]),[4]],["b-md","Medulla (heartbeat/breathing)","मेडुला (धड़कन/श्वसन)",L([0,-1.7,-.4]),[5]],
+  ["b-sk","Cranium & Meninges (CSF)","खोपड़ी व मस्तिष्कावरण",L([0,2.3,1.0]),[0]]];
+ return run({kinds:K_BR,n,g,org,show,base,ST:BR_ST,cams,camK,labels,plane,cutAt:.02,
+  tools2:[{label:"🎨 Functional lobes",toggle:()=>(lobeView=lobeView?0:1,lobeMeshes.forEach(x=>x.m.material.color.setHex(lobeView?x.col:0xefc0b5)),!!lobeView)}],
+  frame:(s,t)=>{for(let i=0;i<NI;i++){const a=i*2.39996+t*.8,r=1.35+.2*sin(t*2+i);m4.makeScale(1,1,1);m4.setPosition(cos(a)*r*.75,.55+sin(a*1.3)*.75,sin(a)*r*1.05);imp.setMatrixAt(i,m4)}imp.instanceMatrix.needsUpdate=!0},
+  predict:{q:"Which part of the brain maintains posture and balance while riding a bicycle?",opts:[["Medulla",!1,"Medulla controls involuntary breathing and heartbeat."],["Cerebellum",!0,"Correct — the cerebellum coordinates posture, balance, and precision movement."],["Olfactory lobe",!1,"Olfactory lobes process smell."]]}})}
+Q_("ch6/brain3d",[["Which is the main thinking part of the human brain?","मानव मस्तिष्क का मुख्य सोचने वाला भाग कौन-सा है?",["Fore-brain (Cerebrum)","Cerebellum","Medulla","Pons"],0,"The cerebrum handles thought, memory, reasoning, and voluntary actions."],["Involuntary actions like blood pressure, salivation, and vomiting are controlled by…","रक्तचाप, लार आना व उल्टी जैसी अनैच्छिक क्रियाएँ नियंत्रित होती हैं…",["Medulla in hind-brain","Frontal lobe","Cerebellum","Corpus callosum"],0,"The medulla oblongata regulates vital involuntary functions."],["What protects the brain inside the skull besides bone?","खोपड़ी के भीतर अस्थि के अलावा मस्तिष्क की रक्षा कौन करता है?",["Meninges and cerebrospinal fluid","Synovial fluid","Pleural fluid","Pericardial fluid"],0,"Three meninges and CSF act as a fluid shock-absorber."]]);
+Px["ch6/brain3d"]=[["Although the brain is only ~2% of body weight, it uses ~20% of the body's oxygen and glucose!","यद्यपि मस्तिष्क शरीर के भार का केवल ~2% है, यह ~20% ऑक्सीजन और ग्लूकोज़ उपयोग करता है।"],["The folded cortex (gyri & sulci) gives ~2,400 cm² of surface area — about the size of a pillowcase.","मस्तिष्क के वलन लगभग 2,400 cm² सतह क्षेत्र देते हैं।"]];
+{const Lb_=Hi.find(h=>h.no===6).topics,i=Lb_.findIndex(x=>x.id==="brain");Lb_.splice(i<0?Lb_.length:i+1,0,{id:"brain3d",title:"Human brain & lobes — ultra-realistic 3D",hi:"मानव मस्तिष्क व खंड — अति-यथार्थ 3D",build:Mbrain3d,ncert:"Ch 6 · human brain"})}
+
+/* ============================== 3. PLANT COORDINATION: AUXIN & MIMOSA (Ch 6) ============================== */
+const K_PL={
+ shoot:["Shoot apex (meristem)","प्ररोह शीर्ष (विभज्योतक)","Tip of the stem produces the plant hormone Auxin (IAA), which diffuses downward.","तने का शीर्ष पादप हार्मोन ऑक्सिन (IAA) बनाता है जो नीचे विसरित होता है।"],
+ auxin:["Auxin (IAA) hormone","ऑक्सिन (IAA) हार्मोन","Collects on the shaded side of the stem, causing shaded cells to elongate faster → stem bends toward light!","तने के छाया वाले हिस्से में जमा होकर कोशिकाओं को लंबा करता है → तना प्रकाश की ओर मुड़ता है!"],
+ root:["Primary & lateral roots","मुख्य व पार्श्व जड़ें","Show positive geotropism (grow downward toward gravity) and hydrotropism (toward moisture).","धनात्मक गुरुत्वानुवर्तन (नीचे गुरुत्व की ओर) व जलानुवर्तन (नमी की ओर) दर्शाती हैं।"],
+ mimosa:["Mimosa pudica (Touch-me-not)","छुई-मुई (लाजवंती)","Touching leaflets triggers an electrical/chemical signal; water rushes out of the pulvinus base, folding the leaves instantaneously (thigmonasty).","पत्ती छूते ही पर्णवृंत-फुलाव (पल्विनस) से जल निकलने के कारण पत्तियाँ तुरंत मुड़ जाती हैं (स्पर्शानुंचन)।"]};
+const PL_ST=[
+["1","How plants coordinate without nerves","बिना तंत्रिकाओं के पादप समन्वय","Plants use chemical hormones (like Auxin) and turgor-pressure shifts instead of nerves to respond to light, gravity, and touch.","पौधे तंत्रिकाओं के बिना ऑक्सिन जैसे हार्मोन और स्फीति-दाब परिवर्तन से प्रकाश, गुरुत्व व स्पर्श पर प्रतिक्रिया देते हैं।","Sculpted potted seedling + Mimosa",8],
+["2","Phototropism: Light from Left","प्रकाशानुवर्तन: बायाँ प्रकाश","When sunlight shines from one side, auxin migrates to the shaded side and stimulates faster cell elongation there, bending the shoot toward light.","एक ओर से प्रकाश पड़ने पर ऑक्सिन छाया वाली ओर जाता है, जिससे वह ओर तेज़ी से बढ़ती है और तना प्रकाश की ओर मुड़ता है।","Animated auxin migration",10],
+["3","Phototropism: Light from Right","प्रकाशानुवर्तन: दायाँ प्रकाश","Move the sun to the right: auxin shifts to the left (shaded) side, reversing the bend!","सूर्य को दाईं ओर ले जाएँ: ऑक्सिन बाईं ओर खिसक जाता है और तना दाईं ओर मुड़ जाता है!","Interactive Sun toggle",10],
+["4","Geotropism: Tilted pot response","गुरुत्वानुवर्तन: झुका गमला","Lay the pot on its side: auxin pools on the lower side. In the shoot it stimulates upward growth (−ve geotropism); in roots it inhibits lower cells so roots curve down (+ve geotropism).","गमला तिरछा करने पर निचली ओर जमा ऑक्सिन प्ररोह को ऊपर (ऋणात्मक) और जड़ को नीचे (धनात्मक गुरुत्वानुवर्तन) मोड़ता है।","Interactive Tilt toggle",11],
+["5","Thigmonasty: Mimosa pudica touch response","स्पर्शानुंचन: छुई-मुई की प्रतिक्रिया","Unlike slow tropic growth, Mimosa folds its leaflets within seconds by rapidly pumping water out of swollen pulvinus cells — a growth-independent movement.","धीमी वृद्धि गति के विपरीत, छुई-मुई स्पर्श पर पल्विनस से जल बाहर निकालकर सेकंडों में पत्तियाँ बंद कर लेती है (वृद्धि-रहित गति)।","Interactive Touch Mimosa",10]];
+function Mplants3d(){
+ sd=44;const n=new Ne;Ge(n,{key:1.95});Je(n,-3.2,18,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const leafTex=mkTex(128,256,(q,w,h)=>{q.fillStyle="#3a9844";q.fillRect(0,0,w,h);q.strokeStyle="rgba(210,245,165,0.5)";q.lineWidth=3;q.beginPath();q.moveTo(w/2,h);q.lineTo(w/2,0);q.stroke()});
+ const potG=new J;g.add(potG);
+ add("root",lathe([[.95,-2.9],[1.22,-1.5],[1.32,-1.3],[1.22,-1.3],[1.1,-1.5],[.88,-2.85],[0,-2.85]],32),MAT(0xb85c38,{roughness:.68,clearcoat:.1,bumpScale:.4}),[0,0,0],{parent:potG});
+ add("root",lathe([[0,-1.55],[1.14,-1.55],[1.14,-1.45],[0,-1.45]],28),MAT(0x47311f,{roughness:.92,bumpScale:.5}),[0,0,0],{parent:potG});
+ const rootM=MAT(0xe6d4aa,{roughness:.6,clearcoat:.2});
+ const rtMain=add("root",tube([c(0,-1.5,0),c(0,-2.1,0),c(.12,-2.65,.08)],.09,10,u=>1-.6*u),rootM,[0,0,0],{parent:potG});
+ [[-.45,-.3],[.45,.25],[.2,-.4]].forEach(d=>add("root",tube([c(0,-1.85,0),c(d[0],-2.3,d[1])],.05,8,u=>1-.6*u),rootM,[0,0,0],{parent:potG}));
+ /* Segmented bendable shoot */
+ const NSEG=10,segs=[],segM=MAT(0x52a848,{roughness:.35,clearcoat:.55,sheen:.3,sheenC:0xb8f4a0});
+ let par=potG;
+ for(let i=0;i<NSEG;i++){const j=new J;j.position.set(0,i===0?-1.5:.32,0);par.add(j);add("shoot",tube([c(0,0,0),c(0,.34,0)],.12-.006*i,12),segM,[0,0,0],{parent:j});segs.push(j);par=j}
+ /* Leaves on top of shoot */
+ const leafGeo=paramUV(14,14,(u,v)=>{const x=u*1.2,w=.42*sin(u*PI);return[x,.06*sin(u*PI),(v-.5)*2*w]});
+ const leafM=MAT(0xffffff,{map:leafTex,roughness:.35,clearcoat:.6,sheen:.4,sheenC:0xc0f8b0});
+ add("shoot",leafGeo,leafM,[0,.2,0],{parent:par,rot:[0,0,.35]});
+ add("shoot",leafGeo,leafM,[0,.2,0],{parent:par,rot:[0,PI,.35]});
+ add("shoot",sph(.12,.02,2,1,1.3,1,14,16),MAT(0xa6e86b,{emissive:0x2e6a10,emissiveIntensity:.35}),[0,.36,0],{parent:par});
+ /* Sun sphere */
+ const sun=add("auxin",sph(.45,0,1,1,1,1,20,24),new bt({color:0xffe46b}),[-3.4,2.8,0],{ns:1});
+ /* Mimosa pudica compound branch */
+ const mimG=new J;mimG.position.set(3.2,-.9,0);g.add(mimG);
+ add("mimosa",tube([c(-1.2,-.5,0),c(0,0,0),c(1.3,.3,0)],.07,10,u=>1-.4*u),segM,[0,0,0],{parent:mimG});
+ const leaflets=[];
+ for(let i=0;i<6;i++){const x=-.3+i*.28,y=.06+i*.06;
+  [-1,1].forEach(sd_=>{const lf=new J;lf.position.set(x,y,0);mimG.add(lf);
+   add("mimosa",sph(.065,0,1,1,1,1,10,12),MAT(0x98e06c,{emissive:0x2a5a10,emissiveIntensity:.3}),[0,0,sd_*.06],{parent:lf});
+   add("mimosa",paramUV(10,10,(u,v)=>[u*.14,.01,(v-.5)*.22*sin(u*PI)+sd_*.24]),leafM,[0,0,0],{parent:lf,rot:[0,sd_*-.35,0]});
+   leaflets.push({lf,sd:sd_})})}
+ /* Auxin IAA glowing dots */
+ const NA=28,aux=new Wn(new it(.055,8,6),new bt({color:0xffcf40}),NA);aux.frustumCulled=!1;potG.add(aux);const m4=new gt;
+ let pMode=0,touched=0; // pMode: 0=left sun, 1=right sun, 2=tilted geo
+ const cams=[[c(0,1.1,10.5),c(.6,.1,0)],[c(0,1.2,9.2),c(-.5,.2,0)],[c(0,1.2,9.2),c(.5,.2,0)],[c(0,.8,9.8),c(0,-.4,0)],[c(3.2,1.1,6.0),c(3.2,-.6,0)]];
+ const camK=["Overview","Light Left","Light Right","Geotropism","Mimosa"];
+ const show={root:[1,1,1,1,0],shoot:[1,1,1,1,0],auxin:[1,1,1,1,0],mimosa:[1,0,0,0,1]};
+ const base={root:1,shoot:1,auxin:1,mimosa:1};
+ const L=p=>()=>c(...p);
+ const labels=[["p-ap","Shoot tip (makes Auxin)","प्ररोह शीर्ष (ऑक्सिन निर्माण)",L([0,1.7,0]),[0,1,2]],["p-au","Auxin on shaded side","छाया ओर ऑक्सिन",L([.6,.5,0]),[1,2,3]],
+  ["p-rt","Root (+ve geotropism)","जड़ (धनात्मक गुरुत्वानुवर्तन)",L([0,-2.2,0]),[3]],["p-mi","Mimosa pulvinus (thigmonasty)","छुई-मुई पल्विनस (स्पर्शानुंचन)",L([3.2,-.4,0]),[4]]];
+ return run({kinds:K_PL,n,g,org,show,base,ST:PL_ST,cams,camK,labels,
+  tools2:[
+   {label:"☀ Light Left",group:"pl",on:!0,act:()=>{pMode=0}},{label:"☀ Light Right",group:"pl",act:()=>{pMode=1}},
+   {label:"🌍 Tilt Pot (Geo)",group:"pl",act:()=>{pMode=2}},{label:"👆 Touch Mimosa",toggle:()=>(touched=touched?0:1,!!touched)}],
+  frame:(s,t)=>{
+   const eff=(s===2)?1:(s===3)?2:pMode;
+   sun.position.x=eff===1?3.4:eff===2?0:-3.4;sun.visible=eff<2;
+   potG.rotation.z=lerp(potG.rotation.z,eff===2?-1.38:0,.08);
+   const bend=eff===0?.065:eff===1?-.065:.14;
+   segs.forEach(sg=>{sg.rotation.z=lerp(sg.rotation.z,bend,.08)});
+   rtMain.rotation.z=lerp(rtMain.rotation.z,eff===2?.65:0,.08);
+   const fold=(touched||s===4*(sin(t*.7)>0))?1:0;
+   leaflets.forEach(x=>{x.lf.rotation.x=lerp(x.lf.rotation.x,fold*x.sd*1.15,.12)});
+   for(let i=0;i<NA;i++){const f=((i/NA)+t*.22)%1,side=eff===0?.24:eff===1?-.24:-.24;
+    m4.makeScale(1,1,1);m4.setPosition(side+sin(i)*.05,1.5-f*2.6,cos(i)*.06);aux.setMatrixAt(i,m4)}aux.instanceMatrix.needsUpdate=!0},
+  predict:{q:"Why does a plant shoot bend toward sunlight?",opts:[["Auxin accumulates on the sunlit side",!1,"Sunlight moves auxin away from the lit side."],["Auxin accumulates on the shaded side and elongates those cells",!0,"Correct — faster elongation on the shaded side bends the stem toward light."],["Leaves pull the stem mechanically",!1,"Bending is caused by differential cell elongation."]]}})}
+Q_("ch6/plants3d",[["Which plant hormone promotes cell elongation in phototropism?","प्रकाशानुवर्तन में कोशिका दीर्घीकरण कौन-सा पादप हार्मोन करता है?",["Auxin","Abscisic acid","Cytokinin","Ethylene"],0,"Auxin concentrates on the shaded side, elongating cells faster."],["Shoots show _____ geotropism while roots show _____ geotropism.","प्ररोह _____ गुरुत्वानुवर्तन व जड़ें _____ गुरुत्वानुवर्तन दर्शाती हैं।",["Negative, positive","Positive, negative","Zero, positive","Positive, zero"],0,"Shoots grow away from gravity (up) and roots grow toward gravity (down)."],["Folding of Mimosa pudica leaves on touch is due to…","छुई-मुई की पत्तियाँ छूने पर क्यों मुड़ जाती हैं?",["Sudden loss of turgor water from pulvinus","Fast growth of cells","Photosynthesis","Gravity"],0,"Turgor changes in pulvinus cells produce rapid nastic movement."]]);
+Px["ch6/plants3d"]=[["Farmers spray synthetic auxins like 2,4-D to control broad-leaved weeds selectively in wheat fields.","किसान गेहूँ के खेतों में खरपतवार नियंत्रण के लिए 2,4-D जैसे संश्लेषित ऑक्सिन का उपयोग करते हैं।"],["Unlike growth-based tropisms (hours/days), Mimosa's turgor reflex finishes in ~1–2 seconds!","वृद्धि-आधारित अनुवर्तन (घंटों/दिनों) के विपरीत छुई-मुई की स्फीति प्रतिक्रिया 1–2 सेकंड में हो जाती है।"]];
+{const Lp_=Hi.find(h=>h.no===6).topics,i=Lp_.findIndex(x=>x.id==="plants");Lp_.splice(i<0?Lp_.length:i+1,0,{id:"plants3d",title:"Plant tropisms & Mimosa — ultra-realistic 3D",hi:"पादप अनुवर्तन व छुई-मुई — अति-यथार्थ 3D",build:Mplants3d,ncert:"Ch 6 · coordination in plants"})}
+
+/* ============================== 4. HUMAN ENDOCRINE SYSTEM (Ch 6) ============================== */
+const K_EN={
+ pituitary:["Pituitary gland (Master gland)","पीयूष ग्रंथि (मास्टर ग्रंथि)","Pea-sized gland under the hypothalamus; secretes Growth Hormone (GH) and tropic hormones controlling other glands.","हाइपोथैलेमस के नीचे मटर के दाने जितनी ग्रंथि; वृद्धि हार्मोन व अन्य ग्रंथियों को नियंत्रित करने वाले हार्मोन बनाती है।"],
+ thyroid:["Thyroid gland","थायरॉइड (अवटु) ग्रंथि","Butterfly-shaped gland wrapping the trachea; needs iodine to make thyroxine (regulates carbohydrate, protein & fat metabolism).","श्वासनली से लिपटी तितली के आकार की ग्रंथि; थायरॉक्सिन बनाने हेतु आयोडीन चाहिए (उपापचय नियंत्रण)।"],
+ adrenal:["Adrenal glands","अधिवृक्क ग्रंथियाँ","Sit atop both kidneys; release adrenaline directly into blood during danger/stress ('fight or flight').","दोनों वृक्कों के ऊपर स्थित; खतरे/तनाव में रक्त में एड्रीनलिन छोड़ती हैं ('लड़ो या भागो')।"],
+ pancreas:["Pancreas (Islets of Langerhans)","अग्न्याशय (लैंगरहैंस द्वीप)","Leaf-shaped dual gland behind the stomach; secretes insulin to lower high blood glucose (deficiency causes diabetes).","आमाशय के पीछे स्थित दोहरी ग्रंथि; बढ़ा रक्त ग्लूकोज़ कम करने को इंसुलिन स्रावित करती है (कमी से मधुमेह)।"],
+ gonads:["Ovary / Testis (Gonads)","अंडाशय / वृषण (जनन ग्रंथियाँ)","Testes make testosterone (male puberty); ovaries make oestrogen & progesterone (female puberty & menstrual cycle).","वृषण टेस्टोस्टेरोन और अंडाशय एस्ट्रोजन व प्रोजेस्टेरोन बनाते हैं (यौवनारंभ परिवर्तन)।"],
+ vessel:["Circulatory vessels & Heart","रक्त वाहिकाएँ व हृदय","Endocrine glands have NO ducts — hormones enter blood directly to reach distant target organs.","अंतःस्रावी ग्रंथियाँ नलिका-विहीन होती हैं; हार्मोन सीधे रक्त से लक्ष्य अंगों तक पहुँचते हैं।"]};
+const EN_ST=[
+["1","Ductless endocrine glands in the body","शरीर में नलिकाहीन अंतःस्रावी ग्रंथियाँ","Endocrine glands secrete chemical messengers (hormones) directly into the bloodstream to coordinate slow, body-wide processes.","अंतःस्रावी ग्रंथियाँ रासायनिक संदेशवाहक (हार्मोन) सीधे रक्त में स्रावित कर पूरे शरीर का समन्वय करती हैं।","Sculpted 3D torso + vasculature",9],
+["2","Pituitary: the Master Gland","पीयूष: मास्टर ग्रंथि","Guided by the hypothalamus, the pituitary releases Growth Hormone (GH) and signals controlling the thyroid, adrenals, and gonads.","हाइपोथैलेमस के निर्देश पर पीयूष ग्रंथि वृद्धि हार्मोन व अन्य ग्रंथियों को नियंत्रित करती है।","Anatomical head/neck focus",9],
+["3","Thyroid & iodine metabolism","थायरॉइड व आयोडीन उपापचय","The butterfly thyroid on the windpipe needs iodine for thyroxine. Lack of iodine enlarges the gland (Goitre).","श्वासनली पर स्थित थायरॉइड को थायरॉक्सिन हेतु आयोडीन चाहिए; कमी से घेंघा (Goitre) होता है।","Interactive Goitre toggle",10],
+["4","Adrenal glands: Fight or Flight","अधिवृक्क: लड़ो या भागो","In fear or excitement, adrenaline surges from the adrenals: heart beats faster, airways dilate, and blood rushes to skeletal muscles.","भय या उत्तेजना में एड्रीनलिन हृदय-धड़कन व श्वास तेज़ कर कंकाल पेशियों में रक्त बढ़ाता है।","Interactive Adrenaline surge",10],
+["5","Pancreas: Insulin–Glucose feedback","अग्न्याशय: इंसुलिन-ग्लूकोज़ प्रतिपुष्टि","When blood sugar rises after a meal, Islets of Langerhans release insulin so cells absorb glucose; low sugar turns secretion off (feedback).","भोजन के बाद बढ़ी शर्करा पर अग्न्याशय इंसुलिन छोड़ता है; सामान्य होने पर स्राव रुक जाता है (प्रतिपुष्टि क्रियाविधि)।","Interactive Insulin feedback",10],
+["6","Testes & Ovaries: Puberty hormones","वृषण व अंडाशय: यौवनारंभ हार्मोन","Testosterone and oestrogen trigger secondary sexual characteristics at puberty under pituitary control.","पीयूष नियंत्रण में टेस्टोस्टेरोन व एस्ट्रोजन यौवनारंभ के लक्षण उत्पन्न करते हैं।","Sculpted 3D overview",9]];
+function Mhormones3d(){
+ sd=51;const n=new Ne;Ge(n,{key:1.95});Je(n,-4.8,20,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const glassM=MAT(0xcfe4ff,{roughness:.1,clearcoat:1,transmission:.6,ior:1.35,thickness:.4,opacity:.14,depthWrite:!1});
+ /* Translucent human head + neck + torso shell */
+ add("vessel",sph(1.05,.02,1.5,.88,1.08,1.0,32,40),glassM,[0,3.8,0],{ns:1});
+ add("vessel",lathe([[.55,2.7],[.52,2.1],[1.8,1.6],[1.65,-.4],[1.4,-2.4],[1.7,-3.6],[0,-3.6]],36),glassM,[0,0,0],{ns:1,scl:[1,1,.65]});
+ /* Heart + Aorta + Vena cava */
+ const heartM=add("vessel",sph(.55,.04,2,.9,1.15,.85,24,28),MAT(0xc4363a,{roughness:.38,clearcoat:.7,sheen:.5,emissive:0x520808,emissiveIntensity:.3}),[.25,1.0,.25]);
+ add("vessel",tube([c(0,3.6,-.1),c(0,1.1,-.1),c(0,-3.0,-.1)],.13,12),MAT(0xd93c3c,{roughness:.35,clearcoat:.6,opacity:.7}),[0,0,0],{ns:1});
+ /* Brain hypothalamus + Pituitary + Pineal */
+ add("pituitary",sph(.18,.02,2,1.1,.9,1.1,16,20),MAT(0xf5a623,{roughness:.3,clearcoat:.8,emissive:0x6e4400,emissiveIntensity:.45}),[0,3.62,.26]);
+ /* Trachea + Butterfly Thyroid */
+ add("thyroid",tube([c(0,2.7,.15),c(0,1.6,.15)],.18,16),MAT(0xeadac0,{roughness:.5,opacity:.75}),[0,0,0],{ns:1});
+ const thyL=add("thyroid",sph(.32,.04,2,.7,1.25,.65,20,24),MAT(0xe86c78,{roughness:.35,clearcoat:.7,emissive:0x601020,emissiveIntensity:.35}),[-.26,2.25,.24]);
+ const thyR=add("thyroid",sph(.32,.04,2,.7,1.25,.65,20,24),thyL.material,[.26,2.25,.24]);
+ /* Kidneys + Adrenal caps */
+ const kidM=MAT(0x8c2e28,{roughness:.45,clearcoat:.5});
+ const adrM=MAT(0xf5c842,{roughness:.3,clearcoat:.75,emissive:0x704800,emissiveIntensity:.4});
+ [-.88,.88].forEach(sx=>{
+  add("adrenal",sph(.45,.04,2,.78,1.2,.62,22,28),kidM,[sx,-.95,-.15]);
+  add("adrenal",sph(.26,.04,2,1.1,.55,.85,18,22),adrM,[sx,-.38,-.1]);
+ });
+ /* Leaf-shaped Pancreas */
+ add("pancreas",tube([c(-.75,-.15,.22),c(-.1,-.05,.28),c(.58,.1,.18)],.24,14,u=>1-.5*u),MAT(0xe6b84c,{roughness:.38,clearcoat:.65,emissive:0x5a3e00,emissiveIntensity:.35}),[0,0,0]);
+ /* Gonads */
+ [-.62,.62].forEach(sx=>add("gonads",sph(.24,.03,2,.85,1.1,.75,18,22),MAT(0xd980c8,{roughness:.35,clearcoat:.7,emissive:0x4a1040,emissiveIntensity:.35}),[sx,-2.6,.15]));
+ /* Circulating Hormone particles */
+ const NH=36,hor=new Wn(new it(.065,8,6),new bt({color:0xffffff}),NH);hor.frustumCulled=!1;g.add(hor);const hc=new we,m4=new gt;
+ let hMode=0; // 0=normal, 1=adrenaline, 2=insulin, 3=goitre
+ const cams=[[c(0,.8,11.5),c(0,.4,0)],[c(0,3.6,4.8),c(0,3.5,0)],[c(0,2.2,4.5),c(0,2.2,0)],[c(0,-.3,5.2),c(0,-.5,0)],[c(0,.1,5.2),c(0,-.1,0)],[c(0,-2.4,5.4),c(0,-2.5,0)]];
+ const camK=["Whole body","Pituitary","Thyroid","Adrenals","Pancreas","Gonads"];
+ const show={vessel:[1,1,1,1,1,1],pituitary:[1,1,0,0,0,0],thyroid:[1,0,1,0,0,0],adrenal:[1,0,0,1,0,0],pancreas:[1,0,0,0,1,0],gonads:[1,0,0,0,0,1]};
+ const base={vessel:.5,pituitary:1,thyroid:1,adrenal:1,pancreas:1,gonads:1};
+ const L=p=>()=>c(...p);
+ const labels=[["e-pi","Pituitary (Master gland)","पीयूष ग्रंथि",L([0,3.9,.3]),[0,1]],["e-th","Thyroid (Thyroxine)","थायरॉइड ग्रंथि",L([.6,2.3,.3]),[0,2]],
+  ["e-ad","Adrenal glands (Adrenaline)","अधिवृक्क (एड्रीनलिन)",L([-1.1,-.2,0]),[0,3]],["e-pa","Pancreas (Insulin)","अग्न्याशय (इंसुलिन)",L([.7,.2,.3]),[0,4]],
+  ["e-go","Ovaries / Testes","अंडाशय / वृषण",L([-.8,-2.6,.2]),[0,5]]];
+ return run({kinds:K_EN,n,g,org,show,base,ST:EN_ST,cams,camK,labels,
+  tools2:[
+   {label:"⚖ Normal",group:"hm",on:!0,act:()=>{hMode=0}},{label:"⚡ Adrenaline surge",group:"hm",act:()=>{hMode=1}},
+   {label:"🍬 Insulin feedback",group:"hm",act:()=>{hMode=2}},{label:"🦋 Iodine-deficient Goitre",group:"hm",act:()=>{hMode=3}}],
+  hud:()=>hMode===1?"Adrenaline Surge: Heart rate spikes, blood flows rapidly to muscles":hMode===2?"High Blood Sugar: Pancreas β-cells release Insulin → Glucose stored":hMode===3?"Iodine Deficiency: Thyroid swells into Goitre trying to make thyroxine":"Homeostasis: Feedback mechanisms balance hormone secretion",
+  frame:(s,t)=>{
+   const eff=hMode||(s===3?1:s===4?2:0);
+   const rate=eff===1?3.6:1.2;const pulse=1+.1*sin(t*rate*2);heartM.scale.setScalar(pulse);
+   const gS=hMode===3?1.85:1;thyL.scale.set(gS,gS,gS);thyR.scale.set(gS,gS,gS);
+   const colHex=eff===1?0xff5252:eff===2?0x4ee6ff:0xffd54f;
+   for(let i=0;i<NH;i++){hor.setColorAt(i,hc.setHex(colHex));const f=((i/NH)+t*(eff===1?.35:.16))%1;
+    const y0=eff===1?-.4+f*2.2:eff===2?-.1+sin(f*PI)*1.5:3.6-f*6.4;
+    m4.makeScale(1,1,1);m4.setPosition(sin(f*TAU+i)*.35,y0,cos(f*TAU+i)*.25);hor.setMatrixAt(i,m4)}
+   hor.instanceMatrix.needsUpdate=!0;if(hor.instanceColor)hor.instanceColor.needsUpdate=!0},
+  predict:{q:"Which hormone regulates blood sugar levels by helping cells absorb glucose?",opts:[["Adrenaline",!1,"Adrenaline prepares the body for emergencies."],["Insulin",!0,"Correct — insulin secreted by the pancreas lowers blood glucose."],["Thyroxine",!1,"Thyroxine controls general metabolism."]]}})}
+Q_("ch6/hormones3d",[["Which gland is called the master endocrine gland?","किस ग्रंथि को मास्टर अंतःस्रावी ग्रंथि कहते हैं?",["Pituitary","Thyroid","Adrenal","Pancreas"],0,"Pituitary secretes hormones that regulate other endocrine glands."],["Which mineral is essential for thyroxine synthesis?","थायरॉक्सिन बनाने के लिए कौन-सा खनिज आवश्यक है?",["Iodine","Calcium","Iron","Sodium"],0,"Iodine deficiency leads to simple goitre."],["Adrenaline prepares the body for…","एड्रीनलिन शरीर को किसके लिए तैयार करता है?",["Emergency ('fight or flight')","Digestion during sleep","Bone growth","Slowing heart rate"],0,"It increases heart beat, breathing rate, and blood flow to muscles."]]);
+Px["ch6/hormones3d"]=[["Iodised salt programmes eliminated endemic goitre in millions of families across India.","आयोडीन-युक्त नमक ने भारत में लाखों परिवारों को घेंघा रोग से बचाया।"],["The timing and amount of hormone released are controlled by feedback mechanisms — just like a thermostat!","हार्मोन स्राव की मात्रा व समय प्रतिपुष्टि क्रियाविधि से नियंत्रित होते हैं — थर्मोस्टेट की तरह।"]];
+{const Lh_=Hi.find(h=>h.no===6).topics,i=Lh_.findIndex(x=>x.id==="hormones");Lh_.splice(i<0?Lh_.length:i+1,0,{id:"hormones3d",title:"Endocrine system & feedback — ultra-realistic 3D",hi:"अंतःस्रावी तंत्र व प्रतिपुष्टि — अति-यथार्थ 3D",build:Mhormones3d,ncert:"Ch 6 · hormones in animals"})}
+
+/* ============================== 5. EVOLUTION, FOSSILS & HOMOLOGOUS LIMBS (Ch 8) ============================== */
+const K_EV={
+ strata:["Sedimentary fossil strata","अवसादी जीवाश्म परतें","Deeper rock layers hold older fossils (trilobites, ancient fish); upper layers hold younger fossils (ammonites, mammals).","गहरी चट्टानी परतों में पुराने जीवाश्म (ट्राइलोबाइट) व ऊपरी परतों में नवीन जीवाश्म (स्तनधारी) मिलते हैं।"],
+ homo:["Homologous forelimbs (divergent evolution)","समजात अग्रपाद (अपसारी विकास)","Human arm, whale flipper, and bat wing share the SAME bone plan (humerus, radius-ulna, carpals, phalanges) adapted for different jobs.","मानव भुजा, व्हेल पंख व चमगादड़ पंख में समान अस्थि-योजना अलग कार्यों के लिए रूपांतरित हुई है।"],
+ analo:["Analogous wings (convergent evolution)","समरूप पंख (अभिसारी विकास)","Bat/bird wing (bones) vs insect wing (chitin membrane): similar function (flight), different origin and structure.","पक्षी/चमगादड़ पंख (अस्थियाँ) बनाम कीट पंख (काइटिन): कार्य समान (उड़ना), उत्पत्ति व संरचना भिन्न।"],
+ moth:["Natural selection (Peppered moth)","प्राकृतिक वरण (पेपर्ड मॉथ)","On clean lichen trees, light moths camouflage; on soot-darkened industrial bark, dark mutants survive better and multiply.","स्वच्छ लाइकेन पर हल्के पतंगे छिपते हैं; कालिख-युक्त वृक्षों पर गहरे पतंगे बचते व बढ़ते हैं।"]};
+const EV_ST=[
+["1","Fossils & sedimentary strata","जीवाश्म व अवसादी चट्टानी परतें","As organisms die and get buried in sediment over millions of years, deeper strata preserve older life forms and upper strata preserve newer ones.","लाखों वर्षों में अवसाद में दबे जीवों के जीवाश्म बनते हैं — गहरी परतों में प्राचीन और ऊपर नवीन जीव मिलते हैं।","Sculpted 3D rock strata",9],
+["2","Homologous organs: common ancestor","समजात अंग: साझा पूर्वज","Human hand, whale flipper, and bat wing all have humerus (gold), radius-ulna (blue), and 5-digit phalanges (coral) — proof of divergent evolution.","मानव हाथ, व्हेल चप्पू व चमगादड़ पंख सभी में समान अस्थि-योजना साझा पूर्वज का प्रमाण है।","Colour-coded pentadactyl bones",10],
+["3","Analogous organs: different origin","समरूप अंग: भिन्न उत्पत्ति","Bird/bat wings have internal bones while insect wings are thin chitin sheets. Both fly (convergent evolution), without a winged common ancestor.","चमगादड़ के पंख में अस्थियाँ हैं पर कीट का पंख काइटिन की झिल्ली है — दोनों उड़ते हैं पर उत्पत्ति भिन्न है।","Side-by-side comparison",9],
+["4","Natural selection in action","प्राकृतिक वरण का प्रत्यक्ष उदाहरण","Toggle Clean Bark vs Industrial Soot: environment selects which trait survives and passes genes to the next generation.","स्वच्छ छाल बनाम औद्योगिक कालिख चुनिए: पर्यावरण तय करता है कि कौन-सा लक्षण जीवित रहेगा।","Interactive Selection toggle",10]];
+function Mevolution3d(){
+ sd=62;const n=new Ne;Ge(n,{key:1.95});Je(n,-3.2,20,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const rockTex=mkTex(256,256,(q,w,h)=>{const cols=["#4a3b2c","#6e553b","#8c7150","#b09874"];for(let k=0;k<4;k++){q.fillStyle=cols[k];q.fillRect(0,k*h/4,w,h/4);for(let d=0;d<60;d++){q.fillStyle="rgba(0,0,0,0.12)";q.fillRect((d*47)%w,k*h/4+(d*13)%(h/4),6,2)}}});
+ /* Left: Fossil cliff strata */
+ add("strata",boxy(2.4,2.8,1.5,.1,.04,3),MAT(0xffffff,{map:rockTex,roughness:.88,clearcoat:0,bumpScale:.5}),[-4.8,-.3,0]);
+ const fosM=MAT(0xe8dec6,{roughness:.6,clearcoat:.2,bumpScale:.3});
+ add("strata",sph(.36,.04,3,1.2,.4,.9,18,22,1),fosM,[-4.6,-2.1,.85]); /* deep trilobite */
+ add("strata",torus(.28,.09),fosM,[-4.9,-.5,.85]); /* middle ammonite */
+ add("strata",sph(.32,.03,2,.9,.7,1.1,16,20,2),fosM,[-4.5,1.2,.85]); /* upper mammal skull */
+ /* Center: Homologous forelimbs (Humerus=gold, Radius-Ulna=blue, Digits=coral) */
+ const hM=MAT(0xf2c94c,{roughness:.35,clearcoat:.5}),rM=MAT(0x56ccf2,{roughness:.35,clearcoat:.5}),dM=MAT(0xeb7a64,{roughness:.35,clearcoat:.5});
+ const mkLimb=(x,scales)=>{const lg=new J;lg.position.set(x,.2,0);g.add(lg);
+  add("homo",tube([c(0,1.6,0),c(0,.4,0)],scales[0],10),hM,[0,0,0],{parent:lg});
+  add("homo",tube([c(-.08,.4,0),c(-.08,-.7,0)],scales[1],10),rM,[0,0,0],{parent:lg});
+  add("homo",tube([c(.09,.4,0),c(.09,-.7,0)],scales[1]*.85,10),rM,[0,0,0],{parent:lg});
+  for(let k=-2;k<=2;k++)add("homo",tube([c(k*.07,-.7,0),c(k*scales[2],-1.6-Math.abs(k)*.1,0)],.045,8),dM,[0,0,0],{parent:lg})};
+ mkLimb(-1.3,[.14,.09,.15]); // Human
+ mkLimb(.1,[.18,.13,.11]);   // Whale flipper
+ mkLimb(1.5,[.1,.06,.34]);   // Bat wing digits
+ /* Right: Insect chitin wing (Analogous) + Peppered moths on bark */
+ const wingM=MAT(0xa6e8ff,{roughness:.15,clearcoat:.9,transmission:.5,opacity:.55,depthWrite:!1});
+ add("analo",paramUV(12,12,(u,v)=>[3.3+u*1.7,.6+.3*sin(u*PI),(v-.5)*1.1*sin(u*PI)]),wingM,[0,0,0],{ns:1});
+ const barkM=MAT(0x52463a,{roughness:.9,clearcoat:0,bumpScale:.5});
+ add("moth",tube([c(5.4,-2.4,0),c(5.4,1.9,0)],.68,18),barkM,[0,0,0]);
+ const lMoth=add("moth",sph(.22,0,1,1.6,.2,1.1,14,16),MAT(0xf2efe4,{roughness:.5}),[5.3,.6,.7]);
+ const dMoth=add("moth",sph(.22,0,1,1.6,.2,1.1,14,16),MAT(0x282420,{roughness:.5}),[5.5,-.4,.7]);
+ let soot=0;
+ const cams=[[c(0,1.2,13.5),c(0,-.2,0)],[c(-4.8,.2,7.2),c(-4.8,-.3,0)],[c(.1,.2,7.5),c(.1,0,0)],[c(3.6,.8,6.8),c(2.6,.2,0)],[c(5.4,.2,6.2),c(5.4,.1,0)]];
+ const camK=["Overview","Fossils","Homologous","Analogous","Moths"];
+ const show={strata:[1,1,0,0,0],homo:[1,0,1,1,0],analo:[1,0,0,1,0],moth:[1,0,0,0,1]};
+ const base={strata:1,homo:1,analo:.7,moth:1};
+ const L=p=>()=>c(...p);
+ const labels=[["ev-st","Fossil strata (oldest deepest)","जीवाश्म परतें (सबसे पुरानी नीचे)",L([-4.8,2.2,0]),[0]],["ev-ho","Homologous bones (common plan)","समजात अस्थियाँ (समान योजना)",L([.1,1.9,0]),[1]],
+  ["ev-an","Analogous insect wing (chitin)","समरूप कीट पंख (काइटिन)",L([4.1,1.1,0]),[2]],["ev-mo","Peppered moths (Natural Selection)","पेपर्ड मॉथ (प्राकृतिक वरण)",L([5.4,1.5,.7]),[3]]];
+ return run({kinds:K_EV,n,g,org,show,base,ST:EV_ST,cams,camK,labels,
+  tools2:[{label:"🌿 Clean Lichen Bark",group:"ev",on:!0,act:()=>{soot=0}},{label:"🏭 Industrial Soot",group:"ev",act:()=>{soot=1}}],
+  hud:()=>soot?"Industrial Soot: Dark moth camouflaged & survives; light moth spotted by birds!":"Clean Lichen Bark: Light moth camouflaged & survives; dark moth spotted!",
+  frame:(s,t)=>{barkM.color.setHex(soot?0x26221e:0xa89f88);lMoth.scale.setScalar(soot?.55:1.1+.05*sin(t*3));dMoth.scale.setScalar(soot?1.15+.05*sin(t*3):.55)},
+  predict:{q:"Human arm, whale flipper, and bat wing are examples of…",opts:[["Analogous organs",!1,"Analogous organs have different origins and bone plans."],["Homologous organs",!0,"Correct — same basic bone structure inherited from a common ancestor."],["Vestigial organs",!1,"They are all actively used."]]}})}
+Q_("ch8/evolution3d",[["Which organs have the same basic structure and origin but different functions?","वे अंग जिनकी मूल संरचना व उत्पत्ति समान पर कार्य भिन्न हों, कहलाते हैं…",["Homologous organs","Analogous organs","Vestigial organs","Artificial organs"],0,"Homologous organs indicate divergent evolution from a common ancestor."],["In sedimentary rocks, older fossils are generally found in…","अवसादी चट्टानों में पुराने जीवाश्म प्रायः कहाँ मिलते हैं?",["Deeper (lower) layers","Topmost surface layers","Volcanic lava only","Atmosphere"],0,"Younger sediment accumulates on top of older layers."],["Wings of a bat and wings of a butterfly are…","चमगादड़ के पंख और तितली के पंख हैं…",["Analogous organs","Homologous organs","Identical bones","Clones"],0,"Both are used for flying, but bat wings have bones while butterfly wings are chitinous."]]);
+Px["ch8/evolution3d"]=[["Charles Darwin observed 13 species of finches on the Galápagos Islands whose beaks adapted to seeds, insects, or cactus!","चार्ल्स डार्विन ने गैलापैगोस द्वीपों पर 13 प्रकार की फ़िंच चिड़ियों की चोंच का भोजन के अनुसार अनुकूलन देखा।"],["Radioactive carbon-14 and uranium-lead dating allow scientists to measure the exact age of fossils.","रेडियोधर्मी कार्बन-14 व यूरेनियम-लेड डेटिंग से वैज्ञानिक जीवाश्मों की सटीक आयु मापते हैं।"]];
+{const Le_=Hi.find(h=>h.no===8).topics,i=Le_.findIndex(x=>x.id==="evolution");Le_.splice(i<0?Le_.length:i+1,0,{id:"evolution3d",title:"Evolution, fossils & selection — ultra-realistic 3D",hi:"विकास, जीवाश्म व वरण — अति-यथार्थ 3D",build:Mevolution3d,ncert:"Ch 8 · evolution"})}
+
+/* ============================== 6. ECOSYSTEM, 10% LAW, BIOMAGNIFICATION & OZONE (Ch 13) ============================== */
+const K_EC={
+ prod:["Producers (10,000 J · Autotrophs)","उत्पादक (10,000 J · स्वपोषी)","Green plants trap ~1% of sunlight to make food; they form the wide base of every ecosystem.","हरे पौधे सूर्य-प्रकाश का ~1% ग्रहण कर भोजन बनाते हैं और पारिस्थितिकी का आधार बनाते हैं।"],
+ herb:["Primary consumers (1,000 J · Herbivores)","प्राथमिक उपभोक्ता (1,000 J · शाकाहारी)","Receive only ~10% of producer energy; ~90% is lost as heat and respiration.","उत्पादकों की केवल ~10% ऊर्जा पाते हैं; ~90% ऊष्मा व श्वसन में व्यय होती है।"],
+ carn:["Secondary consumers (100 J)","द्वितीयक उपभोक्ता (100 J)","Receive ~10% of herbivore energy. Persistent toxins (DDT) accumulate higher at each step (biological magnification).","शाकाहारियों से ~10% ऊर्जा पाते हैं; DDT जैसे स्थायी विष हर स्तर पर बढ़ते जाते हैं (जैव आवर्धन)।"],
+ apex:["Apex predators (10 J)","शीर्ष उपभोक्ता (10 J)","Because energy drops 10× per level, food chains rarely exceed 3–4 trophic levels — and apex predators carry the highest toxin load!","ऊर्जा हर स्तर पर 10× घटने से खाद्य श्रृंखला 3–4 स्तर से लंबी नहीं होती — और शीर्ष पर विष सर्वाधिक होता है!"],
+ ozone:["Stratospheric Ozone (O₃) shield","समतापमंडलीय ओज़ोन (O₃) कवच","O₃ layer absorbs lethal UV-B/UV-C radiation. CFC refrigerants release Cl• radicals that break O₃ → O₂ + O, creating ozone holes.","O₃ परत घातक UV किरणों को रोकती है; CFC से निकला Cl• ओज़ोन तोड़कर छिद्र बनाता है।"]};
+const EC_ST=[
+["1","3D Living Trophic Pyramid","3D सजीव पोषी पिरामिड","Every ecosystem runs on solar energy captured by green producers, passing upward through herbivores, carnivores, and apex predators.","हर पारिस्थितिकी तंत्र हरे उत्पादकों द्वारा ग्रहण सौर ऊर्जा से चलता है जो शाकाहारी, मांसाहारी व शीर्ष पर जाती है।","Sculpted 3D biome tiers",9],
+["2","The 10% Energy Law","10% ऊर्जा नियम","Only ~10% of energy transfers to the next trophic level (10,000 J → 1,000 J → 100 J → 10 J); ~90% radiates away as heat at each tier.","केवल ~10% ऊर्जा अगले पोषी स्तर पर जाती है; ~90% हर स्तर पर ऊष्मा के रूप में निकल जाती है।","Animated energy & heat streams",10],
+["3","Biological Magnification (DDT)","जैव आवर्धन (DDT)","Non-biodegradable pesticides wash into water and plants, magnifying 1× → 10× → 100× → 1000× up the food chain — harming apex predators most.","अजैव-निम्नीकरणीय कीटनाशक खाद्य श्रृंखला में ऊपर जाते हुए 1000× तक सांद्रित हो जाते हैं।","Interactive DDT Biomagnification",10],
+["4","Stratospheric Ozone (O₃) & CFCs","समतापमंडलीय ओज़ोन (O₃) व CFC","The blue O₃ dome blocks purple UV rays. Switch CFC Depletion ON to see Cl• radicals shatter O₃ and let UV reach the biosphere.","नीला O₃ गुंबद पराबैंगनी किरणें रोकता है; CFC चालू करके देखिए कि कैसे Cl• ओज़ोन तोड़ता है।","Interactive CFC Depletion",10]];
+function Meco3d(){
+ sd=73;const n=new Ne;Ge(n,{key:1.95});Je(n,-3.6,24,.08);const g=new J;n.add(g);const org=[];const add=mkAdd(g,org);
+ const tiers=[
+  ["prod",3.4,-2.6,0x3ca34d,0x256930],["herb",2.45,-1.0,0x7fc44b,0x4c8227],
+  ["carn",1.6,.5,0xe09638,0x8c5614],["apex",.85,1.9,0xd9483b,0x7a1f18]];
+ tiers.forEach(([id,r,y,col,col2],ti)=>{
+  add(id,boxy(r,.42,r,.18,.02,ti),MAT(col,{roughness:.55,clearcoat:.35,opacity:.88}),[0,y,0]);
+  const count=ti===0?14:ti===1?7:ti===2?4:2;
+  for(let k=0;k<count;k++){const a=k/count*TAU+ti,rr=r*.52;
+   add(id,ti===0?sph(.22,.08,3,.8,1.5,.8,12,14,k):sph(.2,.04,2,1.2,.8,.8,14,16,k),MAT(col2,{roughness:.45,clearcoat:.4}),[cos(a)*rr,y+.55,sin(a)*rr],{ns:1})}
+ });
+ /* Stratospheric Ozone Dome overhead + Sun */
+ const ozM=MAT(0x4fc3ff,{roughness:.12,clearcoat:1,transmission:.55,opacity:.32,depthWrite:!1,emissive:0x0a4a8a,emissiveIntensity:.25});
+ const ozDome=add("ozone",paramUV(16,32,(u,v)=>{const th=u*PI*.42,ph=v*TAU,R_=5.4;return[sin(th)*cos(ph)*R_,cos(th)*R_-1.0,sin(th)*sin(ph)*R_]}),ozM,[0,0,0],{ns:1});
+ add("ozone",sph(.62,0,1,1,1,1,20,24),new bt({color:0xffe46b}),[4.4,5.2,-2.2],{ns:1});
+ /* Particles: Energy upward (gold), Heat outward (orange), UV rays (violet), DDT (red) */
+ const NE=32,enP=new Wn(new it(.08,8,6),new bt({color:0xffdf4d}),NE);enP.frustumCulled=!1;g.add(enP);
+ const NH=32,htP=new Wn(new it(.065,8,6),new bt({color:0xff6d2e}),NH);htP.frustumCulled=!1;g.add(htP);
+ const NU=24,uvP=new Wn(new it(.07,8,6),new bt({color:0xb84dff}),NU);uvP.frustumCulled=!1;g.add(uvP);
+ const ND=36,ddtP=new Wn(new it(.075,8,6),new bt({color:0xff2e4c}),ND);ddtP.frustumCulled=!1;g.add(ddtP);
+ const m4=new gt;let ddt=0,cfc=0;
+ const cams=[[c(0,2.2,13.5),c(0,.4,0)],[c(0,1.6,11.5),c(0,-.2,0)],[c(0,1.6,11.5),c(0,-.2,0)],[c(0,4.6,12.5),c(0,2.2,0)]];
+ const camK=["Trophic Biome","10% Energy Law","Biomagnification","Ozone Shield"];
+ const show={prod:[1,1,1,1],herb:[1,1,1,1],carn:[1,1,1,1],apex:[1,1,1,1],ozone:[1,0,0,1]};
+ const base={prod:.88,herb:.88,carn:.88,apex:.88,ozone:.32};
+ const L=p=>()=>c(...p);
+ const labels=[["ec-pr","Producers (10,000 J)","उत्पादक (10,000 J)",L([-2.8,-2.2,1.8]),[0,1,2]],["ec-hb","Herbivores (1,000 J)","शाकाहारी (1,000 J)",L([-2.0,-.5,1.4]),[0,1,2]],
+  ["ec-ca","Carnivores (100 J)","मांसाहारी (100 J)",L([-1.4,.9,1.0]),[0,1,2]],["ec-ap","Apex predator (10 J · max DDT)","शीर्ष उपभोक्ता (10 J)",L([0,2.7,0]),[0,1,2]],
+  ["ec-oz","Ozone (O₃) UV shield","ओज़ोन (O₃) कवच",L([2.2,4.1,1.0]),[3]]];
+ return run({kinds:K_EC,n,g,org,show,base,ST:EC_ST,cams,camK,labels,
+  tools2:[{label:"☠ DDT Biomagnification",toggle:()=>(ddt=ddt?0:1,!!ddt)},{label:"💨 CFC Depletion",toggle:()=>(cfc=cfc?0:1,!!cfc)}],
+  hud:()=>cfc?"CFC Depletion ON: Cl• breaks O₃ → UV-B penetrates to biosphere!":ddt?"DDT Biomagnification: 1 ppm → 10 ppm → 100 ppm → 1000 ppm at apex!":"10% Law: Each trophic tier retains only ~10% of the energy below it",
+  frame:(s,t)=>{
+   ozM.opacity=cfc?.12:.34;ozM.color.setHex(cfc?0xff7b6b:0x4fc3ff);
+   for(let i=0;i<NE;i++){const f=((i/NE)+t*.22)%1;m4.makeScale(1,1,1);m4.setPosition(sin(i+f*4)*.6,-2.4+f*4.5,cos(i+f*4)*.6);enP.setMatrixAt(i,m4)}enP.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<NH;i++){const tier=i%4,f=((i/NH)+t*.25)%1,a=i*2.1;const r=lerp(3.5-tier*.8,5.6-tier*.6,f);
+    m4.makeScale(1-f*.5,1-f*.5,1-f*.5);m4.setPosition(cos(a)*r,-2.4+tier*1.45+f*.8,sin(a)*r);htP.setMatrixAt(i,m4)}htP.instanceMatrix.needsUpdate=!0;
+   for(let i=0;i<NU;i++){const f=((i/NU)+t*.32)%1,a=i*1.7;const yMax=cfc?-2.2:3.7;const y=lerp(5.8,yMax,f);
+    m4.makeScale(1,1,1);m4.setPosition(cos(a)*(1.8-f*.4),y,sin(a)*(1.8-f*.4));uvP.setMatrixAt(i,m4)}uvP.instanceMatrix.needsUpdate=!0;
+   const showDDT=ddt||s===2;for(let i=0;i<ND;i++){if(!showDDT){m4.makeScale(0,0,0)}else{const ti=min(3,(i/9|0));const y=[-2.1,-.5,1.0,2.4][ti];const sc=[.5,.8,1.2,1.7][ti];
+    m4.makeScale(sc,sc,sc);m4.setPosition(cos(i*1.9+t)*(.8-ti*.15),y+sin(t*2+i)*.1,sin(i*1.9+t)*(.8-ti*.15))}ddtP.setMatrixAt(i,m4)}ddtP.instanceMatrix.needsUpdate=!0},
+  predict:{q:"If producers trap 10,000 J of energy, how much reaches the 3rd trophic level (secondary consumers)?",opts:[["1,000 J",!1,"1,000 J is at the 2nd trophic level (herbivores)."],["100 J",!0,"Correct — 10,000 J → 1,000 J → 100 J (10% at each transfer)."],["10 J",!1,"10 J is at the 4th trophic level (apex predators)."]]}})}
+Q_("ch13/ecosystem3d",[["According to the 10% law, what happens to ~90% of energy at each trophic level?","10% नियम के अनुसार प्रत्येक पोषी स्तर पर ~90% ऊर्जा का क्या होता है?",["Lost as heat and life processes (respiration)","Stored in bones forever","Turned into ozone","Destroyed permanently"],0,"Most energy is used in respiration, movement, and lost as heat to the environment."],["Which trophic level suffers the highest concentration of non-biodegradable pesticides like DDT?","DDT जैसे अजैव-निम्नीकरणीय कीटनाशकों की सर्वाधिक सांद्रता किस स्तर पर होती है?",["Top (apex) consumers","Producers","Decomposers","Soil water"],0,"Biological magnification concentrates non-biodegradable toxins up the food chain."],["Which chemical group is mainly responsible for depleting stratospheric ozone (O₃)?","समतापमंडलीय ओज़ोन (O₃) के क्षरण के लिए मुख्यतः कौन-सा रसायन उत्तरदायी है?",["Chlorofluorocarbons (CFCs)","Oxygen gas","Nitrogen gas","Water vapour"],0,"CFCs release chlorine radicals under UV light that break down O₃."]]);
+Px["ch13/ecosystem3d"]=[["The 1987 Montreal Protocol phased out CFCs globally — allowing Earth's ozone layer to begin healing!","1987 के मॉन्ट्रियल प्रोटोकॉल ने विश्वभर में CFC पर रोक लगाई, जिससे ओज़ोन परत धीरे-धीरे ठीक हो रही है।"],["Eating lower on the food chain (more plants) supports far more people from the same solar energy budget.","खाद्य श्रृंखला के निचले स्तर (पौधे) से भोजन लेने पर समान सौर ऊर्जा से अधिक लोगों का पोषण संभव है।"]];
+{const Lec=Hi.find(h=>h.no===13).topics,i=Lec.findIndex(x=>x.id==="pyramid");Lec.splice(i<0?Lec.length:i+1,0,{id:"ecosystem3d",title:"Trophic pyramid, DDT & Ozone — ultra-realistic 3D",hi:"पोषी पिरामिड, DDT व ओज़ोन — अति-यथार्थ 3D",build:Meco3d,ncert:"Ch 13 · ecosystem & ozone"})}
 
 })();
 /* ===== Guided sequences for free-play (explore) topics =====
