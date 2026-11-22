@@ -54,7 +54,7 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    let pulses = [], stemGrp = null, t = 0;
+    let pulses = [], stemGrp = null, t = 0, hormoneMode = ctx.preset?.sub === "hormones";
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();
@@ -62,6 +62,26 @@ export default {
       }
       pulses = []; stemGrp = null;
       const N = view(ctx.vars);
+      if (hormoneMode) {
+        /* Human Endocrine Glands Atlas: Pituitary, Thyroid, Pancreas (Insulin), Adrenal (Adrenaline) */
+        const glands = [
+          [0, 1.55, 0xa855f7, "Pituitary (Growth Hormone)"],
+          [0, 0.75, 0x38bdf8, "Thyroid (Thyroxine · Iodine)"],
+          [-1.3, -0.35, 0x22c55e, "Pancreas (Insulin lowers glucose)"],
+          [1.3, -0.35, 0xef4444, "Adrenal (Adrenaline fight-or-flight)"]
+        ];
+        glands.forEach(([gx, gy, col, txt]) => {
+          const m = new THREE.Mesh(new THREE.SphereGeometry(0.42, 18, 14), new THREE.MeshStandardMaterial({ color: col, emissive: col, emissiveIntensity: N.stim > 60 ? 0.55 : 0.2 }));
+          m.position.set(gx, gy, 0); dyn.add(m);
+          const lb = labelSprite(THREE, txt, "", { scale: 0.62, size: 19, color: "#f8fafc" });
+          lb.position.set(gx, gy - 0.58, 0.25); dyn.add(lb);
+        });
+        const tag = labelSprite(THREE, "Endocrine Hormones · अंतःस्रावी हार्मोन", N.stim > 70 ? "High Stress → Adrenaline Surge!" : "Feedback Equilibrium", { scale: 0.85, size: 22, color: "#fef08a" });
+        tag.position.set(0, 2.45, 0); dyn.add(tag);
+        h1.textContent = "Human Endocrine System (Feedback)";
+        h2.textContent = N.stim > 70 ? "Adrenaline ↑ Heart & Breathing Rate" : "Insulin ↔ Blood Glucose Balanced";
+        return;
+      }
       if (N.mode === 0) {
         /* Neuron: soma + dendrites + myelinated axon + synaptic cleft + next dendrite */
         const soma = new THREE.Mesh(new THREE.SphereGeometry(0.75, 22, 16), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
@@ -147,8 +167,9 @@ export default {
     const sl = sliders(ctx, side);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Module · भाग"));
     NERVOUS_MODES.forEach((m, i) => {
-      actionButton(presets, m.name.split(" ")[0], () => { ctx.set("mode", i); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
+      actionButton(presets, m.name.split(" ")[0], () => { hormoneMode = false; ctx.set("mode", i); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
     });
+    actionButton(presets, "🧪 Hormones", () => { hormoneMode = !hormoneMode; sfx.play("pop"); rebuild(); }, "cl-chipb");
     side.insertBefore(presets, sl.root.nextSibling);
     const facts = factsView(ctx, side);
     note(side, "Reflex arcs are wired directly through the Spinal Cord for instant protection. Cerebellum balances posture; Medulla controls involuntary breathing & heartbeat!", "प्रतिवर्ती चाप मेरुरज्जु से तुरंत प्रतिक्रिया देता है। अनुमस्तिष्क (Cerebellum) संतुलन तथा मेडुला अनैच्छिक क्रियाएँ नियंत्रित करते हैं।");

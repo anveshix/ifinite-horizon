@@ -135,8 +135,31 @@ export default {
     const extraBox = el("div", "cl-presets"); extraBox.appendChild(el("span", "cl-lab", "Metals & Corrosion · धातु एवं संक्षारण"));
     actionButton(extraBox, "🛡️ Galvanised Fe (Zn coat)", () => { rodMat.color.setHex(0xcbd5e1); liqMat.color.setHex(0x38bdf8); h1.textContent = "Galvanisation: Zn protects Iron from Rusting"; h2.textContent = "Zn is more reactive → sacrifices itself!"; sfx.play("pop"); }, "cl-chipb");
     actionButton(extraBox, "🔥 Thermite (Fe₂O₃ + 2Al)", () => { rodMat.color.setHex(0xf97316); liqMat.color.setHex(0xef4444); h1.textContent = "Thermite: Fe₂O₃ + 2Al → 2Fe (molten) + Al₂O₃"; h2.textContent = "Exothermic welding of railway tracks!"; sfx.play("fizz"); }, "cl-chipb");
+    /* Interactive Equation Balancer + Reactivity Series Drop Test */
+    const balBox = el("div", "cl-presets"); balBox.appendChild(el("span", "cl-lab", "⚖️ Equation Balancer · समीकरण संतुलन"));
+    let cH2 = 1, cO2 = 1, cH2O = 1;
+    const balStat = el("p", "cl-note", "");
+    const paintBal = () => {
+      const L_H = 2 * cH2, L_O = 2 * cO2, R_H = 2 * cH2O, R_O = cH2O, ok = L_H === R_H && L_O === R_O;
+      balStat.textContent = `${cH2} H₂ + ${cO2} O₂ → ${cH2O} H₂O  |  LHS(H=${L_H},O=${L_O}) vs RHS(H=${R_H},O=${R_O}) ${ok ? "✅ BALANCED!" : "❌ Unbalanced"}`;
+      if (ok) { h1.textContent = `Balanced: ${cH2}H₂ + ${cO2}O₂ → ${cH2O}H₂O`; h2.textContent = "Law of Conservation of Mass satisfied!"; }
+    };
+    [["H₂+", () => { cH2 = (cH2 % 4) + 1; }], ["O₂+", () => { cO2 = (cO2 % 4) + 1; }], ["H₂O+", () => { cH2O = (cH2O % 4) + 1; }]].forEach(([lbl, fn]) => {
+      actionButton(balBox, lbl, () => { fn(); paintBal(); sfx.play("tick"); }, "cl-chipb");
+    });
+    paintBal();
+    const serBox = el("div", "cl-presets"); serBox.appendChild(el("span", "cl-lab", "🧪 Reactivity Dip in CuSO₄ (Blue)"));
+    [["K/Mg", true, 0xe2e8f0, "Rapid vigorous displacement!"], ["Zn", true, 0x94a3b8, "Zn + CuSO₄ → ZnSO₄ + Cu↓"], ["Fe", true, 0x64748b, "Fe + CuSO₄ → FeSO₄ (Green) + Cu↓"], ["Cu/Ag", false, 0xb45309, "NO reaction (below Cu in series)"]].forEach(([m, reacts, col, msg]) => {
+      actionButton(serBox, m, () => {
+        rodMat.color.setHex(col); liqMat.color.setHex(reacts ? 0x22c55e : 0x2563eb);
+        h1.textContent = `${m} in CuSO₄`; h2.textContent = msg; sfx.play(reacts ? "fizz" : "tick");
+      }, "cl-chipb");
+    });
     side.insertBefore(presets, sl.root.nextSibling);
     side.insertBefore(extraBox, presets.nextSibling);
+    side.insertBefore(balBox, extraBox.nextSibling);
+    side.insertBefore(balStat, balBox.nextSibling);
+    side.insertBefore(serBox, balStat.nextSibling);
     const facts = factsView(ctx, side);
     note(side, "Reactivity Series: K > Na > Ca > Mg > Al > Zn > Fe > Pb > [H] > Cu > Ag > Au. Iron displaces Copper from CuSO₄ because Fe is more reactive than Cu!", "सक्रियता श्रेणी में लोहा (Fe) ताँबे (Cu) से अधिक अभिक्रियाशील है, इसलिए यह CuSO₄ से Cu को विस्थापित कर देता है।");
 
@@ -144,6 +167,8 @@ export default {
     sync();
     if (ctx.preset?.sub === "corrosion") { rodMat.color.setHex(0xcbd5e1); h1.textContent = "Galvanisation & Rusting Prevention"; }
     if (ctx.preset?.sub === "extraction") { rodMat.color.setHex(0xf97316); h1.textContent = "Thermite & Ore Reduction (Fe₂O₃ + 2Al)"; }
+    if (ctx.preset?.sub === "balance") { paintBal(); }
+    if (ctx.preset?.sub === "series") { h1.textContent = "Reactivity Series Drop-Test"; h2.textContent = "K > Na > Ca > Mg > Al > Zn > Fe > Cu > Ag"; }
     facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },

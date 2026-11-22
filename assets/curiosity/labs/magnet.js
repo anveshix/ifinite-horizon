@@ -80,15 +80,34 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    let magnetGrp = null, needle = null, particles = [], t = 0, domesticMode = ctx.preset?.sub === "domestic";
+    let magnetGrp = null, needle = null, motorArmature = null, particles = [], t = 0, domesticMode = ctx.preset?.sub === "domestic", motorMode = ctx.preset?.sub === "motor" || ctx.preset?.sub === "flhr";
 
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();
         c.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
       }
-      particles = [];
+      particles = []; motorArmature = null;
       const M = view(ctx.vars);
+      if (motorMode) {
+        /* 3D DC Electric Motor + Fleming's Left-Hand Rule (N->S B-field, rotating armature, split-ring commutator) */
+        const nPole = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.8, 1.4), new THREE.MeshStandardMaterial({ color: 0xef4444 }));
+        nPole.position.set(-2.5, 0.2, 0); dyn.add(nPole);
+        const sPole = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.8, 1.4), new THREE.MeshStandardMaterial({ color: 0x3b82f6 }));
+        sPole.position.set(2.5, 0.2, 0); dyn.add(sPole);
+        const lbN = labelSprite(THREE, "N", "", { scale: 0.65, size: 26, color: "#fff" }); lbN.position.set(-2.5, 1.4, 0); dyn.add(lbN);
+        const lbS = labelSprite(THREE, "S", "", { scale: 0.65, size: 26, color: "#fff" }); lbS.position.set(2.5, 1.4, 0); dyn.add(lbS);
+        motorArmature = new THREE.Group(); motorArmature.position.set(0, 0.2, 0); dyn.add(motorArmature);
+        const loop = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.08, 10, 4), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.7 }));
+        loop.rotation.z = Math.PI / 4; motorArmature.add(loop);
+        const comm = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.45, 16, 1, false, 0, Math.PI * 0.85), new THREE.MeshStandardMaterial({ color: 0xfacc15 }));
+        comm.rotation.x = Math.PI / 2; comm.position.set(0, 0, 1.15); motorArmature.add(comm);
+        const lbM = labelSprite(THREE, `DC Motor (F = BIL · ${M.dir >= 0 ? "CW" : "CCW"})`, "Split-ring commutator reverses coil current every ½ turn!", { scale: 0.82, size: 21, color: "#fef08a" });
+        lbM.position.set(0, 2.35, 0); dyn.add(lbM);
+        h1.textContent = `DC Motor · I=${M.I} A · Torque ∝ N·I·B`;
+        h2.textContent = M.dir >= 0 ? "FLHR Force: Left Up, Right Down (CW)" : "Reversed Current: CCW Spin";
+        return;
+      }
       if (domesticMode) {
         /* 220V 50Hz Domestic AC Parallel Wiring: Live (Red), Neutral (Black/Slate), Earth (Green) + MCB */
         const wires = [
@@ -156,6 +175,7 @@ export default {
     const stopFrame = st.onFrame(dt => {
       const M = view(ctx.vars);
       t += dt;
+      if (motorArmature) { motorArmature.rotation.z -= dt * (1.2 + M.I * 0.55) * M.dir; return; }
       if (magnetGrp) {
         const v = M.speed * 1.3;
         magnetGrp.position.x = 2.8 + (M.speed ? Math.sin(t * v) * 0.75 : 0);
@@ -175,9 +195,11 @@ export default {
       b.type = "button"; b.onclick = () => { ctx.set("dir", val); sfx.play("zap"); };
       segDir.appendChild(b); return b;
     });
-    const bDom = el("button", "cl-opt", "220V Domestic AC"); bDom.type = "button";
-    bDom.onclick = () => { domesticMode = !domesticMode; bDom.classList.toggle("on", domesticMode); sfx.play("pop"); rebuild(); };
-    segDir.appendChild(bDom);
+    const bDom = el("button", "cl-opt" + (domesticMode ? " on" : ""), "220V Domestic AC"); bDom.type = "button";
+    bDom.onclick = () => { motorMode = false; domesticMode = !domesticMode; bDom.classList.toggle("on", domesticMode); bMot.classList.toggle("on", false); sfx.play("pop"); rebuild(); };
+    const bMot = el("button", "cl-opt" + (motorMode ? " on" : ""), "⚙️ DC Motor"); bMot.type = "button";
+    bMot.onclick = () => { domesticMode = false; motorMode = !motorMode; bMot.classList.toggle("on", motorMode); bDom.classList.toggle("on", false); sfx.play("pop"); rebuild(); };
+    segDir.append(bDom, bMot);
     side.appendChild(el("h3", "cl-h", "Current Direction & AC · धारा")); side.appendChild(segDir);
 
     const sl = sliders(ctx, side, { skip: ["dir"] });

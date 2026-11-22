@@ -142,6 +142,27 @@ export default {
     const pulseRing = new THREE.Mesh(new THREE.TorusGeometry(0.75, 0.045, 10, 32), new THREE.MeshBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0 }));
     pulseRing.rotation.y = Math.PI / 2; pulseRing.position.set(-3.8, 0.7, 0); scene.add(pulseRing);
 
+    /* 3D Human Ear sub-view (Pinna -> Ear Canal -> Eardrum -> Ossicles -> Cochlea) */
+    const earGrp = new THREE.Group(); earGrp.visible = false; scene.add(earGrp);
+    const canal = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.38, 2.8, 20, 1, true), new THREE.MeshStandardMaterial({ color: 0xfda4af, transparent: true, opacity: 0.4, side: THREE.DoubleSide }));
+    canal.rotation.z = Math.PI / 2; canal.position.set(-1.6, 0.5, 0); earGrp.add(canal);
+    const eardrum = new THREE.Mesh(new THREE.CircleGeometry(0.42, 24), new THREE.MeshStandardMaterial({ color: 0xfacc15, side: THREE.DoubleSide }));
+    eardrum.rotation.y = Math.PI / 2; eardrum.position.set(-0.2, 0.5, 0); earGrp.add(eardrum);
+    const ossicles = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.18, 0.18), new THREE.MeshStandardMaterial({ color: 0xf8fafc }));
+    ossicles.position.set(0.55, 0.5, 0); earGrp.add(ossicles);
+    const cochlea = new THREE.Mesh(new THREE.TorusKnotGeometry(0.55, 0.14, 48, 10, 2, 3), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
+    cochlea.position.set(2.1, 0.5, 0); earGrp.add(cochlea);
+    const earLbl = labelSprite(THREE, "Human Ear · Pinna → Eardrum → Ossicles → Cochlea", "Tympanic membrane vibrates at f → electrical nerve signal", { scale: 0.85, size: 21, color: "#fde68a" });
+    earLbl.position.set(0.2, 2.35, 0); earGrp.add(earLbl);
+
+    let earMode = ctx.preset?.sub === "ear";
+    const setEarMode = on => {
+      earMode = on; earGrp.visible = on;
+      [fork, forkTag, wall, wallTag].forEach(o => { o.visible = !on; });
+      particles.forEach(p => { p.m.visible = !on; });
+      wavePts.forEach(w => { w.m.visible = !on; });
+    };
+
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const hv = el("span"), hl = el("span"), he = el("span"); hud.append(hv, hl, he);
 
@@ -166,10 +187,11 @@ export default {
       phase += dt * omega;
       const amp3d = 0.08 + S.A * 0.24;
 
-      /* animate tuning fork vibration */
+      /* animate tuning fork & eardrum vibration */
       const forkVib = Math.sin(phase * 2.2) * (0.02 + S.A * 0.05) * (toneGlow > 0 ? 1.8 : 0.7);
       prongL.position.x = -0.38 - forkVib;
       prongR.position.x = 0.38 + forkVib;
+      if (earMode) { eardrum.position.x = -0.2 + forkVib * 1.4; ossicles.position.x = 0.55 + forkVib; }
       if (toneGlow > 0) { toneGlow = Math.max(0, toneGlow - dt * 1.1); steelMat.emissiveIntensity = toneGlow * 0.8; }
 
       /* longitudinal oscillation */
@@ -234,6 +256,7 @@ export default {
       echoAnim = { t: 0 };
       ctx.run();
     }, "cl-act sec");
+    const btnEar = actionButton(btns, "👂 Human Ear", () => { setEarMode(!earMode); btnEar.classList.toggle("on", earMode); sfx.play("pop"); }, "cl-chipb");
 
     const scope = el("canvas", "cl-graph"); scope.width = 340; scope.height = 140; scope.setAttribute("role", "img"); scope.setAttribute("aria-label", "Live waveform oscilloscope");
     side.appendChild(el("h3", "cl-h", "Oscilloscope · तरंग आरेख")); side.appendChild(scope);
@@ -261,7 +284,7 @@ export default {
       refresh(); facts.update(); sl.sync();
       mBtns.forEach((b, j) => b.classList.toggle("on", j === ctx.vars.medium));
     });
-    refresh(); facts.update(); ctx.stage.dataset.ready = "1";
+    refresh(); setEarMode(earMode); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

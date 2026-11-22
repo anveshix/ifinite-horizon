@@ -157,7 +157,18 @@ const checks = [
   ["assets/curiosity/labs/climate.js", "cycleGrp"],
   ["assets/curiosity/labs/ecology.js", "bioGrp"],
   ["assets/curiosity/labs/ohm.js", "probeHud"],
-  ["assets/curiosity/labs/reactions.js", "extraBox"]
+  ["assets/curiosity/labs/reactions.js", "extraBox"],
+  ["assets/curiosity/labs/reactions.js", "balBox"],
+  ["assets/curiosity/labs/reactions.js", "serBox"],
+  ["assets/curiosity/labs/repro.js", "Human Reproduction"],
+  ["assets/curiosity/labs/repro.js", "Vegetative Propagation"],
+  ["assets/curiosity/labs/genetics.js", "dihybridMode"],
+  ["assets/curiosity/labs/nervous.js", "hormoneMode"],
+  ["assets/curiosity/labs/heart.js", "Hemodialysis"],
+  ["assets/curiosity/labs/magnet.js", "motorArmature"],
+  ["assets/curiosity/labs/sound.js", "earGrp"],
+  ["assets/curiosity/labs/molecules.js", "homologousN"],
+  ["assets/curiosity/labs/ph.js", "Limewater"]
 ];
 for (const [rel, marker] of checks) {
   const txt = fs.readFileSync(path.resolve(rel), "utf8");
