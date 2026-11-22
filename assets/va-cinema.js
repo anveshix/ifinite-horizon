@@ -38,7 +38,7 @@ body.cine #labels .lab{transform-origin:left top}
 @media (max-width:700px){#cine .ttl{display:none}body.cine #hud{font-size:calc(15px*var(--fs))!important}}
 @media print{#cine,#cineBtn{display:none}}`;
 document.head.appendChild(css);
-const btn=document.createElement("button");btn.type="button";btn.className="ib";btn.id="cineBtn";btn.textContent="🎬 Cinema";btn.title="Play this lesson as a cinematic presentation (C)";
+const btn=document.createElement("button");btn.type="button";btn.className="ib";btn.id="cineBtn";btn.textContent="Cinema";btn.title="Play this lesson as a cinematic presentation (C)";
 bar.insertBefore(btn,$("#tlab")||null);
 const el=document.createElement("div");el.id="cine";
 el.innerHTML=`<div class="lb t"></div><div class="lb b"></div><div class="ttl"><span id="cineT"></span><small id="cineS"></small></div>
