@@ -111,14 +111,54 @@ export default {
       }
     };
 
+    const lifeGrp = new THREE.Group(); scene.add(lifeGrp);
+    let lifeMode = 0; // 0=Heart, 1=Alveoli Gas Exchange, 2=Kidney Nephron
+    const rebuildLife = () => {
+      while (lifeGrp.children.length) lifeGrp.remove(lifeGrp.children.pop());
+      heartGrp.visible = lifeMode === 0;
+      lungs.visible = lifeMode === 0; body.visible = lifeMode === 0;
+      l1.visible = lifeMode === 0; l2.visible = lifeMode === 0;
+      lRA.visible = lifeMode === 0; lLA.visible = lifeMode === 0;
+      packets.forEach(p => { p.m.visible = lifeMode === 0; });
+      if (lifeMode === 1) {
+        /* 3D Alveoli Air Sacs + Capillary Gas Exchange (O₂ in, CO₂ out) */
+        [[-0.8, 0.5], [0.8, 0.5], [0, -0.4], [-0.9, -0.7], [0.9, -0.7]].forEach(([x, y]) => {
+          const sac = new THREE.Mesh(new THREE.SphereGeometry(0.72, 20, 14), new THREE.MeshStandardMaterial({ color: 0xf9a8d4, transparent: true, opacity: 0.75 }));
+          sac.position.set(x, y, 0); lifeGrp.add(sac);
+        });
+        const cap = new THREE.Mesh(new THREE.TorusGeometry(1.75, 0.16, 12, 36), new THREE.MeshStandardMaterial({ color: 0xef4444 }));
+        lifeGrp.add(cap);
+        const lb = labelSprite(THREE, "Alveoli Gas Exchange (x/ch5)", "O₂ diffuses in · CO₂ diffuses out", { scale: 0.85, size: 22, color: "#bae6fd" });
+        lb.position.set(0, 2.35, 0); lifeGrp.add(lb);
+        h1.textContent = "Respiration: Alveoli & Haemoglobin";
+        h2.textContent = "O₂ → RBCs · CO₂ → Exhaled";
+      } else if (lifeMode === 2) {
+        /* 3D Kidney Nephron: Bowman's Capsule + Glomerulus + Tubule + Collecting Duct */
+        const bowman = new THREE.Mesh(new THREE.SphereGeometry(0.92, 22, 16, 0, Math.PI * 1.4), new THREE.MeshStandardMaterial({ color: 0xfacc15, transparent: true, opacity: 0.65, side: THREE.DoubleSide }));
+        bowman.position.set(-1.6, 0.7, 0); lifeGrp.add(bowman);
+        const glom = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 12), new THREE.MeshStandardMaterial({ color: 0xef4444 }));
+        glom.position.set(-1.6, 0.7, 0); lifeGrp.add(glom);
+        const tubule = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 3.6, 12), new THREE.MeshStandardMaterial({ color: 0xfb923c }));
+        tubule.rotation.z = Math.PI / 2; tubule.position.set(0.4, 0.2, 0); lifeGrp.add(tubule);
+        const duct = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 2.8, 12), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
+        duct.position.set(2.3, -0.2, 0); lifeGrp.add(duct);
+        const lb = labelSprite(THREE, "Kidney Nephron (Excretion)", "Ultrafiltration → Selective Reabsorption → Urine", { scale: 0.85, size: 22, color: "#fef08a" });
+        lb.position.set(0, 2.35, 0); lifeGrp.add(lb);
+        h1.textContent = "Excretion: 1 Million Nephrons/Kidney";
+        h2.textContent = "Filters Urea · Reabsorbs Glucose & H₂O";
+      }
+    };
+
     let beatPhase = 0, lastBeat = -1;
     const sync = () => {
+      if (lifeMode !== 0) return;
       const H = view(ctx.vars);
       h1.textContent = `Heart Rate: ${H.bpm} BPM · ${H.loopName}`;
       h2.textContent = `Output: ${H.CO} L/min`;
     };
 
     const stopFrame = st.onFrame(dt => {
+      if (lifeMode !== 0) { lifeGrp.rotation.y += dt * 0.35; return; }
       const H = view(ctx.vars);
       const bps = H.bpm / 60;
       beatPhase += dt * bps;
@@ -143,7 +183,10 @@ export default {
     const sl = sliders(ctx, side);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Activity · स्थिति"));
     [["Sleep (55)", 55], ["Rest (70)", 70], ["Brisk Walk (105)", 105], ["Sprint (150)", 150]].forEach(([lbl, b]) => {
-      actionButton(presets, lbl, () => { ctx.set("bpm", b); sfx.play("pop"); sl.sync(); }, "cl-chipb");
+      actionButton(presets, lbl, () => { lifeMode = 0; rebuildLife(); ctx.set("bpm", b); sfx.play("pop"); sl.sync(); sync(); }, "cl-chipb");
+    });
+    [["🫁 Alveoli", 1], ["💧 Nephron", 2]].forEach(([lbl, lm]) => {
+      actionButton(presets, lbl, () => { lifeMode = lifeMode === lm ? 0 : lm; sfx.play("pop"); rebuildLife(); if (lifeMode === 0) sync(); }, "cl-chipb");
     });
     side.insertBefore(presets, sl.root.nextSibling);
 

@@ -81,12 +81,33 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
+    let skyMode = false;
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();
         c.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
       }
       const E = view(ctx.vars);
+      if (skyMode) {
+        /* Rayleigh Scattering / Blue Sky & Red Sunset (x/ch10) */
+        const sun = new THREE.Mesh(new THREE.SphereGeometry(0.65, 24, 18), new THREE.MeshStandardMaterial({ color: 0xfde047, emissive: 0xfacc15, emissiveIntensity: 0.9 }));
+        sun.position.set(-3.4, 0.2, 0); dyn.add(sun);
+        const atmo = new THREE.Mesh(new THREE.SphereGeometry(1.5, 24, 18), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.25 }));
+        atmo.position.set(0, 0.2, 0); dyn.add(atmo);
+        const redRay = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 6.2, 10), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
+        redRay.rotation.z = Math.PI / 2; redRay.position.set(0, 0.2, 0); dyn.add(redRay);
+        for (let i = 0; i < 8; i++) {
+          const a = (i / 8) * Math.PI * 2;
+          const bRay = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.8, 8), new THREE.MeshBasicMaterial({ color: 0x60a5fa }));
+          bRay.position.set(Math.cos(a) * 1.1, 0.2 + Math.sin(a) * 1.1, 0); bRay.rotation.z = a + Math.PI / 2;
+          dyn.add(bRay);
+        }
+        const lbl = labelSprite(THREE, "Rayleigh Scattering (λ⁻⁴)", "Blue scatters sideways · Red reaches sunset", { scale: 0.85, size: 22, color: "#93c5fd" });
+        lbl.position.set(0, 2.35, 0); dyn.add(lbl);
+        h1.textContent = "Sky Scattering · λ⁻⁴ Rayleigh Law";
+        h2.textContent = "Blue scattered (sky) · Red straight (sunset)";
+        return;
+      }
       if (E.viewMode === 1) {
         const pGeo = new THREE.CylinderGeometry(1.3, 1.3, 1.8, 3);
         const prism = new THREE.Mesh(pGeo, new THREE.MeshStandardMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.45, roughness: 0.1 }));
@@ -139,10 +160,13 @@ export default {
 
     const segM = el("div", "cl-seg");
     const mBtns = [["Eye Focus", 0], ["Prism VIBGYOR", 1]].map(([t, val]) => {
-      const b = el("button", "cl-opt" + (ctx.vars.viewMode === val ? " on" : ""), t);
-      b.type = "button"; b.onclick = () => { ctx.set("viewMode", val); sfx.play("pop"); };
+      const b = el("button", "cl-opt" + (ctx.vars.viewMode === val && !skyMode ? " on" : ""), t);
+      b.type = "button"; b.onclick = () => { skyMode = false; ctx.set("viewMode", val); sfx.play("pop"); rebuild(); };
       segM.appendChild(b); return b;
     });
+    const bSky = el("button", "cl-opt", "Blue Sky / Sunset"); bSky.type = "button";
+    bSky.onclick = () => { skyMode = !skyMode; sfx.play("pop"); bSky.classList.toggle("on", skyMode); mBtns.forEach(x => x.classList.toggle("on", !skyMode && Number(x === mBtns[1]) === ctx.vars.viewMode)); rebuild(); };
+    segM.appendChild(bSky);
     side.appendChild(el("h3", "cl-h", "Experiment Mode · प्रयोग मोड")); side.appendChild(segM);
 
     const sl = sliders(ctx, side, { skip: ["defect", "viewMode"] });

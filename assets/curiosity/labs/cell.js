@@ -154,8 +154,26 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const hc = el("span"), hf = el("span"); hud.append(hc, hf);
 
-    let spot = null, t = 0;
+    let spot = null, t = 0, divMode = 0; // 0=Osmosis, 1=Mitosis (2×2n), 2=Meiosis (4×n)
+    const divCloneGrp = new THREE.Group(); scene.add(divCloneGrp);
     const refresh = () => {
+      while (divCloneGrp.children.length) divCloneGrp.remove(divCloneGrp.children.pop());
+      cellGrp.visible = divMode === 0;
+      if (divMode > 0) {
+        const cnt = divMode === 1 ? 2 : 4, r = divMode === 1 ? 1.15 : 0.72;
+        for (let i = 0; i < cnt; i++) {
+          const ang = (i / cnt) * Math.PI * 2;
+          const dc = new THREE.Mesh(new THREE.SphereGeometry(r, 20, 14), new THREE.MeshStandardMaterial({ color: divMode === 1 ? 0x38bdf8 : 0xf472b6, transparent: true, opacity: 0.45 }));
+          dc.position.set(Math.cos(ang) * 1.6, Math.sin(ang) * (cnt === 4 ? 1.1 : 0.2), 0);
+          const dn = new THREE.Mesh(new THREE.SphereGeometry(r * 0.32, 12, 10), new THREE.MeshStandardMaterial({ color: 0xa855f7 }));
+          dn.position.copy(dc.position); divCloneGrp.add(dc, dn);
+        }
+        const tag = labelSprite(THREE, divMode === 1 ? "Mitosis (2n → 2 × 2n)" : "Meiosis (2n → 4 × n)", divMode === 1 ? "Growth & repair · समसूत्री" : "Gamete formation · अर्धसूत्री", { scale: 0.9, size: 24, color: "#e0f2fe" });
+        orgTag.material.map.dispose(); orgTag.material.map = tag.material.map; orgTag.scale.copy(tag.scale);
+        hc.textContent = divMode === 1 ? "Mitosis: 2 identical diploid (2n) cells" : "Meiosis: 4 haploid (n) gametes";
+        hf.textContent = divMode === 1 ? "1 division · chromosome number unchanged" : "2 divisions · half chromosomes";
+        return;
+      }
       const O = view(ctx.vars);
       wallMesh.visible = O.hasCellWall;
       if (O.cellType === 1) {
@@ -228,6 +246,7 @@ export default {
     const spotInfo = el("p", "cl-note", "Tap an organelle to spotlight it in 3D.");
     [["nuc", "Nucleus/DNA"], ["mito", "Mitochondria"], ["chloro", "Chloroplast"], ["wall", "Cell Wall"]].forEach(([k, lbl]) => {
       actionButton(spotBox, lbl, () => {
+        divMode = 0;
         spot = spot === k ? null : k;
         sfx.play("tick");
         const desc = {
@@ -237,6 +256,14 @@ export default {
           wall: "Cell Wall (Plant & Bacteria): Rigid outer boundary that prevents bursting in pure water!"
         };
         spotInfo.textContent = spot ? desc[spot] : "Tap an organelle to spotlight it in 3D.";
+        refresh();
+      }, "cl-chipb");
+    });
+    [["Mitosis (2n→2×2n)", 1], ["Meiosis (2n→4×n)", 2]].forEach(([lbl, dm]) => {
+      actionButton(spotBox, lbl, () => {
+        divMode = divMode === dm ? 0 : dm;
+        sfx.play("pop");
+        spotInfo.textContent = divMode === 1 ? "Mitosis: 1 division → 2 genetically identical daughter cells (2n) for growth/repair." : divMode === 2 ? "Meiosis: 2 divisions → 4 genetically varied gametes with half chromosomes (n)!" : "Returned to Osmosis Cell View.";
         refresh();
       }, "cl-chipb");
     });

@@ -80,7 +80,7 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    let magnetGrp = null, needle = null, particles = [], t = 0;
+    let magnetGrp = null, needle = null, particles = [], t = 0, domesticMode = false;
 
     const rebuild = () => {
       while (dyn.children.length) {
@@ -89,6 +89,30 @@ export default {
       }
       particles = [];
       const M = view(ctx.vars);
+      if (domesticMode) {
+        /* 220V 50Hz Domestic AC Parallel Wiring: Live (Red), Neutral (Black/Slate), Earth (Green) + MCB */
+        const wires = [
+          [0xef4444, 1.25, "Live 220V (Red)"],
+          [0x94a3b8, 0.25, "Neutral 0V (Black)"],
+          [0x22c55e, -0.75, "Earth Safety (Green)"]
+        ];
+        wires.forEach(([hex, y, txt]) => {
+          const w = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 6.2, 10), new THREE.MeshStandardMaterial({ color: hex }));
+          w.rotation.z = Math.PI / 2; w.position.set(0, y, 0); dyn.add(w);
+          const lb = labelSprite(THREE, txt, null, { scale: 0.62, size: 20, color: "#f8fafc" });
+          lb.position.set(-2.2, y + 0.35, 0); dyn.add(lb);
+        });
+        const mcb = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.6), new THREE.MeshStandardMaterial({ color: M.I > 5 ? 0xef4444 : 0x38bdf8 }));
+        mcb.position.set(-0.5, 1.25, 0); dyn.add(mcb);
+        const socket = new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.2, 0.4), new THREE.MeshStandardMaterial({ color: 0x334155 }));
+        socket.position.set(1.8, 0.25, -0.25); dyn.add(socket);
+        const overload = M.I > 5;
+        const lbl = labelSprite(THREE, overload ? "MCB TRIPPED! (>5A Overload)" : "220 V 50 Hz Parallel AC", overload ? "Short circuit / Overload!" : "Live · Neutral · Earth", { scale: 0.85, size: 24, color: overload ? "#fca5a5" : "#86efac" });
+        lbl.position.set(0.4, 2.35, 0); dyn.add(lbl);
+        h1.textContent = "Domestic AC · 220 V 50 Hz";
+        h2.textContent = overload ? "MCB Tripped! (I > 5 A)" : "Parallel Sockets OK";
+        return;
+      }
       /* copper solenoid coils */
       const coils = Math.round(M.N / 5);
       for (let i = 0; i < coils; i++) {
@@ -151,7 +175,10 @@ export default {
       b.type = "button"; b.onclick = () => { ctx.set("dir", val); sfx.play("zap"); };
       segDir.appendChild(b); return b;
     });
-    side.appendChild(el("h3", "cl-h", "Current Direction · धारा की दिशा")); side.appendChild(segDir);
+    const bDom = el("button", "cl-opt", "220V Domestic AC"); bDom.type = "button";
+    bDom.onclick = () => { domesticMode = !domesticMode; bDom.classList.toggle("on", domesticMode); sfx.play("pop"); rebuild(); };
+    segDir.appendChild(bDom);
+    side.appendChild(el("h3", "cl-h", "Current Direction & AC · धारा")); side.appendChild(segDir);
 
     const sl = sliders(ctx, side, { skip: ["dir"] });
     const facts = factsView(ctx, side);

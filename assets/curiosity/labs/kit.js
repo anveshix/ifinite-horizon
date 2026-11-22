@@ -6,9 +6,11 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;"
 export { esc, fmt };
 export const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
 
-let threeP = null;
+let threeP = null, cannonP = null;
 /** Three.js is fetched once, on the first lab that needs it. A failed fetch is retryable. */
 export const loadThree = () => threeP || (threeP = import("../../vendor/three.module.min.js").catch(error => { threeP = null; throw error; }));
+/** cannon-es 3D rigid-body physics engine (MIT, zero-dep ES module) loaded on demand for realistic mechanics labs. */
+export const loadCannon = () => cannonP || (cannonP = import("../../vendor/cannon-es.js").catch(error => { cannonP = null; throw error; }));
 
 /* ---------------------------------------------------------------- stage */
 /** Creates renderer + scene + camera inside ctx.stage. Returns { THREE, scene, camera, renderer, onFrame, dispose, resize, setView }. */

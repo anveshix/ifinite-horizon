@@ -120,14 +120,24 @@ export default {
     const stopFrame = st.onFrame(dt => {
       const M = view(ctx.vars);
       t += dt * Math.max(0.25, 0.5 + (M.temp + 10) / 40);
+      const conv = M.temp >= 45 && !M.settles;
       parts.forEach((p, i) => {
-        const settleY = M.settles ? -0.98 + (i % 4) * 0.14 : p.y;
-        const amp = M.temp < 0 ? 0.03 : M.settles ? 0.04 : M.temp >= 100 ? 0.32 : 0.16;
-        p.m.position.set(
-          p.x + Math.sin(t * 1.4 + p.ph) * amp,
-          settleY + Math.cos(t * 1.8 + p.ph) * amp,
-          p.z + Math.sin(t * 1.1 + i) * amp
-        );
+        if (conv) {
+          /* Thermal fluid convection loop (WebGL-Fluid style): warm rises center, cools down sides; steam escapes >100°C */
+          const cyc = ((t * 0.45 + p.ph) % 1 + 1) % 1;
+          const rSide = (i % 2 === 0 ? 1 : -1) * (0.25 + (i % 5) * 0.22);
+          const py = M.temp >= 100 && i % 4 === 0 ? -0.9 + cyc * 3.2 : -1.0 + Math.sin(cyc * Math.PI) * 2.15;
+          const px = rSide * (cyc < 0.5 ? 0.35 : 1.0);
+          p.m.position.set(px, py, p.z * 0.6);
+        } else {
+          const settleY = M.settles ? -0.98 + (i % 4) * 0.14 : p.y;
+          const amp = M.temp < 0 ? 0.03 : M.settles ? 0.04 : 0.16;
+          p.m.position.set(
+            p.x + Math.sin(t * 1.4 + p.ph) * amp,
+            settleY + Math.cos(t * 1.8 + p.ph) * amp,
+            p.z + Math.sin(t * 1.1 + i) * amp
+          );
+        }
       });
     });
 
