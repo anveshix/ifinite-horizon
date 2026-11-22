@@ -220,3 +220,142 @@ body:not(.light) #clLink .btn.prim,body:not(.light) .btn.prim{color:#fff}
   #stagebar .sp{flex:1}
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* =====================================================================
+   Class IX simulator lab — same paper/teal/copper system as the rest.
+   Chrome on paper; the model canvas stays deep teal as the one bright moment.
+   Controls dock beside the canvas instead of floating over it.
+   ===================================================================== */
+.va-sim{background:var(--p-paper);color:var(--p-ink);font:14px/1.5 var(--p-sans)}
+.va-sim .va-sim-top{height:64px;min-height:64px;padding:8px 24px;background:var(--p-paper);border-bottom:1px solid var(--p-line)}
+.va-sim .va-sim-brand{gap:12px}
+.va-sim .va-sim-mark{width:36px;height:36px;border:1px solid var(--p-line2);border-radius:50%;background:#e5e7dc;color:var(--p-copper);font-size:18px}
+.va-sim .va-sim-brand b{font:500 19px/1.1 var(--p-serif);letter-spacing:0}
+.va-sim .va-sim-brand small{margin-top:3px;font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-scope{padding:0;border:0;border-radius:0;font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-icon{white-space:nowrap;min-height:36px;padding:7px 14px;border:1px solid var(--p-line2);border-radius:8px;background:#fff;color:var(--p-ink);font:500 13px/1.2 var(--p-sans);transition:background-color .15s var(--p-ease),border-color .15s var(--p-ease)}
+.va-sim .va-sim-icon:hover{border-color:var(--p-ink);background:#fff;outline:0}
+.va-sim .va-sim-icon:focus-visible,.va-sim .va-sim-picker button:focus-visible,.va-sim .va-sim-field :focus-visible,.va-sim .va-sim-panel-actions button:focus-visible,.va-sim .va-sim-related button:focus-visible{outline:2px solid var(--p-copper);outline-offset:2px}
+.va-sim .va-sim-picker{height:56px;min-height:56px;gap:8px;padding:8px 24px;background:var(--p-paper);border-bottom:1px solid var(--p-line)}
+.va-sim .va-sim-picker button{max-width:340px;overflow:hidden;text-overflow:ellipsis;gap:8px;padding:7px 14px;border:1px solid var(--p-line2)!important;border-radius:999px;background:transparent;color:var(--p-ink2);font:500 13px/1.2 var(--p-sans);transition:background-color .15s var(--p-ease),border-color .15s var(--p-ease)}
+.va-sim .va-sim-picker button:hover{border-color:var(--p-ink)!important}
+.va-sim .va-sim-picker button span{font:500 12px/1 var(--p-sans);letter-spacing:0;color:var(--p-mute)}
+.va-sim .va-sim-picker button.is-active{background:var(--p-deep);border-color:var(--p-deep)!important;color:#f7f3e8;box-shadow:none}
+.va-sim .va-sim-picker button.is-active span{color:#b5c9c0}
+/* workspace: canvas card + docked controls */
+.va-sim .va-sim-workspace{display:grid;grid-template-columns:minmax(0,1fr) 392px;grid-template-rows:minmax(0,1fr) auto auto;gap:8px 16px;padding:16px 24px;background:var(--p-paper)}
+.va-sim .va-sim-workspace:has(.va-sim-panel.is-hidden){grid-template-columns:minmax(0,1fr)}
+.va-sim .va-sim-workspace canvas{position:static;grid-column:1;grid-row:1;width:100%;height:100%;min-height:0;border-radius:14px;border:1px solid #2f4a4d;background:#0b191c}
+.va-sim .va-sim-scene-tag{position:static;grid-column:1;grid-row:2;pointer-events:auto;font:500 13px/1.4 var(--p-sans);color:var(--p-ink);text-shadow:none}
+.va-sim .va-sim-scene-tag span{font:600 13px/1.4 var(--p-sans);letter-spacing:0;color:var(--p-copper)}
+.va-sim .va-sim-scene-tag small{display:inline;margin-left:6px;font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-caption{position:static;grid-column:1;grid-row:3;max-width:none;padding:0;border:0;border-radius:0;background:none;font-size:12px;line-height:1.5;color:var(--p-mute);pointer-events:auto}
+.va-sim .va-sim-panel{position:static;grid-column:2;grid-row:1/span 3;width:auto;max-height:none;padding:20px;border:1px solid var(--p-line);border-radius:14px;background:var(--p-card);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;scrollbar-color:var(--p-line2) transparent}
+.va-sim .va-sim-panel.is-hidden{display:none;transform:none}
+.va-sim .va-sim-kicker{font:500 12px/1.4 var(--p-sans);letter-spacing:0;color:var(--p-copper)}
+.va-sim .va-sim-card-head h1{margin:4px 0;font:500 22px/1.2 var(--p-serif);color:var(--p-ink)}
+.va-sim .va-sim-hi{font-size:13px;color:var(--p-mute)}
+.va-sim .va-sim-close-card{width:32px;height:32px;border:1px solid var(--p-line2);background:#fff;color:var(--p-ink);font-size:18px}
+.va-sim .va-sim-objectives{margin-top:16px;padding:12px 14px;background:var(--p-raise);border-left:2px solid var(--p-copper-bright);border-radius:2px 10px 10px 2px}
+.va-sim .va-sim-objectives>b,.va-sim .va-sim-prompt>b{font-size:13px;font-weight:600;color:var(--p-ink)}
+.va-sim .va-sim-objectives li{font-size:13px;line-height:1.5;color:var(--p-ink2)}
+.va-sim .va-sim-objectives li small{font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-equation{margin:12px 0;padding:10px 12px;border:1px solid var(--p-line);border-radius:10px;background:#fff}
+.va-sim .va-sim-equation span{font:500 12px/1 var(--p-sans);letter-spacing:0;color:var(--p-mute)}
+.va-sim .va-sim-equation b{font-size:13px;font-weight:500;line-height:1.45;color:var(--p-ink)}
+.va-sim .va-sim-fields{gap:8px}
+.va-sim .va-sim-field{gap:6px;padding:6px 0}
+.va-sim .va-sim-field b{font-size:13px;font-weight:500;color:var(--p-ink)}
+.va-sim .va-sim-field small{font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-field output{font-size:13px;font-weight:600;color:var(--p-copper);font-variant-numeric:tabular-nums}
+.va-sim .va-sim-field input[type=range]{height:20px;accent-color:var(--p-deep)}
+.va-sim .va-sim-field select{padding:8px 10px;border:1px solid var(--p-line2);border-radius:8px;background:#fff;color:var(--p-ink);font:13px/1.3 var(--p-sans)}
+.va-sim .va-sim-live{margin:12px 0;padding:12px 14px;border:1px solid var(--p-line);border-radius:10px;background:var(--p-raise);font-size:13px;line-height:1.5;color:var(--p-ink2)}
+.va-sim .va-sim-live>b{font-size:13px;font-weight:600;color:var(--p-ink)}
+.va-sim .va-sim-live strong{color:var(--p-copper);font-weight:600}
+.va-sim .va-sim-prompt{margin:16px 0 8px}
+.va-sim .va-sim-prompt p{font-size:13px;line-height:1.5;color:var(--p-ink2)}
+.va-sim .va-sim-prompt small{font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-panel-actions{gap:8px;margin:12px 0}
+.va-sim .va-sim-panel-actions button{min-height:36px;padding:8px 14px;border-radius:8px;font:500 13px/1.2 var(--p-sans);transition:background-color .15s var(--p-ease),border-color .15s var(--p-ease)}
+.va-sim .va-sim-primary{border:1px solid var(--p-deep);background:var(--p-deep);color:#f7f3e8}
+.va-sim .va-sim-quiet{border:1px solid var(--p-line2);background:#fff;color:var(--p-ink)}
+.va-sim .va-sim-panel-actions button:hover{filter:none;border-color:var(--p-ink)}
+.va-sim .va-sim-primary:hover{background:#24444a;border-color:#24444a}
+.va-sim .va-sim-feedback{padding:12px 14px;border-radius:10px;background:#e4eee9;color:#1f4a3b;font-size:13px;line-height:1.5}
+.va-sim .va-sim-related{gap:6px;margin-top:12px}
+.va-sim .va-sim-related button{padding:6px 10px;border:1px solid var(--p-line2);border-radius:6px;color:var(--p-ink2);font:500 12px/1.3 var(--p-sans)}
+.va-sim .va-sim-related button:hover{border-color:var(--p-ink);color:var(--p-ink)}
+.va-sim .va-sim-related small{font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-limit{margin-top:12px;padding-top:10px;border-top:1px solid var(--p-line)}
+.va-sim .va-sim-limit summary{font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-limit p{font-size:12px;line-height:1.5;color:var(--p-mute)}
+.va-sim .va-sim-footer{height:auto;min-height:36px;padding:8px 24px;background:var(--p-paper);border-top:1px solid var(--p-line);font-size:12px;color:var(--p-mute)}
+.va-sim .va-sim-footer b{color:var(--p-ink);font-weight:500}
+@media(max-width:1000px){
+  .va-sim .va-sim-workspace{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;overflow-y:auto;padding:12px 16px 20px}
+  .va-sim .va-sim-workspace canvas{grid-row:auto;height:46svh;min-height:260px;flex:none}
+  .va-sim .va-sim-scene-tag,.va-sim .va-sim-caption,.va-sim .va-sim-panel{grid-column:1;grid-row:auto}
+  .va-sim .va-sim-panel{overflow:visible}
+}
+@media(max-width:760px){
+  .va-sim .va-sim-top{height:56px;min-height:56px;padding:6px 12px}
+  .va-sim .va-sim-brand b{font-size:16px}
+  .va-sim .va-sim-brand small{font-size:12px}
+  .va-sim .va-sim-picker{height:52px;min-height:52px;padding:6px 12px}
+  .va-sim .va-sim-picker button{max-width:220px;padding:6px 12px;font-size:12px}
+  .va-sim .va-sim-icon{padding:6px 10px;font-size:12px}
+  .va-sim .va-sim-panel{padding:16px}
+  .va-sim .va-sim-footer{padding:8px 12px}
+}
+
+/* =====================================================================
+   Mind map + teacher dashboard — same system, legible sizes
+   ===================================================================== */
+.va-mm .va-mm-head{background:var(--p-paper);color:var(--p-ink);border-bottom:1px solid var(--p-line);min-height:64px;padding:8px 24px}
+.va-mm .va-mm-brand b{font:500 19px/1.1 var(--p-serif);letter-spacing:0;color:var(--p-ink)}
+.va-mm .va-mm-brand small{font-size:12px;color:var(--p-mute)}
+.va-mm .va-mm-brand>span{border:1px solid var(--p-line2);background:#e5e7dc;color:var(--p-copper)}
+.va-mm .va-mm-head .va-mm-sim,.va-mm .va-mm-head button{min-height:36px;padding:7px 14px;border:1px solid var(--p-line2);border-radius:8px;background:#fff;color:var(--p-ink);font:500 13px/1.2 var(--p-sans)}
+.va-mm .va-mm-head button:hover{border-color:var(--p-ink)}
+.va-mm .va-mm-head button:focus-visible,.va-mm button:focus-visible{outline:2px solid var(--p-copper);outline-offset:2px}
+.va-mm .va-mm-toolbar{background:var(--p-paper);border-bottom:1px solid var(--p-line);padding:8px 24px}
+.va-mm .va-mm-courses button{padding:7px 12px;border:1px solid var(--p-line2);border-radius:8px;background:transparent;color:var(--p-ink2);font:500 13px/1.25 var(--p-sans)}
+.va-mm .va-mm-courses button small{font-size:12px;font-weight:400;color:var(--p-mute)}
+.va-mm .va-mm-courses button[aria-selected="true"]{background:var(--p-deep);border-color:var(--p-deep);color:#f7f3e8}
+.va-mm .va-mm-courses button[aria-selected="true"] small{color:#b5c9c0}
+.va-mm .va-mm-search input{border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;outline:0!important;font:13px/1.2 var(--p-sans)}
+.va-mm .va-mm-units{background:var(--p-paper);border-bottom:1px solid var(--p-line);padding:8px 24px}
+.va-mm .va-mm-units button{padding:6px 12px;border:1px solid var(--p-line2);background:transparent;color:var(--p-ink2);font:500 13px/1.2 var(--p-sans)}
+.va-mm .va-mm-units button small{font-size:12px;font-weight:400;color:var(--p-mute)}
+.va-mm .va-mm-units button[aria-pressed="true"],.va-mm .va-mm-units button.is-active,.va-mm .va-mm-units button[aria-selected="true"]{background:var(--p-raise);border-color:var(--p-ink)}
+.va-mm .va-mm-info{background:var(--p-card);box-shadow:none;border-left:1px solid var(--p-line)}
+.va-mm .mm-info-head>span{font:500 12px/1.4 var(--p-sans);letter-spacing:0;color:var(--p-copper)}
+.va-mm .va-mm-foot{min-height:36px;padding:8px 24px;background:var(--p-paper);color:var(--p-mute);border-top:1px solid var(--p-line);font-size:12px}
+.va-mm .va-mm-foot b{color:var(--p-ink);font-weight:500}
+.va-mm .mm-sub{font-size:11px}
+.va-mm .mm-meta{font-size:11px}
+@media(max-width:700px){
+  .va-mm .va-mm-head{padding:6px 12px;min-height:56px}
+  .va-mm .va-mm-brand b{font-size:16px}
+  .va-mm .va-mm-brand small{font-size:12px}
+  .va-mm .va-mm-toolbar,.va-mm .va-mm-units{padding:6px 12px}
+  .va-mm .va-mm-foot{padding:8px 12px}
+}
+/* teacher dashboard: sentence case, no tracked caps, 12px floor */
+.va-teacher .teacher-kicker,.va-teacher .teacher-input-label,.va-teacher .teacher-brand-copy>span,.va-teacher .teacher-privacy b{font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--p-mute)}
+.va-teacher .teacher-input-label span{letter-spacing:0;text-transform:none}
+.va-teacher .teacher-brand-copy small,.va-teacher .teacher-privacy small,.va-teacher .teacher-how-card small,.va-teacher .teacher-local-note p{font-size:12px}
+.va-teacher .teacher-intro h2 em,.va-teacher .teacher-brand-copy strong em{font-style:normal}
+.va-teacher .teacher-button{min-height:40px;border-radius:6px;transition:background-color .15s var(--p-ease),border-color .15s var(--p-ease)}
+@media(max-width:600px){.va-teacher .teacher-privacy{display:none}}
+
+/* full-page overlays (practical lab, competency reference, cell inquiry) */
+.hhead .hlogo{display:none}
+.hhead h1{font:500 clamp(28px,3.4vw,40px)/1.1 var(--p-serif);letter-spacing:-.02em;color:var(--p-ink)}
+.hhead h1 span{color:var(--p-copper-bright)}
+.hhead .credit{font-size:13px;color:var(--p-mute)}
+.hw .notice{padding:12px 16px;border:0;border-left:2px solid var(--p-copper-bright);border-radius:0;background:none;font-size:13px;line-height:1.6;color:var(--p-mute)}
+.hw .notice b{color:var(--p-ink);font-weight:500}
+.hw .pc{border-radius:10px;border:1px solid var(--p-line);background:var(--p-card);box-shadow:none}
+.hw .pc>summary .n{background:var(--p-raise);color:var(--p-ink);font-weight:600}
