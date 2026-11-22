@@ -359,3 +359,15 @@ body:not(.light) #clLink .btn.prim,body:not(.light) .btn.prim{color:#fff}
 .hw .notice b{color:var(--p-ink);font-weight:500}
 .hw .pc{border-radius:10px;border:1px solid var(--p-line);background:var(--p-card);box-shadow:none}
 .hw .pc>summary .n{background:var(--p-raise);color:var(--p-ink);font-weight:600}
+
+/* Curiosity Lab: tokens already follow the system; align type and selected states */
+#cl .cl-brand b,#cl .cl-pickhead h2{font-family:var(--p-serif);font-weight:500;letter-spacing:0}
+body.light #cl .cl-tabs button,body.light #cl .cl-f{font-weight:500;border-color:var(--p-line2);border-radius:8px}
+body.light #cl .cl-f{border-radius:999px}
+body.light #cl .cl-tabs button[aria-selected="true"],body.light #cl .cl-f.on{background:var(--p-deep);border-color:var(--p-deep);color:#f7f3e8}
+body.light #cl .cl-chip{border-color:var(--p-line2);background:#fff;font-weight:500}
+body.light #cl .cl-chip.hot{border-color:var(--p-copper-bright);box-shadow:none}
+body.light #cl .cl-lv u{background:var(--p-copper-bright)}
+body.light #cl .cl-snd,body.light #cl .cl-x{background:#fff;border-color:var(--p-line2)}
+body.light #cl .cl-snd[aria-pressed="true"]{border-color:var(--p-deep);background:var(--p-raise)}
+#cl :focus-visible{outline-color:var(--p-copper)}

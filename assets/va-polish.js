@@ -65,4 +65,21 @@
   }
   home.addEventListener("scroll", spy, { passive: true });
   spy();
+
+  /* 3. Drop leading emoji / play glyphs from text buttons (labels live in lesson data; keys stay untouched). */
+  var LEAD = /^[\s\u25B6\u23E9\u23F8\u2600\u26A1\uFE0F\p{Extended_Pictographic}]+/u;
+  var SEL = "#tools button, #play, #testbtn, #predbtn, #replay, #homeGo, .va-hero-actions button, #info button, .ctrl .btn";
+  function strip(root) {
+    root.querySelectorAll(SEL).forEach(function (b) {
+      var n = b.firstChild;
+      if (!n || n.nodeType !== 3) return;
+      var t = n.nodeValue, r = t.replace(LEAD, "");
+      if (r !== t && (r.trim() || b.children.length || b.textContent.length > t.length)) n.nodeValue = r;
+    });
+  }
+  var roots = [document.getElementById("panel"), home].filter(Boolean);
+  roots.forEach(function (r) {
+    strip(r);
+    new MutationObserver(function () { strip(r); }).observe(r, { childList: true, subtree: true, characterData: true });
+  });
 })();
