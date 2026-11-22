@@ -301,6 +301,102 @@
     });
   }
 
+  var POLICY_ASYMMETRY_2026_27 = {
+    circularRef: 'CBSE Circular Acad-70/2026 (2026–27 Session)',
+    classIXStatus: 'NCF-SE 2023 new textbooks (Exploration, Ganita Manjari) introduce CG-6 / C-6.1 Indian references in Biology/Chemistry/Earth, yet Physics chapters (Motion, Work & Energy, Sound Waves) list zero C-6.1 Indian references and Gravitation was removed as a standalone chapter.',
+    classXStatus: '2026–27 Class X remains on the Old Rationalized Scheme. Per CBSE Science Note for Teachers (p. 6), NCERT Box items (e.g. Delhi Iron Pillar in Ch. 3) are non-evaluative; Evolution & Motor/Generator are formative-only; Sustainable Management of Natural Resources & Sources of Energy are removed from board exams; Class X Math lists zero Indian mathematicians despite IKS preface.',
+    ktpiNote: 'Dedicated IKS elective "Knowledge Traditions and Practices of India" (Code 073) is offered only in Classes XI–XII, not IX–X.'
+  };
+
+  var CBSE_2026_27_GAPS = [
+    {
+      gapId: 'GAP-PHY-IX',
+      domainId: 'A',
+      tier: 'TIER_1',
+      cbseChapter: 'Class IX Science: ix9 Motion, ix10 Force, ix11 Work & Simple Machines',
+      currentInSyllabus: 'Zero C-6.1 Indian references listed in Motion / Work / Sound; Gravitation removed as independent chapter.',
+      absentVerifiedScience: 'Kaṇāda’s authentic Vaiśeṣika Sūtra qualitative dynamics (1.1.11, 5.1.7 gurutva, 5.1.8 nodana, 5.1.17 saṁskāra/vega) — framed strictly as qualitative natural philosophy, never equated to Newton–Euler F = ma.',
+      evidenceBasis: 'Vaiśeṣika Sūtra (1.1.11, 5.1.7, 5.1.8, 5.1.17)'
+    },
+    {
+      gapId: 'GAP-CHEM-IX',
+      domainId: 'F',
+      tier: 'TIER_2',
+      cbseChapter: 'Class IX Science: ix5 Exploring Mixtures and their Separation',
+      currentInSyllabus: 'One-line C-6.1 mention of "traditional distillation methods".',
+      absentVerifiedScience: 'Rasashastra Rasashala apparatus mechanics: Ūrdhvapātana (upward), Adhaḥpātana (downward), Tiryakpātana (lateral), Dolā & Ḍamaru Yantras.',
+      evidenceBasis: 'Rasaratna Samuccaya, Rasārṇava, National Science Centre (Delhi) exhibit'
+    },
+    {
+      gapId: 'GAP-SND-IX',
+      domainId: 'G',
+      tier: 'TIER_1',
+      cbseChapter: 'Class IX Science: ix12 Sound Waves',
+      currentInSyllabus: 'Zero C-6.1 Indian references.',
+      absentVerifiedScience: 'Archaeological acoustics of Hampi Viṭṭhala Temple & Madurai granite musical pillars (flexural modes) + 22 Śrutis frequency ratios.',
+      evidenceBasis: 'Hampi & Madurai stone pillar acoustic surveys'
+    },
+    {
+      gapId: 'GAP-BIO-IX',
+      domainId: 'C',
+      tier: 'TIER_2',
+      cbseChapter: 'Class IX Science: ix2 Tissues & ix3 Reproduction',
+      currentInSyllabus: 'General C-6.1 lines on Yoga and "India’s historical contribution to human anatomy".',
+      absentVerifiedScience: 'Suśruta’s 121 surgical instruments (101 yantras + 20 śastras), Aṣṭavidha Śastrakarma, 7 skin layers, heat sanitization, simulation training, and 1793 Pune Indian Flap rhinoplasty.',
+      evidenceBasis: 'Suśruta Saṃhitā (c. 600 BCE; 878 CE MS) & Madras Gazette 1793 (Findlay & Cruso)'
+    },
+    {
+      gapId: 'GAP-MET-X',
+      domainId: 'E',
+      tier: 'TIER_2',
+      cbseChapter: 'Class X Science: ch3 Metals and Non-metals',
+      currentInSyllabus: 'Delhi Iron Pillar confined to non-evaluative "More to Know!" box (Note for Teachers p. 6).',
+      absentVerifiedScience: 'Prof. R. Balasubramaniam (IIT Kanpur) δ-FeOOH Misawite & iron hydrogen phosphate hydrate passive film; IISc Wootz steel (1–2% C superplasticity); Zawar closed-retort zinc distillation.',
+      evidenceBasis: 'Corrosion Science (1998/2000), IISc Wootz studies, Zawar archaeometallurgy'
+    },
+    {
+      gapId: 'GAP-AST-ECO',
+      domainId: 'H',
+      tier: 'TIER_1',
+      cbseChapter: 'Class IX–X Science: ix8 Earth, ch13 Our Environment (Natural Resources dropped from X board)',
+      currentInSyllabus: 'No standalone Astronomy chapter; Sustainable Management of Natural Resources & Class IX Agriculture absent.',
+      absentVerifiedScience: 'Āryabhaṭa’s axial sidereal rotation & eclipse shadow optics; Surapāla’s Vṛkṣāyurveda (c. 1000 CE) & Kuṇapajala; Jharkhand/Santhal Pargana Dobha & Sarna hydrology.',
+      evidenceBasis: 'Āryabhaṭīya (499 CE), Vṛkṣāyurveda (c. 1000 CE), regional watershed surveys'
+    },
+    {
+      gapId: 'GAP-MATH-IX',
+      domainId: 'B',
+      tier: 'TIER_2',
+      cbseChapter: 'Class IX Mathematics: Unit I & II (Ganita Manjari)',
+      currentInSyllabus: 'Includes Baudhāyana rectangle-square, Brahmagupta, Mādhava, Virahāṅka.',
+      absentVerifiedScience: 'Baudhāyana √2 formula 577/408 (5-decimal accuracy, 0.000150% error) & triples; Piṅgala Chandaḥśāstra & Halāyudha Meru Prastāra (binomial triangle).',
+      evidenceBasis: 'Baudhāyana Śulbasūtra (61–62), Chandaḥśāstra & Mṛtasañjīvanī'
+    },
+    {
+      gapId: 'GAP-MATH-X',
+      domainId: 'B',
+      tier: 'TIER_1',
+      cbseChapter: 'Class X Mathematics: Trigonometry (12 marks), Triangles, Quadratic Equations',
+      currentInSyllabus: 'Preface cites IKS integration, yet syllabus names 0 Indian mathematicians; Constructions & Pythagorean proof omitted.',
+      absentVerifiedScience: 'Āryabhaṭa’s ardha-jyā chord-based trigonometry, Bakhshali non-perfect square-root method, Kerala School (Mādhava/Nīlakaṇṭha Tantrasaṅgraha) series.',
+      evidenceBasis: 'Āryabhaṭīya, Bakhshali MS, Tantrasaṅgraha'
+    },
+    {
+      gapId: 'GAP-MYTH-T3',
+      domainId: 'B',
+      tier: 'TIER_3',
+      cbseChapter: 'Scientific Rigor Boundary (Excluded from CBSE Syllabus)',
+      currentInSyllabus: 'Properly excluded from mainstream science/math exams.',
+      absentVerifiedScience: '20th-century 16 "Vedic Maths" sutras (not in Atharvaveda per TIFR Prof. S. G. Dani & K. S. Shukla) and fabricated blog Sanskrit verses attributing F = ma or nuclear weapons to Kaṇāda.',
+      evidenceBasis: 'TIFR / IAS Resonance audits & canonical Vaiśeṣika Sūtra text checks'
+    }
+  ];
+
+  function getGapMatrix(tierFilter) {
+    if (!tierFilter || tierFilter === 'ALL') return CBSE_2026_27_GAPS.slice();
+    return CBSE_2026_27_GAPS.filter(function (g) { return g.tier === tierFilter; });
+  }
+
   function validateAllMappings() {
     var all = getAllMappings();
     var issues = [];
@@ -313,12 +409,15 @@
 
   return {
     CURRICULUM_META: CURRICULUM_META,
+    POLICY_ASYMMETRY_2026_27: POLICY_ASYMMETRY_2026_27,
+    CBSE_2026_27_GAPS: CBSE_2026_27_GAPS,
     CLASS_IX_MAPPINGS: CLASS_IX_MAPPINGS,
     CLASS_X_MAPPINGS: CLASS_X_MAPPINGS,
     getAllMappings: getAllMappings,
     getByClass: getByClass,
     getByDomain: getByDomain,
     getByChapterId: getByChapterId,
+    getGapMatrix: getGapMatrix,
     validateAllMappings: validateAllMappings
   };
 });

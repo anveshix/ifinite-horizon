@@ -52,6 +52,17 @@ Verified Vigyan Atlas Class X chapters (`Hi`): `ch1`–`ch13`.
 
 ---
 
-## 4. Future-Updatable Structure
+## 4. CBSE 2026–27 Structural Asymmetry & 3-Tier Gap Audit
+
+Per **CBSE Circular Acad-70/2026**, Class IX has transitioned to NCF-SE 2023 textbooks (*Exploration*, *Ganita Manjari*) with `CG-6 / C-6.1` provisions, whereas Class X (2026–27) remains on the Old Rationalized Scheme where NCERT Box items (e.g., Delhi Iron Pillar in Ch. 3) are explicitly **non-evaluative** (*Note for Teachers*, p. 6), *Knowledge Traditions and Practices of India* (073) is restricted to XI–XII, and Class IX Physics chapters (*Motion*, *Work & Energy*, *Sound Waves*) list zero `C-6.1` Indian references.
+
+The engine separates all gap items cleanly into three epistemic tiers (`modules/iks-science/curriculum/cbse-mapping.js` → `CBSE_2026_27_GAPS`):
+- **Tier 1 (`TIER_1` — Verified & Absent from CBSE):** Kaṇāda's authentic qualitative dynamics (*Vaiśeṣika Sūtra* 1.1.11, 5.1.7, 5.1.8, 5.1.17), Hampi/Madurai musical pillars & 22 Śrutis (Class IX *Sound Waves* gap), Āryabhaṭa's *ardha-jyā* trigonometry & Kerala School series (Class X Math gap), Surapāla's *Vṛkṣāyurveda* & *Kuṇapajala* (c. 1000 CE).
+- **Tier 2 (`TIER_2` — Partial in Class IX / Excluded from Class X Board Exam):** Delhi Iron Pillar $\delta\text{-FeOOH}$ Misawite & phosphate passivation (`2H₃PO₄ + Fe → Fe(H₂PO₄)₂ + H₂`, Prof. R. Balasubramaniam, IIT Kanpur), IISc Wootz 1–2% C steel, Zawar closed-retort zinc distillation, Rasashastra *Pātana Yantras* (*Ūrdhva*, *Adhaḥ*, *Tiryak*, *Dolā*, *Ḍamaru*), Suśruta's 121 instruments & 1793 Pune flap, Baudhāyana $\sqrt{2} \approx 577/408$ & Piṅgala/Halāyudha *Meru Prastāra*.
+- **Tier 3 (`TIER_3` — Refuted Myths Excluded for Scientific Rigor):** 20th-century 16 "Vedic Maths" sutras (not in Atharvaveda per TIFR Prof. S. G. Dani & K. S. Shukla) and fabricated blog Sanskrit lines attributing $F = ma$ or nuclear weapons to Kaṇāda.
+
+---
+
+## 5. Future-Updatable Structure
 
 All mappings are stored declaratively in `modules/iks-science/curriculum/cbse-mapping.js` with `curriculumSession: "2026–27"`, `classLevel: "IX" | "X"`, `syllabusSourceStatus`, and `scopeLabel`, allowing instant updates for future CBSE academic sessions (`2027–28+`) without modifying UI or simulation code.

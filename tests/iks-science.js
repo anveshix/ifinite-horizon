@@ -16,12 +16,20 @@ const ADMIN = require('../modules/iks-science/services/admin-service');
 // 1. Evidence & Schema Validation
 const claimCheck = EVIDENCE.validateAllClaims();
 assert.equal(claimCheck.valid, true, 'Evidence validation failed: ' + JSON.stringify(claimCheck.issues));
-assert.ok(claimCheck.total >= 24, 'Expected at least 24 evidence claims');
+assert.ok(claimCheck.total >= 33, 'Expected at least 33 evidence claims');
 
 // Guardrail checks on evidence claims
 const paramanu = EVIDENCE.getClaimById('IKS-A-01');
 assert.equal(paramanu.evidenceClass, 'P1');
 assert.ok(paramanu.scientificSufficiencyNote.includes(SCHEMA.INSUFFICIENCY_NOTICE));
+
+const kanadaFake = EVIDENCE.getClaimById('IKS-A-05');
+assert.equal(kanadaFake.evidenceClass, 'U1');
+assert.ok(kanadaFake.scientificSufficiencyNote.includes(SCHEMA.INSUFFICIENCY_NOTICE));
+
+const vedicMathCritique = EVIDENCE.getClaimById('IKS-B-06');
+assert.equal(vedicMathCritique.evidenceClass, 'U1');
+assert.ok(vedicMathCritique.scientificSufficiencyNote.includes(SCHEMA.INSUFFICIENCY_NOTICE));
 
 const tridosha = EVIDENCE.getClaimById('IKS-C-03');
 assert.equal(tridosha.evidenceClass, 'P1');
@@ -64,6 +72,12 @@ CURRICULUM.getAllMappings().forEach((m) => {
   assert.ok(indexHtml.includes(m.chapterId), `Chapter ID ${m.chapterId} not found in index.html`);
 });
 
+// Verify 3-tier CBSE 2026-27 Gap Matrix
+assert.ok(CURRICULUM.getGapMatrix('TIER_1').length >= 4);
+assert.ok(CURRICULUM.getGapMatrix('TIER_2').length >= 3);
+assert.ok(CURRICULUM.getGapMatrix('TIER_3').length >= 1);
+assert.ok(CURRICULUM.POLICY_ASYMMETRY_2026_27.circularRef.includes('70/2026'));
+
 // 4. Experiment Engine: 23-field compliance + Scientific correctness + Safety
 const expCheck = EXPERIMENTS.validateAllExperiments();
 assert.equal(expCheck.valid, true, 'Experiment validation failed: ' + JSON.stringify(expCheck.issues));
@@ -78,12 +92,13 @@ assert.equal(resA1.charge, 0);
 const resA2 = expA.run({ protons: 7, neutrons: 7, electrons: 7 });
 assert.equal(resA2.symbol, 'N');
 
-// EXP-B: Baudhayana 3-4-5 & Aryabhata pi
+// EXP-B: Baudhayana 3-4-5, sqrt(2) = 577/408 & Aryabhata pi
 const expB = EXPERIMENTS.getExperimentById('EXP-B');
 const resB = expB.run({ sideA: 3, sideB: 4 });
 assert.equal(resB.diagonalC, 5);
 assert.equal(resB.areaSum, 25);
 assert.ok(Math.abs(resB.aryabhataPi - 3.1416) < 1e-9);
+assert.ok(Math.abs(resB.baudhayanaRoot2 - Math.SQRT2) < 0.000003);
 
 // EXP-D: Alveolar ventilation
 const expD = EXPERIMENTS.getExperimentById('EXP-D');
@@ -92,10 +107,11 @@ assert.equal(resD.veLMin, 5.5);
 assert.equal(resD.vaLMin, 4);
 assert.ok(resD.simulatedHr3Min > 72 && resD.simulatedHr3Min < 120);
 
-// EXP-E: Corrosion passive barrier vs saline breakdown
+// EXP-E: Corrosion passive barrier vs saline breakdown + Misawite reaction
 const expE = EXPERIMENTS.getExperimentById('EXP-E');
 const delhiIron = expE.run({ phosphorus: 0.26, humidity: 45, salinity: 0, days: 180 });
 const marineIron = expE.run({ phosphorus: 0.26, humidity: 85, salinity: 3.0, days: 180 });
+assert.ok(delhiIron.reactionMechanism.includes('H₃PO₄') && delhiIron.regime.includes('Misawite'));
 assert.ok(marineIron.oxideUm > delhiIron.oxideUm * 5, 'High salinity/humidity should strongly accelerate corrosion');
 
 // EXP-F: Aqueous salt-water boiling point elevation & safety
@@ -133,7 +149,7 @@ const sampleAns = {};
 ASSESSMENT.getAllQuestions().forEach((q) => { sampleAns[q.id] = q.correctIndex; });
 const score = ASSESSMENT.scoreSubmission(sampleAns);
 assert.equal(score.pct, 100);
-assert.equal(score.correct, 8);
+assert.equal(score.correct, 10);
 
 // 7. Privacy, XSS Escaping & Admin Gates
 assert.equal(SCHEMA.escapeHtml('<script>alert(1)</script>'), '&lt;script&gt;alert(1)&lt;/script&gt;');

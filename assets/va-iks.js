@@ -30,6 +30,7 @@
     evidenceClassFilter: 'ALL',
     evidenceQuery: '',
     teacherClassTab: 'IX',
+    gapTierFilter: 'ALL',
     fullscreenViz: false,
     paramsByExp: {},
     vizState: VIZ.createViewState('A'),
@@ -792,6 +793,8 @@
 
   function renderTeacherTab(main) {
     var mappings = CURRICULUM.getByClass(ui.teacherClassTab);
+    var gaps = CURRICULUM.getGapMatrix(ui.gapTierFilter);
+    var pol = CURRICULUM.POLICY_ASYMMETRY_2026_27;
     var savedPlan = ui.progress.lessonPlanOverrides[ui.domainId + '-' + ui.teacherClassTab] ||
       PROGRESS.buildLessonPlanTemplate(ui.domainId, ui.teacherClassTab);
     var auditEntries = ADMIN.getAuditEntries();
@@ -803,11 +806,35 @@
       '  <h3 style="margin:0 0 6px;color:#ffd36b;">Teacher &amp; CBSE 2026–27 Curriculum Studio</h3>',
       '  <p style="margin:0 0 10px;font-size:13px;color:#cfe2de;">' + esc(CURRICULUM.CURRICULUM_META.compulsoryExamDisclaimer) + '</p>',
       '  <p style="margin:0 0 10px;font-size:12px;color:#9fc1bc;">' + esc(CURRICULUM.CURRICULUM_META.verificationStatus) + '</p>',
+      '  <div class="va-iks-subcard" style="margin-bottom:10px;font-size:12.5px;line-height:1.5;">',
+      '    <strong style="color:#ffd36b;">' + esc(pol.circularRef) + ' — Structural Asymmetry:</strong><br>',
+      '    • <strong>Class IX:</strong> ' + esc(pol.classIXStatus) + '<br>',
+      '    • <strong>Class X:</strong> ' + esc(pol.classXStatus) + '<br>',
+      '    • <strong>KTPI (073):</strong> ' + esc(pol.ktpiNote),
+      '  </div>',
       '  <div style="display:flex;gap:8px;flex-wrap:wrap;">',
       '    <button type="button" class="va-iks-chip-btn" id="vaTeachIxBtn" aria-pressed="' + (ui.teacherClassTab === 'IX') + '">Class IX (Science 086 · 2026–27)</button>',
       '    <button type="button" class="va-iks-chip-btn" id="vaTeachXBtn" aria-pressed="' + (ui.teacherClassTab === 'X') + '">Class X (Science 086 · 2026–27)</button>',
       '    <button type="button" class="va-iks-chip-btn" id="vaTeachPrintBtn">🖨 Printable Worksheet (Domain ' + esc(ui.domainId) + ')</button>',
       '  </div>',
+      '</div>',
+
+      '<div class="va-iks-card">',
+      '  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">',
+      '    <h4 style="margin:0;color:#ffd36b;">CBSE 2026–27 Gap Audit: Verified Absent Science vs Refuted Myths</h4>',
+      '    <div style="display:flex;gap:6px;flex-wrap:wrap;">',
+      '      <button type="button" class="va-iks-chip-btn" data-gap-tier="ALL" aria-pressed="' + (ui.gapTierFilter === 'ALL') + '">All Tiers</button>',
+      '      <button type="button" class="va-iks-chip-btn" data-gap-tier="TIER_1" aria-pressed="' + (ui.gapTierFilter === 'TIER_1') + '">Tier 1: Absent Verified</button>',
+      '      <button type="button" class="va-iks-chip-btn" data-gap-tier="TIER_2" aria-pressed="' + (ui.gapTierFilter === 'TIER_2') + '">Tier 2: Non-Eval Box / IX-Only</button>',
+      '      <button type="button" class="va-iks-chip-btn" data-gap-tier="TIER_3" aria-pressed="' + (ui.gapTierFilter === 'TIER_3') + '">Tier 3: Refuted Myths</button>',
+      '    </div>',
+      '  </div>',
+      '  <table class="va-iks-table"><thead><tr><th>Tier</th><th>CBSE Chapter / Area</th><th>Current Syllabus Status</th><th>Verified Science / Rigor Boundary</th></tr></thead><tbody>',
+      gaps.map(function (g) {
+        var tMeta = SCHEMA.CBSE_GAP_TIERS[g.tier];
+        return '<tr><td><span class="va-iks-badge" style="background:' + esc(tMeta.color) + ';">' + esc(g.tier) + '</span></td><td><strong>' + esc(g.cbseChapter) + '</strong></td><td>' + esc(g.currentInSyllabus) + '</td><td>' + esc(g.absentVerifiedScience) + '<br><small style="color:#9fc1bc;">Basis: ' + esc(g.evidenceBasis) + '</small></td></tr>';
+      }).join(''),
+      '  </tbody></table>',
       '</div>',
 
       '<div class="va-iks-card">',
@@ -842,6 +869,12 @@
     main.querySelector('#vaTeachIxBtn').addEventListener('click', function () { ui.teacherClassTab = 'IX'; renderTeacherTab(main); });
     main.querySelector('#vaTeachXBtn').addEventListener('click', function () { ui.teacherClassTab = 'X'; renderTeacherTab(main); });
     main.querySelector('#vaTeachPrintBtn').addEventListener('click', function () { openWorksheetWindow(ui.domainId); });
+    main.querySelectorAll('[data-gap-tier]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        ui.gapTierFilter = btn.getAttribute('data-gap-tier');
+        renderTeacherTab(main);
+      });
+    });
     main.querySelectorAll('[data-assign-id]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var id = btn.getAttribute('data-assign-id');
