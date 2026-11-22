@@ -92,11 +92,30 @@ export default {
       dna.add(b1, b2, rung);
     }
 
-    let evoMode = ctx.preset?.sub === "evolution";
+    let evoMode = ctx.preset?.sub === "evolution", dihybridMode = ctx.preset?.sub === "dihybrid";
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();
         c.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
+      }
+      if (dihybridMode) {
+        /* 4x4 Mendel Dihybrid Cross (RrYy x RrYy -> 9 Round-Yellow : 3 Round-Green : 3 Wrinkled-Yellow : 1 Wrinkled-Green) */
+        const gam = ["RY", "Ry", "rY", "ry"];
+        for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
+          const g = gam[r] + gam[c];
+          const round = g.includes("R"), yellow = g.includes("Y");
+          const sx = -0.35 + c * 0.92, sy = 1.35 - r * 0.85;
+          const seed = new THREE.Mesh(
+            round ? new THREE.SphereGeometry(0.28, 16, 12) : new THREE.DodecahedronGeometry(0.26, 0),
+            new THREE.MeshStandardMaterial({ color: yellow ? 0xfacc15 : 0x22c55e, roughness: round ? 0.3 : 0.85 })
+          );
+          seed.position.set(sx, sy, 0); dyn.add(seed);
+          const lb = labelSprite(THREE, `${round ? "R" : "r"}${yellow ? "Y" : "y"}`, "", { scale: 0.34, size: 18, color: "#fff" });
+          lb.position.set(sx, sy - 0.38, 0.25); dyn.add(lb);
+        }
+        h1.textContent = "Dihybrid Cross: RrYy × RrYy (16 offspring)";
+        h2.textContent = "9 Round-Yellow : 3 Round-Green : 3 Wrinkled-Yellow : 1 Wrinkled-Green";
+        return;
       }
       if (evoMode) {
         /* Evolution & Natural Selection: Homologous (Common Ancestor -> Divergent) vs Analogous (Convergent) */
@@ -152,9 +171,10 @@ export default {
     const sl = sliders(ctx, side);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Crosses · संकरण"));
     [["F₁ (TT×tt)", 0, 2, 0], ["F₂ (Tt×Tt)", 1, 1, 0], ["Test (Tt×tt)", 1, 2, 0], ["Human XX×XY", 1, 1, 1]].forEach(([lbl, a, b, c]) => {
-      actionButton(presets, lbl, () => { evoMode = false; ctx.set("p1", a); ctx.set("p2", b); ctx.set("cross", c); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
+      actionButton(presets, lbl, () => { evoMode = false; dihybridMode = false; ctx.set("p1", a); ctx.set("p2", b); ctx.set("cross", c); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
     });
-    actionButton(presets, "🦴 Evolution & Fossils", () => { evoMode = !evoMode; sfx.play("pop"); rebuild(); }, "cl-chipb");
+    actionButton(presets, "🌱 Dihybrid 9:3:3:1", () => { evoMode = false; dihybridMode = !dihybridMode; sfx.play("pop"); rebuild(); }, "cl-chipb");
+    actionButton(presets, "🦴 Evolution & Fossils", () => { dihybridMode = false; evoMode = !evoMode; sfx.play("pop"); rebuild(); }, "cl-chipb");
     side.insertBefore(presets, sl.root.nextSibling);
 
     const facts = factsView(ctx, side);

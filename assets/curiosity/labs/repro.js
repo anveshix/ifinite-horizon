@@ -66,13 +66,63 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    let t = 0;
+    let t = 0, subMode = ctx.preset?.sub === "human" ? "human" : ctx.preset?.sub === "vegetative" ? "vegetative" : null;
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();
         c.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
       }
       const R = view(ctx.vars);
+      if (subMode === "human") {
+        /* Human Reproduction: Ovum + Sperm -> Zygote -> Morula/Blastocyst -> Embryo & Placenta */
+        const ovum = new THREE.Mesh(new THREE.SphereGeometry(0.9, 24, 18), new THREE.MeshStandardMaterial({ color: 0xf472b6, transparent: true, opacity: 0.72 }));
+        ovum.position.set(R.step >= 2 ? 0 : 0.7, 0.2, 0); dyn.add(ovum);
+        const nuc = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 12), new THREE.MeshStandardMaterial({ color: 0xa855f7 }));
+        nuc.position.copy(ovum.position); dyn.add(nuc);
+        if (R.step === 1) {
+          const sp = new THREE.Mesh(new THREE.SphereGeometry(0.22, 14, 10), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
+          sp.position.set(-1.5, 0.2, 0); dyn.add(sp);
+          const tail = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.01, 1.3, 8), new THREE.MeshBasicMaterial({ color: 0x7dd3fc }));
+          tail.rotation.z = Math.PI / 2; tail.position.set(-2.25, 0.2, 0); dyn.add(tail);
+        } else if (R.step >= 3) {
+          const cells = R.step === 3 ? 4 : 8;
+          for (let i = 0; i < cells; i++) {
+            const a = (i / cells) * Math.PI * 2;
+            const c = new THREE.Mesh(new THREE.SphereGeometry(0.24, 12, 10), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
+            c.position.set(Math.cos(a) * 0.42, 0.2 + Math.sin(a) * 0.42, (i % 2 ? 0.18 : -0.18)); dyn.add(c);
+          }
+          if (R.step === 4) {
+            const plac = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.35, 1.8), new THREE.MeshStandardMaterial({ color: 0xef4444 }));
+            plac.position.set(0, -1.25, 0); dyn.add(plac);
+            const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.1, 10), new THREE.MeshStandardMaterial({ color: 0xfda4af }));
+            cord.position.set(0, -0.65, 0); dyn.add(cord);
+          }
+        }
+        const stages = ["", "Gametes (Sperm n + Ovum n)", "Fertilisation → Zygote (2n)", "Cleavage → Embryo", "Implantation & Placenta (O₂/Nutrients)"];
+        const tag = labelSprite(THREE, "Human Reproduction · मानव जनन", stages[R.step], { scale: 0.85, size: 22, color: "#fbcfe8" });
+        tag.position.set(0, 2.45, 0); dyn.add(tag);
+        h1.textContent = `Human Reproduction · Stage ${R.step}/4`;
+        h2.textContent = stages[R.step];
+        return;
+      }
+      if (subMode === "vegetative") {
+        /* Bryophyllum Leaf Margin Buds + Stem Grafting */
+        const leaf = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.14, 1.6), new THREE.MeshStandardMaterial({ color: 0x16a34a, roughness: 0.5 }));
+        leaf.position.set(0, -0.3, 0); dyn.add(leaf);
+        const buds = R.step + 1;
+        for (let i = 0; i < buds; i++) {
+          const x = -1.1 + (i / Math.max(1, buds - 1)) * 2.2, z = i % 2 === 0 ? 0.82 : -0.82;
+          const shoot = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.3 + R.step * 0.16, 8), new THREE.MeshStandardMaterial({ color: 0x86efac }));
+          shoot.position.set(x, -0.1 + R.step * 0.08, z); dyn.add(shoot);
+          const cap = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 8), new THREE.MeshStandardMaterial({ color: 0x4ade80 }));
+          cap.position.set(x, 0.1 + R.step * 0.16, z); dyn.add(cap);
+        }
+        const tag = labelSprite(THREE, "Vegetative Propagation (Bryophyllum)", "Leaf-margin buds grow clonal plantlets!", { scale: 0.85, size: 22, color: "#bbf7d0" });
+        tag.position.set(0, 2.35, 0); dyn.add(tag);
+        h1.textContent = `Vegetative Propagation · ${buds} Leaf Buds`;
+        h2.textContent = "Genetically identical clonal plants";
+        return;
+      }
       if (R.mode === 0) {
         /* 3D Flower: green sepals, pink petals, central ovary/style/stigma, yellow stamens + growing pollen tube */
         for (let i = 0; i < 6; i++) {
@@ -138,8 +188,10 @@ export default {
     const sl = sliders(ctx, side);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Topic · विषय"));
     REPRO_MODES.forEach((m, i) => {
-      actionButton(presets, m.name.split(" ")[0], () => { ctx.set("mode", i); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
+      actionButton(presets, m.name.split(" ")[0], () => { subMode = null; ctx.set("mode", i); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
     });
+    actionButton(presets, "🌿 Vegetative", () => { subMode = "vegetative"; sfx.play("pop"); rebuild(); }, "cl-chipb");
+    actionButton(presets, "🧬 Human", () => { subMode = "human"; sfx.play("pop"); rebuild(); }, "cl-chipb");
     side.insertBefore(presets, sl.root.nextSibling);
     const facts = factsView(ctx, side);
     note(side, "After pollination on the stigma, a pollen tube grows down the style into the ovule (fertilisation): the ovule becomes the SEED and the ovary ripens into the FRUIT!", "परागण के बाद पराग नली वर्तिका से बीजांड तक पहुँचती है: निषेचन के बाद बीजांड से बीज तथा अंडाशय से फल बनता है!");

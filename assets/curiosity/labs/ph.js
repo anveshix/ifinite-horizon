@@ -77,7 +77,7 @@ export default {
       b.visible = false; scene.add(b);
       h2Bubbles.push({ m: b, x: 0.35 + (Math.random() - 0.5) * 0.45, y: -0.9 + Math.random() * 1.9, z: (Math.random() - 0.5) * 0.4 });
     }
-    let zincIn = false;
+    let zincIn = ctx.preset?.sub === "acidrx";
 
     const tag = labelSprite(THREE, "Neutral · Green", "उदासीन", { scale: 0.9, size: 26 });
     tag.position.set(0, 2.45, 0); scene.add(tag);
@@ -129,10 +129,15 @@ export default {
     actionButton(btns, "🫧 Neutralise to pH 7 · उदासीन करो", () => {
       ctx.set("pH", 7); sfx.play("fizz"); ctx.run();
     }, "cl-act");
-    const btnZn = actionButton(btns, "⚗️ Drop Zinc (Zn + Acid → H₂↑)", () => {
+    const btnZn = actionButton(btns, zincIn ? "⚗️ Remove Zinc Strip" : "⚗️ Drop Zinc (Zn + Acid → H₂↑)", () => {
       zincIn = !zincIn;
       if (zincIn && ctx.vars.pH > 4) ctx.set("pH", 2);
       btnZn.textContent = zincIn ? "⚗️ Remove Zinc Strip" : "⚗️ Drop Zinc (Zn + Acid → H₂↑)";
+      sfx.play("fizz");
+    }, "cl-chipb");
+    actionButton(btns, "🥛 Carbonate + Acid (CO₂↑)", () => {
+      if (ctx.vars.pH > 4) ctx.set("pH", 2);
+      zincIn = true; h1.textContent = "CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑"; h2.textContent = "CO₂ turns Limewater Ca(OH)₂ Milky!";
       sfx.play("fizz");
     }, "cl-chipb");
 

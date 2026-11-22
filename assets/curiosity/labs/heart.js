@@ -112,7 +112,7 @@ export default {
     };
 
     const lifeGrp = new THREE.Group(); scene.add(lifeGrp);
-    let lifeMode = ctx.preset?.sub === "alveoli" ? 1 : ctx.preset?.sub === "nephron" ? 2 : 0; // 0=Heart, 1=Alveoli Gas Exchange, 2=Kidney Nephron
+    let lifeMode = ctx.preset?.sub === "alveoli" ? 1 : ctx.preset?.sub === "nephron" ? 2 : ctx.preset?.sub === "dialysis" ? 3 : 0; // 0=Heart, 1=Alveoli, 2=Nephron, 3=Hemodialysis
     const rebuildLife = () => {
       while (lifeGrp.children.length) lifeGrp.remove(lifeGrp.children.pop());
       heartGrp.visible = lifeMode === 0;
@@ -146,6 +146,18 @@ export default {
         lb.position.set(0, 2.35, 0); lifeGrp.add(lb);
         h1.textContent = "Excretion: 1 Million Nephrons/Kidney";
         h2.textContent = "Filters Urea · Reabsorbs Glucose & H₂O";
+      } else if (lifeMode === 3) {
+        /* Artificial Kidney / Hemodialysis Unit */
+        const tank = new THREE.Mesh(new THREE.BoxGeometry(3.8, 2.4, 1.6), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.25 }));
+        lifeGrp.add(tank);
+        for (let i = -1; i <= 1; i++) {
+          const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 3.4, 12), new THREE.MeshStandardMaterial({ color: 0xef4444 }));
+          tube.rotation.z = Math.PI / 2; tube.position.set(0, i * 0.55, 0); lifeGrp.add(tube);
+        }
+        const lb = labelSprite(THREE, "Artificial Kidney (Hemodialysis)", "Semi-permeable tubes diffuse Urea out; RBCs stay!", { scale: 0.85, size: 22, color: "#bae6fd" });
+        lb.position.set(0, 2.25, 0); lifeGrp.add(lb);
+        h1.textContent = "Hemodialysis · कृत्रिम वृक्क";
+        h2.textContent = "Clears Urea without reabsorption";
       }
     };
 
@@ -185,7 +197,7 @@ export default {
     [["Sleep (55)", 55], ["Rest (70)", 70], ["Brisk Walk (105)", 105], ["Sprint (150)", 150]].forEach(([lbl, b]) => {
       actionButton(presets, lbl, () => { lifeMode = 0; rebuildLife(); ctx.set("bpm", b); sfx.play("pop"); sl.sync(); sync(); }, "cl-chipb");
     });
-    [["🫁 Alveoli", 1], ["💧 Nephron", 2]].forEach(([lbl, lm]) => {
+    [["🫁 Alveoli", 1], ["💧 Nephron", 2], ["🩺 Dialysis", 3]].forEach(([lbl, lm]) => {
       actionButton(presets, lbl, () => { lifeMode = lifeMode === lm ? 0 : lm; sfx.play("pop"); rebuildLife(); if (lifeMode === 0) sync(); }, "cl-chipb");
     });
     side.insertBefore(presets, sl.root.nextSibling);

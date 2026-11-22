@@ -83,6 +83,23 @@ export default {
         const c = dyn.children.pop();
         c.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
       }
+      if (homologousN > 0) {
+        /* 3D Alkane Homologous Series Builder: C_n H_{2n+2} (differing by -CH2- = 14 u) */
+        const n = homologousN, formulas = ["", "CH₄ (Methane · 16 u)", "C₂H₆ (Ethane · 30 u)", "C₃H₈ (Propane · 44 u)", "C₄H₁₀ (Butane · 58 u)"];
+        for (let i = 0; i < n; i++) {
+          const cx = (i - (n - 1) / 2) * 1.15, cy = (i % 2 ? 0.25 : -0.25);
+          sphere(0.38, 0x475569, [cx, cy, 0]);
+          if (i > 0) bond([(i - 1 - (n - 1) / 2) * 1.15, ((i - 1) % 2 ? 0.25 : -0.25), 0], [cx, cy, 0]);
+          [[0, 0.72, 0.35], [0, -0.72, -0.35]].forEach(([dx, dy, dz]) => {
+            const hp = [cx + dx, cy + (i % 2 ? Math.abs(dy) : -Math.abs(dy)) * 0.9, dz];
+            bond([cx, cy, 0], hp); sphere(0.2, 0xf8fafc, hp);
+          });
+        }
+        const tag = labelSprite(THREE, `Homologous Series · ${formulas[n]}`, "Each step adds −CH₂− (+14 u mass)", { scale: 0.85, size: 22, color: "#fef08a" });
+        tag.position.set(0, 2.35, 0); dyn.add(tag);
+        h1.textContent = formulas[n]; h2.textContent = "Step Δ = −CH₂− (14 u)";
+        return;
+      }
       const M = view(ctx.vars);
       if (M.id === "h2o") {
         sphere(0.45, 0xef4444, [0, 0.2, 0]);
@@ -143,19 +160,30 @@ export default {
       h2.textContent = `${M.count} unit(s) → ${M.totalAtoms} atoms · ${M.totalMass} u`;
     };
 
+    let homologousN = ctx.preset?.sub === "homologous" ? 3 : 0;
     const stopFrame = st.onFrame(dt => { dyn.rotation.y += dt * 0.45; });
     const side = ctx.side; side.replaceChildren();
     const sl = sliders(ctx, side);
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Pick molecule · अणु चुनें"));
     MOLECULES_LIST.forEach((m, i) => {
-      actionButton(presets, m.formula.split(" ")[0], () => { ctx.set("mol", i); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
+      actionButton(presets, m.formula.split(" ")[0], () => { homologousN = 0; ctx.set("mol", i); sfx.play("pop"); sl.sync(); rebuild(); }, "cl-chipb");
+    });
+    const homBox = el("div", "cl-presets"); homBox.appendChild(el("span", "cl-lab", "🧬 Homologous (−CH₂− = 14 u) & Carbon Rxns"));
+    [1, 2, 3, 4].forEach(n => {
+      actionButton(homBox, `C${n}H${2 * n + 2}`, () => { homologousN = n; sfx.play("pop"); rebuild(); }, "cl-chipb");
+    });
+    [["Esterification", "CH₃COOH + C₂H₅OH —H⁺→ Sweet Ester + H₂O"], ["Hydrogenation", "C₂H₄ + H₂ —Ni→ C₂H₆ (Saturated Fat)"]].forEach(([nm, eq]) => {
+      actionButton(homBox, nm, () => { homologousN = 0; ctx.set("mol", 3); rebuild(); h1.textContent = nm; h2.textContent = eq; sfx.play("fizz"); }, "cl-chipb");
     });
     side.insertBefore(presets, sl.root.nextSibling);
+    side.insertBefore(homBox, presets.nextSibling);
     const facts = factsView(ctx, side);
     note(side, "Carbon forms covalent bonds via tetravalency & catenation. In Graphite each C bonds to 3 others (1 free e⁻ conducts electricity); in Diamond each C bonds rigidly to 4 others!", "कार्बन में श्रृंखलन (catenation) व चतुःसंयोजकता होती है। ग्रेफाइट में मुक्त इलेक्ट्रॉन होने से वह विद्युत का सुचालक है, जबकि हीरा कठोरतम है।");
 
     const off = bus.on("sim:change", e => { if (e.labId !== "molecules") return; rebuild(); facts.update(); sl.sync(); });
-    rebuild(); facts.update(); ctx.stage.dataset.ready = "1";
+    rebuild();
+    if (ctx.preset?.sub === "creactions") { h1.textContent = "Carbon Reactions: Esterification & Addition"; h2.textContent = "CH₃COOH + C₂H₅OH → Ester · C₂H₄ + H₂ —Ni→ C₂H₆"; }
+    facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

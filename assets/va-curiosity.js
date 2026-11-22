@@ -47,7 +47,7 @@ badge();addEventListener("va-cl-progress",badge);addEventListener("storage",e=>{
 const LINKS={
  /* Class X Ch 1: Chemical Reactions & Equations */
  "ch1/displacement":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Drop Zinc, Iron & Copper into salt solutions and watch the Reactivity Series in 3D!",{rxn:2,progress:90}],
- "ch1/balancing":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Balance coefficients and verify Law of Conservation of Mass across atoms!",{rxn:0,progress:90}],
+ "ch1/balancing":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Balance coefficients and verify Law of Conservation of Mass across atoms!",{rxn:0,sub:"balance"}],
  "ch1/combination":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Combine Mg + O₂ or CaO + H₂O in 3D exothermic synthesis reactions.",{rxn:0,progress:90}],
  "ch1/redox":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Track oxidation & reduction electron shifts live in CuO + H₂ → Cu + H₂O!",{rxn:4,progress:90}],
  "ch1/corrosion":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Inspect rusting of iron, rancidity, and sacrificial galvanisation protection.",{rxn:2,sub:"corrosion"}],
@@ -56,10 +56,10 @@ const LINKS={
  "ch2/indicators":["ph","pH Lab","pH प्रयोगशाला","Compare Litmus, Turmeric, Universal & Phenolphthalein colour shifts across acids & bases.",{pH:11,indicator:1}],
  "ch2/neutralisation":["ph","pH Lab","pH प्रयोगशाला","Titrate HCl and NaOH in 3D to reach pH 7 neutral salt + water!",{pH:7}],
  "ch2/salts":["ph","pH Lab","pH प्रयोगशाला","Mix acids and bases to form neutral, acidic or basic salt solutions.",{pH:7}],
- "ch2/acidrx":["ph","pH Lab","pH प्रयोगशाला","Drop Zinc metal into strong acid (pH ≤ 4) to watch H₂ gas bubbles rise!",{pH:2}],
+ "ch2/acidrx":["ph","pH Lab","pH प्रयोगशाला","Drop Zinc metal into strong acid (pH ≤ 4) to watch H₂ gas bubbles rise!",{pH:2,sub:"acidrx"}],
  /* Class X Ch 3: Metals & Non-metals */
  "ch3/ionic":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Inspect Na⁺Cl⁻ ionic crystal lattices, reactivity series & metal displacement.",{rxn:5,progress:90}],
- "ch3/reactivity":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Compare K > Na > Ca > Mg > Al > Zn > Fe > Cu > Ag reactivity in displacement tests!",{rxn:2,progress:90}],
+ "ch3/reactivity":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Compare K > Na > Ca > Mg > Al > Zn > Fe > Cu > Ag reactivity in displacement tests!",{rxn:2,sub:"series"}],
  "ch3/extraction":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","See thermite reduction (Fe₂O₃ + Al), roasting, and electrolytic refining.",{rxn:4,sub:"extraction"}],
  "ch3/prevent":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Test galvanisation (Zn coat) and alloying to halt iron corrosion.",{rxn:2,sub:"corrosion"}],
  "ch3/physical":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Compare metallic lustre, malleability, conductivity & reactivity series.",{rxn:5,progress:90}],
@@ -67,10 +67,10 @@ const LINKS={
  "ch4/molecules":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Rotate 3D Methane, Ethanol, Acetic Acid, Diamond, Graphite & Soap Micelles!",{mol:1}],
  "ch4/covalent":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","See shared covalent electron pairs in CH₄, H₂O, CO₂ & N₂ triple bonds.",{mol:1}],
  "ch4/allotropes":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Compare 3D tetrahedral Diamond (insulator) vs hexagonal Graphite (conductor) vs C₆₀!",{mol:5}],
- "ch4/homologous":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Step through alkanes/alcohols differing by −CH₂− (14 u) in a homologous series.",{mol:3}],
+ "ch4/homologous":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Step through alkanes/alcohols differing by −CH₂− (14 u) in a homologous series.",{sub:"homologous"}],
  "ch4/ethanol":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Inspect 3D Ethanol (CH₃CH₂OH) oxidation, esterification & dehydration.",{mol:3}],
  "ch4/micelle":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Watch amphiphilic soap micelles trap grease in their hydrophobic tails!",{mol:7}],
- "ch4/reactions":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Explore combustion, oxidation, addition (H₂/Ni) & substitution of carbon compounds.",{mol:2}],
+ "ch4/reactions":["molecules","Molecules 3D Lab","अणु 3D प्रयोगशाला","Explore combustion, oxidation, addition (H₂/Ni) & substitution of carbon compounds.",{mol:3,sub:"creactions"}],
  /* Class X Ch 5: Life Processes */
  "ch5/heart":["heart","Heart Lab","हृदय प्रयोगशाला","Watch O₂-rich & CO₂-rich blood flow through RA, RV, LA & LV and hear lub-dub!",{bpm:72,loop:0}],
  "ch5/heart3d":["heart","Heart Lab","हृदय प्रयोगशाला","Interactive double-circulation simulator with BPM & cardiac output readout.",{bpm:72,loop:0}],
@@ -78,7 +78,7 @@ const LINKS={
  "ch5/lungs3d":["heart","Heart Lab","हृदय प्रयोगशाला","Explore 3D Alveoli air sacs and pulmonary blood oxygenation.",{sub:"alveoli"}],
  "ch5/nephron":["heart","Heart Lab","हृदय प्रयोगशाला","Switch to Nephron mode to trace ultrafiltration & selective reabsorption!",{sub:"nephron"}],
  "ch5/nephron3d":["heart","Heart Lab","हृदय प्रयोगशाला","Inspect Bowman's capsule, glomerulus & tubule in 3D nephron view.",{sub:"nephron"}],
- "ch5/dialysis3d":["heart","Heart Lab","हृदय प्रयोगशाला","See how kidney filtration & artificial dialysis clear urea from blood.",{sub:"nephron"}],
+ "ch5/dialysis3d":["heart","Heart Lab","हृदय प्रयोगशाला","See how kidney filtration & artificial dialysis clear urea from blood.",{sub:"dialysis"}],
  "ch5/digestion":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Explode the human digestive tract in 3D: Amylase, HCl/Pepsin, Bile & Villi!",{mode:0}],
  "ch5/digest3d":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Interactive 3D exploded view of Stomach, Liver, Pancreas & Small Intestine.",{mode:1}],
  "ch5/xylem":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Watch unidirectional Xylem water flow and bidirectional Phloem transport.",{tissue:3,transp:4}],
@@ -89,18 +89,18 @@ const LINKS={
  "ch6/reflex":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Trigger a hot-flame stimulus and race the spinal Reflex Arc in milliseconds!",{mode:1}],
  "ch6/brain":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Inspect Forebrain (thinking), Midbrain, Cerebellum (balance) & Medulla in 3D!",{mode:2}],
  "ch6/plants":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Rotate the sunlight to watch Auxin migrate and bend the plant shoot (Phototropism)!",{mode:3}],
- "ch6/hormones":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Compare Adrenaline, Insulin, Thyroxine, Auxin & Gibberellin endocrine feedback.",{mode:2}],
+ "ch6/hormones":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Compare Adrenaline, Insulin, Thyroxine & Pituitary endocrine feedback in 3D!",{sub:"hormones"}],
  /* Class X Ch 7: How do Organisms Reproduce? */
- "ch7/flower":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Dissect a 3D flower and grow the pollen tube down into the ovule!",{mode:2}],
- "ch7/flower3d":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Rotate 3D sepals, petals, stamen & carpel to trace pollination & fertilisation.",{mode:2}],
- "ch7/fission":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Multiply Amoeba across 4 generations via Binary Fission (2ⁿ clones)!",{mode:0}],
- "ch7/budding":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Grow a tiny Hydra bud in 3D until it detaches as a new individual.",{mode:1}],
- "ch7/vegetative":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Explore vegetative propagation, grafting & clonal plant growth.",{mode:1}],
- "ch7/human":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare gametes, fertilisation & reproductive development stages.",{mode:2}],
- "ch7/human3d":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Explore gamete fusion, zygote formation & reproductive biology in 3D.",{mode:2}],
+ "ch7/flower":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Dissect a 3D flower and grow the pollen tube down into the ovule!",{mode:0}],
+ "ch7/flower3d":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Rotate 3D sepals, petals, stamen & carpel to trace pollination & fertilisation.",{mode:0}],
+ "ch7/fission":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Multiply Amoeba across 4 generations via Binary Fission (2ⁿ clones)!",{mode:1}],
+ "ch7/budding":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Grow a tiny Hydra bud in 3D until it detaches as a new individual.",{mode:2}],
+ "ch7/vegetative":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Grow Bryophyllum leaf-margin buds & clonal plants in 3D!",{sub:"vegetative"}],
+ "ch7/human":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Watch Sperm + Ovum fertilisation, Zygote cleavage & Placenta in 3D!",{sub:"human"}],
+ "ch7/human3d":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Explore gamete fusion, embryo implantation & placenta exchange in 3D.",{sub:"human"}],
  /* Class X Ch 8: Heredity */
  "ch8/mendel":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Cross TT, Tt, and tt pea plants in 3D and verify Mendel's 3:1 & 1:2:1 ratios!",{cross:0,p1:1,p2:1}],
- "ch8/dihybrid":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Explore independent assortment, dominant vs recessive alleles & Punnett squares.",{cross:0,p1:1,p2:1}],
+ "ch8/dihybrid":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Explore the 4×4 Dihybrid Cross (RrYy × RrYy → 9:3:3:1) in 3D!",{sub:"dihybrid"}],
  "ch8/sex":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Switch to Human XX × XY mode and test the 50% Boy / 50% Girl probability.",{cross:1}],
  "ch8/genetics3d":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Watch the 3D DNA double helix and live Punnett Square genotypes.",{cross:0}],
  "ch8/evolution":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Tap Evolution & Fossils to compare Homologous vs Analogous organs!",{sub:"evolution"}],
@@ -124,8 +124,8 @@ const LINKS={
  "ch12/field":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Place a 3D compass around a bar magnet or solenoid to trace B-field lines!",{I:3}],
  "ch12/solenoid":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Increase coil turns N and current I to supercharge the electromagnet B ∝ nI!",{I:4,N:12}],
  "ch12/magnet":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Flip current direction to swap North and South poles on the solenoid.",{dir:-1}],
- "ch12/flhr":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Inspect magnetic field vectors B and Fleming's Left-Hand motor force!",{I:3}],
- "ch12/motor":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Explore how solenoid current strength builds uniform magnetic fields for motors.",{I:4}],
+ "ch12/flhr":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Inspect Fleming's Left-Hand Rule motor force F = BIL on the 3D spinning armature!",{I:3,sub:"flhr"}],
+ "ch12/motor":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Spin the 3D DC Electric Motor with split-ring commutator and reverse current!",{I:4,sub:"motor"}],
  "ch12/induction":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Move the magnet to deflect Faraday's galvanometer needle live!",{speed:3}],
  "ch12/domestic":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Toggle 220V Domestic AC mode to see Live/Neutral/Earth wires & MCB trip!",{sub:"domestic"}],
  /* Class X Ch 13: Our Environment */
@@ -151,11 +151,11 @@ const LINKS={
  "ix2/joint":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Flex the 3D Ball-and-Socket vs Hinge Joint and inspect Cartilage & Ligaments!",{mode:3}],
  "ix2/joint3d":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Bend & rotate human bone joints, tendons, and ligaments in real-time 3D.",{mode:3}],
  /* Class IX Ch 3: Reproduction & Continuity */
- "ix3/fission":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Watch Amoeba divide by Binary Fission across 4 exponential generations!",{mode:0}],
- "ix3/budding":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Grow a Hydra bud in 3D until it detaches as a clone.",{mode:1}],
- "ix3/vegetative":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Explore vegetative propagation and clonal plant multiplication.",{mode:1}],
- "ix3/flower":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Dissect sepals, petals, stamen & carpel and trace pollen-tube fertilisation!",{mode:2}],
- "ix3/human":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare sexual gamete fusion vs asexual reproduction outcomes.",{mode:2}],
+ "ix3/fission":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Watch Amoeba divide by Binary Fission across 4 exponential generations!",{mode:1}],
+ "ix3/budding":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Grow a Hydra bud in 3D until it detaches as a clone.",{mode:2}],
+ "ix3/vegetative":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Grow Bryophyllum leaf-margin buds & clonal plants in 3D!",{sub:"vegetative"}],
+ "ix3/flower":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Dissect sepals, petals, stamen & carpel and trace pollen-tube fertilisation!",{mode:0}],
+ "ix3/human":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Watch Sperm + Ovum fertilisation, Zygote cleavage & Placenta in 3D!",{sub:"human"}],
  "ix3/dispersal":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Watch winged seeds disperse away from the parent plant in 3D!",{mode:3}],
  /* Class IX Ch 4: Diversity in Living Organisms */
  "ix4/kingdoms":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","Review Whittaker's 5 Kingdoms (Monera, Protista, Fungi, Plantae, Animalia) in 3D!",{sub:"kingdoms"}],
@@ -163,7 +163,7 @@ const LINKS={
  /* Class IX Ch 5: Matter & Mixtures */
  "ix5/types":["matter","Matter Lab","पदार्थ प्रयोगशाला","Shine a laser beam through Solution, Colloid & Suspension to test the Tyndall Effect!",{mix:1}],
  "ix5/lab":["matter","Matter Lab","पदार्थ प्रयोगशाला","Watch thermal convection currents & Brownian motion from −10 °C to 110 °C!",{temp:65}],
- "ix5/conc":["matter","Matter Lab","पदार्थ प्रयोगशाला","Compute mass-by-mass % concentration and compare particle sizes in 3D.",{mix:0}],
+ "ix5/conc":["matter","Matter Lab","पदार्थ प्रयोगशाला","Compute mass-by-mass % concentration and compare particle sizes in 3D.",{mix:0,sub:"conc"}],
  /* Class IX Ch 6: Atomic Structure */
  "ix6/atom":["atom","Atom Lab","परमाणु प्रयोगशाला","Build elements Z = 1–20 in 3D, fill K, L, M, N Bohr shells and inspect valency!",{Z:6}],
  "ix6/models":["atom","Atom Lab","परमाणु प्रयोगशाला","Fire α-particles at Gold Foil (Rutherford 1911) and test Bohr shells & isotopes!",{sub:"rutherford"}],
@@ -195,7 +195,7 @@ const LINKS={
  /* 2025-26 Track */
  "ix25_1/states":["matter","Matter Lab","पदार्थ प्रयोगशाला","Heat & cool water from −10 °C ice to 110 °C steam and watch convection!",{temp:60}],
  "ix25_1/diffusion":["matter","Matter Lab","पदार्थ प्रयोगशाला","Watch Brownian motion and diffusion speed rise as temperature increases!",{temp:85}],
- "ix25_1/evaporation":["matter","Matter Lab","पदार्थ प्रयोगशाला","Explore surface evaporation, thermal convection & steam state transitions in 3D!",{temp:105}]
+ "ix25_1/evaporation":["matter","Matter Lab","पदार्थ प्रयोगशाला","Explore surface evaporation, thermal convection & steam state transitions in 3D!",{temp:105,sub:"evap"}]
 };
 const lcss=document.createElement("style");lcss.textContent=`
 #clLink{display:flex;align-items:center;gap:12px;margin:8px 0;padding:10px 12px;border:1px solid var(--bd,var(--line));border-left:4px solid var(--acc,#ffd36b);border-radius:12px;background:var(--glass,rgba(255,255,255,.05));animation:clLinkIn .4s ease both}

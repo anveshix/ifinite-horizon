@@ -155,7 +155,10 @@ export default {
       if (e.labId !== "matter") return;
       sync(); facts.update(); sl.sync();
     });
-    sync(); facts.update(); ctx.stage.dataset.ready = "1";
+    sync();
+    if (ctx.preset?.sub === "evap") { h1.textContent = "Evaporation (Surface) vs Boiling (Bulk)"; h2.textContent = "Higher T, wind & surface area speed up evaporation!"; }
+    if (ctx.preset?.sub === "conc") { h1.textContent = `Mass % = (${ctx.vars.conc} / ${100 + ctx.vars.conc}) × 100`; h2.textContent = "Solute + Solvent = Solution"; }
+    facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 
