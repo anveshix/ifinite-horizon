@@ -1,21 +1,26 @@
 # Class IX simulator lab — scope and learning map
 
-**Release slice:** seven 2026–27 Class IX activities plus one separately tagged 2025–26 Matter inquiry (Science 086).
+**Coverage:** twelve 2026–27 Class IX compulsory chapters (`ix1`–`ix12`) plus one separately tagged 2025–26 Matter inquiry (`ix25_1`, Science 086).
 
-**Course scope:** The 2026–27 slice covers four Physics chapters and three Chemistry chapters. A separate 2025–26 track adds one Matter inquiry; it does not alter the current course. Class X is not implemented in this release.
+**Course scope:** The 2026–27 compulsory track covers Biology (`ix1`–`ix4`), Chemistry (`ix5`–`ix7`), Earth Science (`ix8`), and Physics (`ix9`–`ix12`). A separate 2025–26 track adds one Matter inquiry (`ix25_1/states`); it does not alter the current course. Class X is served through the 3D Curiosity Lab and 3D/2D Atlas.
 **Curriculum authority:** [CBSE Science (086), Class IX, 2026–27](https://cbseacademic.nic.in/web_material/CurriculumMain27/SecPart1/ScienceSt_SecP1_2026-27.pdf). The app's Class IX registry and chapter keys are in `docs/class9-coverage.json` and `index.html`.
 
-This is an **initial, chapter-linked inquiry slice**, not evidence that every official learning outcome, practical, or examination demand is covered. Outcomes below are short teaching goals for the individual models, not official CBSE quotations. The simulator does not claim teacher validation. The visualisations are idealised and must support, not replace, hands-on practical work.
+This is a **chapter-linked inquiry simulator**, not evidence that every official learning outcome, practical, or examination demand is covered. Outcomes below are short teaching goals for the individual models, not official CBSE quotations. The simulator does not claim teacher validation. The visualisations are idealised and must support, not replace, hands-on practical work.
 
 | Subject | Official chapter in the app registry | Activity | Main learner investigation | Related app topic |
 |---|---|---|---|---|
+| Biology | Cell | Microscope field-of-view estimate | Vary measured field diameter, cell count across diameter, and objective/eyepiece lenses; distinguish size estimate from magnification. | `ix1/scale` |
+| Biology | Tissues | Root-tip growth (apical meristem) | Step through days 1–7 and compare intact Jar A against Jar B root-tip trimming after day 3. | `ix2/meristem` |
+| Biology | Reproduction | Reproduction, pollination & dispersal | Compare binary fission (`N = 2ⁿ`), Hydra budding, biotic/abiotic pollination efficiency, and seed dispersal range. | `ix3/flower` |
+| Biology | Diversity | Five Kingdoms & classification | Match cellular organisation, cell wall, and mode of nutrition to Whittaker’s Five Kingdoms or acellular viruses with binomial names. | `ix4/kingdoms` |
+| Chemistry | Exploring Mixtures and their Separation | Separation decision lab | Choose a mixture, a recovery goal, and a separation technique; compare the choice with the physical-property rationale. This is a conceptual chooser, not a lab protocol. | `ix5/lab` |
+| Chemistry | Structure of an Atom | Atomic number / isotope / ion explorer | Change protons, neutrons, and electrons; inspect element identity, mass number, net charge, and simplified 2,8,8 shell filling for the first 18 elements. | `ix6/atom` |
+| Chemistry | Atoms and Molecules | Formula and relative-mass builder | Select a common molecule/formula unit and vary particle count; count atoms and calculate relative formula mass using school-level values. | `ix7/molecules` |
+| Earth Science | Earth as a System: Energy, Matter & Life | Solar heating, albedo & coastal winds | Vary latitude and surface albedo (`ocean`, `forest`, `desert`, `snow`), and toggle day sea breeze vs night land breeze. | `ix8/heating` |
 | Physics | Motion | Position–time explorer | Change initial velocity, acceleration, and time; compare displacement, velocity, and a schematic position–time curve under constant acceleration. | `ix9/line` |
 | Physics | Force and Laws of Motion | Net-force block | Vary resultant force and mass; observe `a = Fnet / m`. Friction and air resistance are omitted. | `ix10/forces` |
 | Physics | Work, Energy and Simple Machines | Ideal lever | Vary effort/load arms and effort; inspect ideal mechanical advantage and the force–distance trade-off. | `ix11/energy` |
 | Physics | Sound | Longitudinal-wave model | Vary frequency, amplitude, and medium; compare source frequency, schematic particle vibration, wave speed, and `v = fλ`. | `ix12/source` |
-| Chemistry | Exploring Mixtures and their Separation | Separation decision lab | Choose a mixture, a recovery goal, and a separation technique; compare the choice with the physical-property rationale. This is a conceptual chooser, not a lab protocol. | `ix5/lab` |
-| Chemistry | Structure of an Atom | Atomic number / isotope / ion explorer | Change protons, neutrons, and electrons; inspect element identity, mass number, net charge, and simplified 2,8,8 shell filling for the first 18 elements. | `ix6/atom` |
-| Chemistry | Atoms and Molecules | Formula and relative-mass builder | Select a common molecule/formula unit and vary particle count; count atoms and calculate relative formula mass using school-level values. | `ix7/molecules` |
 | 2025–26 historical track | Matter in Our Surroundings | Water particle-state inquiry | At about 1 atm, vary temperature around school-level 0 °C and 100 °C thresholds; predict particle arrangement and state. | `ix25_1/states` |
 
 ## Model limitations that are surfaced in the interface
