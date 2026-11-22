@@ -28,6 +28,7 @@ function build() {
       <span class="cl-chip" id="clStreak" title="Correct answers in a row">🔥 <b>0</b></span>
       <span class="cl-lv" id="clLv" title="Level"><span class="cl-lvn">Lv 1</span><i><u></u></i></span>
     </div>
+    <button type="button" class="cl-snd" id="clSnd" aria-pressed="false" title="Sound effects on / off · ध्वनि प्रभाव">🔇</button>
     <button type="button" class="cl-x" id="clClose" aria-label="Close Curiosity Lab" title="Close (Esc)">✕</button>
   </header>
   <main class="cl-main">
@@ -41,6 +42,15 @@ function build() {
   root.addEventListener("keydown", onKey);
   fx.mount($("#clFx", root));
   unsub.push(store.subscribe(paintHud));
+  const syncSnd = () => {
+    const b = $("#clSnd", root);
+    if (!b) return;
+    const on = fx.sound.on;
+    b.textContent = on ? "🔊" : "🔇";
+    b.setAttribute("aria-pressed", String(on));
+  };
+  syncSnd();
+  window.addEventListener("va-cl-snd", syncSnd);
 }
 
 /* ---------- HUD ---------- */
@@ -86,10 +96,10 @@ function paintPicker() {
   const all = labs(), shown = all.filter(l => filter === "all" || String(l.cls) === filter);
   const chips = [["all", "All classes"], ["9", "Class IX"], ["10", "Class X"]].map(([k, t]) => `<button type="button" class="cl-f${filter === k ? " on" : ""}" data-filter="${k}" aria-pressed="${filter === k}">${t}</button>`).join("");
   const cards = shown.map(l => {
-    const r = store.lab(l.id), unit = SYLLABUS[l.unit];
+    const r = store.lab(l.id), unit = SYLLABUS[l.unit], ms = l.missions || [], doneM = (r.missions || []).filter(id => ms.some(m => m.id === id)).length;
     return `<button type="button" class="cl-card" data-lab="${esc(l.id)}"><span class="cl-ico" aria-hidden="true">${esc(l.icon)}</span>
       <span class="cl-ct"><b>${esc(l.title.en)}</b><span class="hi" lang="hi">${esc(l.title.hi)}</span><em>${esc(l.blurb.en)}</em><small>Class ${l.cls === 9 ? "IX" : "X"} · NCERT Ch ${unit.no} · ${esc(unit.title.en)}</small></span>
-      <span class="cl-meta">${r.tweaks ? `🧪 ${r.tweaks}` : "New"}${r.answered ? ` · 🎯 ${r.correct}/${r.answered}` : ""}</span></button>`;
+      <span class="cl-meta">${r.tweaks ? `🧪 ${r.tweaks}` : "New"}${ms.length ? ` · 🏅 ${doneM}/${ms.length}` : ""}${r.answered ? ` · 🎯 ${r.correct}/${r.answered}` : ""}</span></button>`;
   }).join("");
   $("#clPick", root).innerHTML = `<div class="cl-pickhead"><h2>What do you want to explore? <span class="hi" lang="hi">आप क्या खोजना चाहते हैं?</span></h2><div class="cl-filters" role="group" aria-label="Filter by class">${chips}</div></div>
     <div class="cl-cards">${cards || `<p class="cl-empty">${all.length ? "No experiments for this class yet." : "No experiments are registered yet."}</p>`}</div>`;
@@ -143,7 +153,45 @@ function mountFallback(ctx, error, token) {
   const off = bus.on("sim:change", e => { if (e.labId === ctx.lab.id) update(); });
   cur.handle = { resize: update, dispose() { off(); stage.classList.remove("cl-fallback-mode"); } };
   update();
+  renderMissions(ctx);
   setTab("sim");
+}
+function renderMissions(ctx) {
+  const ms = ctx.lab.missions;
+  if (!ms || !ms.length || !ctx.side) return;
+  let box = $("#clMissions", ctx.side);
+  if (!box) { box = document.createElement("div"); box.id = "clMissions"; box.className = "cl-missions"; ctx.side.appendChild(box); }
+  const done = store.lab(ctx.lab.id).missions || [];
+  const count = ms.filter(m => done.includes(m.id)).length;
+  box.innerHTML = `<h3 class="cl-h">🏅 Discovery Missions · खोज मिशन <span class="cl-mcnt">${count}/${ms.length}</span></h3>
+    <ul class="cl-ml">${ms.map(m => {
+      const ok = done.includes(m.id);
+      return `<li class="${ok ? "done" : ""}" data-mid="${esc(m.id)}"><span class="cl-mk">${ok ? "✓" : "○"}</span><span><b>${esc(m.en)}</b> <span class="hi" lang="hi">${esc(m.hi)}</span></span><em>+15 XP</em></li>`;
+    }).join("")}</ul>`;
+}
+function checkMissions(ctx, trigger = "change") {
+  const ms = ctx.lab.missions;
+  if (!ms || !ms.length) return;
+  const facts = ctx.facts, runs = store.lab(ctx.lab.id).runs || 0;
+  let changed = false;
+  ms.forEach(m => {
+    try {
+      if (m.check({ ...ctx.vars }, facts, { runs, trigger })) {
+        const res = store.recordMission(ctx.lab.id, m.id, 15);
+        if (res.awarded) {
+          changed = true;
+          fx.sound.play("mission");
+          fx.vibrate([25, 25, 45]);
+          const xpChip = $("#clXp", root);
+          if (xpChip) {
+            fx.burstFrom(xpChip, { count: 42, spread: 100, angle: 90, power: 10 });
+            fx.floatFrom(xpChip, `+15 XP · 🏅 ${m.en.slice(0, 26)}`, { color: "#ffe066", size: 20, ms: 1500 });
+          }
+        }
+      }
+    } catch (e) { console.warn("[curiosity] mission check failed", m.id, e); }
+  });
+  if (changed) renderMissions(ctx);
 }
 export async function openLab(id) {
   const lab = getLab(id); if (!lab) return;
@@ -162,9 +210,10 @@ export async function openLab(id) {
       vars[varId] = val; store.recordTweak(lab.id, varId, val); paintTabs();
       if (!nudged && tried(lab.id) >= NUDGE_AT) { nudged = true; nudge(); }
       bus.emit("sim:change", { labId: lab.id, varId, value: val, vars: { ...vars }, facts: lab.facts({ ...vars }) });
+      checkMissions(ctx, "change");
       return val;
     },
-    run() { store.recordRun(lab.id); bus.emit("sim:run", { labId: lab.id, vars: { ...vars } }); },
+    run() { store.recordRun(lab.id); bus.emit("sim:run", { labId: lab.id, vars: { ...vars } }); checkMissions(ctx, "run"); },
     get facts() { return lab.facts({ ...vars }); }
   };
   cur = { lab, vars, ctx, handle: { dispose() {} }, stageHandle: null };
@@ -176,6 +225,7 @@ export async function openLab(id) {
     const h = await lab.mount(ctx);
     if (!active()) { if (h && h.dispose) h.dispose(); return; }
     cur.handle = h || cur.handle; cur.stageHandle = null;
+    renderMissions(ctx);
   } catch (e) {
     if (!active()) return;
     mountFallback(ctx, e, token);
@@ -219,6 +269,7 @@ function applyVars(vars, goSim = true) {
 function onClick(e) {
   const t = e.target.closest("button"); if (!t) return;
   if (t.id === "clClose") return close();
+  if (t.id === "clSnd") { fx.sound.toggle(); return; }
   if (t.dataset.tab) return setTab(t.dataset.tab);
   if (t.dataset.filter) { filter = t.dataset.filter; LS.set("va.cl.cls", filter); return paintPicker(); }
   if (t.dataset.lab) return openLab(t.dataset.lab);

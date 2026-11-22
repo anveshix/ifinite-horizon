@@ -1,11 +1,15 @@
 // Question generators vs independent re-derivations. Run: node tests/curiosity-questions.mjs
 // For hundreds of random experiment states per lab: every question must validate, contain exactly one marked answer, and that answer must equal
 // what the physics gives when worked out again here WITHOUT the lab's own model code (plain formulas / geometry).
-import { validateQuestion } from "../assets/curiosity/core.js";
+import { validateQuestion, registerLab, _resetLabs } from "../assets/curiosity/core.js";
 import lens from "../assets/curiosity/labs/lens.js";
 import ohm from "../assets/curiosity/labs/ohm.js";
 import force from "../assets/curiosity/labs/force.js";
 import energy from "../assets/curiosity/labs/energy.js";
+import sound from "../assets/curiosity/labs/sound.js";
+import gravity from "../assets/curiosity/labs/gravity.js";
+import cell from "../assets/curiosity/labs/cell.js";
+import tissues from "../assets/curiosity/labs/tissues.js";
 import { rng } from "../assets/curiosity/labs/kit.js";
 
 let n = 0, bad = 0; const seenIds = {};
@@ -99,6 +103,60 @@ run(energy, 400, 51, (q) => {
     ok(q.meta.b.h >= 0.05 - 1e-9 && q.meta.b.h <= 1 + 1e-9, `energy-height new h ${q.meta.b.h} outside the lab's range`);
   }
   if (q.id === "energy-law") ok(/conservation of energy/.test(c), "energy-law");
+});
+
+/* ---------------- contract registration for all 8 labs ---------------- */
+_resetLabs();
+for (const lab of [lens, ohm, force, energy, sound, gravity, cell, tissues]) {
+  try { registerLab(lab); ok(true, `register ${lab.id}`); }
+  catch (e) { fail(`registerLab(${lab.id}) threw: ${e.message}`); }
+}
+
+/* ---------------- sound ---------------- */
+const MV = [344, 1498, 5960];
+run(sound, 400, 67, (q) => {
+  const iv = q.image.vars, c = correct(q), v = MV[iv.medium];
+  if (q.id === "sound-echo") { const echo = (2 * iv.dist) / v >= 0.1 - 1e-9; ok(echo ? /Distinct echo/i.test(c) : /reverberation/i.test(c), `sound-echo ${JSON.stringify(iv)} got "${c}"`); }
+  if (q.id === "sound-wavelength") { const lam = +(v / iv.f).toFixed(2); ok(c === `${lam} m`, `sound-wavelength expected ${lam} m got "${c}"`); }
+  if (q.id === "sound-medium") ok(/Steel/.test(c), `sound-medium got "${c}"`);
+  if (q.id === "sound-pitch") ok(/Frequency/.test(c), `sound-pitch got "${c}"`);
+  if (q.id === "sound-loudness") ok(/Amplitude/.test(c), `sound-loudness got "${c}"`);
+  if (q.id === "sound-predict") { const r = (MV[q.meta.b.medium] / q.meta.b.f) / (MV[q.meta.a.medium] / q.meta.a.f); ok(near(r, q.meta.ratio, 1e-9) && /half/i.test(c), `sound-predict ratio ${r} text "${c}"`); }
+});
+
+/* ---------------- gravity ---------------- */
+const PG = [1.63, 9.8, 24.8];
+run(gravity, 400, 73, (q) => {
+  const iv = q.image.vars, c = correct(q), g = PG[iv.planet];
+  if (q.id === "grav-time") { const t = +Math.sqrt((2 * iv.h) / g).toFixed(2); ok(c === `${t} s`, `grav-time expected ${t} s got "${c}"`); }
+  if (q.id === "grav-impact") { const vi = +Math.sqrt(2 * g * iv.h).toFixed(2); ok(c === `${vi} m/s`, `grav-impact expected ${vi} m/s got "${c}"`); }
+  if (q.id === "grav-mass") ok(/exact same time/.test(c), `grav-mass got "${c}"`);
+  if (q.id === "grav-weight") { const w = +(iv.m * g).toFixed(1); ok(c === `${w} N`, `grav-weight expected ${w} N got "${c}"`); }
+  if (q.id === "grav-predict") { const r = Math.sqrt(q.meta.b.h / q.meta.a.h); ok(near(r, q.meta.ratio, 1e-9) && /doubles/i.test(c), `grav-predict ratio ${r} got "${c}"`); }
+  if (q.id === "grav-vt") ok(/slope = g/.test(c), `grav-vt got "${c}"`);
+});
+
+/* ---------------- cell ---------------- */
+run(cell, 400, 89, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  if (q.id === "cell-osmosis-dir") ok(iv.tonicity < 0 ? /INWARD/.test(c) : iv.tonicity > 0 ? /OUTWARD/.test(c) : /Equal water/.test(c), `cell-osmosis-dir ${iv.tonicity} got "${c}"`);
+  if (q.id === "cell-wall") ok(/cell wall/i.test(c), `cell-wall got "${c}"`);
+  if (q.id === "cell-plasmolysis") ok(/Plasmolysis/.test(c), `cell-plasmolysis got "${c}"`);
+  if (q.id === "cell-prokaryote") ok(/Nucleoid/.test(c), `cell-prokaryote got "${c}"`);
+  if (q.id === "cell-organelle") ok(c === "Mitochondria", `cell-organelle got "${c}"`);
+  if (q.id === "cell-predict") ok(/exits.*shrinks/i.test(c), `cell-predict got "${c}"`);
+});
+
+/* ---------------- tissues ---------------- */
+const TNAMES = ["Parenchyma", "Collenchyma", "Sclerenchyma", "Xylem & Phloem", "Striated Muscle", "Neuron"];
+run(tissues, 400, 97, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  if (q.id === "tis-identify") ok(c === TNAMES[iv.tissue], `tis-identify ${iv.tissue} got "${c}"`);
+  if (q.id === "tis-living") ok(/Sclerenchyma/.test(c), `tis-living got "${c}"`);
+  if (q.id === "tis-flex") ok(c === "Collenchyma", `tis-flex got "${c}"`);
+  if (q.id === "tis-transport") ok(/Xylem carries water upward only/.test(c), `tis-transport got "${c}"`);
+  if (q.id === "tis-muscle") ok(/Striated/.test(c), `tis-muscle got "${c}"`);
+  if (q.id === "tis-predict") ok(/speeds up/.test(c), `tis-predict got "${c}"`);
 });
 
 const ids = Object.keys(seenIds).sort();

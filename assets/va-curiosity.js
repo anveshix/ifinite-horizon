@@ -51,9 +51,22 @@ const LINKS={
  "ch11/resistance":["ohm","Circuit Lab","परिपथ प्रयोगशाला","Wire R₁ and R₂ in series or parallel and read the meters."],
  "ch11/series":["ohm","Circuit Lab","परिपथ प्रयोगशाला","Wire R₁ and R₂ in series or parallel and read the meters."],
  "ch11/heating":["ohm","Circuit Lab","परिपथ प्रयोगशाला","Watch a resistor heat up as the current grows."],
+ "ix1/cell":["cell","Cell Lab","कोशिका प्रयोगशाला","Explore Animal, Plant, and Prokaryotic cells in 3D."],
+ "ix1/osmosis":["cell","Cell Lab","कोशिका प्रयोगशाला","Test Hypotonic, Isotonic & Hypertonic solutions and watch H₂O cross!"],
+ "ix1/microscope":["cell","Cell Lab","कोशिका प्रयोगशाला","Spotlight organelles and see cell structures in 3D."],
+ "ix1/scale":["cell","Cell Lab","कोशिका प्रयोगशाला","Compare cell structures across Animal, Plant & Bacterial cells."],
+ "ix2/tissues":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Inspect Parenchyma, Collenchyma, Sclerenchyma, Muscle & Neuron under 3D zoom."],
+ "ix2/xylem":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Watch unidirectional Xylem water flow and bidirectional Phloem transport."],
+ "ix2/growth":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Compare plant tissue cell walls, living state, and flexibility."],
+ "ix2/meristem":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Explore plant tissues under adjustable microscope magnification."],
+ "ix9/line":["gravity","Gravity Lab","गुरुत्व प्रयोगशाला","Drop balls in vacuum and read the live velocity–time graph."],
+ "ix9/circular":["gravity","Gravity Lab","गुरुत्व प्रयोगशाला","Test gravity g on Moon, Earth, and Jupiter in real time."],
  "ix10/forces":["force","Force Lab","बल प्रयोगशाला","Pull a trolley with different forces and masses: F = m × a."],
  "ix10/trolley":["force","Force Lab","बल प्रयोगशाला","Pull a trolley with different forces and masses: F = m × a."],
- "ix11/energy":["energy","Energy Lab","ऊर्जा प्रयोगशाला","Swing a pendulum and watch PE turn into KE."]
+ "ix11/energy":["energy","Energy Lab","ऊर्जा प्रयोगशाला","Swing a pendulum and watch PE turn into KE."],
+ "ix12/wave":["sound","Sound Lab","ध्वनि प्रयोगशाला","See longitudinal compressions & rarefactions and hear real pitch!"],
+ "ix12/source":["sound","Sound Lab","ध्वनि प्रयोगशाला","Pluck a 3D tuning fork and hear frequency and amplitude live."],
+ "ix12/echo":["sound","Sound Lab","ध्वनि प्रयोगशाला","Clap toward a cliff wall and test the 0.1 s echo threshold!"]
 };
 const lcss=document.createElement("style");lcss.textContent=`
 #clLink{display:flex;align-items:center;gap:12px;margin:8px 0;padding:10px 12px;border:1px solid var(--bd,var(--line));border-left:4px solid var(--acc,#ffd36b);border-radius:12px;background:var(--glass,rgba(255,255,255,.05));animation:clLinkIn .4s ease both}

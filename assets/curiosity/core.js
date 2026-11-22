@@ -6,11 +6,15 @@
 export const SYLLABUS = Object.freeze({
   /* Class X (NCERT, 2023-24 rationalised): app keys ch9…ch11 */
   "x/ch9":  { cls: 10, no: 9,  title: { en: "Light – Reflection and Refraction", hi: "प्रकाश – परावर्तन तथा अपवर्तन" } },
+  "x/ch10": { cls: 10, no: 10, title: { en: "The Human Eye and the Colourful World", hi: "मानव नेत्र तथा रंगबिरंगा संसार" } },
   "x/ch11": { cls: 10, no: 11, title: { en: "Electricity", hi: "विद्युत" } },
-  /* Class IX Science 2026-27 (Compulsory 086): app keys ix9…ix11 */
+  /* Class IX Science 2026-27 (Compulsory 086): app keys ix1, ix2, ix9…ix12 */
+  "ix/ix1":  { cls: 9, no: 1,  title: { en: "The Fundamental Unit of Life (Cell)", hi: "जीवन की मौलिक इकाई (कोशिका)" } },
+  "ix/ix2":  { cls: 9, no: 2,  title: { en: "Tissues", hi: "ऊतक" } },
   "ix/ix9":  { cls: 9, no: 9,  title: { en: "Motion", hi: "गति" } },
   "ix/ix10": { cls: 9, no: 10, title: { en: "Force and Laws of Motion", hi: "बल तथा गति के नियम" } },
-  "ix/ix11": { cls: 9, no: 11, title: { en: "Work, Energy and Power", hi: "कार्य, ऊर्जा और शक्ति" } }
+  "ix/ix11": { cls: 9, no: 11, title: { en: "Work, Energy and Power", hi: "कार्य, ऊर्जा और शक्ति" } },
+  "ix/ix12": { cls: 9, no: 12, title: { en: "Sound", hi: "ध्वनि" } }
 });
 
 /* ---------- lab registry ---------- */
@@ -40,6 +44,15 @@ export function registerLab(lab) {
       throw new Error(`Curiosity Lab: ${id}.${v.id} needs finite min < max, step > 0 and min ≤ value ≤ max`);
   });
   ["mount", "facts", "questions", "snapshot"].forEach(fn => { if (typeof lab[fn] !== "function") throw new Error(`Curiosity Lab: ${id}.${fn} must be a function`); });
+  if (lab.missions !== undefined) {
+    if (!Array.isArray(lab.missions)) throw new Error(`Curiosity Lab: ${id}.missions must be an array`);
+    const ms = new Set();
+    lab.missions.forEach((m, i) => {
+      if (!isObj(m) || !m.id || ms.has(m.id)) throw new Error(`Curiosity Lab: ${id}.missions[${i}] needs a unique id`);
+      ms.add(m.id); bi(m, `${id}.missions[${i}]`);
+      if (typeof m.check !== "function") throw new Error(`Curiosity Lab: ${id}.missions[${i}].check must be a function`);
+    });
+  }
   LABS.set(id, Object.freeze(lab));
   return lab;
 }
@@ -88,7 +101,7 @@ export function levelInfo(xp) {
 /* ---------- persistent progress store ---------- */
 const KEY = "va.cl.v1";
 const blank = () => ({ xp: 0, streak: 0, bestStreak: 0, answered: 0, correct: 0, labs: {} });
-const labRec = () => ({ tweaks: 0, runs: 0, explored: {}, correct: 0, answered: 0 });
+const labRec = () => ({ tweaks: 0, runs: 0, explored: {}, correct: 0, answered: 0, missions: [] });
 const read = () => { try { const o = JSON.parse(localStorage.getItem(KEY) || "null"); return isObj(o) ? { ...blank(), ...o, labs: isObj(o.labs) ? o.labs : {} } : blank(); } catch { return blank(); } };
 const write = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* private mode: progress simply lives for this visit */ } };
 
@@ -109,6 +122,18 @@ export const store = {
   },
   /** One simulator run finished (e.g. an object was dropped / a circuit closed). */
   recordRun(labId) { const r = (state.labs[labId] = { ...labRec(), ...state.labs[labId] }); r.runs++; commit(); },
+  /** Marks a discovery mission complete (idempotent: XP is awarded only the first time). */
+  recordMission(labId, missionId, bonus = 15) {
+    const r = (state.labs[labId] = { ...labRec(), ...state.labs[labId] });
+    const list = Array.isArray(r.missions) ? r.missions : (r.missions = []);
+    if (list.includes(missionId)) return { awarded: false, xp: state.xp, level: levelInfo(state.xp).level, leveledUp: false };
+    const before = levelInfo(state.xp).level;
+    list.push(missionId);
+    state.xp += Math.max(0, bonus | 0);
+    const level = levelInfo(state.xp).level;
+    commit();
+    return { awarded: true, gained: bonus | 0, xp: state.xp, level, leveledUp: level > before };
+  },
   /** An answer was given: updates streak, XP and per-lab accuracy. Returns {gained, streak, level, leveledUp}. */
   recordAnswer(labId, correct, bonus = 0) {
     const before = levelInfo(state.xp).level, r = (state.labs[labId] = { ...labRec(), ...state.labs[labId] });

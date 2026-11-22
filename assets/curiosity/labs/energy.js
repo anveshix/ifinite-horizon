@@ -53,6 +53,11 @@ export default {
     ];
   },
   snapshot,
+  missions: [
+    { id: "energy-release", en: "Release the pendulum and watch PE turn into KE", hi: "लोलक को छोड़ो और स्थितिज को गतिज ऊर्जा बनते देखो", check: (_v, _f, meta) => meta.runs >= 1 },
+    { id: "energy-high", en: "Raise release height h ≥ 0.8 m for maximum speed", hi: "अधिकतम चाल के लिए ऊँचाई h ≥ 0.8 m तक बढ़ाओ", check: v => v.h >= 0.8 },
+    { id: "energy-heavy", en: "Test a heavy bob (m ≥ 4 kg) — speed at bottom stays same!", hi: "भारी गोलक (m ≥ 4 kg) आज़माओ — तल पर चाल वही रहती है!", check: v => v.m >= 4 }
+  ],
 
   async mount(ctx) {
     const THREE = await loadThree();

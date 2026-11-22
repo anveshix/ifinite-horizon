@@ -6,7 +6,16 @@ import { renderQuiz } from "./quiz/quiz.js";
 
 shell.setQuizRenderer(renderQuiz);              // Phase 3: the Knowledge check tab
 
-const LAB_FILES = ["./labs/lens.js", "./labs/ohm.js", "./labs/force.js", "./labs/energy.js"];
+const LAB_FILES = [
+  "./labs/lens.js",
+  "./labs/ohm.js",
+  "./labs/force.js",
+  "./labs/energy.js",
+  "./labs/sound.js",
+  "./labs/gravity.js",
+  "./labs/cell.js",
+  "./labs/tissues.js"
+];
 
 let booted = null;
 async function boot() {

@@ -79,6 +79,11 @@ export default {
     return rows;
   },
   snapshot,
+  missions: [
+    { id: "ohm-series", en: "Wire R₁ and R₂ in series and see Req = R₁ + R₂", hi: "R₁ व R₂ को श्रेणीक्रम में जोड़ो (Req = R₁ + R₂)", check: v => v.mode === 1 },
+    { id: "ohm-parallel", en: "Wire R₁ and R₂ in parallel (Req drops below both!)", hi: "पार्श्वक्रम में जोड़ो और देखो कुल प्रतिरोध दोनों से कम होता है", check: v => v.mode === 2 },
+    { id: "ohm-heat", en: "Reach at least 24 W power so the resistor glows bright!", hi: "कम से कम 24 W शक्ति प्राप्त कर प्रतिरोधक को चमकाओ!", check: v => view(v).P >= 24 }
+  ],
 
   async mount(ctx) {
     const THREE = await loadThree();
