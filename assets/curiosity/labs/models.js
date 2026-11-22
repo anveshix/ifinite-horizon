@@ -170,5 +170,146 @@ export function tissueModel({ tissue = 0, zoom = 200, transp = 3 }) {
   return { ...T, tissue, zoom, transp, speed, fieldUm };
 }
 
+/* ============ Class X · Ch 10 · Human Eye & Prism Dispersion ============ */
+export const EYE_DEFECTS = [
+  { id: "myopia", val: -1, name: "Myopia (Nearsighted)", hi: "निकट-दृष्टि दोष", reqP: -2.0, fix: "Concave lens", fixHi: "अवतल लेंस" },
+  { id: "normal", val: 0, name: "Normal Vision", hi: "सामान्य दृष्टि", reqP: 0.0, fix: "No lens needed", fixHi: "लेंस आवश्यक नहीं" },
+  { id: "hypermetropia", val: 1, name: "Hypermetropia (Farsighted)", hi: "दूर-दृष्टि दोष", reqP: 2.0, fix: "Convex lens", fixHi: "उत्तल लेंस" }
+];
+export function eyeModel({ defect = -1, P = 0, viewMode = 0 }) {
+  const D = EYE_DEFECTS.find(x => x.val === defect) || EYE_DEFECTS[1];
+  const err = +(P - D.reqP).toFixed(2);       // 0 => exact focus on retina; >0 => in front; <0 => behind
+  const sharp = Math.abs(err) < 0.25;
+  const focusWhere = sharp ? "On retina (Sharp!)" : err > 0 ? "In front of retina (blurry)" : "Behind retina (blurry)";
+  const focusHi = sharp ? "रेटिना पर (स्पष्ट!)" : err > 0 ? "रेटिना के आगे (धुंधला)" : "रेटिना के पीछे (धुंधला)";
+  const redDev = 36, violetDev = 44, spread = violetDev - redDev;
+  return { defect, defectName: D.name, defectHi: D.hi, reqP: D.reqP, fix: D.fix, fixHi: D.fixHi, P, err, sharp, focusWhere, focusHi, viewMode, redDev, violetDev, spread };
+}
+
+/* ============ Class X · Ch 12 · Magnetic Effects & Induction ============ */
+export function magnetModel({ I = 3, N = 30, dir = 1, speed = 2 }) {
+  const B = +(0.04 * N * I).toFixed(2);       // mT inside solenoid proportional to N*I
+  const forceRel = +(B * I * dir).toFixed(2); // F = B I L indicator
+  const emf = +(0.015 * N * speed).toFixed(2); // induced current indicator (0 when stationary)
+  const poleRight = dir >= 0 ? "North (N)" : "South (S)";
+  const poleLeft = dir >= 0 ? "South (S)" : "North (N)";
+  return { I, N, dir, speed, B, forceRel, emf, poleLeft, poleRight };
+}
+
+/* ============ Class X · Ch 2 · Acids, Bases, pH & Indicators ============ */
+export const PH_INDICATORS = [
+  { id: "universal", name: "Universal", hi: "सार्वत्रिक सूचक" },
+  { id: "litmus", name: "Litmus", hi: "लिटमस" },
+  { id: "phenol", name: "Phenolphthalein", hi: "फिनॉल्फ़थेलीन" },
+  { id: "turmeric", name: "Turmeric", hi: "हल्दी" }
+];
+export function phModel({ pH = 7, indicator = 0 }) {
+  const nature = pH < 7 ? "Acidic" : pH > 7 ? "Basic" : "Neutral";
+  const natureHi = pH < 7 ? "अम्लीय" : pH > 7 ? "क्षारीय" : "उदासीन";
+  const strength = pH <= 2 ? "Strong Acid" : pH < 7 ? "Weak Acid" : pH === 7 ? "Neutral" : pH <= 11 ? "Weak Base" : "Strong Base";
+  let colorName, colorHi, hex;
+  if (indicator === 0) {
+    if (pH <= 2) { colorName = "Red"; colorHi = "लाल"; hex = "#ef4444"; }
+    else if (pH <= 4) { colorName = "Orange"; colorHi = "नारंगी"; hex = "#f97316"; }
+    else if (pH <= 6) { colorName = "Yellow"; colorHi = "पीला"; hex = "#eab308"; }
+    else if (pH === 7) { colorName = "Green"; colorHi = "हरा"; hex = "#22c55e"; }
+    else if (pH <= 10) { colorName = "Blue"; colorHi = "नीला"; hex = "#3b82f6"; }
+    else { colorName = "Violet"; colorHi = "बैंगनी"; hex = "#8b5cf6"; }
+  } else if (indicator === 1) {
+    if (pH < 7) { colorName = "Red"; colorHi = "लाल"; hex = "#ef4444"; }
+    else if (pH === 7) { colorName = "Purple"; colorHi = "बैंगनी"; hex = "#a855f7"; }
+    else { colorName = "Blue"; colorHi = "नीला"; hex = "#3b82f6"; }
+  } else if (indicator === 2) {
+    if (pH <= 8) { colorName = "Colourless"; colorHi = "रंगहीन"; hex = "#94a3b8"; }
+    else { colorName = "Pink / Magenta"; colorHi = "गुलाबी"; hex = "#ec4899"; }
+  } else {
+    if (pH <= 7) { colorName = "Yellow"; colorHi = "पीला"; hex = "#facc15"; }
+    else { colorName = "Reddish-brown"; colorHi = "लाल-भूरा"; hex = "#b45309"; }
+  }
+  const ind = PH_INDICATORS[indicator] || PH_INDICATORS[0];
+  return { pH, indicator, indName: ind.name, indHi: ind.hi, nature, natureHi, strength, colorName, colorHi, hex, hExp: -pH, ohExp: -(14 - pH) };
+}
+
+/* ============ Class IX · Ch 6 · Structure of the Atom (Bohr Z = 1..20) ============ */
+export const ELEMENTS_20 = [
+  null,
+  ["H", "Hydrogen", "हाइड्रोजन", 0], ["He", "Helium", "हीलियम", 2], ["Li", "Lithium", "लिथियम", 4], ["Be", "Beryllium", "बेरिलियम", 5],
+  ["B", "Boron", "बोरॉन", 6], ["C", "Carbon", "कार्बन", 6], ["N", "Nitrogen", "नाइट्रोजन", 7], ["O", "Oxygen", "ऑक्सीजन", 8],
+  ["F", "Fluorine", "फ्लोरीन", 10], ["Ne", "Neon", "निऑन", 10], ["Na", "Sodium", "सोडियम", 12], ["Mg", "Magnesium", "मैग्नीशियम", 12],
+  ["Al", "Aluminium", "ऐलुमिनियम", 14], ["Si", "Silicon", "सिलिकॉन", 14], ["P", "Phosphorus", "फॉस्फोरस", 16], ["S", "Sulphur", "सल्फर", 16],
+  ["Cl", "Chlorine", "क्लोरीन", 18], ["Ar", "Argon", "आर्गन", 22], ["K", "Potassium", "पोटैशियम", 20], ["Ca", "Calcium", "कैल्शियम", 20]
+];
+export function atomModel({ Z = 6, iso = 0 }) {
+  const z = Math.min(20, Math.max(1, Math.round(Z)));
+  const el = ELEMENTS_20[z];
+  const neutrons = el[3] + iso;
+  const A = z + neutrons;
+  const K = Math.min(2, z);
+  const L = Math.min(8, Math.max(0, z - 2));
+  const M = Math.min(8, Math.max(0, z - 10));
+  const N = Math.max(0, z - 18);
+  const shells = [K, L, M, N].filter(x => x > 0);
+  const valence = shells[shells.length - 1];
+  const valency = z === 2 ? 0 : (valence <= 4 ? valence : 8 - valence);
+  const noble = z === 2 || z === 10 || z === 18;
+  const kind = noble ? "Noble Gas (Inert)" : (valency === 0 ? "Inert" : valence <= 3 && z !== 1 && z !== 5 ? "Metal (loses e⁻)" : "Non-metal / Metalloid");
+  return { Z: z, symbol: el[0], name: el[1], hi: el[2], protons: z, electrons: z, neutrons, A, shells, config: shells.join(", "), valence, valency, noble, kind, iso };
+}
+
+/* ============ Class IX · Ch 5 · Matter, States & Solutions ============ */
+export const MIXTURE_TYPES = [
+  { id: "pure", name: "Pure Water", hi: "शुद्ध जल", tyndall: false, settles: false, size: "< 0.3 nm" },
+  { id: "true", name: "True Solution (Salt)", hi: "वास्तविक विलयन (नमक)", tyndall: false, settles: false, size: "< 1 nm" },
+  { id: "colloid", name: "Colloid (Milk/Starch)", hi: "कोलॉइड (दूध/स्टार्च)", tyndall: true, settles: false, size: "1–1000 nm" },
+  { id: "suspension", name: "Suspension (Chalk)", hi: "निलंबन (चॉक)", tyndall: true, settles: true, size: "> 1000 nm" }
+];
+export function matterModel({ temp = 25, mix = 2, conc = 20 }) {
+  const state = temp < 0 ? "Solid (Ice)" : temp >= 100 ? "Gas (Steam)" : "Liquid (Water)";
+  const stateHi = temp < 0 ? "ठोस (बर्फ)" : temp >= 100 ? "गैस (भाप)" : "द्रव (जल)";
+  const Tkelvin = +(temp + 273.15).toFixed(2);
+  const M = MIXTURE_TYPES[mix] || MIXTURE_TYPES[2];
+  const massPct = +((100 * conc) / (100 + conc)).toFixed(1);
+  return { temp, Tkelvin, state, stateHi, mix, mixName: M.name, mixHi: M.hi, tyndall: M.tyndall, settles: M.settles, size: M.size, conc, massPct };
+}
+
+/* ============ Class X · Ch 5 · Heart & Double Circulation ============ */
+export function heartModel({ bpm = 70, sv = 70, loop = 0 }) {
+  const CO = +((bpm * sv) / 1000).toFixed(2); // L/min
+  const period = +(60 / bpm).toFixed(2);      // s per beat
+  const loopName = loop === 1 ? "Pulmonary (Heart → Lungs → Heart)" : loop === 2 ? "Systemic (Heart → Body → Heart)" : "Double Circulation (Both Loops)";
+  return { bpm, sv, loop, loopName, CO, period };
+}
+
+/* ============ Class X · Ch 8 · Heredity & Mendel Cross ============ */
+const GENOS = ["TT", "Tt", "tt"];
+export function geneticsModel({ p1 = 1, p2 = 1, cross = 0 }) {
+  if (cross === 1) {
+    /* Sex determination: XX × XY */
+    return {
+      cross, g1: "XX (Mother)", g2: "XY (Father)",
+      cells: ["XX", "XY", "XX", "XY"],
+      tallPct: 50, dwarfPct: 50,
+      ratioText: "50% XX (Girl) : 50% XY (Boy)"
+    };
+  }
+  const a1 = GENOS[p1] || "Tt", a2 = GENOS[p2] || "Tt";
+  const cells = [];
+  let tt = 0, Tt = 0, TT = 0;
+  for (const x of a1) {
+    for (const y of a2) {
+      const g = [x, y].sort().join(""); // "TT", "Tt", "tt" ("T" < "t" in ASCII)
+      cells.push(g);
+      if (g === "TT") TT++; else if (g === "Tt") Tt++; else tt++;
+    }
+  }
+  const tall = TT + Tt;
+  return {
+    cross, g1: a1, g2: a2, cells, TT, Tt, tt,
+    tallPct: Math.round((tall / 4) * 100),
+    dwarfPct: Math.round((tt / 4) * 100),
+    ratioText: `${TT} TT : ${Tt} Tt : ${tt} tt (${tall} Tall : ${tt} Dwarf)`
+  };
+}
+
 /* ============ small shared helpers ============ */
 export const fmt = (x, d = 2) => !Number.isFinite(x) ? "∞" : (Math.abs(x) >= 1000 ? x.toFixed(0) : +x.toFixed(d)).toString();

@@ -4,13 +4,19 @@
 
 /* ---------- NCERT alignment: only units that already exist in Vigyan Atlas (see docs/CLASS9_COVERAGE.md) ---------- */
 export const SYLLABUS = Object.freeze({
-  /* Class X (NCERT, 2023-24 rationalised): app keys ch9…ch11 */
+  /* Class X (NCERT, 2023-24 rationalised): app keys ch2, ch5, ch8…ch12 */
+  "x/ch2":  { cls: 10, no: 2,  title: { en: "Acids, Bases and Salts", hi: "अम्ल, क्षारक एवं लवण" } },
+  "x/ch5":  { cls: 10, no: 5,  title: { en: "Life Processes", hi: "जैव प्रक्रम" } },
+  "x/ch8":  { cls: 10, no: 8,  title: { en: "Heredity", hi: "आनुवंशिकता" } },
   "x/ch9":  { cls: 10, no: 9,  title: { en: "Light – Reflection and Refraction", hi: "प्रकाश – परावर्तन तथा अपवर्तन" } },
   "x/ch10": { cls: 10, no: 10, title: { en: "The Human Eye and the Colourful World", hi: "मानव नेत्र तथा रंगबिरंगा संसार" } },
   "x/ch11": { cls: 10, no: 11, title: { en: "Electricity", hi: "विद्युत" } },
-  /* Class IX Science 2026-27 (Compulsory 086): app keys ix1, ix2, ix9…ix12 */
+  "x/ch12": { cls: 10, no: 12, title: { en: "Magnetic Effects of Electric Current", hi: "विद्युत धारा के चुंबकीय प्रभाव" } },
+  /* Class IX Science 2026-27 (Compulsory 086): app keys ix1, ix2, ix5, ix6, ix9…ix12 */
   "ix/ix1":  { cls: 9, no: 1,  title: { en: "The Fundamental Unit of Life (Cell)", hi: "जीवन की मौलिक इकाई (कोशिका)" } },
   "ix/ix2":  { cls: 9, no: 2,  title: { en: "Tissues", hi: "ऊतक" } },
+  "ix/ix5":  { cls: 9, no: 5,  title: { en: "Is Matter Around Us Pure?", hi: "क्या हमारे आस-पास के पदार्थ शुद्ध हैं?" } },
+  "ix/ix6":  { cls: 9, no: 6,  title: { en: "Structure of the Atom", hi: "परमाणु की संरचना" } },
   "ix/ix9":  { cls: 9, no: 9,  title: { en: "Motion", hi: "गति" } },
   "ix/ix10": { cls: 9, no: 10, title: { en: "Force and Laws of Motion", hi: "बल तथा गति के नियम" } },
   "ix/ix11": { cls: 9, no: 11, title: { en: "Work, Energy and Power", hi: "कार्य, ऊर्जा और शक्ति" } },
