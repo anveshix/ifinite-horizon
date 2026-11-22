@@ -1,0 +1,87 @@
+{
+"course":"Class X · Science (086) · NCERT rationalised syllabus, 13 chapters",
+"chapters":[
+{"no":1,"title":"Chemical Reactions and Equations","hi":"रासायनिक अभिक्रियाएँ एवं समीकरण","unit":"Chemistry","branches":[
+ {"n":"Chemical equation","i":["Word equation to skeletal to balanced","Law of conservation of mass; balancing by hit and trial","State symbols (s) (l) (g) (aq); conditions above arrow","Observable changes: colour, gas, precipitate, temperature, state"]},
+ {"n":"Types of reactions","i":["Combination: CaO + H2O, burning of Mg, 2H2 + O2","Decomposition: thermal (CaCO3, FeSO4), electrolytic (water), photolytic (AgCl, AgBr)","Displacement: Fe + CuSO4, Zn + CuSO4","Double displacement: BaCl2 + Na2SO4 precipitation","Exothermic vs endothermic: respiration, quicklime slaking, Ba(OH)2 + NH4Cl"]},
+ {"n":"Oxidation and reduction","i":["Gain of oxygen or loss of hydrogen = oxidation","Loss of oxygen or gain of hydrogen = reduction","Redox: both occur together; oxidising and reducing agent","CuO + H2 to Cu + H2O"]},
+ {"n":"Everyday effects","i":["Corrosion: rusting of iron needs air and moisture; green coating on copper; black on silver","Rancidity: oxidation of fats and oils; prevention by antioxidants, nitrogen flushing, airtight containers, refrigeration"]},
+ {"n":"Activities","i":["Burning magnesium ribbon","Iron nail in copper sulphate solution","Heating lead nitrate; ferrous sulphate crystals","Electrolysis of water 2:1 gases","Silver chloride in sunlight"]},
+ {"n":"Exam focus","i":["Balancing equations","Identify reaction type","Observations with colour changes","Corrosion and rancidity prevention"]}]},
+{"no":2,"title":"Acids, Bases and Salts","hi":"अम्ल, क्षार तथा लवण","unit":"Chemistry","branches":[
+ {"n":"Indicators","i":["Litmus: acid blue to red, base red to blue","Phenolphthalein: colourless in acid, pink in base","Methyl orange: red in acid, yellow in base","Olfactory indicators: onion, vanilla, clove","Turmeric, China rose, red cabbage"]},
+ {"n":"Reactions","i":["Acid + metal gives salt + hydrogen; pop test","Acid + metal carbonate or hydrogencarbonate gives salt + CO2 + water; lime water test","Acid + base gives salt + water: neutralisation","Metal oxide + acid; non-metal oxide + base","Base + metal: Zn + NaOH gives sodium zincate + H2"]},
+ {"n":"Acids and bases in water","i":["H+ (H3O+) from acids; OH- from bases","Dilution is exothermic: add acid to water","Strong vs weak acids and bases","Conductivity activity: glucose and alcohol do not conduct"]},
+ {"n":"pH scale","i":["0 to 14; pH 7 neutral","pH paper and universal indicator","Strength of H+ ions: lower pH stronger acid","pH in digestion: stomach HCl","Tooth decay below pH 5.5; antacids; toothpaste","pH of soil; nettle sting; bee sting","Self-defence in nature"]},
+ {"n":"Salts family","i":["Family of salts and pH of salts","Common salt: NaCl; chlor-alkali process gives NaOH, Cl2, H2","Bleaching powder CaOCl2: Cl2 + slaked lime; disinfectant, bleaching","Baking soda NaHCO3: NaCl + H2O + CO2 + NH3; antacid, baking powder, soda-acid extinguisher","Washing soda Na2CO3.10H2O: recrystallisation of sodium carbonate","Plaster of Paris CaSO4.1/2H2O; gypsum CaSO4.2H2O; setting","Water of crystallisation: CuSO4.5H2O blue to white"]}]},
+{"no":3,"title":"Metals and Non-metals","hi":"धातु एवं अधातु","unit":"Chemistry","branches":[
+ {"n":"Physical properties","i":["Metals: lustre, malleable, ductile, conductors, sonorous, hard; exceptions Na, K, Hg, Ga","Non-metals: brittle, non-lustrous; exceptions graphite, iodine, diamond"]},
+ {"n":"Chemical properties","i":["Reaction with oxygen: amphoteric oxides Al2O3, ZnO","Reaction with water, steam and dilute acids","Reaction with solutions of other metal salts","Reactivity series: K Na Ca Mg Al Zn Fe Pb H Cu Hg Ag Au"]},
+ {"n":"Ionic compounds","i":["Metal + non-metal gives ionic bond: transfer of electrons","NaCl, MgCl2, CaO formation","Properties: high melting point, soluble in water, conduct in molten and aqueous state, hard and brittle crystals"]},
+ {"n":"Occurrence and extraction","i":["Minerals and ores; gangue","Low reactivity: Hg from cinnabar; Cu from Cu2S","Medium reactivity: roasting, calcination, reduction with carbon; thermit reaction","High reactivity: electrolysis of molten chloride","Refining: electrolytic refining of copper"]},
+ {"n":"Corrosion and prevention","i":["Rusting of iron","Painting, oiling, galvanising, chrome plating, anodising, alloying","Alloys: brass, bronze, solder, steel, stainless steel, amalgam"]},
+ {"n":"Exam focus","i":["Reactivity series questions","Electron dot structures of ionic compounds","Extraction flow chart by reactivity","Activities with sodium, magnesium, aluminium"]}]},
+{"no":4,"title":"Carbon and its Compounds","hi":"कार्बन एवं उसके यौगिक","unit":"Chemistry","branches":[
+ {"n":"Bonding in carbon","i":["Tetravalency; covalent bond: sharing electrons","Single, double and triple bonds","Electron dot structure of H2, O2, N2, CH4, C2H4","Properties of covalent compounds: low melting and boiling point, poor conductors"]},
+ {"n":"Versatile nature","i":["Catenation","Tetravalency","Chains, branches, rings","Saturated vs unsaturated: alkane, alkene, alkyne","Isomerism: butane and isobutane"]},
+ {"n":"Allotropes","i":["Diamond: rigid 3D lattice, hardest","Graphite: layers, conducts","Fullerene C-60: football shape"]},
+ {"n":"Homologous series and nomenclature","i":["CH2 difference; gradation of properties","Functional groups: halo, alcohol, aldehyde, ketone, carboxylic acid","IUPAC naming: prefix, word root, suffix","Alkane, alkene, alkyne names"]},
+ {"n":"Chemical properties","i":["Combustion: CO2 + H2O + heat + light; sooty flame in unsaturated compounds","Oxidation: alkaline KMnO4, acidified K2Cr2O7","Addition: hydrogenation with Ni catalyst; vegetable oil to fat","Substitution: methane with chlorine in sunlight"]},
+ {"n":"Ethanol and ethanoic acid","i":["Ethanol: reactions with sodium; dehydration with conc. H2SO4 to ethene; uses; harmful effects of alcohol; denatured alcohol","Ethanoic acid (acetic acid): glacial acetic acid; esterification, saponification; with carbonates and NaOH","Ester: sweet smell"]},
+ {"n":"Soaps and detergents","i":["Soap = sodium or potassium salt of long-chain fatty acid","Micelle formation: hydrophobic tail, hydrophilic head; cleansing action","Hard water: scum with soap; detergents work in hard water"]}]},
+{"no":5,"title":"Life Processes","hi":"जैव प्रक्रम","unit":"Biology","branches":[
+ {"n":"What are life processes","i":["Maintenance of life: nutrition, respiration, transport, excretion","Energy sources; ATP"]},
+ {"n":"Nutrition","i":["Autotrophic: photosynthesis; chlorophyll, light, CO2, water; stomata; light and dark reaction; starch test","Heterotrophic nutrition: holozoic (Amoeba), saprotrophic (fungi), parasitic (Cuscuta, tapeworm)","Amoeba: pseudopodia","Human alimentary canal: mouth, salivary amylase, oesophagus, stomach HCl pepsin mucus, small intestine bile trypsin lipase villi, liver, pancreas, large intestine","Dental caries"]},
+ {"n":"Respiration","i":["Aerobic vs anaerobic: yeast, muscles lactic acid","ATP; glycolysis in cytoplasm; Krebs in mitochondria","Plants: stomata; lenticels; roots","Humans: nasal passage, trachea, bronchi, alveoli, diaphragm, ribs; haemoglobin; breathing rate","Gaseous exchange in alveoli"]},
+ {"n":"Transport in humans","i":["Heart: four chambers; double circulation; valves","Blood: RBC, WBC, platelets, plasma","Blood vessels: arteries, veins, capillaries","Blood pressure; clotting; lymph","Heart: oxygenated and deoxygenated flow; pulmonary and systemic circulation"]},
+ {"n":"Transport in plants","i":["Xylem: water, minerals; root pressure, transpiration pull","Phloem: translocation of food using ATP"]},
+ {"n":"Excretion","i":["Human: kidneys, ureters, bladder, urethra","Nephron: glomerulus, Bowman's capsule, tubule; filtration, reabsorption, secretion","Dialysis; artificial kidney","Plants: gum, resins, latex, leaves, bark; transpiration"]}]},
+{"no":6,"title":"Control and Coordination","hi":"नियंत्रण एवं समन्वय","unit":"Biology","branches":[
+ {"n":"Nervous system in animals","i":["Receptors and effectors","Neuron: dendrite, cell body, axon; nerve impulse chemical and electrical","Synapse: neurotransmitter","Reflex action; reflex arc: receptor, sensory neuron, spinal cord, motor neuron, effector"]},
+ {"n":"Human brain","i":["Fore-brain: cerebrum, hypothalamus","Mid-brain","Hind-brain: cerebellum, pons, medulla","Spinal cord and cranium; meninges","Protection: cerebrospinal fluid"]},
+ {"n":"Coordination in plants","i":["Tropic movements: phototropism, geotropism, hydrotropism, chemotropism","Nastic movement: touch-me-not (Mimosa)","Plant hormones: auxin, gibberellin, cytokinin, abscisic acid (ABA)"]},
+ {"n":"Hormones in animals","i":["Endocrine glands: pituitary, thyroid, parathyroid, thymus, pancreas, adrenal, testes, ovary","Thyroxine and iodised salt; goitre","Growth hormone; dwarfism and gigantism","Insulin and diabetes","Adrenaline: fight or flight","Feedback mechanism","Pineal; hypothalamus"]}]},
+{"no":7,"title":"How do Organisms Reproduce?","hi":"जीव जनन कैसे करते हैं","unit":"Biology","branches":[
+ {"n":"Importance of reproduction","i":["Variation: DNA copying; survival","Basic: DNA copying","Reproduction leads to inheritance"]},
+ {"n":"Asexual reproduction","i":["Fission: binary in Amoeba, multiple in Plasmodium","Fragmentation: Spirogyra","Regeneration: Planaria, Hydra","Budding: Hydra, yeast","Vegetative propagation: roots, stems, leaves; cutting, layering, grafting; tissue culture","Spore formation: Rhizopus"]},
+ {"n":"Sexual reproduction in plants","i":["Flower: sepal, petal, stamen, pistil","Unisexual and bisexual","Pollination: self and cross; pollen tube, fertilisation; zygote to embryo; ovary to fruit; ovule to seed","Germination"]},
+ {"n":"Human reproduction","i":["Puberty; secondary sexual characters","Male: testes, scrotum, vas deferens, urethra, sperms, prostate, seminal vesicle","Female: ovary, oviduct, uterus, cervix, vagina","Menstrual cycle; fertilisation; implantation; placenta; embryo to foetus","Gestation and birth"]},
+ {"n":"Reproductive health","i":["Contraception: barrier, oral pills, IUCD, surgical","Sexually transmitted diseases: gonorrhoea, syphilis, warts, HIV-AIDS","Female foeticide and declining sex ratio","Population and family planning"]}]},
+{"no":8,"title":"Heredity","hi":"आनुवंशिकता","unit":"Biology","branches":[
+ {"n":"Accumulation of variation","i":["Variation during reproduction","Inherited traits","Survival value of variation"]},
+ {"n":"Mendel's contributions","i":["Pea plant Pisum sativum","Monohybrid cross: 3:1 phenotypic, 1:2:1 genotypic","Dihybrid cross: 9:3:3:1","Dominant and recessive traits","Law of dominance, segregation and independent assortment"]},
+ {"n":"How traits are expressed","i":["DNA to protein to trait","Genes on chromosomes","Gene and chromosome"]},
+ {"n":"Sex determination","i":["Humans: 22 pairs autosomes + XX or XY","Father's sperm decides sex of child","Environment: turtles temperature; snails sex change"]},
+ {"n":"Evolution (reading material)","i":["Speciation","Natural selection","Genetic drift","Fossils and evolution; homologous and analogous organs","Evolution and classification; Darwin; Human evolution"]}]},
+{"no":9,"title":"Light – Reflection and Refraction","hi":"प्रकाश – परावर्तन तथा अपवर्तन","unit":"Physics","branches":[
+ {"n":"Reflection","i":["Laws: angle of incidence = angle of reflection; incident ray, reflected ray, normal in one plane","Plane mirror image: virtual, erect, same size, laterally inverted"]},
+ {"n":"Spherical mirrors","i":["Concave and convex; pole, centre of curvature, radius, principal axis, focus, aperture","f = R/2","Ray diagrams: six positions of concave mirror","Image of convex mirror","Sign convention (New Cartesian)","Mirror formula 1/v + 1/u = 1/f","Magnification m = -v/u = h'/h","Uses: headlights, shaving, rear view, dentist"]},
+ {"n":"Refraction of light","i":["Rays bend at interface; speed changes","Laws: Snell's law sin i / sin r = n","Refractive index n = c/v; optical density","Glass slab: lateral displacement, emergent ray parallel"]},
+ {"n":"Spherical lenses","i":["Convex and concave; optical centre, focus, focal length","Ray diagrams for convex lens, six cases; concave lens","Lens formula 1/v - 1/u = 1/f","Magnification m = v/u = h'/h","Power P = 1/f in metres; unit dioptre; lens combination P = P1 + P2"]},
+ {"n":"Exam focus","i":["Numericals on mirror and lens formula","Ray diagrams","Sign convention","Refractive index of media"]}]},
+{"no":10,"title":"The Human Eye and the Colourful World","hi":"मानव नेत्र एवं रंग-बिरंगा संसार","unit":"Physics","branches":[
+ {"n":"Human eye","i":["Cornea, iris, pupil, lens, ciliary muscles, retina, rods and cones, optic nerve, aqueous and vitreous humour","Image formed on retina real and inverted","Power of accommodation","Far point 25 cm near point; far point infinity"]},
+ {"n":"Defects of vision and correction","i":["Myopia: near-sighted; concave lens","Hypermetropia: far-sighted; convex lens","Presbyopia: bifocal lens","Cataract: surgery"]},
+ {"n":"Refraction by prism and dispersion","i":["Angle of deviation; prism angle","Dispersion: VIBGYOR; Newton","Rainbow: water drops, dispersion, internal reflection, refraction","Recombination with second prism"]},
+ {"n":"Atmospheric refraction","i":["Twinkling of stars","Advance sunrise and delayed sunset by about 2 minutes","Planets do not twinkle"]},
+ {"n":"Scattering of light","i":["Tyndall effect","Blue colour of sky","Reddening of sun at sunrise and sunset","Danger signal red light","Colour of clouds and deep sea"]}]},
+{"no":11,"title":"Electricity","hi":"विद्युत","unit":"Physics","branches":[
+ {"n":"Basic quantities","i":["Charge Q; current I = Q/t; ampere","Potential difference V = W/Q; volt","Electric circuit diagram symbols","Ammeter in series; voltmeter in parallel"]},
+ {"n":"Ohm's law","i":["V = IR; V-I graph straight line","Resistance: ohm"]},
+ {"n":"Resistance","i":["Factors: length, area, material, temperature","R = rho l / A; resistivity: metals, alloys, insulators","Alloys used in heating elements, high resistivity"]},
+ {"n":"Combination of resistors","i":["Series: Rs = R1 + R2 + R3; same current","Parallel: 1/Rp = 1/R1 + 1/R2 + 1/R3; same voltage","Domestic circuits in parallel"]},
+ {"n":"Heating effect","i":["Joule's law: H = I2 R t","Applications: electric heater, iron, bulb, fuse"]},
+ {"n":"Electric power","i":["P = VI = I2R = V2/R; watt","Energy: kilowatt-hour; 1 kWh = 3.6 x 10^6 J"]}]},
+{"no":12,"title":"Magnetic Effects of Electric Current","hi":"विद्युत धारा के चुंबकीय प्रभाव","unit":"Physics","branches":[
+ {"n":"Magnetic field and field lines","i":["Oersted experiment","Bar magnet: field lines from N to S outside; closed loops; do not intersect; crowded near poles","Compass needle"]},
+ {"n":"Field due to current","i":["Straight conductor: right-hand thumb rule; concentric circles","Circular loop: field at the centre; depends on current, number of turns, radius","Solenoid: field like bar magnet; electromagnet; core of soft iron"]},
+ {"n":"Force on a conductor","i":["Current-carrying conductor in a field experiences force","Fleming's left-hand rule: thumb force, forefinger field, middle finger current","Maximum when perpendicular"]},
+ {"n":"Applications","i":["Electric motor: split ring commutator, brushes, armature","Loudspeaker, microphone, MRI","Galvanometer","DC and AC concepts"]},
+ {"n":"Electromagnetic induction","i":["Faraday; moving magnet near coil induces current","Fleming's right-hand rule","Electric generator: AC; slip rings; DC with commutator","AC: 50 Hz, reverses direction every 1/100 s"]},
+ {"n":"Domestic electric circuits","i":["Live (red), neutral (black), earth (green)","Main supply 220 V, 50 Hz; fuse; earth wire; overloading; short circuit","MCB"]}]},
+{"no":13,"title":"Our Environment","hi":"हमारा पर्यावरण","unit":"Environment","branches":[
+ {"n":"Ecosystem","i":["Biotic and abiotic","Producers, consumers, decomposers","Natural vs artificial ecosystem: forest, pond, garden, crop field"]},
+ {"n":"Food chains and webs","i":["Food chain: grass to deer to lion; trophic levels","Food web: interlinked chains","Energy flow: 10 per cent law","Biological magnification: pesticides, DDT; accumulation of non-biodegradable chemicals"]},
+ {"n":"Ozone layer","i":["O3 absorbs UV","Chlorofluorocarbons (CFCs) deplete ozone; refrigerators, aerosols","UNEP 1987 CFC reduction"]},
+ {"n":"Garbage disposal","i":["Biodegradable: paper, food waste, dead plants","Non-biodegradable: plastics, glass, metals, DDT","Waste management; recycling; landfills; reduce reuse recycle"]}]}
+]}
