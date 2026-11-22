@@ -86,6 +86,27 @@
     'Teacher Extension Material'
   ];
 
+  var CBSE_GAP_TIERS = {
+    TIER_1: {
+      code: 'TIER_1',
+      label: 'Verified by Lab / Archaeology / Primary Text — Absent from CBSE Syllabus',
+      labelHi: 'प्रयोगशाला/पुरातत्व/मूल ग्रंथ से प्रमाणित — सीबीएसई पाठ्यक्रम से अनुपस्थित',
+      color: '#1b6ca8'
+    },
+    TIER_2: {
+      code: 'TIER_2',
+      label: 'Partially in Class IX (CG-6) — Excluded from Class X or Non-Evaluative Box',
+      labelHi: 'कक्षा 9 में आंशिक (CG-6) — कक्षा 10 या बोर्ड मूल्यांकन से बाहर',
+      color: '#b07b28'
+    },
+    TIER_3: {
+      code: 'TIER_3',
+      label: 'Popular Misconception / Unverified Claim — Excluded for Scientific Rigor',
+      labelHi: 'लोकप्रचलित भ्रांति / अपुष्ट दावा — वैज्ञानिक कठोरता हेतु अस्वीकृत',
+      color: '#a94442'
+    }
+  };
+
   var ACTIVITY_TYPES = {
     A: { code: 'A', label: 'Real laboratory experiment', labelHi: 'वास्तविक प्रयोगशाला प्रयोग' },
     B: { code: 'B', label: 'Interactive mathematical model', labelHi: 'संवादात्मक गणितीय मॉडल' },
@@ -264,6 +285,7 @@
     PENDING_REF_LABEL: PENDING_REF_LABEL,
     EVIDENCE_CLASSES: EVIDENCE_CLASSES,
     SCOPE_LABELS: SCOPE_LABELS,
+    CBSE_GAP_TIERS: CBSE_GAP_TIERS,
     ACTIVITY_TYPES: ACTIVITY_TYPES,
     REQUIRED_EVIDENCE_FIELDS: REQUIRED_EVIDENCE_FIELDS,
     REQUIRED_EXPERIMENT_FIELDS: REQUIRED_EXPERIMENT_FIELDS,

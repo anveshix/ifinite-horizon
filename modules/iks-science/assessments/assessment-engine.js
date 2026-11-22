@@ -207,6 +207,56 @@
       correctIndex: 0,
       rationale: 'Traditional ecological systems are context-dependent (D1/T1): effective within matching Chota Nagpur plateau hydrology, limited on steep eroded ridges or multi-year droughts.',
       rationaleHi: 'पारंपरिक पारिस्थितिक प्रणालियाँ स्थानीय भूगोल, ढलान और वर्षा के संदर्भ में ही प्रभावी होती हैं।'
+    },
+    {
+      id: 'Q-B-2',
+      domainId: 'B',
+      classLevel: 'IX',
+      competency: 'Analysis & Evaluation',
+      questionType: 'Historiographic Rigor',
+      scopeLabel: 'IKS Historical Enrichment',
+      question: 'According to mathematical historians (e.g., Prof. S. G. Dani at TIFR and Prof. K. S. Shukla), which works represent authentic ancient Indian mathematics rather than 20th-century arithmetic shortcuts?',
+      questionHi: 'गणित इतिहासकारों (जैसे TIFR के प्रो. एस. जी. दाणी व प्रो. के. एस. शुक्ल) के अनुसार 20वीं सदी की अंकगणितीय युक्तियों के बजाय प्रामाणिक प्राचीन भारतीय गणित किन ग्रंथों में है?',
+      options: [
+        'Baudhāyana Śulbasūtra (e.g., √2 ≈ 577/408), Piṅgala’s Chandaḥśāstra / Meru Prastāra, Āryabhaṭīya, Brāhmasphuṭasiddhānta, Bakhshali MS, and the Kerala School.',
+        'The 16 "Vedic Mathematics" sutras found in an Atharvaveda appendix.',
+        'Modern European algebra translated backwards into Sanskrit blogs.',
+        'Only oral horoscopes.'
+      ],
+      optionsHi: [
+        'बौधायन शुल्बसूत्र (√2 ≈ 577/408), पिंगल का छन्दशास्त्र / मेरु प्रस्तार, आर्यभटीय, ब्रह्मस्फुटसिद्धांत, बख्शाली पांडुलिपि और केरल गणित संप्रदाय।',
+        'अथर्ववेद के परिशिष्ट में मिलने वाले 16 "वैदिक गणित" सूत्र।',
+        'आधुनिक यूरोपीय बीजगणित का संस्कृत अनुवाद।',
+        'केवल मौखिक फलित ज्योतिष।'
+      ],
+      correctIndex: 0,
+      rationale: 'TIFR & IAS Resonance audits confirm the 16 "Vedic Maths" sutras do not appear in any known Atharvaveda Pariśiṣṭa and are 20th-century shortcuts, whereas Śulbasūtras, Piṅgala, Āryabhaṭa, Brahmagupta, and Mādhava are verified primary mathematical traditions.',
+      rationaleHi: 'शोध पुष्टि करते हैं कि 16 "वैदिक गणित" सूत्र 20वीं सदी की रचना हैं, जबकि शुल्बसूत्र, पिंगल, आर्यभट, ब्रह्मगुप्त और केरल संप्रदाय प्रामाणिक प्राचीन भारतीय गणित हैं।'
+    },
+    {
+      id: 'Q-E-2',
+      domainId: 'E',
+      classLevel: 'X',
+      competency: 'Application',
+      questionType: 'Spectroscopic Corrosion Chemistry',
+      scopeLabel: 'CBSE Curriculum-linked Enrichment',
+      question: 'In Prof. R. Balasubramaniam’s (IIT Kanpur) FTIR and Mössbauer analysis of the Delhi Iron Pillar, which passive phase forms via 2H₃PO₄ + Fe → Fe(H₂PO₄)₂ + H₂ to protect the wrought iron?',
+      questionHi: 'IIT कानपुर के प्रो. आर. बालसुब्रमण्यम के FTIR और मॉसबाउर विश्लेषण के अनुसार दिल्ली के लौह स्तंभ पर 2H₃PO₄ + Fe → Fe(H₂PO₄)₂ + H₂ के बाद कौन-सी निष्क्रिय सुरक्षात्मक परत बनती है?',
+      options: [
+        'A dense amorphous/nanocrystalline δ-FeOOH (misawite) and crystalline iron hydrogen phosphate hydrate film at the metal–oxide interface.',
+        'A thick layer of pure metallic chromium plated electrochemically.',
+        'Liquid mercury coating derived from cinnabar.',
+        'Pure carbon-nanotube graphene skin.'
+      ],
+      optionsHi: [
+        'धातु-ऑक्साइड अंतरापृष्ठ पर अक्रिस्टलीय/अतिसूक्ष्म δ-FeOOH (मिसावाइट) और क्रिस्टलीय आयरन हाइड्रोजन फॉस्फेट हाइड्रेट की सघन निष्क्रिय परत।',
+        'विद्युत-लेपन द्वारा चढ़ाई गई शुद्ध क्रोमियम परत।',
+        'हिंगुल से निकाले गए तरल पारे का लेप।',
+        'शुद्ध कार्बन-नैनोट्यूब ग्रैफीन परत।'
+      ],
+      correctIndex: 0,
+      rationale: 'High phosphorus (~0.25%) smelted without lime flux reacts during wet–dry cycles to precipitate iron phosphates and nucleate a protective δ-FeOOH (misawite) passive barrier.',
+      rationaleHi: 'उच्च फॉस्फोरस और नमी से बने फॉस्फेट अवक्षेप धातु की सतह पर मिसावाइट (δ-FeOOH) की सुरक्षात्मक निष्क्रिय परत बनाते हैं।'
     }
   ];
 

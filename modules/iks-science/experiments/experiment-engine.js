@@ -163,6 +163,8 @@
         var isTriple = Math.abs(c - Math.round(c)) < 1e-9;
         var aryabhataPi = 62832 / 20000;
         var piError = Math.abs(aryabhataPi - Math.PI);
+        var baudhayanaRoot2 = 1 + 1 / 3 + 1 / 12 - 1 / (12 * 34); // 577 / 408
+        var root2RelErrPct = (Math.abs(baudhayanaRoot2 - Math.SQRT2) / Math.SQRT2) * 100;
         return {
           sideA: a,
           sideB: b,
@@ -173,7 +175,9 @@
           isTriple: isTriple ? 'Yes (' + a + ',' + b + ',' + Math.round(c) + ')' : 'No (Irrational)',
           aryabhataPi: aryabhataPi,
           piError: Number(piError.toFixed(6)),
-          summary: 'a²+b² = ' + areaSum + ', c = ' + c.toFixed(4) + ' (' + (isTriple ? 'Exact integer triple' : 'Irrational diagonal') + ')'
+          baudhayanaRoot2: Number(baudhayanaRoot2.toFixed(10)),
+          root2RelErrPct: Number(root2RelErrPct.toFixed(6)),
+          summary: 'a²+b² = ' + areaSum + ', c = ' + c.toFixed(4) + ' · Baudhāyana √2 ≈ 577/408 = ' + baudhayanaRoot2.toFixed(7) + ' (err ' + root2RelErrPct.toFixed(4) + '%)'
         };
       },
       generateSeries: function (params) {
@@ -389,7 +393,9 @@
         var salFactor = 1 + 2.8 * sal;
         var passiveFactor = (p >= 0.2 && sal < 1.0) ? 0.22 : (1 - 1.4 * p);
         var oxideUm = Number((3.8 * rhFactor * salFactor * Math.max(0.18, passiveFactor) * Math.sqrt(days)).toFixed(1));
-        var regime = oxideUm < 25 ? 'Passive phosphate barrier effective' : (oxideUm < 90 ? 'Moderate oxidation' : 'Severe pitting / breakdown');
+        var regime = oxideUm < 25
+          ? 'Passive δ-FeOOH (Misawite) + FeHPO₄/Fe₃(PO₄)₂ barrier effective'
+          : (oxideUm < 90 ? 'Moderate oxidation' : 'Severe Cl⁻ pitting / film breakdown');
         return {
           phosphorus: p,
           humidity: rh,
@@ -397,6 +403,7 @@
           days: days,
           oxideUm: oxideUm,
           regime: regime,
+          reactionMechanism: '2H₃PO₄ + Fe → Fe(H₂PO₄)₂ + H₂ → FeHPO₄ / Fe₃(PO₄)₂ + δ-FeOOH',
           summary: 'Modeled corrosion = ' + oxideUm + ' µm in ' + days + ' d (' + regime + ')'
         };
       },
