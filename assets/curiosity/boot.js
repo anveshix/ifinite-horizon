@@ -8,13 +8,20 @@ shell.setQuizRenderer(renderQuiz);              // Phase 3: the Knowledge check 
 
 const LAB_FILES = [
   "./labs/lens.js",
+  "./labs/eye.js",
   "./labs/ohm.js",
+  "./labs/magnet.js",
   "./labs/force.js",
   "./labs/energy.js",
   "./labs/sound.js",
   "./labs/gravity.js",
+  "./labs/ph.js",
+  "./labs/atom.js",
+  "./labs/matter.js",
   "./labs/cell.js",
-  "./labs/tissues.js"
+  "./labs/tissues.js",
+  "./labs/heart.js",
+  "./labs/genetics.js"
 ];
 
 let booted = null;

@@ -142,8 +142,17 @@ export const sound = {
       else if (kind === "thud") tone(125, 0, 0.18, "sine", 0.18, 44);
       else if (kind === "zap") { tone(760, 0, 0.08, "sawtooth", 0.05, 1140); tone(1520, 0.03, 0.09, "sine", 0.05, 920); }
       else if (kind === "pop") tone(480, 0, 0.09, "sine", 0.09, 820);
+      else if (kind === "fizz") noiseBurst(0, 0.25, 2800, 0.8, 0.09, 4400);
       else tone(660, 0, 0.07, "triangle", 0.06);
     } catch { /* audio blocked: silently ignore */ }
+  },
+  /** Synthesizes a realistic Lub-Dub heartbeat on user click for Heart Lab. */
+  playHeartbeat() {
+    try {
+      tone(72, 0, 0.11, "sine", 0.24, 42);
+      tone(92, 0.19, 0.09, "sine", 0.19, 52);
+      return true;
+    } catch { return false; }
   },
   /** Synthesizes a pure tuning-fork tone (+ gentle 2nd harmonic) for Sound Lab on direct user click. */
   playTone(freq = 440, amp = 0.6, dur = 0.85) {

@@ -25,7 +25,7 @@ const core = await import("../assets/curiosity/core.js");
 const fx = await import("../assets/curiosity/quiz/fx.js");
 
 const labModules = await Promise.all(
-  ["lens", "ohm", "force", "energy", "sound", "gravity", "cell", "tissues"].map(
+  ["lens", "eye", "ohm", "magnet", "force", "energy", "sound", "gravity", "ph", "atom", "matter", "cell", "tissues", "heart", "genetics"].map(
     id => import(`../assets/curiosity/labs/${id}.js`).then(m => m.default)
   )
 );
@@ -33,7 +33,7 @@ const labModules = await Promise.all(
 core._resetLabs();
 labModules.forEach(l => core.registerLab(l));
 const registered = core.labs();
-ok(registered.length === 8, `expected 8 registered labs, got ${registered.length}`);
+ok(registered.length === 15, `expected 15 registered labs, got ${registered.length}`);
 
 // Mock 2D canvas context to verify every lab's snapshot() renders cleanly across focus modes
 function mockCanvas() {
@@ -69,12 +69,14 @@ for (const lab of registered) {
 
 // Verify fx.sound defaults & headless safety
 ok(fx.sound.on === false, "fx.sound.on must default to false");
-ok(typeof fx.sound.playTone === "function" && typeof fx.sound.playClapEcho === "function", "fx.sound acoustic helpers missing");
+ok(typeof fx.sound.playTone === "function" && typeof fx.sound.playClapEcho === "function" && typeof fx.sound.playHeartbeat === "function", "fx.sound acoustic helpers missing");
 fx.sound.play("mission");
 fx.sound.play("whoosh");
 fx.sound.play("thud");
 fx.sound.play("zap");
+fx.sound.play("fizz");
 fx.sound.play("pop");
+fx.sound.playHeartbeat(72);
 ok(fx.sound.toggle() === true && fx.sound.on === true, "sound.toggle() -> true");
 ok(fx.sound.toggle() === false && fx.sound.on === false, "sound.toggle() -> false");
 
@@ -103,7 +105,7 @@ sandbox.window = sandbox;
 vm.runInNewContext(vaCode, sandbox);
 const links = sandbox.__curiosity.links;
 const linkKeys = Object.keys(links);
-ok(linkKeys.length >= 22, `expected >= 22 LINKS, got ${linkKeys.length}`);
+ok(linkKeys.length >= 50, `expected >= 50 LINKS, got ${linkKeys.length}`);
 for (const k of linkKeys) {
   ok(htmlKeys.has(k), `LINKS key "${k}" not found in index.html`);
   const [labId, title] = links[k];
@@ -120,5 +122,5 @@ const rs = sandbox.__curiosity.reportString();
 const parsed = sandbox.__curiosity.parseReport(rs);
 ok(parsed && parsed.xp === 30 && parsed.ans === 1 && parsed.cor === 1 && parsed.labs.sound[0] === 1, `reportString round-trip failed: ${rs}`);
 
-console.log(`curiosity upgrade · 8 labs · ${linkKeys.length} topic links · checks ${n} · failures ${bad}`);
+console.log(`curiosity upgrade · ${registered.length} labs · ${linkKeys.length} topic links · checks ${n} · failures ${bad}`);
 process.exit(bad ? 1 : 0);

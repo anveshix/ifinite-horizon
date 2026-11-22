@@ -3,13 +3,20 @@
 // what the physics gives when worked out again here WITHOUT the lab's own model code (plain formulas / geometry).
 import { validateQuestion, registerLab, _resetLabs } from "../assets/curiosity/core.js";
 import lens from "../assets/curiosity/labs/lens.js";
+import eye from "../assets/curiosity/labs/eye.js";
 import ohm from "../assets/curiosity/labs/ohm.js";
+import magnet from "../assets/curiosity/labs/magnet.js";
 import force from "../assets/curiosity/labs/force.js";
 import energy from "../assets/curiosity/labs/energy.js";
 import sound from "../assets/curiosity/labs/sound.js";
 import gravity from "../assets/curiosity/labs/gravity.js";
+import ph from "../assets/curiosity/labs/ph.js";
+import atom from "../assets/curiosity/labs/atom.js";
+import matter from "../assets/curiosity/labs/matter.js";
 import cell from "../assets/curiosity/labs/cell.js";
 import tissues from "../assets/curiosity/labs/tissues.js";
+import heart from "../assets/curiosity/labs/heart.js";
+import genetics from "../assets/curiosity/labs/genetics.js";
 import { rng } from "../assets/curiosity/labs/kit.js";
 
 let n = 0, bad = 0; const seenIds = {};
@@ -105,9 +112,9 @@ run(energy, 400, 51, (q) => {
   if (q.id === "energy-law") ok(/conservation of energy/.test(c), "energy-law");
 });
 
-/* ---------------- contract registration for all 8 labs ---------------- */
+/* ---------------- contract registration for all 15 labs ---------------- */
 _resetLabs();
-for (const lab of [lens, ohm, force, energy, sound, gravity, cell, tissues]) {
+for (const lab of [lens, eye, ohm, magnet, force, energy, sound, gravity, ph, atom, matter, cell, tissues, heart, genetics]) {
   try { registerLab(lab); ok(true, `register ${lab.id}`); }
   catch (e) { fail(`registerLab(${lab.id}) threw: ${e.message}`); }
 }
@@ -157,6 +164,91 @@ run(tissues, 400, 97, (q) => {
   if (q.id === "tis-transport") ok(/Xylem carries water upward only/.test(c), `tis-transport got "${c}"`);
   if (q.id === "tis-muscle") ok(/Striated/.test(c), `tis-muscle got "${c}"`);
   if (q.id === "tis-predict") ok(/speeds up/.test(c), `tis-predict got "${c}"`);
+});
+
+/* ---------------- eye ---------------- */
+run(eye, 300, 103, (q) => {
+  const c = correct(q);
+  if (q.id === "eye-myopia") ok(/Concave/.test(c), `eye-myopia got "${c}"`);
+  if (q.id === "eye-hyper") ok(/Convex/.test(c), `eye-hyper got "${c}"`);
+  if (q.id === "eye-prism-order") ok(/Violet bends the most/.test(c), `eye-prism-order got "${c}"`);
+  if (q.id === "eye-accom") ok(/Ciliary/.test(c), `eye-accom got "${c}"`);
+  if (q.id === "eye-range") ok(/25 cm to infinity/.test(c), `eye-range got "${c}"`);
+  if (q.id === "eye-predict") ok(/closer to the eye lens/.test(c), `eye-predict got "${c}"`);
+});
+
+/* ---------------- magnet ---------------- */
+run(magnet, 300, 113, (q) => {
+  const c = correct(q);
+  if (q.id === "mag-solenoid") ok(/Straight, parallel/.test(c), `mag-solenoid got "${c}"`);
+  if (q.id === "mag-flip") ok(/North and South poles swap/.test(c), `mag-flip got "${c}"`);
+  if (q.id === "mag-induction-zero") ok(/Zero/.test(c), `mag-induction-zero got "${c}"`);
+  if (q.id === "mag-flhr") ok(/Fleming's Left-Hand/.test(c), `mag-flhr got "${c}"`);
+  if (q.id === "mag-predict-turns") ok(/doubles/.test(c), `mag-predict-turns got "${c}"`);
+  if (q.id === "mag-domestic") ok(/220 V AC/.test(c), `mag-domestic got "${c}"`);
+});
+
+/* ---------------- ph ---------------- */
+run(ph, 300, 127, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  if (q.id === "ph-neutral") ok(/Salt and Water/.test(c), `ph-neutral got "${c}"`);
+  if (q.id === "ph-phenol") ok(/Pink/.test(c), `ph-phenol got "${c}"`);
+  if (q.id === "ph-litmus") ok(/Red/.test(c), `ph-litmus got "${c}"`);
+  if (q.id === "ph-nature") ok(iv.pH === 7 ? /Neutral/.test(c) : iv.pH < 7 ? /Acidic/.test(c) : /Basic/.test(c), `ph-nature pH=${iv.pH} got "${c}"`);
+  if (q.id === "ph-turmeric") ok(/Reddish-brown/.test(c), `ph-turmeric got "${c}"`);
+  if (q.id === "ph-predict") ok(/100 times lower/.test(c), `ph-predict got "${c}"`);
+});
+
+/* ---------------- atom ---------------- */
+run(atom, 300, 139, (q) => {
+  const iv = q.image.vars, c = correct(q), Z = iv.Z;
+  const k = Math.min(2, Z), l = Math.min(8, Math.max(0, Z - 2)), m = Math.min(8, Math.max(0, Z - 10)), n4 = Math.max(0, Z - 18);
+  const cfg = [k, l, m, n4].filter(x => x > 0).join(", ");
+  const val = Z === 2 ? 0 : (Z <= 2 ? k : Z <= 10 ? l : Z <= 18 ? m : n4);
+  const valency = Z === 2 ? 0 : (val <= 4 ? val : 8 - val);
+  if (q.id === "atom-config") ok(c === cfg, `atom-config Z=${Z} expected "${cfg}" got "${c}"`);
+  if (q.id === "atom-valency") ok(c === String(valency), `atom-valency Z=${Z} expected ${valency} got "${c}"`);
+  if (q.id === "atom-isotopes") ok(/Same atomic number Z/.test(c), `atom-isotopes got "${c}"`);
+  if (q.id === "atom-noble") ok(/Noble gas/.test(c), `atom-noble got "${c}"`);
+  if (q.id === "atom-predict") ok(/Na⁺/.test(c), `atom-predict got "${c}"`);
+});
+
+/* ---------------- matter ---------------- */
+run(matter, 300, 149, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  if (q.id === "mat-tyndall") ok(/Colloid/.test(c), `mat-tyndall got "${c}"`);
+  if (q.id === "mat-true") ok(/< 1 nm/.test(c), `mat-true got "${c}"`);
+  if (q.id === "mat-filter") ok(/Suspension/.test(c), `mat-filter got "${c}"`);
+  if (q.id === "mat-conc") { const pct = +((100 * iv.conc) / (100 + iv.conc)).toFixed(1); ok(c === `${pct}%`, `mat-conc ${iv.conc} expected ${pct}% got "${c}"`); }
+  if (q.id === "mat-kelvin") ok(/373\.15 K/.test(c), `mat-kelvin got "${c}"`);
+  if (q.id === "mat-predict") ok(/Centrifugation/.test(c), `mat-predict got "${c}"`);
+});
+
+/* ---------------- heart ---------------- */
+run(heart, 300, 157, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  if (q.id === "hrt-lv") ok(/Left Ventricle/.test(c), `hrt-lv got "${c}"`);
+  if (q.id === "hrt-pulm") ok(/Pulmonary Artery/.test(c), `hrt-pulm got "${c}"`);
+  if (q.id === "hrt-pvein") ok(/Pulmonary Vein/.test(c), `hrt-pvein got "${c}"`);
+  if (q.id === "hrt-septum") ok(/Prevents mixing/.test(c), `hrt-septum got "${c}"`);
+  if (q.id === "hrt-output") ok(c === `${+((iv.bpm * iv.sv) / 1000).toFixed(2)} L/min`, `hrt-output bpm=${iv.bpm} sv=${iv.sv} got "${c}"`);
+  if (q.id === "hrt-predict") ok(/backward flow/.test(c), `hrt-predict got "${c}"`);
+});
+
+/* ---------------- genetics ---------------- */
+const GC = ["TT", "Tt", "tt"];
+run(genetics, 300, 163, (q) => {
+  const iv = q.image.vars, c = correct(q);
+  if (q.id === "gen-f2") ok(/3 Tall : 1 Dwarf/.test(c), `gen-f2 got "${c}"`);
+  if (q.id === "gen-f1") ok(/100% Tall/.test(c), `gen-f1 got "${c}"`);
+  if (q.id === "gen-geno") ok(c === "1 TT : 2 Tt : 1 tt", `gen-geno got "${c}"`);
+  if (q.id === "gen-sex") ok(/Father's sperm/.test(c), `gen-sex got "${c}"`);
+  if (q.id === "gen-pct") {
+    const a1 = GC[iv.p1].split(""), a2 = GC[iv.p2].split("");
+    let tall = 0; a1.forEach(x => a2.forEach(y => { if (x === "T" || y === "T") tall++; }));
+    ok(c === `${tall * 25}% Tall`, `gen-pct ${GC[iv.p1]}x${GC[iv.p2]} expected ${tall * 25}% Tall got "${c}"`);
+  }
+  if (q.id === "gen-predict") ok(/50% Tall.*50% Dwarf/.test(c), `gen-predict got "${c}"`);
 });
 
 const ids = Object.keys(seenIds).sort();

@@ -1,5 +1,5 @@
 // Physics models vs NCERT textbook results. Run: node tests/curiosity-physics.mjs
-import { lens, lensNature, lensRays, circuit, motion, pendulumStart, pendulumEnergy, pendulumStep, G, PEND_L, soundWave, freeFall, osmosisModel, tissueModel } from "../assets/curiosity/labs/models.js";
+import { lens, lensNature, lensRays, circuit, motion, pendulumStart, pendulumEnergy, pendulumStep, G, PEND_L, soundWave, freeFall, osmosisModel, tissueModel, eyeModel, magnetModel, phModel, atomModel, matterModel, heartModel, geneticsModel } from "../assets/curiosity/labs/models.js";
 let n = 0, bad = 0;
 const ok = (c, m) => { n++; if (!c) { bad++; console.log(" ✗", m); } };
 const near = (a, b, e = 1e-6) => Math.abs(a - b) <= e * Math.max(1, Math.abs(b));
@@ -77,6 +77,52 @@ let TM = tissueModel({ tissue: 2, zoom: 400, transp: 3 });
 ok(!TM.living && TM.fieldUm === 100 && /Sclerenchyma/.test(TM.name), "sclerenchyma dead");
 TM = tissueModel({ tissue: 3, zoom: 200, transp: 5 });
 ok(TM.speed === 3 && TM.fieldUm === 200 && /Xylem/.test(TM.name), "xylem speed scales with transp");
+
+/* Eye & Defects (NCERT Class X Ch 10) */
+let EY = eyeModel({ defect: 0, P: 0, viewMode: 0 });
+ok(EY.sharp && near(EY.reqP, 0, 1e-6), "normal eye sharp without glasses");
+EY = eyeModel({ defect: -1, P: -2.0, viewMode: 0 });
+ok(near(EY.reqP, -2.0, 1e-6) && EY.sharp, "myopia corrected by -2.0 D concave lens");
+EY = eyeModel({ defect: 1, P: 2.0, viewMode: 0 });
+ok(near(EY.reqP, 2.0, 1e-6) && EY.sharp, "hypermetropia corrected by +2.0 D convex lens");
+
+/* Magnet & Solenoid (NCERT Class X Ch 12) */
+let MG = magnetModel({ I: 4, N: 30, dir: 1, speed: 2 });
+ok(near(MG.B, 0.04 * 30 * 4) && MG.poleRight === "North (N)" && MG.emf > 0, "solenoid B scales with N*I");
+ok(magnetModel({ I: 2, N: 20, dir: -1, speed: 0 }).poleRight === "South (S)" && magnetModel({ I: 2, N: 20, dir: -1, speed: 0 }).emf === 0, "negative dir flips poles and stationary magnet has 0 emf");
+
+/* pH & Indicators (NCERT Class X Ch 2) */
+let PH = phModel({ pH: 7, indicator: 0 });
+ok(PH.pH === 7 && PH.nature === "Neutral" && PH.colorName === "Green" && PH.hExp === -7, "pH 7 neutral green in universal indicator");
+PH = phModel({ pH: 2, indicator: 1 });
+ok(PH.nature === "Acidic" && PH.colorName === "Red", "pH 2 turns litmus red");
+PH = phModel({ pH: 11, indicator: 2 });
+ok(PH.nature === "Basic" && /Pink/.test(PH.colorName), "pH 11 turns phenolphthalein pink");
+
+/* Atom Builder (NCERT Class IX Ch 6) */
+let AT = atomModel({ Z: 6, iso: 2 });
+ok(AT.symbol === "C" && AT.config === "2, 4" && AT.valency === 4 && AT.A === 14, "Carbon-14 isotope");
+AT = atomModel({ Z: 10, iso: 0 });
+ok(AT.symbol === "Ne" && AT.noble && AT.valency === 0 && AT.config === "2, 8", "Neon noble gas");
+AT = atomModel({ Z: 20, iso: 0 });
+ok(AT.symbol === "Ca" && AT.config === "2, 8, 8, 2" && AT.valency === 2, "Calcium 4th shell");
+
+/* Matter & Mixtures (NCERT Class IX Ch 1-2) */
+ok(!matterModel({ mix: 1, temp: 25, conc: 20 }).tyndall && near(matterModel({ mix: 1, temp: 25, conc: 20 }).Tkelvin, 298.15), "true solution no Tyndall + Kelvin");
+ok(matterModel({ mix: 2, temp: 25, conc: 20 }).tyndall && !matterModel({ mix: 2, temp: 25, conc: 20 }).settles, "colloid Tyndall + non-settling");
+ok(matterModel({ mix: 3, temp: 105, conc: 25 }).settles && /Gas/.test(matterModel({ mix: 3, temp: 105, conc: 25 }).state) && near(matterModel({ mix: 3, temp: 105, conc: 25 }).massPct, 20), "suspension settles + steam + 20% w/w");
+
+/* Heart & Double Circulation (NCERT Class X Ch 5) */
+let HR = heartModel({ bpm: 70, sv: 70, loop: 0 });
+ok(near(HR.CO, 4.9) && near(HR.period, 60 / 70, 1e-2), "70 bpm * 70mL = 4.9 L/min");
+ok(heartModel({ bpm: 140, sv: 70, loop: 1 }).CO === 9.8 && /Pulmonary/.test(heartModel({ bpm: 140, sv: 70, loop: 1 }).loopName), "140 bpm pulmonary output");
+
+/* Genetics & Mendel (NCERT Class X Ch 8) */
+let GN = geneticsModel({ p1: 1, p2: 1, cross: 0 });
+ok(GN.tallPct === 75 && GN.dwarfPct === 25 && /1 TT : 2 Tt : 1 tt/.test(GN.ratioText), "Tt x Tt = 3:1 & 1:2:1");
+GN = geneticsModel({ p1: 1, p2: 2, cross: 0 });
+ok(GN.tallPct === 50 && GN.dwarfPct === 50, "Tt x tt test cross = 50:50");
+ok(geneticsModel({ p1: 0, p2: 0, cross: 1 }).tallPct === 50 && /XX.*XY/.test(geneticsModel({ p1: 0, p2: 0, cross: 1 }).ratioText), "XX x XY = 50/50");
 
 console.log(`physics models · checks ${n} · failures ${bad}`);
 process.exit(bad ? 1 : 0);
