@@ -207,8 +207,23 @@ export default {
     jump("R₁ × 2", () => ctx.set("R1", ctx.vars.R1 * 2)); jump("R₁ ÷ 2", () => ctx.set("R1", Math.max(1, Math.round(ctx.vars.R1 / 2))));
     jump("🎲 Random", () => { ctx.set("V", 1.5 * (1 + Math.floor(Math.random() * 8))); ctx.set("R1", 1 + Math.floor(Math.random() * 20)); ctx.set("R2", 1 + Math.floor(Math.random() * 20)); });
     side.insertBefore(presets, gh);
+    const probeHud = el("div", "cl-presets"); probeHud.appendChild(el("span", "cl-lab", "🔍 Live Probe · मापक जाँच"));
+    const probeRead = el("p", "cl-note", "Circuit Total: V = 6.0 V · I = 1.00 A · P = 6.0 W");
+    let probeTarget = "all";
+    const updateProbe = () => {
+      const C = cur, blown = C.I > 6.5;
+      if (blown) { probeRead.textContent = `🚨 FUSE BLOWN (I = ${fmt(C.I, 2)} A > 6.5 A)! Lower voltage or increase R.`; return; }
+      if (probeTarget === "r1") probeRead.textContent = `Probe R₁ (${C.R1} Ω): V₁ = ${fmt(C.V1, 2)} V · I₁ = ${fmt(C.mode === 2 ? C.I1 : C.I, 2)} A · P₁ = ${fmt(C.P1, 2)} W`;
+      else if (probeTarget === "r2") probeRead.textContent = C.mode === 0 ? "R₂ is disconnected in Single mode." : `Probe R₂ (${C.R2} Ω): V₂ = ${fmt(C.V2, 2)} V · I₂ = ${fmt(C.mode === 2 ? C.I2 : C.I, 2)} A · P₂ = ${fmt(C.P2, 2)} W`;
+      else if (probeTarget === "fuse") probeRead.textContent = `Probe Safety Fuse (6.5 A rating): carrying ${fmt(C.I, 2)} A (${Math.round((C.I / 6.5) * 100)}% load)`;
+      else probeRead.textContent = `Total Circuit: Req = ${fmt(C.Req, 2)} Ω · I = ${fmt(C.I, 2)} A · P = ${fmt(C.P, 1)} W`;
+    };
+    [["Total", "all"], ["Probe R₁", "r1"], ["Probe R₂", "r2"], ["Probe Fuse", "fuse"]].forEach(([lbl, pk]) => {
+      actionButton(probeHud, lbl, () => { probeTarget = pk; sfx.play("tick"); updateProbe(); }, "cl-chipb");
+    });
+    side.insertBefore(probeHud, gh); side.insertBefore(probeRead, gh);
     note(side, "The ammeter is connected in series and the voltmeter in parallel. Current flows from + to −; electrons drift the opposite way. The glowing resistor shows the heating effect of current.", "अमीटर श्रेणी में और वोल्टमीटर पार्श्व में जुड़ता है। धारा + से − की ओर बहती है, इलेक्ट्रॉन उल्टी दिशा में। चमकता प्रतिरोधक धारा का ऊष्मीय प्रभाव दिखाता है।");
-    const paint = () => { modes.forEach((b, i) => { b.classList.toggle("on", ctx.vars.mode === i); b.setAttribute("aria-pressed", String(ctx.vars.mode === i)); }); r2row.style.display = ctx.vars.mode === 0 ? "none" : ""; };
+    const paint = () => { modes.forEach((b, i) => { b.classList.toggle("on", ctx.vars.mode === i); b.setAttribute("aria-pressed", String(ctx.vars.mode === i)); }); r2row.style.display = ctx.vars.mode === 0 ? "none" : ""; updateProbe(); };
     const off = bus.on("sim:change", e => { if (e.labId !== "ohm") return; rebuild(); facts.update(); sl.sync(); paint(); drawGraph(); });
     rebuild(); facts.update(); paint(); drawGraph(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };

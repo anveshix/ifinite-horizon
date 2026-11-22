@@ -81,7 +81,7 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    let skyMode = false;
+    let skyMode = ctx.preset?.sub === "sky";
     const rebuild = () => {
       while (dyn.children.length) {
         const c = dyn.children.pop();

@@ -103,7 +103,22 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const ht = el("span"), hv = el("span"), hs = el("span"); hud.append(ht, hv, hs);
 
-    let t = 0, running = false, landed = false, bouncing = false, tagM = -1;
+    let t = 0, running = false, landed = false, bouncing = false, tagM = -1, orbitMode = ctx.preset?.sub === "orbit", orbAng = 0;
+    const orbitGrp = new THREE.Group(); orbitGrp.visible = false; scene.add(orbitGrp);
+    const planetSphere = new THREE.Mesh(new THREE.SphereGeometry(0.95, 28, 20), new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.4 }));
+    planetSphere.position.set(0, 2.5, 0); orbitGrp.add(planetSphere);
+    const orbitRing = new THREE.Mesh(new THREE.TorusGeometry(2.6, 0.02, 8, 64), new THREE.MeshBasicMaterial({ color: 0x64748b }));
+    orbitRing.rotation.x = Math.PI / 2; orbitRing.position.set(0, 2.5, 0); orbitGrp.add(orbitRing);
+    const satMesh = new THREE.Mesh(new THREE.SphereGeometry(0.22, 18, 14), new THREE.MeshStandardMaterial({ color: 0xfacc15, emissive: 0xd97706, emissiveIntensity: 0.5 }));
+    orbitGrp.add(satMesh);
+    const satTag = labelSprite(THREE, "Centripetal F_c = mv²/r", "Tangential velocity v ⊥ F_c", { scale: 0.85, size: 22, color: "#fef08a" });
+    satTag.position.set(0, 4.3, 0); orbitGrp.add(satTag);
+    const setOrbitMode = on => {
+      orbitMode = on; btnOrb.classList.toggle("on", on);
+      [pole, ball, pebble, mTag, pTag].forEach(o => { o.visible = !on; });
+      orbitGrp.visible = on;
+      if (on) { running = false; bouncing = false; ht.textContent = "Circular Orbit · वृत्तीय गति"; hv.textContent = "F_c = mv²/r → Centre"; hs.textContent = "v = √(gR)"; }
+    };
 
     const placeAt = tc => {
       const F = view(ctx.vars), stAt = F.at(tc);
@@ -137,6 +152,14 @@ export default {
 
     const stopFrame = st.onFrame(dt => {
       const F = view(ctx.vars);
+      if (orbitMode) {
+        orbAng += dt * (0.9 + F.g * 0.05);
+        const rad = 1.8 + (F.h / 100) * 1.4;
+        orbitRing.scale.setScalar(rad / 2.6);
+        satMesh.position.set(Math.cos(orbAng) * rad, 2.5, Math.sin(orbAng) * rad);
+        planetSphere.material.color.set(PLANETS[F.planet].color);
+        return;
+      }
       if (bouncing) {
         world.step(1 / 60, dt, 3);
         const r = 0.16 + Math.cbrt(F.m) * 0.09;
@@ -177,12 +200,14 @@ export default {
     const sl = sliders(ctx, side, { skip: ["planet"] });
     const btns = el("div", "cl-btns"); side.appendChild(btns);
     const btnGo = actionButton(btns, "▶ Drop Both · दोनों गिराओ", () => {
+      if (orbitMode) setOrbitMode(false);
       if (landed || running) { reset(); return; }
       running = true; landed = false; t = 0;
       btnGo.textContent = "■ Reset · रोकें";
       sfx.play("whoosh");
       ctx.run();
     }, "cl-act");
+    const btnOrb = actionButton(btns, "🛰️ Circular Orbit", () => { setOrbitMode(!orbitMode); sfx.play("pop"); }, "cl-chipb");
 
     const graph = el("canvas", "cl-graph"); graph.width = 340; graph.height = 160; graph.setAttribute("role", "img"); graph.setAttribute("aria-label", "Live velocity vs time graph");
     side.appendChild(el("h3", "cl-h", "Velocity–time graph · वेग–समय ग्राफ़")); side.appendChild(graph);
@@ -214,7 +239,7 @@ export default {
       reset(); facts.update(); sl.sync();
       pBtns.forEach((b, j) => b.classList.toggle("on", j === ctx.vars.planet));
     });
-    reset(); facts.update(); ctx.stage.dataset.ready = "1";
+    reset(); setOrbitMode(orbitMode); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

@@ -193,14 +193,17 @@ function checkMissions(ctx, trigger = "change") {
   });
   if (changed) renderMissions(ctx);
 }
-export async function openLab(id) {
+export async function openLab(id, preset = null) {
   const lab = getLab(id); if (!lab) return;
   disposeLab();
   const token = ++mountToken, vars = defaults(lab);
+  if (preset && typeof preset === "object") {
+    lab.vars.forEach(v => { if (Number.isFinite(preset[v.id])) vars[v.id] = snap(v, preset[v.id]); });
+  }
   let nudged = false;
   const active = () => !!root && !!cur && cur.ctx === ctx && token === mountToken;
   const ctx = {
-    lab, vars, stage: $("#clStage", root), side: $("#clSide", root),
+    lab, vars, preset: preset || {}, stage: $("#clStage", root), side: $("#clSide", root),
     registerStage(handle) { if (active()) cur.stageHandle = handle; else handle && handle.dispose && handle.dispose(); },
     fail(error) { if (active()) mountFallback(ctx, error, token); },
     /** Labs call this when the student moves a control: snaps, stores, tells the quiz. */
@@ -287,14 +290,14 @@ function onKey(e) {
 }
 
 /* ---------- open / close ---------- */
-export function open(labId) {
+export function open(labId, preset = null) {
   if (!root) build();
   prevFocus = document.activeElement;
   prevPause = window.__vaPause; window.__vaPause = true;       // the atlas pauses its own 3D render loop while the lab is on screen
   document.body.classList.add("cl-open");
   root.hidden = false;
   paintHud(); paintPicker(); setTab("sim");
-  if (labId && getLab(labId)) openLab(labId); else $("#clClose", root).focus({ preventScroll: true });
+  if (labId && getLab(labId)) openLab(labId, preset); else $("#clClose", root).focus({ preventScroll: true });
 }
 export function close() {
   if (!root || root.hidden) return;

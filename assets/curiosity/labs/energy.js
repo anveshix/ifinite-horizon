@@ -91,7 +91,32 @@ export default {
     const arcPts = []; for (let i = 0; i <= 40; i++) arcPts.push([0, 0, 0]);
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud); const hh = el("span"), vv = el("span"), ee = el("span"); hud.append(hh, vv, ee);
 
-    let s = { theta: 0, omega: 0 }, running = false, tagKey = "";
+    let s = { theta: 0, omega: 0 }, running = false, tagKey = "", phaseTrail = [], leverMode = ctx.preset?.sub === "lever", leverEffortArm = 2.0, leverLoadArm = 1.0;
+    const leverGrp = new THREE.Group(); leverGrp.visible = false; scene.add(leverGrp);
+    const drawLever3D = () => {
+      while (leverGrp.children.length) {
+        const ch = leverGrp.children.pop();
+        ch.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); });
+      }
+      const ma = leverEffortArm / leverLoadArm, tilt = Math.max(-0.22, Math.min(0.22, (ma - 1) * 0.08));
+      const fulc = new THREE.Mesh(new THREE.ConeGeometry(0.45, 0.75, 3), new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.4 }));
+      fulc.position.set(0, BOTTOM_Y - 0.17, 0); leverGrp.add(fulc);
+      const bar = new THREE.Group(); bar.position.set(0, BOTTOM_Y + 0.22, 0); bar.rotation.z = -tilt; leverGrp.add(bar);
+      const plank = new THREE.Mesh(new THREE.BoxGeometry(leverEffortArm + leverLoadArm + 0.6, 0.14, 0.45), new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.3 }));
+      plank.position.x = (leverEffortArm - leverLoadArm) / 2; bar.add(plank);
+      const loadBox = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.65, 0.65), new THREE.MeshStandardMaterial({ color: 0xf97316 }));
+      loadBox.position.set(-leverLoadArm, 0.4, 0); bar.add(loadBox);
+      const effSphere = new THREE.Mesh(new THREE.SphereGeometry(0.26, 16, 12), new THREE.MeshStandardMaterial({ color: 0x4ade80 }));
+      effSphere.position.set(leverEffortArm, 0.34, 0); bar.add(effSphere);
+      const lb = labelSprite(THREE, `MA = d_e / d_l = ${fmt(ma, 2)}`, `Effort ${fmt(100 / ma, 1)} N lifts 100 N Load`, { scale: 0.9, size: 24, color: "#fef08a" });
+      lb.position.set(0, PIVOT_Y - 0.3, 0); leverGrp.add(lb);
+    };
+    const setLeverMode = on => {
+      leverMode = on; if (on) running = false;
+      [beam, hLine, hTag, string, bob, massTag].forEach(o => { o.visible = !on; });
+      leverGrp.visible = on; leverBox.hidden = !on; btnLever.classList.toggle("on", on);
+      if (on) drawLever3D(); else place();
+    };
     const place = () => {
       const x = Math.sin(s.theta) * PEND_L, y = PIVOT_Y - Math.cos(s.theta) * PEND_L, r = 0.1 + Math.cbrt(ctx.vars.m) * 0.07;
       bob.scale.setScalar(r); bob.position.set(x, y, 0); massTag.position.set(x, y + r + 0.28, 0);
@@ -102,9 +127,11 @@ export default {
     const paintEnergy = () => {
       const x = ctx.vars, E = pendulumEnergy(x.m, s.theta, s.omega), S0 = start(x);
       hh.textContent = `height = ${fmt(E.height, 2)} m`; vv.textContent = `speed = ${fmt(Math.abs(E.v), 2)} m/s`; ee.textContent = `PE ${fmt(E.PE, 2)} J + KE ${fmt(E.KE, 2)} J = ${fmt(E.PE + E.KE, 2)} J`;
-      bobMat.emissiveIntensity = S0.KEmax ? 0.9 * Math.min(1, E.KE / S0.KEmax) : 0; drawBars(E, S0);
+      bobMat.emissiveIntensity = S0.KEmax ? 0.9 * Math.min(1, E.KE / S0.KEmax) : 0;
+      phaseTrail.push([s.theta, s.omega]); if (phaseTrail.length > 220) phaseTrail.shift();
+      drawBars(E, S0); drawPhase(S0);
     };
-    const hold = () => { const S0 = start(ctx.vars); s = { theta: S0.theta0, omega: 0 }; place(); paintEnergy(); };
+    const hold = () => { const S0 = start(ctx.vars); s = { theta: S0.theta0, omega: 0 }; phaseTrail = [[s.theta, 0]]; place(); paintEnergy(); };
     const refresh = () => {
       const x = ctx.vars, S0 = start(x); hold();
       hLine.position.set(0, BOTTOM_Y + x.h, 0); hTag.position.set(2.9, BOTTOM_Y + x.h + 0.12, 0);
@@ -139,15 +166,32 @@ export default {
       btnPuck.textContent = impactTest ? "🧱 Hide Puck" : "🧱 Work Puck Test (W=F·d)";
       sfx.play("pop");
     }, "cl-chipb");
-    const bars = el("canvas", "cl-graph"); bars.width = 340; bars.height = 190; bars.setAttribute("role", "img"); bars.setAttribute("aria-label", "Energy bars: potential, kinetic and total");
+    const btnLever = actionButton(btns, "⚖️ Lever & MA", () => { setLeverMode(!leverMode); sfx.play("pop"); }, "cl-chipb");
+    const leverBox = el("div", "cl-presets"); leverBox.hidden = !leverMode;
+    leverBox.innerHTML = `<span class="cl-lab">Class 1 Lever · यांत्रिक लाभ MA = d_e / d_l</span>`;
+    [["Balanced (MA=1)", 1.5, 1.5], ["2× Force (MA=2)", 2.0, 1.0], ["3× Crowbar (MA=3)", 2.4, 0.8], ["Speed (MA=0.5)", 1.0, 2.0]].forEach(([lbl, de, dl]) => {
+      actionButton(leverBox, lbl, () => { leverEffortArm = de; leverLoadArm = dl; sfx.play("pop"); drawLever3D(); }, "cl-chipb");
+    });
+    side.appendChild(leverBox);
+    const bars = el("canvas", "cl-graph"); bars.width = 340; bars.height = 175; bars.setAttribute("role", "img"); bars.setAttribute("aria-label", "Energy bars: potential, kinetic and total");
     side.appendChild(el("h3", "cl-h", "Energy bars · ऊर्जा आलेख")); side.appendChild(bars);
+    const phaseCv = el("canvas", "cl-graph"); phaseCv.width = 340; phaseCv.height = 140; phaseCv.setAttribute("role", "img"); phaseCv.setAttribute("aria-label", "Phase space trajectory theta vs omega");
+    side.appendChild(el("h3", "cl-h", "Phase Space (θ vs ω) · कला समष्टि")); side.appendChild(phaseCv);
     const facts = factsView(ctx, side);
     function drawBars(E, S0) {
-      const g = C2.prep(bars, 340, 190, "#0b1424"), bb = 158, bh = 118, tot = S0.Etotal || 1, H = k => Math.max(0, (k / tot) * bh);
+      const g = C2.prep(bars, 340, 175, "#0b1424"), bb = 145, bh = 108, tot = S0.Etotal || 1, H = k => Math.max(0, (k / tot) * bh);
       C2.line(g, [[24, bb], [316, bb]], "#9fb3c8", 2);
       [["PE", E.PE, "#3b82f6", 36], ["KE", E.KE, "#f97316", 128]].forEach(([n, val, col, x]) => { C2.rect(g, x, bb - H(val), 62, H(val), { stroke: "#fff", fill: col, lw: 1 }); C2.text(g, n, x + 31, bb + 15, { size: 12, color: "#cfe0ff" }); C2.text(g, `${fmt(val, 2)} J`, x + 31, bb - H(val) - 9, { size: 11, color: "#fff" }); });
       g.save(); g.setLineDash([5, 4]); C2.line(g, [[24, bb - bh], [316, bb - bh]], "#e2e8f0", 2); g.restore(); C2.text(g, `total = ${fmt(E.PE + E.KE, 2)} J`, 270, bb - bh - 10, { size: 11, color: "#e2e8f0" });
       C2.rect(g, 220, bb - H(E.PE + E.KE), 62, H(E.PE + E.KE), { stroke: "#fff", fill: "rgba(226,232,240,.35)", lw: 1 }); C2.text(g, "Total", 251, bb + 15, { size: 12, color: "#cfe0ff" });
+    }
+    function drawPhase(S0) {
+      const g = C2.prep(phaseCv, 340, 140, "#0b1424"), cx = 170, cy = 72, tMax = Math.max(0.5, S0.theta0 * 1.25), wMax = Math.max(1.5, Math.sqrt(2 * G * ctx.vars.h) / PEND_L * 1.25);
+      C2.line(g, [[20, cy], [320, cy]], "#475569", 1); C2.line(g, [[cx, 12], [cx, 130]], "#475569", 1);
+      C2.text(g, "θ", 326, cy + 4, { size: 10, color: "#94a3b8" }); C2.text(g, "ω", cx + 10, 14, { size: 10, color: "#94a3b8" });
+      const X = th => cx + (th / tMax) * 135, Y = om => cy - (om / wMax) * 52;
+      if (phaseTrail.length > 1) C2.line(g, phaseTrail.map(([a, b]) => [X(a), Y(b)]), "#38bdf8", 2.2);
+      C2.circle(g, X(s.theta), Y(s.omega), 4.5, { stroke: "#fff", fill: "#facc15", w: 1.5 });
     }
     const presets = el("div", "cl-presets"); presets.appendChild(el("span", "cl-lab", "Try · आज़माओ"));
     const jump = (txt, fn) => actionButton(presets, txt, () => { fn(); sl.sync(); }, "cl-chipb");
@@ -156,7 +200,7 @@ export default {
     side.insertBefore(presets, sl.root.nextSibling);
     note(side, "Ideal pendulum: no air resistance, so the total energy stays constant. Try changing the mass while it swings — the speed at the bottom does not change.", "आदर्श लोलक: वायु-प्रतिरोध नहीं, इसलिए कुल ऊर्जा नियत रहती है। झूलते समय द्रव्यमान बदलकर देखो — तल पर चाल नहीं बदलती।");
     const off = bus.on("sim:change", e => { if (e.labId !== "energy") return; refresh(); facts.update(); sl.sync(); });      // a change re-holds the bob at the new release point (and keeps swinging if it was)
-    refresh(); facts.update(); ctx.stage.dataset.ready = "1";
+    refresh(); setLeverMode(leverMode); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 

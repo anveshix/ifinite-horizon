@@ -65,29 +65,86 @@ export default {
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
     const h1 = el("span"), h2 = el("span"); hud.append(h1, h2);
 
-    /* Coastal terrain: Land (left) & Ocean (right) + Sun + Greenhouse dome */
+    /* Mode 0: Coastal terrain: Land (left) & Ocean (right) + Sun + Greenhouse dome */
+    const breezeGrp = new THREE.Group(); scene.add(breezeGrp);
     const land = new THREE.Mesh(new THREE.BoxGeometry(3.8, 0.6, 3.2), new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.85 }));
-    land.position.set(-2.0, -1.4, 0); scene.add(land);
+    land.position.set(-2.0, -1.4, 0); breezeGrp.add(land);
     const sea = new THREE.Mesh(new THREE.BoxGeometry(3.8, 0.5, 3.2), new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.25 }));
-    sea.position.set(2.0, -1.45, 0); scene.add(sea);
+    sea.position.set(2.0, -1.45, 0); breezeGrp.add(sea);
     const sunMesh = new THREE.Mesh(new THREE.SphereGeometry(0.55, 20, 16), new THREE.MeshStandardMaterial({ color: 0xfde047, emissive: 0xfacc15, emissiveIntensity: 0.9 }));
-    sunMesh.position.set(-3.0, 2.4, -1.0); scene.add(sunMesh);
+    sunMesh.position.set(-3.0, 2.4, -1.0); breezeGrp.add(sunMesh);
 
     const ghMat = new THREE.MeshBasicMaterial({ color: 0xf97316, transparent: true, opacity: 0.12, side: THREE.DoubleSide });
     const ghLayer = new THREE.Mesh(new THREE.PlaneGeometry(8.2, 0.25), ghMat);
-    ghLayer.rotation.x = Math.PI / 2; ghLayer.position.set(0, 1.9, 0); scene.add(ghLayer);
+    ghLayer.rotation.x = Math.PI / 2; ghLayer.position.set(0, 1.9, 0); breezeGrp.add(ghLayer);
 
     /* Fluid convection particles (circulate clockwise in Sea Breeze, counter-clockwise in Land Breeze) */
     const particles = [];
     for (let i = 0; i < 40; i++) {
       const m = new THREE.Mesh(new THREE.SphereGeometry(0.11, 10, 8), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
-      scene.add(m);
+      breezeGrp.add(m);
       particles.push({ m, u: i / 40, z: ((i % 5) - 2) * 0.45 });
     }
+
+    /* Mode 1: Atmospheric Spheres + Ozone Shield + Trapped IR Rays */
+    const sphereGrp = new THREE.Group(); sphereGrp.visible = false; scene.add(sphereGrp);
+    const earthCore = new THREE.Mesh(new THREE.SphereGeometry(1.15, 24, 18), new THREE.MeshStandardMaterial({ color: 0x1d4ed8, roughness: 0.5 }));
+    sphereGrp.add(earthCore);
+    [
+      [1.55, 0x38bdf8, 0.18, "Troposphere (Weather)"],
+      [1.95, 0x22c55e, 0.22, "Stratosphere (Ozone O₃)"],
+      [2.45, 0xa855f7, 0.14, "Mesosphere / Thermosphere"]
+    ].forEach(([rad, col, op, txt], idx) => {
+      const sh = new THREE.Mesh(new THREE.SphereGeometry(rad, 24, 18), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: op, wireframe: idx === 2 }));
+      sphereGrp.add(sh);
+      const lb = labelSprite(THREE, txt, "", { scale: 0.65, size: 20, color: "#e2e8f0" });
+      lb.position.set(rad + 1.15, (idx - 1) * 0.9, 0); sphereGrp.add(lb);
+    });
+
+    /* Mode 2: 7-Band Electromagnetic Spectrum Waves (Gamma -> Radio) */
+    const specGrp = new THREE.Group(); specGrp.visible = false; scene.add(specGrp);
+    const specBands = [
+      ["Gamma", 0xc084fc, 16], ["X-Ray", 0x818cf8, 12], ["UV", 0x6366f1, 9],
+      ["Visible", 0x22c55e, 6.5], ["Infrared", 0xf97316, 4.2], ["Microwave", 0xef4444, 2.5], ["Radio", 0xfacc15, 1.4]
+    ];
+    const specCurves = [];
+    specBands.forEach(([nm, col, freq], idx) => {
+      const y = 1.65 - idx * 0.55, pts = [];
+      for (let i = 0; i <= 48; i++) pts.push(new THREE.Vector3(-3.0 + (i / 48) * 6.0, y + Math.sin((i / 48) * Math.PI * freq) * 0.18, 0));
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: col }));
+      specGrp.add(line); specCurves.push({ geo, y, freq });
+      const lb = labelSprite(THREE, nm, "", { scale: 0.58, size: 20, color: "#f8fafc" });
+      lb.position.set(-3.75, y, 0); specGrp.add(lb);
+    });
+
+    /* Mode 3: Biogeochemical Nitrogen & Carbon Cycle Ring */
+    const cycleGrp = new THREE.Group(); cycleGrp.visible = false; scene.add(cycleGrp);
+    const cRing = new THREE.Mesh(new THREE.TorusGeometry(1.9, 0.05, 10, 48), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+    cycleGrp.add(cRing);
+    const cycleNodes = [
+      [0, 1.9, 0x38bdf8, "Atmosphere (78% N₂ / CO₂)"],
+      [1.9, 0, 0x22c55e, "Rhizobium Fixation → Nitrates"],
+      [0, -1.9, 0xfacc15, "Plants & Consumers"],
+      [-1.9, 0, 0xf97316, "Decomposers & Denitrification"]
+    ];
+    const cycleTokens = [];
+    cycleNodes.forEach(([nx, ny, col, txt], idx) => {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 12), new THREE.MeshStandardMaterial({ color: col }));
+      m.position.set(nx, ny, 0); cycleGrp.add(m);
+      const lb = labelSprite(THREE, txt, "", { scale: 0.65, size: 20, color: "#fef08a" });
+      lb.position.set(nx * 1.48, ny * 1.32, 0); cycleGrp.add(lb);
+      const tok = new THREE.Mesh(new THREE.SphereGeometry(0.11, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      cycleGrp.add(tok); cycleTokens.push({ m: tok, a: (idx / 4) * Math.PI * 2 });
+    });
 
     let tag = null, t = 0;
     const sync = () => {
       const C = view(ctx.vars);
+      breezeGrp.visible = ctx.vars.mode === 0;
+      sphereGrp.visible = ctx.vars.mode === 1;
+      specGrp.visible = ctx.vars.mode === 2;
+      cycleGrp.visible = ctx.vars.mode === 3;
       sunMesh.visible = C.sun > 10;
       sunMesh.scale.setScalar(0.5 + (C.sun / 100) * 0.7);
       ghMat.opacity = 0.08 + ((C.co2 - 280) / 520) * 0.48;
@@ -103,6 +160,19 @@ export default {
       const seaBreeze = C.landTemp >= C.seaTemp;
       const spd = (0.18 + Math.abs(C.landTemp - C.seaTemp) * 0.025) * (seaBreeze ? 1 : -1);
       t += dt;
+      if (ctx.vars.mode === 1) { sphereGrp.rotation.y += dt * 0.35; return; }
+      if (ctx.vars.mode === 2) {
+        specCurves.forEach(c => {
+          const pos = c.geo.attributes.position;
+          for (let i = 0; i < pos.count; i++) pos.setY(i, c.y + Math.sin((i / 48) * Math.PI * c.freq - t * 4.5) * 0.18);
+          pos.needsUpdate = true;
+        });
+        return;
+      }
+      if (ctx.vars.mode === 3) {
+        cycleTokens.forEach(tk => { tk.a += dt * 0.9; tk.m.position.set(Math.cos(tk.a) * 1.9, Math.sin(tk.a) * 1.9, 0); });
+        return;
+      }
       particles.forEach(p => {
         p.u = ((p.u + dt * spd) % 1 + 1) % 1;
         /* rectangular convection loop: x in [-2.6, 2.6], y in [-0.7, 1.5] */

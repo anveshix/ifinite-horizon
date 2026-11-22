@@ -105,7 +105,18 @@ export default {
     shaft.rotation.z = -Math.PI / 2; head.rotation.z = -Math.PI / 2; fArrow.add(shaft, head); fArrow.position.set(1.65, 0.4, 0); trolley.add(fArrow);
     const fTag = labelSprite(THREE, "F = 8 N", "", { scale: 1, size: 30, color: "#ff9c9c" }); trolley.add(fTag);
     const hud = el("div", "cl-hudline"); ctx.stage.appendChild(hud);
-    let t = 0, v = 0, s = 0, running = false, done = false, trail = [], tagKey = "";
+    let t = 0, v = 0, s = 0, running = false, done = false, trail = [], tagKey = "", collisionMode = ctx.preset?.sub === "collision";
+    const colGrp = new THREE.Group(); colGrp.visible = false; scene.add(colGrp);
+    const t2Body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.75, 1.3), new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.4 }));
+    t2Body.position.set(8, 0.55, 0); colGrp.add(t2Body);
+    const t2Tag = labelSprite(THREE, "m₂ = 4 kg (stationary)", "p = m₁v₁ + m₂v₂ = const", { scale: 0.9, size: 24, color: "#bae6fd" });
+    t2Tag.position.set(8, 1.5, 0); colGrp.add(t2Tag);
+    let t2x = 8, t2v = 0, collided = false;
+    const setCollisionMode = on => {
+      collisionMode = on; btnCol.classList.toggle("on", on);
+      colGrp.visible = on; finish.visible = !on; finTag.visible = !on;
+      reset();
+    };
     const info = el("span"), speedEl = el("span"), distEl = el("span"); hud.append(info, speedEl, distEl);
 
     const refresh = () => {
@@ -113,19 +124,27 @@ export default {
       const len = 0.5 + x.F * 0.1; shaft.scale.y = len; shaft.position.x = len / 2; head.position.x = len + 0.1; fTag.position.set(len / 2 + 0.2, 0.95, 0);
       const key = `${x.F}/${x.m}`; if (key !== tagKey) { tagKey = key; const a = labelSprite(THREE, `F = ${x.F} N`, "", { scale: 1, size: 30, color: "#ff9c9c" }), b = labelSprite(THREE, `m = ${x.m} kg`, "", { scale: 1, size: 30, color: "#fde68a" });
         fTag.material.map.dispose(); fTag.material.map = a.material.map; fTag.scale.copy(a.scale); massTag.material.map.dispose(); massTag.material.map = b.material.map; massTag.scale.copy(b.scale); }
-      info.textContent = `a = ${fmt(view(x).a, 2)} m/s²`;
+      info.textContent = collisionMode ? `p₁+p₂ = ${fmt(ctx.vars.m * v + 4 * t2v, 1)} kg·m/s` : `a = ${fmt(view(x).a, 2)} m/s²`;
     };
-    const paintHud = () => { speedEl.textContent = `v = ${fmt(v, 2)} m/s`; distEl.textContent = `s = ${fmt(s, 1)} m · t = ${fmt(t, 1)} s`; };
-    const reset = () => { running = false; done = false; t = 0; v = 0; s = 0; trail = [[0, 0]]; trolley.position.x = 0; resetCrates(); paintHud(); drawGraph(); btnRun.textContent = "▶ Run · चलाओ"; };
+    const paintHud = () => { speedEl.textContent = collisionMode ? `v₁=${fmt(v, 1)} · v₂=${fmt(t2v, 1)} m/s` : `v = ${fmt(v, 2)} m/s`; distEl.textContent = `s = ${fmt(s, 1)} m · t = ${fmt(t, 1)} s`; };
+    const reset = () => { running = false; done = false; t = 0; v = 0; s = 0; t2x = 8; t2v = 0; collided = false; t2Body.position.x = 8; t2Tag.position.x = 8; trail = [[0, 0]]; trolley.position.x = 0; resetCrates(); paintHud(); drawGraph(); btnRun.textContent = "▶ Run · चलाओ"; };
 
     const stopFrame = st.onFrame(dt => {
       if (running) {
-        const a = view(ctx.vars).a;                        // F and m may be changed while it runs
+        const a = collided ? 0 : view(ctx.vars).a;
         v += a * dt; s += v * dt; t += dt;
-        if (s >= TRACK) {
-          s = TRACK; running = false; done = true; btnRun.textContent = "↻ Run again · फिर चलाओ";
+        if (collisionMode && !collided && s + 1.2 >= t2x - 1.1) {
+          collided = true; sfx.play("thud");
+          const m1 = ctx.vars.m, m2 = 4, u1 = v;
+          v = ((m1 - m2) / (m1 + m2)) * u1;
+          t2v = ((2 * m1) / (m1 + m2)) * u1;
+          info.textContent = `p₁+p₂ = ${fmt(m1 * v + m2 * t2v, 1)} kg·m/s (Conserved!)`;
+        }
+        if (collisionMode) { t2x += t2v * dt; t2Body.position.x = t2x; t2Tag.position.x = t2x; }
+        if (s >= TRACK || t2x >= TRACK + 4) {
+          running = false; done = true; btnRun.textContent = "↻ Run again · फिर चलाओ";
           sfx.play("thud");
-          const pBoost = Math.min(24, (ctx.vars.m * v) * 0.22);
+          const pBoost = Math.min(24, (ctx.vars.m * Math.abs(v) + 4 * t2v) * 0.22);
           crates.forEach((c, idx) => {
             c.body.applyImpulse(new CANNON.Vec3(pBoost * (0.85 + 0.1 * idx), pBoost * 0.35, (idx % 2 ? 1 : -1) * pBoost * 0.2));
           });
@@ -149,6 +168,7 @@ export default {
       running = true; btnRun.textContent = "❚❚ Pause · रोको";
     }, "cl-act");
     actionButton(btns, "⟲ Reset", reset, "cl-act sec");
+    const btnCol = actionButton(btns, "🎱 Momentum Collision", () => { setCollisionMode(!collisionMode); sfx.play("pop"); }, "cl-chipb");
     const graph = el("canvas", "cl-graph"); graph.width = 340; graph.height = 190; graph.setAttribute("role", "img"); graph.setAttribute("aria-label", "velocity–time graph");
     side.appendChild(el("h3", "cl-h", "v–t graph · v–t आलेख")); side.appendChild(graph);
     const facts = factsView(ctx, side);
@@ -166,7 +186,7 @@ export default {
       C2.circle(g, X(t), Y(v), 5, { stroke: "#fff", fill: "#ff5d5d", w: 2 });
     }
     const off = bus.on("sim:change", e => { if (e.labId !== "force") return; refresh(); facts.update(); sl.sync(); });
-    reset(); refresh(); facts.update(); ctx.stage.dataset.ready = "1";
+    setCollisionMode(collisionMode); refresh(); facts.update(); ctx.stage.dataset.ready = "1";
     return { resize: st.resize, dispose() { off(); stopFrame(); st.dispose(); } };
   },
 
