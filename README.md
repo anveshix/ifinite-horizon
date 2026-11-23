@@ -72,7 +72,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Security reports: [SECURITY.md](SECURITY
 
 No licence has been chosen for this repository yet. Until one is added, the default applies: **all rights reserved** by the author (anveshix). Please ask before reusing or redistributing the code.
 
-Bundled three.js and cannon-es keep their licences in `assets/vendor/` (`THREE_LICENSE.txt`, `CANNON_ES_LICENSE.txt`).
+Third-party code, fonts and models keep their own licences. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## Author
 
