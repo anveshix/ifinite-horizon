@@ -9,11 +9,11 @@
     simulator:"#homeSimulator",
     mindmap:"#homeMindMap",
     report:"#myReport",
-    teacher:"#teacherBtn",
+    teacher:"#teacherBtn",iks:"#vaIksHeroBtn",
     practicals:"#openLab",
     competency:"#openCg"
   };
-  hub.addEventListener("click",event=>{
+  (document.querySelector("#home")||hub).addEventListener("click",event=>{
     const card=event.target.closest("[data-va-tool]");
     if(!card)return;
     const tool=card.dataset.vaTool;
