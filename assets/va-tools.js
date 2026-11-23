@@ -1,4 +1,4 @@
-/* Home tools hub: route cards to the existing Vigyan Atlas tools. */
+/* Home tools hub: route cards to the existing Infinite Horizons tools. */
 (()=>{
   "use strict";
   const hub=document.querySelector("#home .va-tools-section");

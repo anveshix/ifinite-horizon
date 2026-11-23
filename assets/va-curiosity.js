@@ -1,4 +1,4 @@
-/* Vigyan Atlas — Curiosity Lab launcher.
+/* Infinite Horizons — Curiosity Lab launcher.
    Adds a "🧪 Curiosity Lab" button to the stage bar and to Home (key K). Nothing heavy loads until the first tap:
    the lab shell, styles and (later) Three.js are fetched on demand, so the atlas itself starts exactly as fast as before.
    Code lives in assets/curiosity/ (core.js, shell.js, labs/, quiz/); contract and architecture: docs/CURIOSITY_LAB.md. */

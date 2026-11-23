@@ -1,4 +1,4 @@
-/* Vigyan Atlas — home. Uses the tokens from va-design.css (loaded last); fallbacks keep it standalone. */
+/* Infinite Horizons — home. Uses the tokens from va-design.css (loaded last); fallbacks keep it standalone. */
 #home{
   position:fixed;inset:0;z-index:40;overflow:auto;
   background:var(--va-paper,#f4f6fb);color:var(--va-ink,#0f1a3a);
@@ -159,3 +159,6 @@ body.light #home{background:var(--va-paper)!important}
 #home .hc b{padding-right:0}
 body.light #home .hc,#home .hc{border:1px solid var(--va-rule);border-top:4px solid var(--c);box-shadow:none;background:#fff;border-radius:14px}
 body.light #home .hc:hover,#home .hc:hover{border-color:var(--c);box-shadow:0 12px 28px -18px var(--c)}
+
+.va-brand .va-logo{width:40px;height:40px;border-radius:11px}
+.va-brand-copy b{font-size:20px}

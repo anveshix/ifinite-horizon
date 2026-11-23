@@ -1,11 +1,11 @@
-/* Vigyan Atlas — privacy-friendly visitor counter (unique visitors + session visits).
+/* Infinite Horizons — privacy-friendly visitor counter (unique visitors + session visits).
    Uses Abacus (https://abacus.jasoncameron.dev, free, open-source, no cookies, no account)
    with localStorage/sessionStorage deduplication so page refreshes do not inflate unique visitors.
    Optionally activates GoatCounter if <meta name="va-goatcounter" content="YOUR_SITE_CODE"> is set. */
 (() => {
   "use strict";
 
-  const DEFAULT_NS = "shipransh28aug2016-lab-vigyan-atlas";
+  const DEFAULT_NS = "shipransh28aug2016-lab-infinite-horizons";
   const ABACUS_BASE = "https://abacus.jasoncameron.dev";
   const KEY_VISITOR = "va.visitor.counted.v1";
   const KEY_LOCK = "va.visitor.lock.v1";

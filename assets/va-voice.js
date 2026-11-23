@@ -1,4 +1,4 @@
-/* Vigyan Atlas — Teacher narration (Hindi / English / bilingual, male or female voice).
+/* Infinite Horizons — Teacher narration (Hindi / English / bilingual, male or female voice).
    Zero cost: uses the voices already installed on the device (Web Speech API) and works offline.
    If a real recording exists in assets/voice/ (see docs/VOICE.md) it is played instead of the synthetic voice.
    The script of each topic = hand-written teacher text (assets/va-voice-data.js) + the topic's own lesson text

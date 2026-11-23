@@ -1,4 +1,4 @@
-/* Vigyan Atlas design system — loaded last, so it unifies every view (home, lessons, labs, tools, teacher).
+/* Infinite Horizons design system — loaded last, so it unifies every view (home, lessons, labs, tools, teacher).
    Ink + paper, one blue for actions, a marker yellow that always means "you are here",
    and a fixed colour per subject: physics blue, chemistry violet, biology green, environment teal. */
 :root{
@@ -158,3 +158,16 @@ body.light #stagebar .ib.on{background:var(--va-ink);border-color:var(--va-ink);
 body:not(.light) #stagebar .ib.on{background:var(--va-marker);border-color:var(--va-marker);color:var(--va-ink)}
 #side .settabs{grid-template-columns:repeat(2,minmax(0,1fr))}
 #side .settabs button{padding:8px 6px}
+
+/* ---------- logo: infinity loop with a sun rising at the crossing, always placed before the name ---------- */
+.va-logo{display:block;flex:none;width:36px;height:36px;border-radius:10px}
+.brand{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:11px}
+.brand .va-logo{grid-row:1 / span 2;width:38px;height:38px}
+.brand small{grid-column:2}
+#boot{flex-direction:column;gap:14px}
+#boot:not([hidden]){display:flex;align-items:center;justify-content:center}
+#boot .va-logo{width:56px;height:56px;border-radius:15px;animation:va-rise 1.6s ease-in-out infinite alternate}
+@keyframes va-rise{from{transform:translateY(3px)}to{transform:translateY(-3px)}}
+.va-sim-brand .va-logo,.va-mm-brand .va-logo,.cl-top>.va-logo{width:34px;height:34px;border-radius:9px}
+.cl-top>.va-logo{margin-right:-4px}
+#teacher .teacher-masthead .va-logo{width:42px;height:42px;border-radius:11px}

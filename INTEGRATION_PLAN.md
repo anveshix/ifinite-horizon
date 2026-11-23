@@ -1,14 +1,14 @@
 # INTEGRATION PLAN — Universal IKS × Modern Science Integration Engine
 
-**Target Application:** Vigyan Atlas (`anveshix/ifinite-horizon`)  
+**Target Application:** Infinite Horizons (`anveshix/ifinite-horizon`)  
 **Integration Version:** 2.0  
-**Strategy:** Non-destructive, zero-build-step modular extension aligned with Vigyan Atlas's existing UMD/IIFE architecture.
+**Strategy:** Non-destructive, zero-build-step modular extension aligned with Infinite Horizons's existing UMD/IIFE architecture.
 
 ---
 
 ## 1. Logical Layer Mapping to Existing Repository
 
-We adapt the 10 logical layers into `modules/iks-science/` (pure UMD modules testable directly in Node.js AND usable directly in browser `<script>` tags) plus a thin Vigyan Atlas UI shell (`assets/va-iks.js` and `assets/va-iks.css`):
+We adapt the 10 logical layers into `modules/iks-science/` (pure UMD modules testable directly in Node.js AND usable directly in browser `<script>` tags) plus a thin Infinite Horizons UI shell (`assets/va-iks.js` and `assets/va-iks.css`):
 
 | Logical Layer | Module File | Responsibility |
 |---|---|---|
@@ -21,7 +21,7 @@ We adapt the 10 logical layers into `modules/iks-science/` (pure UMD modules tes
 | 7. Student Assessment Engine | `modules/iks-science/assessments/assessment-engine.js` | Bilingual EN+HI competency-tagged questions (Knowledge, Application, Analysis/Evaluation), rubrics, instant evidence-based feedback |
 | 8 & 9. Teacher Integration & Analytics | `modules/iks-science/analytics/progress-service.js` | Privacy-first `localStorage` (`va.iks.v1`), Teacher Dashboard summary & printable sheets/lesson plans, zero PII/health tracking |
 | 10. Content Admin & Version Control | `modules/iks-science/services/admin-service.js` | Feature flags (`VA_IKS_FLAGS`), schema-gated publishing (`verified`/`teacher-reviewed`/`draft`), browser-local audit log (`va.iks.audit.v1`) |
-| Shell UI & Vigyan Atlas Hooks | `assets/va-iks.js`, `assets/va-iks.css` | Home section (`#vaIksHomeSection`), Hero & Stagebar buttons, `#teacher` integration, full-viewport accessible `#vaIksDialog` workspace |
+| Shell UI & Infinite Horizons Hooks | `assets/va-iks.js`, `assets/va-iks.css` | Home section (`#vaIksHomeSection`), Hero & Stagebar buttons, `#teacher` integration, full-viewport accessible `#vaIksDialog` workspace |
 
 ---
 
@@ -29,7 +29,7 @@ We adapt the 10 logical layers into `modules/iks-science/` (pure UMD modules tes
 
 - **Stage 1 (Audit):** Complete `ARCHITECTURE_AUDIT.md`, `INTEGRATION_PLAN.md`, `RISK_REGISTER.md`, `CURRICULUM_MAPPING.md`.
 - **Stage 2 (Schemas & Evidence):** Implement `evidence-schema.js` and `evidence-engine.js` with strict anti-fabrication rules.
-- **Stage 3 (Curriculum Mapping):** Implement `cbse-mapping.js` separating Class IX and Class X CBSE 2026–27 mappings and linking to existing Vigyan Atlas topic keys (`ix1`–`ix12`, `ch1`–`ch13`).
+- **Stage 3 (Curriculum Mapping):** Implement `cbse-mapping.js` separating Class IX and Class X CBSE 2026–27 mappings and linking to existing Infinite Horizons topic keys (`ix1`–`ix12`, `ch1`–`ch13`).
 - **Stage 4 (Pilot Module + Content System):** Implement Domain A (Ancient Indian Atomic Thought) through Domain H (Traditional Ecological Knowledge incl. Jharkhand & Santhal Pargana) in `domains-data.js`.
 - **Stage 5 (Experiment Engine):** Implement all 8 domain experiments with 23 standardized fields and deterministic scientific simulation equations in `experiment-engine.js`.
 - **Stage 6 (Visualization Engine):** Implement `viz-engine.js` with full interactive controls (rotate/pan/zoom/play/pause/reset/compare/step/labels/fullscreen) and zero heavy downloads.

@@ -1,4 +1,4 @@
-/* Vigyan Atlas — standalone pages (subject indexes, 2D gallery and the stand-alone viewers).
+/* Infinite Horizons — standalone pages (subject indexes, 2D gallery and the stand-alone viewers).
    Same tokens as va-design.css, kept separate so the viewers' own layout rules are not touched. */
 :root{
   --va-ink:#0f1a3a;--va-ink-2:#33406a;--va-mute:#5a6684;--va-paper:#f4f6fb;--va-wash:#e9eefa;
@@ -49,3 +49,4 @@ html:has(#sidebar),html:has(#sidebar) body{background:#0a1128;font-family:var(--
 .btn:hover{background:#2a3b74;border-color:var(--va-marker)}
 .btn.active{background:var(--va-marker);border-color:var(--va-marker);color:var(--va-ink)}
 #stage{background:radial-gradient(circle at center,#1b2859 0%,#0a1128 70%)}
+.va-bar .va-logo{width:36px;height:36px;border-radius:10px}

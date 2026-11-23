@@ -20,7 +20,7 @@ Historical IKS discussions, classical texts, and comparative explorations are pr
 
 ## 2. Class IX (Science 086 — CBSE 2026–27) Separate Mapping
 
-Verified Vigyan Atlas Class IX chapters (`IXC`): `ix1`–`ix12` + `CGR` (`CG 6: India's contribution to science · C6.1`).
+Verified Infinite Horizons Class IX chapters (`IXC`): `ix1`–`ix12` + `CGR` (`CG 6: India's contribution to science · C6.1`).
 
 | Domain | Class IX Chapter(s) (`IXC`) | CBSE Learning Outcome Link | Prescribed Science (`CBSE Prescribed Content`) | IKS Reference / Enrichment (`Non-Compulsory`) |
 |---|---|---|---|---|
@@ -37,7 +37,7 @@ Verified Vigyan Atlas Class IX chapters (`IXC`): `ix1`–`ix12` + `CGR` (`CG 6: 
 
 ## 3. Class X (Science 086 — CBSE 2026–27) Separate Mapping
 
-Verified Vigyan Atlas Class X chapters (`Hi`): `ch1`–`ch13`.
+Verified Infinite Horizons Class X chapters (`Hi`): `ch1`–`ch13`.
 
 | Domain | Class X Chapter(s) (`Hi`) | Prescribed Science (`CBSE Prescribed Content`) | IKS Reference / Enrichment (`Non-Compulsory`) |
 |---|---|---|---|

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """One-off palette migration: moves the old cream/teal palette in an overlay stylesheet onto the
-Vigyan Atlas design-system hues (navy neutrals, blue accent, marker yellow kept). Usage: retone-css.py file.css..."""
+Infinite Horizons design-system hues (navy neutrals, blue accent, marker yellow kept). Usage: retone-css.py file.css..."""
 import re, sys, colorsys
 
 def remap(r, g, b):

@@ -1,4 +1,4 @@
-/* Vigyan Atlas — Cinematic mode (stage 1: live 3D tour).
+/* Infinite Horizons — Cinematic mode (stage 1: live 3D tour).
    One tap turns any guided lesson into a presentation: side panels and toolbars hide, letterbox bars appear, the lesson plays itself step by step
    (camera flights + captions), with a large lower-third caption and a progress bar. Works on every topic that has steps. Esc / ✕ exits.
    Stage 2 (planned): pre-rendered video / 360° turntable clips per topic, declared in public/cinema/<chapter>/<topic>/manifest.json. */
