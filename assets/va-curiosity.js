@@ -212,13 +212,13 @@ const lcss=document.createElement("style");lcss.textContent=`
 @media (prefers-reduced-motion:reduce){#clLink{animation:none}}
 @media print{#clLink{display:none}}`;document.head.appendChild(lcss);
 const card=document.createElement("div");card.id="clLink";card.hidden=true;
-card.innerHTML=`<span class="ic" aria-hidden="true">🧪</span><div><b></b><small></small></div><button type="button" class="btn prim">Open lab →</button>`;
+card.innerHTML=`<div><b></b><small></small></div><button type="button" class="btn prim">Open lab →</button>`;
 const anchor=$("#info");if(anchor&&anchor.parentNode)anchor.parentNode.insertBefore(card,anchor.nextSibling);
 let shownKey=null;
 function syncCard(){const k=window.__atlas&&window.__atlas.key&&window.__atlas.key(),L=LINKS[k];
  if(!L){card.hidden=true;shownKey=null;return}
  if(shownKey===k&&!card.hidden)return;shownKey=k;
- card.querySelector("b").innerHTML=`Try it yourself in the ${esc(L[1])} <span class="hi" lang="hi">· ${esc(L[2])}</span>`;card.querySelector("small").textContent=L[3];
+ card.querySelector("b").innerHTML=`Try it yourself in the ${esc(L[1])} <span class="hi" lang="hi">${esc(L[2])}</span>`;card.querySelector("small").textContent=L[3];
  card.querySelector("button").onclick=()=>open(L[0],L[4]);card.hidden=false}
 setInterval(syncCard,600);addEventListener("hashchange",()=>setTimeout(syncCard,0));
 const ttl=$("#ttl");if(ttl)new MutationObserver(syncCard).observe(ttl,{childList:true,subtree:true,characterData:true});

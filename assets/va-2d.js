@@ -112,7 +112,7 @@ const seg=big=>{const d=document.createElement("div");d.className="vseg"+(big?" 
  d.innerHTML=`<button type="button" data-v="3d" title="Interactive 3D model">3D ${big?"models · मॉडल":""}</button><button type="button" data-v="2d" title="Labelled 2D image">2D ${big?"images · चित्र":""}</button>`;
  d.addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(b)setView(b.dataset.v)});return d};
 const segBar=seg(false);bar.insertBefore(segBar,$("#tlab")||null);
-const fnBtn=document.createElement("button");fnBtn.type="button";fnBtn.className="ib";fnBtn.id="fnBtn";fnBtn.textContent="ⓘ Info";
+const fnBtn=document.createElement("button");fnBtn.type="button";fnBtn.className="ib";fnBtn.id="fnBtn";fnBtn.textContent="Info";
 const paintFn=on=>{B.classList.toggle("nofn",!on);fnBtn.classList.toggle("on",on);fnBtn.setAttribute("aria-pressed",String(on));fnBtn.title="Show/hide a one-line function note on every label (I)";if(typeof place==="function")try{place()}catch{}};
 let fnOn=LS.get("va.fn")!=="off";fnBtn.onclick=()=>{fnOn=!fnOn;LS.set("va.fn",fnOn?"on":"off");paintFn(fnOn)};
 bar.insertBefore(fnBtn,$("#tlab")||null);paintFn(fnOn);

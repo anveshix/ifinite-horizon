@@ -530,7 +530,7 @@ body.noen .chap .ct small{display:block}
   <div class="brand" id="brandHome" title="Home" role="button" tabindex="0"><b>Vigyan <span>Atlas</span></b><small>Science in 3D · Class IX &amp; X · 2026–27</small></div>
   <div class="settabs" role="tablist" aria-label="Course"></div>
   <div class="setnote" id="setnote"></div>
-  <div class="sidelinks" id="sidelinks"><button id="openLab">🧪 Virtual practical lab<br><span class="hi" lang="hi">प्रायोगिक प्रयोगशाला</span></button><button id="openCg">🎯 Competency reference<br><span class="hi" lang="hi">योग्यता संदर्भ</span></button><button id="simOpen">⚗ Interactive simulator<br><span class="hi" lang="hi">इंटरैक्टिव सिम्युलेटर</span></button><button id="mindMapOpen">🧠 Mind Map<br><span class="hi" lang="hi">विषय मानचित्र</span></button></div>
+  <div class="sidelinks" id="sidelinks"><button id="openLab">Virtual practical lab<br><span class="hi" lang="hi">प्रायोगिक प्रयोगशाला</span></button><button id="openCg">Competency reference<br><span class="hi" lang="hi">योग्यता संदर्भ</span></button><button id="simOpen">Interactive simulator<br><span class="hi" lang="hi">इंटरैक्टिव सिम्युलेटर</span></button><button id="mindMapOpen">Mind Map<br><span class="hi" lang="hi">विषय मानचित्र</span></button></div>
   <input id="search" type="search" placeholder="Search topics… (e.g. heart, lens)">
   <nav id="toc"></nav>
   <div class="foot">Drag to explore · tap parts · works offline<br><span class="credit">Copyright © 2026 <b>PP Creations — Paras Pranav</b></span></div>
@@ -539,8 +539,8 @@ body.noen .chap .ct small{display:block}
  <main id="view">
   <div id="stage">
    <svg id="leaders"></svg><div id="labels"></div>
-   <div id="stagebar"><button class="ib" id="menu" title="Show / hide chapters (N)" aria-label="Show or hide chapters">☰ Chapters</button><button class="ib" id="thome" title="Home (H)" aria-label="Home">⌂</button><span id="crumb"></span><span class="sp"></span>
-    <button class="ib" id="tlab" title="Show every label (default: a label appears only when you tap its part)">All labels</button><button class="ib on" id="thi" title="Language">EN + हिं</button><button class="ib" id="resetv">⟲ View</button><button class="ib on" id="ptog" title="Show / hide lesson panel (P)">▤ Panel</button><button class="ib" id="simOpenStage" title="Class IX interactive simulators">⚗ Sim</button><button class="ib" id="mindMapOpenStage" title="Open the syllabus mind map">🧠 Map</button>
+   <div id="stagebar"><button class="ib" id="menu" title="Show / hide chapters (N)" aria-label="Show or hide chapters">☰<span class="lbl"> Chapters</span></button><button class="ib" id="thome" title="Home (H)" aria-label="Home">⌂</button><span id="crumb"></span><span class="sp"></span>
+    <button class="ib" id="tlab" title="Show every label (default: a label appears only when you tap its part)">All labels</button><button class="ib on" id="thi" title="Language">EN + हिं</button><button class="ib" id="resetv">Reset view</button><button class="ib on" id="ptog" title="Show / hide lesson panel (P)">Panel</button><button class="ib" id="simOpenStage" title="Class IX interactive simulators">Simulator</button><button class="ib" id="mindMapOpenStage" title="Open the syllabus mind map">Mind map</button>
     <details id="more"><summary class="ib" aria-label="More options" title="More">⋯</summary><div class="pop">
      <div class="mi"><button class="ib" id="tsnd" aria-label="Sound">🔊</button><span>Sound · ध्वनि</span></div>
      <div class="mi"><button class="ib" id="size" aria-label="Text size">A</button><span>Text size · अक्षर आकार</span></div>
@@ -550,8 +550,8 @@ body.noen .chap .ct small{display:block}
    <div id="hud" hidden></div><div id="fpsm" hidden></div><button id="perfBar" hidden></button>
    <div id="nogl" hidden>3D is not available on this device.</div>
    <div id="test" hidden><div class="card"></div></div>
-   <div id="predict" hidden><div class="card"><div class="tag">PREDICT FIRST · पहले अनुमान लगाओ</div><div class="q"></div><div class="opts"></div><div class="fb"></div>
-    <div class="row"><button class="skip">✕ Skip (छोड़ें)</button><button class="go" hidden>▶</button></div></div></div>
+   <div id="predict" hidden><div class="card"><div class="tag">Predict first · पहले अनुमान लगाओ</div><div class="q"></div><div class="opts"></div><div class="fb"></div>
+    <div class="row"><button class="skip">Skip · छोड़ें</button><button class="go" hidden>▶</button></div></div></div>
   </div>
  </main>
  <section id="panel" aria-label="Lesson panel">
@@ -563,13 +563,13 @@ body.noen .chap .ct small{display:block}
    <div class="sb"><div id="intro"></div></div></details>
   <details class="sec" id="secSteps" open><summary><span class="ic">📖</span><span class="st"><span class="en">Step by step</span><span class="sep">·</span><span class="hi" lang="hi">चरण-दर-चरण</span></span></summary>
    <div class="sb"><div id="guided"><ol id="steps"></ol>
-    <div class="ctrl"><button class="btn" id="prev" aria-label="Previous step">◀</button><button class="btn prim" id="play">▶ Play</button><button class="btn" id="next" aria-label="Next step">▶</button><button class="btn" id="replay" aria-label="Replay">↺</button><span id="stepno"></span></div>
+    <div class="ctrl"><button class="btn" id="prev" aria-label="Previous step">◀</button><button class="btn prim" id="play">Play</button><button class="btn" id="next" aria-label="Next step">▶</button><button class="btn" id="replay" aria-label="Replay">↺</button><span id="stepno"></span></div>
    </div></div></details>
   <details class="sec" id="secTools" open><summary><span class="ic">🧪</span><span class="st"><span class="en">Lab controls</span><span class="sep">·</span><span class="hi" lang="hi">प्रयोग नियंत्रण</span></span></summary>
    <div class="sb"><div id="tools"></div></div></details>
   <details class="sec" id="secQuiz" open><summary><span class="ic">✅</span><span class="st"><span class="en">Quick check</span><span class="sep">·</span><span class="hi" lang="hi">त्वरित जाँच</span></span></summary>
    <div class="sb"><div id="quiz" hidden></div></div></details>
-  <div class="ctrl act"><button class="btn" id="predbtn">? Predict</button><button class="btn prim" id="testbtn">📝 Test yourself</button></div>
+  <div class="ctrl act"><button class="btn" id="predbtn">Predict</button><button class="btn prim" id="testbtn">Test yourself</button></div>
   <details class="sec" id="secReal"><summary><span class="ic">🌍</span><span class="st"><span class="en">Science around you</span><span class="sep">·</span><span class="hi" lang="hi">हमारे आसपास विज्ञान</span></span></summary>
    <div class="sb"><div id="real" hidden></div></div></details>
   <details class="sec" id="secMap"><summary><span class="ic">🗺️</span><span class="st"><span class="en">Chapter map — every NCERT sub-topic</span><span class="sep">·</span><span class="hi" lang="hi">अध्याय मानचित्र — NCERT के सभी उप-विषय</span></span></summary>
@@ -8737,9 +8737,9 @@ function openCellInquiry(kind){const o=mkOverlay("vlab"),size=kind==="cell-size"
   else{const wi=Number(o.querySelector("#waterInitial").value),wf=Number(o.querySelector("#waterFinal").value),si=Number(o.querySelector("#soluteInitial").value),sf=Number(o.querySelector("#soluteFinal").value);if(!(wi>0&&wf>=0&&si>0&&sf>=0)){result.textContent="Enter positive initial masses and non-negative final masses for both conditions.";return}const a=(wf-wi)/wi*100,b=(sf-si)/si*100,dir=x=>x>0?"mass increased":x<0?"mass decreased":"no measured mass change";result.innerHTML=`<b>Calculated from your measurements</b><br>Water beaker: ${dir(a)} · ${a>=0?"+":""}${a.toFixed(1)}%<br>Concentrated solution: ${dir(b)} · ${b>=0?"+":""}${b.toFixed(1)}%<br><small>Interpret as evidence consistent with net water movement; do not treat mass alone as a direct measurement of membrane transport.</small>`}};
  fields.forEach(el=>el.addEventListener("input",update));o.querySelector("#cellLabBack").onclick=()=>{o.hidden=true};o.querySelector("#cellLabPrint").onclick=()=>print();o.querySelector("#cellLabClear").onclick=()=>{fields.forEach(el=>{el.value=el.tagName==="SELECT"?(el.id==="objective"||el.id==="eyepiece"?el.options[0].value:""):""});try{localStorage.removeItem(storeKey)}catch{};update()};o.querySelectorAll("[data-cell-go]").forEach(b=>b.onclick=()=>{o.hidden=true;A().go(b.dataset.cellGo)});update()}
 function openLab(focus){if(focus==="cell-size"||focus==="cell-osmosis")return openCellInquiry(focus);const o=mkOverlay("vlab"),P=VA().prac||[];
- o.innerHTML=`<div class="hw"><div class="hhead"><div class="hlogo">🧪</div><div><h1>Virtual practical <span>lab</span></h1><div class="credit" style="font-size:13px;margin-top:4px">Class IX Compulsory Science (086) · all 13 practicals · वर्चुअल प्रायोगिक प्रयोगशाला</div></div></div>
+ o.innerHTML=`<div class="hw"><div class="hhead"><div><h1>Virtual practical <span>lab</span></h1><div class="credit" style="font-size:13px;margin-top:4px">Class IX Compulsory Science (086) · all 13 practicals · वर्चुअल प्रायोगिक प्रयोगशाला</div></div></div>
  <div class="notice"><b>Virtual demonstration</b> — this supports, and does not replace, the required hands-on laboratory work. Open the linked 3D model to see the apparatus, then record your own observations below (saved on this device).</div>
- <div class="lead"><button class="btn" id="vlClose">⌂ Back</button><button class="btn" id="vlPrint">🖨 Print / save</button></div>
+ <div class="lead"><button class="btn" id="vlClose">Back</button><button class="btn" id="vlPrint">Print / save</button></div>
  ${P.map((p,i)=>`<details class="pc" id="pc${i+1}" ${Number(focus)===i+1?"open":""}><summary><span class="n">${i+1}</span><span class="t"><span class="en">${esc(p[0])}</span><span class="hi" lang="hi">${esc(p[1])}</span></span><span class="ch">${esc(p[2])}</span></summary><div class="pb">
   <div><h5>Aim</h5>${esc(p[4])}</div><div><h5>Apparatus / materials</h5>${esc(p[5])}</div><div class="safe"><h5>Safety</h5>${esc(p[6])}</div>
   <div><h5>Procedure</h5><ol>${p[7].map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
@@ -8829,5 +8829,7 @@ paintSet();sync();
 .va-teacher .teacher-import-card,.va-teacher .teacher-report-card{padding:18px}
 @media(prefers-reduced-motion:reduce){#side{transition:none}}
 </style>
+<link rel="stylesheet" href="assets/va-polish.css">
+<script defer src="assets/va-polish.js"></script>
 </body>
 </html>

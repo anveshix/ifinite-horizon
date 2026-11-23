@@ -179,7 +179,7 @@ const css=document.createElement("style");css.textContent=`
 #vtNote:empty{display:none}.vt-warn{color:#ffd54f}
 @media (max-width:640px){#vtCfgBox{grid-template-columns:1fr}#vtPlay{min-width:0}}`;
 document.head.appendChild(css);
-const btn=document.createElement("button");btn.className="ib";btn.id="vtBtn";btn.type="button";btn.title="Teacher narration · शिक्षक की आवाज़ में समझाएँ";btn.innerHTML="🎙 शिक्षक · Teacher";
+const btn=document.createElement("button");btn.className="ib";btn.id="vtBtn";btn.type="button";btn.title="Teacher narration · शिक्षक की आवाज़ में समझाएँ";btn.innerHTML="शिक्षक · Teacher";
 const seg=bar.querySelector(".vseg");bar.insertBefore(btn,seg?seg.nextSibling:($("#tlab")||null));
 const p=document.createElement("div");p.id="vtp";p.hidden=true;p.setAttribute("role","region");p.setAttribute("aria-label","Teacher narration");
 p.innerHTML=`<div id="vtCap" aria-live="polite"></div>
