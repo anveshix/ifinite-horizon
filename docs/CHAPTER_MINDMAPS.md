@@ -533,7 +533,7 @@ mindmap
       Identify reaction type
       Observations with colour changes
       Corrosion and rancidity prevention
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Iron nail in copper sulphate
       Balancing a chemical equation
       Combination & decomposition
@@ -581,7 +581,7 @@ mindmap
       Washing soda Na2CO3.10H2O: recrystallisation of sodium carbonate
       Plaster of Paris CaSO4.1/2H2O, gypsum CaSO4.2H2O, setting
       Water of crystallisation: CuSO4.5H2O blue to white
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       pH scale & universal indicator
       Acids & bases with metals, carbonates, oxides
       Indicators litmus, turmeric
@@ -623,7 +623,7 @@ mindmap
       Electron dot structures of ionic compounds
       Extraction flow chart by reactivity
       Activities with sodium, magnesium, aluminium
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Physical properties: metals vs non-metals
       Ionic bond: forming NaCl
       Reactivity series
@@ -671,7 +671,7 @@ mindmap
       Soap = sodium or potassium salt of long-chain fatty acid
       Micelle formation: hydrophobic tail, hydrophilic head, cleansing action
       Hard water: scum with soap, detergents work in hard water
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Covalent bonding: sharing electrons
       Allotropes of carbon
       Homologous series & nomenclature
@@ -717,7 +717,7 @@ mindmap
       Nephron: glomerulus, Bowman's capsule, tubule, filtration, reabsorption, secretion
       Dialysis, artificial kidney
       Plants: gum, resins, latex, leaves, bark, transpiration
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Heart & double circulation
       Human digestive system
       Breathing & alveoli
@@ -755,7 +755,7 @@ mindmap
       Adrenaline: fight or flight
       Feedback mechanism
       Pineal, hypothalamus
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Reflex arc
       Neuron & nerve impulse
       Synapse
@@ -798,7 +798,7 @@ mindmap
       Sexually transmitted diseases: gonorrhoea, syphilis, warts, HIV-AIDS
       Female foeticide and declining sex ratio
       Population and family planning
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Human reproduction: fertilisation to placenta
       Binary fission in Amoeba
       Budding in Hydra
@@ -837,7 +837,7 @@ mindmap
       Genetic drift
       Fossils and evolution, homologous and analogous organs
       Evolution and classification, Darwin, Human evolution
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Mendel's monohybrid cross
       Independent inheritance dihybrid
       Sex determination
@@ -879,7 +879,7 @@ mindmap
       Ray diagrams
       Sign convention
       Refractive index of media
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Laws of reflection plane mirror
       Image formation: mirrors & lenses
       Refraction through a glass slab
@@ -918,7 +918,7 @@ mindmap
       Reddening of sun at sunrise and sunset
       Danger signal red light
       Colour of clouds and deep sea
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Structure of the human eye
       Accommodation & defects of vision
       Dispersion by a prism
@@ -954,7 +954,7 @@ mindmap
     Electric power
       P = VI = I2R = V2/R, watt
       Energy: kilowatt-hour, 1 kWh = 3.6 x 10^6 J
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Ohm's law circuit
       Factors affecting resistance
       Resistors in series & parallel
@@ -994,7 +994,7 @@ mindmap
       Live red , neutral black , earth green
       Main supply 220 V, 50 Hz, fuse, earth wire, overloading, short circuit
       MCB
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Bar magnet: field lines
       Field around a straight wire
       Electromagnetic induction
@@ -1028,7 +1028,7 @@ mindmap
       Biodegradable: paper, food waste, dead plants
       Non-biodegradable: plastics, glass, metals, DDT
       Waste management, recycling, landfills, reduce reuse recycle
-    Visual lessons in Vigyan Atlas
+    Visual lessons in Infinite Horizons
       Energy flow & 10% law
       Food web
       Ozone layer depletion

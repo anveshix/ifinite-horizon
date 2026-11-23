@@ -1,4 +1,4 @@
-# AI tools for the Vigyan Atlas dashboard — implementation plan
+# AI tools for the Infinite Horizons dashboard — implementation plan
 
 **Status:** Phase 0 foundation and Phase 1 pilot tools are implemented. The features remain disabled until deployment configuration is supplied; Phases 2/3 and deferred integrations are still plan-only.
 **Requested provider:** Google Gemini.
@@ -6,7 +6,7 @@
 
 ## Product goal
 
-Turn the dashboard from a launcher into a small, trustworthy set of classroom workflows. Start with tools that can use Vigyan Atlas's existing Class IX chapter registry and produce editable, printable materials. Do not reproduce the reference's whole list as disconnected cards, and do not label ordinary templates as AI.
+Turn the dashboard from a launcher into a small, trustworthy set of classroom workflows. Start with tools that can use Infinite Horizons's existing Class IX chapter registry and produce editable, printable materials. Do not reproduce the reference's whole list as disconnected cards, and do not label ordinary templates as AI.
 
 ## Rollout order
 

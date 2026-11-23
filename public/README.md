@@ -1,4 +1,4 @@
-# Vigyan Atlas — Realism Demo (`public/realism-demo.html`)
+# Infinite Horizons — Realism Demo (`public/realism-demo.html`)
 
 Standalone proof-of-concept showing what enriched visuals can look like for Class IX & X science. Built with **three.js r160** (same version bundled in `index.html`) — no build step, open `public/realism-demo.html` directly or serve the `public/` folder.
 

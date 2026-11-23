@@ -1,8 +1,8 @@
-# 🎨 Visual Audit Report — Vigyan Atlas (Class IX & X Science 3D)
+# 🎨 Visual Audit Report — Infinite Horizons (Class IX & X Science 3D)
 
 **Repository:** shipransh28aug2016-lab/ifinite-horizon  
 **Branch:** arena/eae64aa8-ifinite-horizon (from main bfb67a0)  
-**App:** Vigyan Atlas v2.0 — single-file static site `index.html` (1.5 MB), Three.js r160 bundled inside  
+**App:** Infinite Horizons v2.0 — single-file static site `index.html` (1.5 MB), Three.js r160 bundled inside  
 **Audit date:** 2026-11-11  
 **Language:** English + हिंदी summary at the end  
 
@@ -98,7 +98,7 @@ Three class tabs & progress, bilingual labels (EN / हिंदी / both), ste
 
 ## 6. Hindi summary (हिंदी सारांश)
 
-आज का ऐप (Vigyan Atlas) सारे सीन प्रिमिटिव्स (गोला, बेलन, घन) से बना है — जीव विज्ञान में दिल, पाचन तंत्र, गुर्दा, मस्तिष्क, तंत्रिका, आँख सब कार्टून/डायग्राम जैसे दिखते हैं, असली शरीर जैसे नहीं। बायोलॉजी में दो सीन (पाचन तंत्र, कोहनी का जोड़) गलत समझ भी सकते हैं।
+आज का ऐप (Infinite Horizons) सारे सीन प्रिमिटिव्स (गोला, बेलन, घन) से बना है — जीव विज्ञान में दिल, पाचन तंत्र, गुर्दा, मस्तिष्क, तंत्रिका, आँख सब कार्टून/डायग्राम जैसे दिखते हैं, असली शरीर जैसे नहीं। बायोलॉजी में दो सीन (पाचन तंत्र, कोहनी का जोड़) गलत समझ भी सकते हैं।
 
 ज़रूरत: **स्टाइल स्विच** — स्केमैटिक (आज का) · एनIME (रंगीन रेखाएँ, मोशन लाइनें) · अल्ट्रा-रियलिस्टिक (चमड़ी जैसा PBR मटीरियल, सर्जिकल लाइट, क्रॉस-सेक्शन कट, अंग अलग करना) — ताकि विद्यार्थी को लगे "वास्तव में virtually देख पा रहा हूँ", और बायोलॉजी डॉक्टर की सर्जरी जैसे दिखे।
 

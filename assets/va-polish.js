@@ -1,4 +1,4 @@
-/* Vigyan Atlas — polish behaviour: tidy toolbar, home section nav with scroll-spy. No feature logic. */
+/* Infinite Horizons — polish behaviour: tidy toolbar, home section nav with scroll-spy. No feature logic. */
 (function () {
   "use strict";
 

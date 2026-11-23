@@ -1,4 +1,4 @@
-/* Vigyan Atlas — label function notes. window.VA_FN(name) -> one-line "what it does" (or ""). Keys are matched ignoring case, brackets and punctuation. "a/b|text" = aliases. */
+/* Infinite Horizons — label function notes. window.VA_FN(name) -> one-line "what it does" (or ""). Keys are matched ignoring case, brackets and punctuation. "a/b|text" = aliases. */
 (()=>{"use strict";
 const RAW=`
 nucleus|Control centre: holds DNA and directs growth, repair and division.

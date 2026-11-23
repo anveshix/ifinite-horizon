@@ -1,8 +1,8 @@
-# ARCHITECTURE AUDIT — Vigyan Atlas (`anveshix/ifinite-horizon`)
+# ARCHITECTURE AUDIT — Infinite Horizons (`anveshix/ifinite-horizon`)
 
 **Audit Date:** 2026-11-22  
 **Repository:** `anveshix/ifinite-horizon` (branch `arena/e2265803-ifinite-horizon`, base `ff1f0814b3c35ef2183e93581d5d25875ec10ffb`)  
-**Audited Version:** `vigyan-atlas` `2.1.0`
+**Audited Version:** `infinite-horizons` `2.1.0`
 
 ---
 

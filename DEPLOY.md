@@ -1,4 +1,4 @@
-# Deploy Vigyan Atlas on Vercel (static core, optional serverless AI tools)
+# Deploy Infinite Horizons on Vercel (static core, optional serverless AI tools)
 
 **Option A — drag & drop / CLI (2 minutes)**
 1. Install Node 18+ once, then in this `vercel/` folder run: `npx vercel login` → `npx vercel --prod`

@@ -1,98 +1,98 @@
 /* Teacher workspace — private-by-default class insights, visually aligned with the Atlas field guide. */
 #teacher{
-  --teacher-paper:#f2f0e8;--teacher-card:#faf9f3;--teacher-muted:#64716c;--teacher-ink:#17252a;
-  --teacher-rule:#cbd1c8;--teacher-teal:#3c776c;--teacher-copper:#ad6138;
+  --teacher-paper:#e9ebf1;--teacher-card:#faf9f3;--teacher-muted:#636772;--teacher-ink:#161b2b;
+  --teacher-rule:#c8cad1;--teacher-teal:#3c4b77;--teacher-copper:#3853ad;
   position:fixed;inset:0;z-index:42;overflow:auto;background:var(--teacher-paper);color:var(--teacher-ink);
-  font-family:Inter,"Segoe UI",Roboto,"Noto Sans","Nirmala UI",Arial,sans-serif;
+  font-family:var(--va-text);
 }
 #teacher[hidden]{display:none}
 #teacher .hw.va-teacher{width:min(100%,1280px);max-width:none;margin:0 auto;padding:0 clamp(20px,5.5vw,76px) 20px}
 .teacher-masthead{min-height:88px;display:flex;align-items:center;gap:15px;border-bottom:1px solid var(--teacher-rule)}
-.teacher-brand-mark{width:42px;height:42px;display:grid;place-items:center;flex:none;border:1px solid #b8c5bc;border-radius:50%;background:#e5e8df}
+.teacher-brand-mark{width:42px;height:42px;display:grid;place-items:center;flex:none;border:1px solid #b8bbc5;border-radius:50%;background:#dfe1e8}
 .teacher-brand-mark svg{width:26px;height:26px;fill:none;stroke:var(--teacher-teal);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .teacher-brand-copy{display:grid;gap:3px;line-height:1.1}
-.teacher-brand-copy>span,.teacher-kicker{color:#77827c;font:700 9px/1.15 "Segoe UI",sans-serif;letter-spacing:1.55px}
+.teacher-brand-copy>span,.teacher-kicker{color:#767983;font:700 9px/1.15 var(--va-text);letter-spacing:1.55px}
 .teacher-brand-copy>span i,.teacher-footer i{color:var(--teacher-copper);font-style:normal}
-.teacher-brand-copy strong{font:500 22px/1.1 Georgia,"Times New Roman",serif;letter-spacing:-.35px}
+.teacher-brand-copy strong{font:500 22px/1.1 var(--va-display);letter-spacing:-.35px}
 .teacher-brand-copy strong em{color:var(--teacher-copper);font-style:normal}
-.teacher-brand-copy small{color:#697671;font-size:10px}
-.teacher-privacy{display:flex;align-items:center;gap:9px;margin-left:auto;padding:9px 12px;border:1px solid #cbd6ca;border-radius:3px;background:#e9ede4}
-.teacher-lock{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#d4e3d7;color:#397565;font-size:12px}
+.teacher-brand-copy small{color:#686c77;font-size:10px}
+.teacher-privacy{display:flex;align-items:center;gap:9px;margin-left:auto;padding:9px 12px;border:1px solid #cacdd6;border-radius:3px;background:#e4e6ed}
+.teacher-lock{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#d4d8e3;color:#394875;font-size:12px}
 .teacher-privacy>span:last-child{display:grid;gap:3px}
-.teacher-privacy b{color:#376b5f;font:700 8px/1 "Segoe UI",sans-serif;letter-spacing:1.1px}
-.teacher-privacy small{color:#61726b;font-size:9px}
-.teacher-back{display:inline-flex;align-items:center;gap:8px;min-height:38px;margin-left:4px;padding:0 0 0 16px;border:0;border-left:1px solid var(--teacher-rule);background:transparent;color:#52615c;font:600 11px/1.2 "Segoe UI",sans-serif;cursor:pointer}
+.teacher-privacy b{color:#37446b;font:700 8px/1 var(--va-text);letter-spacing:1.1px}
+.teacher-privacy small{color:#606573;font-size:9px}
+.teacher-back{display:inline-flex;align-items:center;gap:8px;min-height:38px;margin-left:4px;padding:0 0 0 16px;border:0;border-left:1px solid var(--teacher-rule);background:transparent;color:#515562;font:600 11px/1.2 var(--va-text);cursor:pointer}
 .teacher-back span{color:var(--teacher-copper);font-size:17px;transition:transform .18s ease}
 .teacher-back:hover span{transform:translateX(-3px)}
 .teacher-main{padding:34px 0 10px}
 .teacher-intro{display:grid;grid-template-columns:minmax(0,.9fr) minmax(280px,.75fr);align-items:end;gap:45px;padding:9px 0 28px;border-bottom:1px solid var(--teacher-rule)}
 .teacher-kicker{margin:0 0 10px}
-.teacher-intro h2{margin:0;color:var(--teacher-ink);font:500 clamp(37px,5vw,58px)/.99 Georgia,"Times New Roman",serif;letter-spacing:-.045em}
+.teacher-intro h2{margin:0;color:var(--teacher-ink);font:500 clamp(37px,5vw,58px)/.99 var(--va-display);letter-spacing:-.045em}
 .teacher-intro h2 em{color:var(--teacher-copper);font-weight:400}
-.teacher-intro>p{max-width:490px;margin:0 0 3px;color:#5b6964;font-size:13px;line-height:1.7}
+.teacher-intro>p{max-width:490px;margin:0 0 3px;color:#5a5e6a;font-size:13px;line-height:1.7}
 .teacher-import-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(265px,.75fr);gap:14px;padding:23px 0 30px;border-bottom:1px solid var(--teacher-rule)}
 .teacher-import-card,.teacher-how-card{border:1px solid var(--teacher-rule);border-radius:3px;background:var(--teacher-card)}
 .teacher-import-card{padding:21px 23px 16px}
 .teacher-card-heading{display:flex;align-items:flex-start;gap:13px;margin-bottom:18px}
-.teacher-step{display:grid;place-items:center;width:27px;height:27px;flex:none;border:1px solid #d4b49d;border-radius:50%;color:var(--teacher-copper);font:600 10px/1 Georgia,serif}
-.teacher-card-heading h3,.teacher-how-card h3{margin:0;color:var(--teacher-ink);font:500 21px/1.15 Georgia,"Times New Roman",serif;letter-spacing:-.25px}
-.teacher-card-heading p{margin:5px 0 0;color:#74807a;font-size:11px;line-height:1.5}
-.teacher-input-label{display:flex;justify-content:space-between;gap:12px;margin:0 0 7px;color:#65716b;font:700 9px/1.2 "Segoe UI",sans-serif;letter-spacing:1.15px}
-.teacher-input-label span{color:#919991;font-weight:500;letter-spacing:.2px;text-transform:none}
-#teacher #tIn{display:block;width:100%;min-height:124px;resize:vertical;padding:12px 14px;border:1px solid #cbd1c8;border-radius:2px;outline:0;background:#f3f2eb;color:#263833;font:12px/1.6 "Segoe UI","Nirmala UI",sans-serif;box-shadow:none;transition:border-color .18s,background .18s}
-#teacher #tIn::placeholder{color:#8a948d;opacity:1}
-#teacher #tIn:focus{border-color:#638a7e;background:#fffefa;box-shadow:0 0 0 3px rgba(60,119,108,.1)}
+.teacher-step{display:grid;place-items:center;width:27px;height:27px;flex:none;border:1px solid #9daad4;border-radius:50%;color:var(--teacher-copper);font:600 10px/1 Georgia,serif}
+.teacher-card-heading h3,.teacher-how-card h3{margin:0;color:var(--teacher-ink);font:500 21px/1.15 var(--va-display);letter-spacing:-.25px}
+.teacher-card-heading p{margin:5px 0 0;color:#737781;font-size:11px;line-height:1.5}
+.teacher-input-label{display:flex;justify-content:space-between;gap:12px;margin:0 0 7px;color:#646872;font:700 9px/1.2 var(--va-text);letter-spacing:1.15px}
+.teacher-input-label span{color:#919399;font-weight:500;letter-spacing:.2px;text-transform:none}
+#teacher #tIn{display:block;width:100%;min-height:124px;resize:vertical;padding:12px 14px;border:1px solid #c8cad1;border-radius:2px;outline:0;background:#ebedf3;color:#252a39;font:12px/1.6 "Segoe UI","Nirmala UI",sans-serif;box-shadow:none;transition:border-color .18s,background .18s}
+#teacher #tIn::placeholder{color:#8a8c94;opacity:1}
+#teacher #tIn:focus{border-color:#616c8c;background:#fffefa;box-shadow:0 0 0 3px rgba(60,75,119,.1)}
 .teacher-import-actions,.teacher-result-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .teacher-import-actions{margin-top:12px}
-.teacher-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:38px;padding:0 13px;border:1px solid #c5cdc4;border-radius:2px;background:transparent;color:#31443f;font:600 11px/1.2 "Segoe UI",sans-serif;text-decoration:none;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
-.teacher-button:hover{border-color:#83968d;background:#edf0e8;color:#172e2b}
+.teacher-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:38px;padding:0 13px;border:1px solid #c4c6cd;border-radius:2px;background:transparent;color:#303545;font:600 11px/1.2 var(--va-text);text-decoration:none;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+.teacher-button:hover{border-color:#838896;background:#e8eaf0;color:#171d2e}
 .teacher-button>span{color:var(--teacher-copper);font-size:15px;line-height:1}
-.teacher-button-primary{border-color:#193c3b;background:#193c3b;color:#f6f3e9}
-.teacher-button-primary:hover{border-color:#2d5a53;background:#2d5a53;color:#fff}
-.teacher-button-primary>span{color:#a9d5c3}
-.teacher-button-danger{border-color:#dcc9bd;color:#895239}
-.teacher-button-danger:hover{border-color:#bd8e73;background:#f5ebe3;color:#784327}
-.teacher-status{min-height:15px;margin:9px 0 0;color:#54796c;font-size:10px;line-height:1.45}
-.teacher-how-card{padding:21px 21px 16px;background:#e9ece4}
+.teacher-button-primary{border-color:#19223c;background:#19223c;color:#f6f3e9}
+.teacher-button-primary:hover{border-color:#2d385a;background:#2d385a;color:#ffffff}
+.teacher-button-primary>span{color:#a9b4d5}
+.teacher-button-danger{border-color:#c1c7d8;color:#394c89}
+.teacher-button-danger:hover{border-color:#7384bd;background:#e3e7f5;color:#273a78}
+.teacher-status{min-height:15px;margin:9px 0 0;color:#525c7b;font-size:10px;line-height:1.45}
+.teacher-how-card{padding:21px 21px 16px;background:#e4e6ec}
 .teacher-how-card .teacher-kicker{margin-bottom:8px}
 .teacher-how-card h3{max-width:245px;font-size:20px}
 .teacher-how-card ol{display:grid;gap:13px;margin:18px 0 16px;padding:0;list-style:none}
 .teacher-how-card li{display:flex;align-items:flex-start;gap:10px}
-.teacher-how-card li>span{display:grid;place-items:center;width:22px;height:22px;flex:none;border:1px solid #bac7bc;border-radius:50%;color:var(--teacher-teal);font:600 10px/1 Georgia,serif}
+.teacher-how-card li>span{display:grid;place-items:center;width:22px;height:22px;flex:none;border:1px solid #babdc7;border-radius:50%;color:var(--teacher-teal);font:600 10px/1 Georgia,serif}
 .teacher-how-card li p{display:grid;gap:3px;margin:1px 0 0}
-.teacher-how-card li b{color:#2b413b;font-size:10px;font-weight:650}
-.teacher-how-card li small{color:#75817a;font-size:9px;line-height:1.35}
-.teacher-local-note{display:flex;align-items:flex-start;gap:9px;padding:10px 11px;border-left:2px solid #6c9a85;background:rgba(255,255,255,.46)}
+.teacher-how-card li b{color:#2a3042;font-size:10px;font-weight:650}
+.teacher-how-card li small{color:#747882;font-size:9px;line-height:1.35}
+.teacher-local-note{display:flex;align-items:flex-start;gap:9px;padding:10px 11px;border-left:2px solid #6c779a;background:rgba(255,255,255,.46)}
 .teacher-local-note>span{color:var(--teacher-teal);font-size:14px;line-height:1.25}
-.teacher-local-note p{margin:0;color:#69766f;font-size:9px;line-height:1.5}
-.teacher-local-note b{color:#355f52}
+.teacher-local-note p{margin:0;color:#686c77;font-size:9px;line-height:1.5}
+.teacher-local-note b{color:#333e61}
 .teacher-results{padding:29px 0 10px}
 .teacher-results-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
 .teacher-results-heading .teacher-kicker{margin-bottom:7px}
-.teacher-results-heading h2{margin:0;color:var(--teacher-ink);font:500 clamp(27px,3vw,36px)/1.1 Georgia,"Times New Roman",serif;letter-spacing:-.035em}
-.teacher-results-heading>div:first-child>p:last-child{margin:6px 0 0;color:#75807a;font-size:11px;line-height:1.5}
+.teacher-results-heading h2{margin:0;color:var(--teacher-ink);font:500 clamp(27px,3vw,36px)/1.1 var(--va-display);letter-spacing:-.035em}
+.teacher-results-heading>div:first-child>p:last-child{margin:6px 0 0;color:#747781;font-size:11px;line-height:1.5}
 .teacher-result-actions{justify-content:flex-end}
 #teacher .teacher-summary{display:flex;gap:8px;margin:13px 0 12px!important}
-#teacher .teacher-summary span{display:flex;align-items:baseline;gap:7px;min-height:43px;padding:9px 12px;border:1px solid #d0d5cc;border-radius:2px;background:#e9e9df;color:#637069;font:500 10px/1.2 "Segoe UI",sans-serif;box-shadow:none}
-#teacher .teacher-summary span b{color:#27443d;font:600 18px/1 Georgia,"Times New Roman",serif}
-#teacher .teacher-summary span:only-child{font:500 11px/1.5 "Segoe UI",sans-serif}
+#teacher .teacher-summary span{display:flex;align-items:baseline;gap:7px;min-height:43px;padding:9px 12px;border:1px solid #ccced5;border-radius:2px;background:#dfe2e9;color:#626671;font:500 10px/1.2 var(--va-text);box-shadow:none}
+#teacher .teacher-summary span b{color:#262e45;font:600 18px/1 var(--va-display)}
+#teacher .teacher-summary span:only-child{font:500 11px/1.5 var(--va-text)}
 .teacher-weak:empty,.teacher-table:empty{display:none}
-#teacher .teacher-weak{margin:12px 0 15px;color:#64716b;font:600 10px/1.5 "Segoe UI",sans-serif}
-#teacher .teacher-weak>b{display:block;margin-bottom:8px;color:#7c563e;font-size:10px;letter-spacing:.15px}
-#teacher .teacher-weak a{display:inline-flex;align-items:center;gap:9px;margin:0 7px 6px 0;padding:7px 10px;border:1px solid #dcc5b2;border-radius:2px;background:#f5eae0;color:#704d39;font-size:10px;text-decoration:none;transition:background .15s,border-color .15s}
-#teacher .teacher-weak a:hover{border-color:#c99470;background:#f0dfd0}
-#teacher .teacher-weak em{color:#a74f35;font:700 10px/1 "Segoe UI",sans-serif}
-#teacher .teacher-table{overflow:auto;max-height:56vh;border:1px solid #cbd1c8;border-radius:2px;background:#faf9f3}
-#teacher .teacher-table table{width:100%;border-collapse:collapse;white-space:nowrap;color:#43534d;font:10px/1.35 "Segoe UI",sans-serif}
-#teacher .teacher-table th{position:sticky;top:0;z-index:1;padding:10px 9px;border-bottom:1px solid #c6cec5;background:#e5e9df;color:#586861;font:700 8px/1.2 "Segoe UI",sans-serif;letter-spacing:.75px;text-transform:uppercase;text-align:left}
-#teacher .teacher-table td{padding:8px 9px;border-bottom:1px solid #e1e3db;color:#45554e;font-size:10px}
-#teacher .teacher-table tr:nth-child(even) td{background:#f3f2eb}
-#teacher .teacher-table tr:hover td{background:#eaf0e8}
-#teacher .teacher-table td.hm{min-width:36px;text-align:center;color:#173c3a;font-size:9px;font-weight:700}
-#teacher .teacher-table .lnk{border:0;background:none;color:#9a5434;font:600 10px/1 "Segoe UI",sans-serif;cursor:pointer}
+#teacher .teacher-weak{margin:12px 0 15px;color:#636772;font:600 10px/1.5 var(--va-text)}
+#teacher .teacher-weak>b{display:block;margin-bottom:8px;color:#3b4c7f;font-size:10px;letter-spacing:.15px}
+#teacher .teacher-weak a{display:inline-flex;align-items:center;gap:9px;margin:0 7px 6px 0;padding:7px 10px;border:1px solid #b2bcdc;border-radius:2px;background:#e0e5f5;color:#394670;font-size:10px;text-decoration:none;transition:background .15s,border-color .15s}
+#teacher .teacher-weak a:hover{border-color:#7085c9;background:#d0d7f0}
+#teacher .teacher-weak em{color:#3550a7;font:700 10px/1 var(--va-text)}
+#teacher .teacher-table{overflow:auto;max-height:56vh;border:1px solid #c8cad1;border-radius:2px;background:#faf9f3}
+#teacher .teacher-table table{width:100%;border-collapse:collapse;white-space:nowrap;color:#424754;font:10px/1.35 var(--va-text)}
+#teacher .teacher-table th{position:sticky;top:0;z-index:1;padding:10px 9px;border-bottom:1px solid #c5c7ce;background:#dfe2e9;color:#575c69;font:700 8px/1.2 var(--va-text);letter-spacing:.75px;text-transform:uppercase;text-align:left}
+#teacher .teacher-table td{padding:8px 9px;border-bottom:1px solid #dbdde3;color:#444956;font-size:10px}
+#teacher .teacher-table tr:nth-child(even) td{background:#ebedf3}
+#teacher .teacher-table tr:hover td{background:#e8eaf0}
+#teacher .teacher-table td.hm{min-width:36px;text-align:center;color:#17203c;font-size:9px;font-weight:700}
+#teacher .teacher-table .lnk{border:0;background:none;color:#344c9a;font:600 10px/1 var(--va-text);cursor:pointer}
 #teacher .teacher-table .lnk:hover{text-decoration:underline}
-.teacher-footer{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:17px;padding:13px 0 3px;border-top:1px solid var(--teacher-rule);color:#7a857e;font:500 9px/1.4 "Segoe UI",sans-serif}
-.teacher-footer span:first-child{color:#4e6259;font-weight:650}
+.teacher-footer{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:17px;padding:13px 0 3px;border-top:1px solid var(--teacher-rule);color:#797c86;font:500 9px/1.4 var(--va-text)}
+.teacher-footer span:first-child{color:#4d5263;font-weight:650}
 #teacher .hact{display:flex;gap:8px;flex-wrap:wrap}
 @media(max-width:790px){
  #teacher .hw.va-teacher{padding-right:22px;padding-left:22px}
@@ -145,12 +145,12 @@
  #teacher .teacher-summary span{flex-direction:column;align-items:center;gap:5px;padding:8px 5px;text-align:center}
 }
 @media print{
- #teacher{position:static;overflow:visible;background:#fff;color:#000}
+ #teacher{position:static;overflow:visible;background:#ffffff;color:#000000}
  #teacher .teacher-masthead,#teacher .teacher-intro,#teacher .teacher-how-card,#teacher .teacher-import-actions,#teacher .teacher-results-heading .teacher-result-actions,#teacher #tIn,#teacher #tMsg,#teacher .teacher-footer{display:none!important}
  #teacher .hw.va-teacher{width:100%;padding:0}
  #teacher .teacher-import-grid{display:block;padding:0;border:0}
  #teacher .teacher-results{padding:0}
  #teacher .teacher-table{max-height:none;overflow:visible;border:0}
- #teacher .teacher-table th{position:static;background:#eee;color:#000}
- #teacher .teacher-table td{color:#000}
+ #teacher .teacher-table th{position:static;background:#eeeeee;color:#000000}
+ #teacher .teacher-table td{color:#000000}
 }

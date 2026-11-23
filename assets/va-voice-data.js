@@ -1,4 +1,4 @@
-/* Vigyan Atlas — teacher narration scripts (hand-written, one per chapter / topic group).
+/* Infinite Horizons — teacher narration scripts (hand-written, one per chapter / topic group).
    Each entry: h = opening hook (Jharkhand connection), i = the core idea.  [Hindi, English]
    Written gender-neutral ("हम समझते हैं") so the same script suits the male and the female teacher voice.
    Spoken-ready: no formulas — they are said in words. Edit freely; the app picks it up on reload. */

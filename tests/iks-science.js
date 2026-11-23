@@ -66,7 +66,7 @@ assert.equal(xMaps.length, 8);
 ixMaps.forEach((m) => assert.equal(m.classLevel, 'IX'));
 xMaps.forEach((m) => assert.equal(m.classLevel, 'X'));
 
-// Verify linked Vigyan Atlas chapter IDs exist in index.html
+// Verify linked Infinite Horizons chapter IDs exist in index.html
 const indexHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 CURRICULUM.getAllMappings().forEach((m) => {
   assert.ok(indexHtml.includes(m.chapterId), `Chapter ID ${m.chapterId} not found in index.html`);
