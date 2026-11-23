@@ -171,3 +171,10 @@ body:not(.light) #stagebar .ib.on{background:var(--va-marker);border-color:var(-
 .va-sim-brand .va-logo,.va-mm-brand .va-logo,.cl-top>.va-logo{width:34px;height:34px;border-radius:9px}
 .cl-top>.va-logo{margin-right:-4px}
 #teacher .teacher-masthead .va-logo{width:42px;height:42px;border-radius:11px}
+
+/* ---------- merge: map the shared polish layer (va-polish.css) onto this palette ---------- */
+:root{
+  --p-paper:#f4f6fb;--p-card:#fff;--p-raise:#e9eefa;--p-line:rgba(15,26,58,.1);--p-line2:rgba(15,26,58,.2);
+  --p-ink:#0f1a3a;--p-ink2:#33406a;--p-mute:#5a6684;--p-deep:#0f1a3a;--p-copper:#2342c8;--p-copper-bright:#2342c8;
+  --p-serif:var(--va-display);--p-sans:var(--va-text);
+}

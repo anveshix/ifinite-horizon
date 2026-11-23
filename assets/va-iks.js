@@ -153,7 +153,7 @@
       sb.id = 'vaIksStageBtn';
       sb.className = 'sbtn';
       sb.title = 'Open IKS × Modern Science context for this chapter';
-      sb.textContent = '🪷 IKS';
+      sb.textContent = 'IKS';
       sb.addEventListener('click', function () {
         var chId = '';
         if (window.__atlas && typeof window.__atlas.state === 'function') {
