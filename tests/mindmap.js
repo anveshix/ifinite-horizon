@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict');
 const {normalize,filter,layout}=require('../assets/va-mindmap-core.js');
 const records=[
- {key:'ix5/types',ch:{kp:'ix5',no:5,set:'ix',title:'Mixtures',hi:'मिश्रण',unit:'Matter',brief:'Solutions and separation',color:'#627f82',kc:['Solution','Suspension'],lo:['Classify mixtures'],act:['Compare a real sample'],flags:['Source scope caveat'],topics:[{id:'types',title:'Types',hi:'प्रकार'},{id:'lab',title:'Separation lab'}]}},
+ {key:'ix5/types',ch:{kp:'ix5',no:5,set:'ix',title:'Mixtures',hi:'मिश्रण',unit:'Matter',brief:'Solutions and separation',color:'#627f82',kc:['Solution','Suspension'],lo:['Classify mixtures'],act:['Compare a real sample'],prac:[1,2],flags:['Source scope caveat'],topics:[{id:'types',title:'Types',hi:'प्रकार',ref:'Syllabus ref 5.1'},{id:'lab',title:'Separation lab'}]}},
  {key:'ix6/atom',ch:{kp:'ix6',no:6,set:'ix',title:'Atoms',unit:'Matter',kc:['Protons'],topics:[{id:'atom',title:'Atom builder'}]}},
  {key:'ix9/line',ch:{kp:'ix9',no:9,set:'ix',title:'Motion',unit:'Physics',topics:[{id:'line',title:'Motion graph'}]}},
  {key:'ix25_1/states',ch:{kp:'ix25_1',set:'ix25',no:1,title:'Matter in Our Surroundings',unit:'Unit I · Matter',topics:[{id:'states',title:'Particles and states'}]}},
@@ -15,6 +15,8 @@ assert.deepEqual(filter(chapters,'ix25').map(c=>c.id),['ix25_1']);
 assert.equal(chapters.find(c=>c.id==='ix5').models[1].available,false,'unbuilt topics remain identified as unavailable');
 assert.equal(chapters.find(c=>c.id==='ix5').models[0].available,true);
 assert.deepEqual(chapters.find(c=>c.id==='ix5').activities,['Compare a real sample']);
+assert.deepEqual(chapters.find(c=>c.id==='ix5').practicals,[1,2]);
+assert.equal(chapters.find(c=>c.id==='ix5').models[0].brief,'Syllabus ref 5.1');
 assert.deepEqual(chapters.find(c=>c.id==='ix5').reviewFlags,['Source scope caveat']);
 assert.deepEqual(filter(chapters,'ix','scope caveat').map(c=>c.id),['ix5'],'mind map search includes source/scope notes');
 assert.deepEqual(filter(chapters,'ix').map(c=>c.id),['ix5','ix6','ix9']);

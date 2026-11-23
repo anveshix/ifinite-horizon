@@ -82,14 +82,18 @@ const LINKS={
  "ch5/digestion":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Explode the human digestive tract in 3D: Amylase, HCl/Pepsin, Bile & Villi!",{mode:0}],
  "ch5/digest3d":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Interactive 3D exploded view of Stomach, Liver, Pancreas & Small Intestine.",{mode:1}],
  "ch5/xylem":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Watch unidirectional Xylem water flow and bidirectional Phloem transport.",{tissue:3,transp:4}],
+ "ch5/xylem3d":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Explore lignified xylem, phloem sieve plates & guard-cell transpiration in 3D!",{tissue:3,transp:4}],
  /* Class X Ch 6: Control & Coordination */
  "ch6/neuron":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Fire an action potential along a 3D myelinated neuron & cross the synapse!",{mode:0}],
  "ch6/neuron3d":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Explore Dendrite → Soma → Axon → Synapse neurotransmitter release in 3D.",{mode:0}],
  "ch6/synapse":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Watch electrical impulses convert into chemical neurotransmitters at the synaptic cleft!",{mode:0}],
  "ch6/reflex":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Trigger a hot-flame stimulus and race the spinal Reflex Arc in milliseconds!",{mode:1}],
  "ch6/brain":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Inspect Forebrain (thinking), Midbrain, Cerebellum (balance) & Medulla in 3D!",{mode:2}],
+ "ch6/brain3d":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Explore cerebral lobes, corpus callosum, cerebellum & brainstem in 3D!",{mode:2}],
  "ch6/plants":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Rotate the sunlight to watch Auxin migrate and bend the plant shoot (Phototropism)!",{mode:3}],
+ "ch6/plants3d":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Compare Phototropism, Geotropism & Mimosa thigmonasty in 3D!",{mode:3}],
  "ch6/hormones":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Compare Adrenaline, Insulin, Thyroxine & Pituitary endocrine feedback in 3D!",{sub:"hormones"}],
+ "ch6/hormones3d":["nervous","Nervous 3D Lab","तंत्रिका 3D प्रयोगशाला","Trigger Adrenaline surges, Insulin feedback & Goitre in 3D!",{sub:"hormones"}],
  /* Class X Ch 7: How do Organisms Reproduce? */
  "ch7/flower":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Dissect a 3D flower and grow the pollen tube down into the ovule!",{mode:0}],
  "ch7/flower3d":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Rotate 3D sepals, petals, stamen & carpel to trace pollination & fertilisation.",{mode:0}],
@@ -104,6 +108,7 @@ const LINKS={
  "ch8/sex":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Switch to Human XX × XY mode and test the 50% Boy / 50% Girl probability.",{cross:1}],
  "ch8/genetics3d":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Watch the 3D DNA double helix and live Punnett Square genotypes.",{cross:0}],
  "ch8/evolution":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Tap Evolution & Fossils to compare Homologous vs Analogous organs!",{sub:"evolution"}],
+ "ch8/evolution3d":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Compare fossil strata, homologous limbs & natural selection in 3D!",{sub:"evolution"}],
  /* Class X Ch 9: Light — Reflection & Refraction */
  "ch9/optics":["lens","Lens Lab","लेंस प्रयोगशाला","Move the object, change f, and see where the image forms.",{type:1}],
  "ch9/power":["lens","Lens Lab","लेंस प्रयोगशाला","See how the focal length decides the power P = 1/f of a lens.",{type:1,f:10}],
@@ -130,6 +135,7 @@ const LINKS={
  "ch12/domestic":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Toggle 220V Domestic AC mode to see Live/Neutral/Earth wires & MCB trip!",{sub:"domestic"}],
  /* Class X Ch 13: Our Environment */
  "ch13/pyramid":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","Explore the 3D 10% Energy Pyramid from T₁ Producers to T₄ Top Carnivores!",{producerE:10000}],
+ "ch13/ecosystem3d":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","Explore 10% Energy Pyramid, DDT biomagnification & Ozone O₃ shield in 3D!",{producerE:10000}],
  "ch13/web":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","See DDT biomagnification concentrate 1000× up the aquatic food web!",{ddt:8}],
  "ch13/ozone":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","Test CFC depletion of the Stratospheric Ozone (O₃) UV-B shield!",{ozonePct:35}],
  "ch13/waste":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","Compare biodegradable nutrient recycling vs non-biodegradable biomagnification.",{ddt:6}],
