@@ -70,7 +70,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Security reports: [SECURITY.md](SECURITY
 
 ## License
 
-Copyright and license terms for this repository are **to be confirmed by the maintainer**; the site footer credits PP Creations — Paras Pranav. Until a `LICENSE` file is added, all rights are reserved by their holders.
+No licence has been chosen for this repository yet. Until one is added, the default applies: **all rights reserved** by the author (anveshix). Please ask before reusing or redistributing the code.
+
+Bundled three.js and cannon-es keep their licences in `assets/vendor/` (`THREE_LICENSE.txt`, `CANNON_ES_LICENSE.txt`).
 
 ## Author
 
