@@ -521,6 +521,7 @@ mindmap
       Combination & decomposition
       Oxidation and reduction
       Corrosion and rancidity
+      Exothermic & endothermic reactions
       Double displacement & precipitation
 ```
 
@@ -554,6 +555,8 @@ mindmap
       Indicators litmus, turmeric
       Neutralisation
       Important salts
+      pH in everyday life
+      Chemicals from salt: NaOH, bleaching powder, soda, PoP
 ```
 
 ### X · Ch 3 — Metals and Non-metals
@@ -635,6 +638,9 @@ mindmap
       Breathing & alveoli
       Nephron & urine formation
       Transport in plants
+      What are life processes?
+      Aerobic & anaerobic respiration
+      Excretion in plants
       Photosynthesis & stomata
       Heterotrophic nutrition
 ```
@@ -685,6 +691,8 @@ mindmap
       Budding in Hydra
       Vegetative propagation
       Flower & fertilisation
+      Copying DNA: why variation appears
+      Regeneration: Planaria & Hydra
       Spore formation in bread mould
       Dicot seed: embryo parts
       Family planning, HIV/AIDS & women’s health
@@ -715,6 +723,11 @@ mindmap
       Independent inheritance dihybrid
       Sex determination
       Evolution Reading Material
+      Accumulation of variation
+      Acquired vs inherited traits, selection & drift
+      Speciation
+      Fossils & dating
+      Evolution by stages & human evolution
 ```
 
 ### X · Ch 9 — Light – Reflection and Refraction

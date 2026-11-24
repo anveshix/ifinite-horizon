@@ -48,4 +48,5 @@ mindmap
 - Combination & decomposition
 - Oxidation and reduction
 - Corrosion and rancidity
+- Exothermic & endothermic reactions
 - Double displacement & precipitation

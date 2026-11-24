@@ -38,6 +38,8 @@ mindmap
 - Budding in Hydra
 - Vegetative propagation
 - Flower & fertilisation
+- Copying DNA: why variation appears
+- Regeneration: Planaria & Hydra
 - Spore formation in bread mould
 - Dicot seed: embryo parts
 - Family planning, HIV/AIDS & women’s health

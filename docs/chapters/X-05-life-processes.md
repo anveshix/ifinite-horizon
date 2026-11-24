@@ -30,5 +30,8 @@ mindmap
 - Breathing & alveoli
 - Nephron & urine formation
 - Transport in plants
+- What are life processes?
+- Aerobic & anaerobic respiration
+- Excretion in plants
 - Photosynthesis & stomata
 - Heterotrophic nutrition

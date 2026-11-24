@@ -43,3 +43,8 @@ mindmap
 - Independent inheritance (dihybrid)
 - Sex determination
 - Evolution (Reading Material)
+- Accumulation of variation
+- Acquired vs inherited traits; selection & drift
+- Speciation
+- Fossils & dating
+- Evolution by stages & human evolution
