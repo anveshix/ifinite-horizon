@@ -1,0 +1,78 @@
+<!doctype html><meta charset="utf-8"><title>Hero heart renderer</title>
+<style>html,body{margin:0;background:#050a1c}canvas{display:block}</style>
+<script type="module">
+/* Offline renderer for the home-page hero video: the app's own anatomical heart + lungs + great vessels (BodyParts3D / Z-Anatomy, CC BY-SA),
+   lit and animated deterministically: heart 72 bpm (atria → ventricles), lungs 12 breaths/min, blood flowing through the double circulation,
+   slow orbit. Driven by tools/build-hero-video.mjs via window.renderAt(t). */
+import * as THREE from "../../assets/vendor/three.module.min.js";
+import {loadMeshes} from "../../assets/va-assets.js";
+const SIZE=+new URLSearchParams(location.search).get("size")||1000,LOOP=10,BPM=72,BEAT=60/BPM,BREATH=5;
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(1);renderer.setSize(SIZE,SIZE);renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene();
+/* background: deep-navy radial gradient */
+{const c=document.createElement("canvas");c.width=c.height=512;const g=c.getContext("2d"),gr=g.createRadialGradient(256,230,20,256,256,380);gr.addColorStop(0,"#1c3a72");gr.addColorStop(.55,"#0b1a3e");gr.addColorStop(1,"#050b1f");g.fillStyle=gr;g.fillRect(0,0,512,512);for(let i=0;i<90;i++){g.fillStyle=`rgba(190,215,255,${.05+Math.random()*.18})`;g.beginPath();g.arc(Math.random()*512,Math.random()*512,Math.random()*1.3,0,7);g.fill()}const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;scene.background=t}
+/* studio environment for wet specular highlights */
+{const env=new THREE.Scene(),box=new THREE.Mesh(new THREE.SphereGeometry(20,32,16),new THREE.MeshBasicMaterial({color:0x1a2a52,side:THREE.BackSide}));env.add(box);
+ const panel=(x,y,z,w,h,col,i)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:new THREE.Color(col).multiplyScalar(i),side:THREE.DoubleSide}));m.position.set(x,y,z);m.lookAt(0,0,0);env.add(m)};
+ panel(8,10,12,10,8,0xfff1e0,6);panel(-12,4,-6,8,12,0x7fb0ff,4);panel(2,-10,8,12,5,0xff5a6a,2.2);panel(0,14,-8,14,5,0xffffff,3);
+ const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(env,.04).texture;pm.dispose()}
+scene.add(new THREE.HemisphereLight(0xcfe3ff,0x201028,.55));
+const key=new THREE.DirectionalLight(0xfff0e0,2.1);key.position.set(4,6,8);scene.add(key);
+const rim=new THREE.DirectionalLight(0x6fb0ff,1.5);rim.position.set(-6,3,-5);scene.add(rim);
+const fill=new THREE.DirectionalLight(0xff5568,.55);fill.position.set(1,-5,4);scene.add(fill);
+const camera=new THREE.PerspectiveCamera(30,1,.1,80);const TARGET=new THREE.Vector3(.04,-.22,0),DIST=8.0;
+const S=10,C0=[.024,1.31,.025];const root=new THREE.Group();root.scale.setScalar(S);root.position.set(-C0[0]*S,-C0[1]*S,-C0[2]*S);scene.add(root);
+const CH=["right-atrium","left-atrium","right-ventricle","left-ventricle"];
+const col={ra:0x5a6df0,rv:0x4059d8,la:0xe8636b,lv:0xc42a38,art:0xe23a45,pulA:0x3f62e8,vein:0x3f62e8,pulV:0xe23a45,cor:0xff5560,lung:0xf2b4bd,air:0xf0e2cc};
+const pickCol=id=>id==="right-atrium"?col.ra:id==="right-ventricle"?col.rv:id==="left-atrium"?col.la:id==="left-ventricle"?col.lv:/^pulmonary-(trunk|artery)/.test(id)?col.pulA:/^pulmonary-vein/.test(id)?col.pulV:/vena-cava/.test(id)?col.vein:/aort|brachio/.test(id)?col.art:/^coronary/.test(id)?col.cor:/^lung/.test(id)?col.lung:col.air;
+const tex=(()=>{const c=document.createElement("canvas");c.width=c.height=256;const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,256,256);for(let i=0;i<200;i++){g.strokeStyle=`rgba(0,0,0,${.05+(i%5)*.012})`;g.lineWidth=1+i%2;g.beginPath();g.moveTo(0,i*1.3);g.bezierCurveTo(85,i*1.3+Math.sin(i*.35)*10,170,i*1.3-Math.cos(i*.28)*10,256,i*1.3);g.stroke()}const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(2,2);return t})();
+const parts=(await loadMeshes("heart/heart.glb")).parts;
+const M={},BB={},pivots=[];const lungs=[];
+for(const id in parts){if(/^(rib|sternum|clavicle|diaphragm|valve)/.test(id))continue;const p=parts[id];
+ const g=new THREE.BufferGeometry();let pos=p.position;g.setAttribute("position",new THREE.BufferAttribute(pos,3));p.normal&&g.setAttribute("normal",new THREE.BufferAttribute(p.normal,3));p.index&&g.setIndex(new THREE.BufferAttribute(p.index,1));g.computeBoundingBox();const bb=g.boundingBox,c=bb.getCenter(new THREE.Vector3());BB[id]={c,mn:bb.min.clone(),mx:bb.max.clone()};
+ const piv=CH.includes(id)||/^(coronary|aort|pulmonary|superior|inferior)/.test(id)&&false;
+ const lung=/^lung/.test(id),vessel=/^(aorta|ascending|aortic|thoracic|abdominal|brachio|pulmonary|superior|inferior)/.test(id),cor=/^coronary/.test(id),air=/^(trachea|bronchus)/.test(id);
+ if(CH.includes(id)){const a=pos.slice();for(let i=0;i<a.length;i+=3){a[i]-=c.x;a[i+1]-=c.y;a[i+2]-=c.z}g.setAttribute("position",new THREE.BufferAttribute(a,3))}
+ const mat=new THREE.MeshPhysicalMaterial({color:pickCol(id),roughness:lung?.7:.3,metalness:0,clearcoat:lung?.2:.8,clearcoatRoughness:.25,sheen:lung?.9:.45,sheenColor:new THREE.Color(0xffc8d0),map:CH.includes(id)?tex:null,transparent:lung||vessel,opacity:lung?.15:vessel?.7:1,depthWrite:!(lung||vessel),side:lung?THREE.DoubleSide:THREE.FrontSide,emissive:cor?0x5a0a12:0x000000,emissiveIntensity:cor?.5:0});
+ const m=new THREE.Mesh(g,mat);m.frustumCulled=false;if(CH.includes(id))m.position.copy(c);m.renderOrder=lung?3:vessel?2:1;root.add(m);M[id]=m;if(lung)lungs.push(m)}
+const tree=(await loadMeshes("lungs/lungs.glb")).parts;
+for(const id in tree){if(!/^(br|sg)\d+$/.test(id))continue;const p=tree[id],g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(p.position,3));p.normal&&g.setAttribute("normal",new THREE.BufferAttribute(p.normal,3));p.index&&g.setIndex(new THREE.BufferAttribute(p.index,1));
+ const m=new THREE.Mesh(g,new THREE.MeshPhysicalMaterial({color:0xf6ead6,roughness:.35,clearcoat:.5,emissive:0x6a5a40,emissiveIntensity:.35,transparent:true,opacity:.92}));m.frustumCulled=false;m.renderOrder=2;root.add(m)}
+const lungC=new THREE.Vector3();lungs.forEach(m=>{const id=Object.keys(M).find(k=>M[k]===m);lungC.add(BB[id].c)});lungC.multiplyScalar(1/lungs.length);
+/* vessel centre-lines for the blood flow */
+const axis=(id,n=9)=>{const a=parts[id].position,bb=BB[id],d=[bb.mx.x-bb.mn.x,bb.mx.y-bb.mn.y,bb.mx.z-bb.mn.z],k=d.indexOf(Math.max(...d)),lo=[bb.mn.x,bb.mn.y,bb.mn.z][k],hi=[bb.mx.x,bb.mx.y,bb.mx.z][k],bins=Array.from({length:n},()=>({s:new THREE.Vector3(),c:0}));
+ for(let i=0;i<a.length;i+=3){const v=[a[i],a[i+1],a[i+2]][k],b=Math.min(n-1,Math.floor((v-lo)/(hi-lo+1e-9)*n));bins[b].s.x+=a[i];bins[b].s.y+=a[i+1];bins[b].s.z+=a[i+2];bins[b].c++}
+ return bins.filter(b=>b.c).map(b=>b.s.multiplyScalar(1/b.c))};
+const orient=(pts,near)=>pts[0].distanceTo(near)<=pts[pts.length-1].distanceTo(near)?pts:pts.slice().reverse();
+const ct=id=>BB[id].c.clone();
+const ivc=orient(axis("inferior-vena-cava"),new THREE.Vector3(0,1.0,0)),svc=orient(axis("superior-vena-cava"),new THREE.Vector3(0,1.7,0)),trunk=orient(axis("pulmonary-trunk"),ct("right-ventricle"));
+const asc=orient(axis("ascending-aorta"),ct("left-ventricle")),arch=orient(axis("aortic-arch"),asc[asc.length-1]),thor=orient(axis("thoracic-aorta"),arch[arch.length-1]),abd=orient(axis("abdominal-aorta"),thor[thor.length-1]);
+const paL=orient(axis("pulmonary-artery-l"),trunk[trunk.length-1]),paR=orient(axis("pulmonary-artery-r"),trunk[trunk.length-1]);
+const lc=s=>{const v=new THREE.Vector3();let n=0;for(const k in BB)if(k.startsWith("lung-"+s)){v.add(BB[k].c);n++}return v.multiplyScalar(1/n)};
+const pvL=orient(axis("pulmonary-vein-l1"),lc("l")),pvR=orient(axis("pulmonary-vein-r1"),lc("r"));
+const mkPath=(first,pa,lg,pv)=>{const segs=[first,[ct("right-atrium")],[ct("right-ventricle")],trunk,pa,[lg],pv,[ct("left-atrium")],[ct("left-ventricle")],asc,arch,thor,abd,[abd[abd.length-1].clone().lerp(ivc[0],.5).add(new THREE.Vector3(.02,-.05,0)),ivc[0]]];
+ const pts=[];segs.forEach(s=>s.forEach(p=>pts.push(p)));const curve=new THREE.CatmullRomCurve3(pts,true,"centripetal");const n=segs.map(s=>s.length);let acc=0;const idx={};["a","ra","rv","tr","pa","lg","pv","la","lv","as","ar","th","ab","bd"].forEach((k,i)=>{idx[k]=acc/pts.length;acc+=n[i]});idx.end=1;
+ return{curve,idx}};
+const paths=[mkPath(ivc,paL,lc("l"),pvL),mkPath(ivc,paR,lc("r"),pvR),mkPath(svc,paL,lc("l"),pvL),mkPath(svc,paR,lc("r"),pvR)];
+const NP=40,total=paths.length*NP;const pg=new THREE.BufferGeometry(),pp=new Float32Array(total*3),pcol=new Float32Array(total*3);pg.setAttribute("position",new THREE.BufferAttribute(pp,3));pg.setAttribute("color",new THREE.BufferAttribute(pcol,3));
+const sprite=(()=>{const c=document.createElement("canvas");c.width=c.height=64;const g=c.getContext("2d"),gr=g.createRadialGradient(32,32,2,32,32,30);gr.addColorStop(0,"rgba(255,255,255,1)");gr.addColorStop(.35,"rgba(255,255,255,.55)");gr.addColorStop(1,"rgba(255,255,255,0)");g.fillStyle=gr;g.fillRect(0,0,64,64);return new THREE.CanvasTexture(c)})();
+const pts=new THREE.Points(pg,new THREE.PointsMaterial({size:.24,map:sprite,toneMapped:false,vertexColors:true,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}));pts.renderOrder=5;pts.frustumCulled=false;root.add(pts);
+const BLUE=new THREE.Color(0x2c64ff),RED=new THREE.Color(0xff2e3e),tmp=new THREE.Color();
+const tint=(P,u)=>{const I=P.idx;if(u<I.lg)return BLUE;if(u<I.pv){return tmp.copy(BLUE).lerp(RED,Math.min(1,(u-I.lg)/(I.pv-I.lg)*1.4))}if(u<I.bd)return RED;return tmp.copy(RED).lerp(BLUE,Math.min(1,(u-I.bd)/(1-I.bd)))};
+const bump=(ph,a,b)=>ph<a||ph>b?0:Math.sin((ph-a)/(b-a)*Math.PI);
+let phaseAcc=[];
+function state(t){const ph=(t/BEAT)%1;return{ph,at:bump(ph,0,.16),vt:bump(ph,.16,.46)}}
+window.renderAt=t=>{const {ph,at,vt}=state(t);
+ for(const id of CH)M[id].scale.setScalar(1-.1*(/atrium/.test(id)?at:vt));
+ const breath=1+.035*(.5-.5*Math.cos(2*Math.PI*t/BREATH));lungs.forEach(m=>m.scale.setScalar(breath));
+ for(const id in M)if(/^(aort|ascending|aortic|thoracic|abdominal|brachio)/.test(id)){M[id].material.emissive.setHex(0x4a0a10);M[id].material.emissiveIntensity=.55*vt}
+ /* flow: faster during ventricular systole; integral keeps loop continuous */
+ let k=0;const sp=t=>{/* integral of speed over time, speed=1+1.4*vt(t) → analytic-ish via numeric step */return t};
+ const U0=t*.085;for(let pi=0;pi<paths.length;pi++){const P=paths[pi];for(let i=0;i<NP;i++){const u=(i/NP+U0+pi*.11)%1,p=P.curve.getPointAt(u);pp[k*3]=p.x;pp[k*3+1]=p.y;pp[k*3+2]=p.z;const c=tint(P,u);const inBody=u>P.idx.bd&&u<=1,b=inBody?.55:1;pcol[k*3]=c.r*b;pcol[k*3+1]=c.g*b;pcol[k*3+2]=c.b*b;k++}}
+ pg.attributes.position.needsUpdate=true;pg.attributes.color.needsUpdate=true;
+ const yaw=THREE.MathUtils.degToRad(16)*Math.sin(2*Math.PI*t/LOOP),pit=THREE.MathUtils.degToRad(5)*Math.sin(2*Math.PI*t/LOOP+1.2);
+ camera.position.set(TARGET.x+DIST*Math.sin(yaw)*Math.cos(pit),TARGET.y+DIST*Math.sin(pit)+.35,TARGET.z+DIST*Math.cos(yaw)*Math.cos(pit));camera.lookAt(TARGET);
+ /* gentle whole-heart pump */root.position.y=-C0[1]*S+.012*vt;
+ renderer.render(scene,camera);return renderer.domElement.toDataURL("image/jpeg",.94).length};
+window.__ready=true;window.renderAt(0);
+</script>

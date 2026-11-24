@@ -515,27 +515,12 @@ body.noen .chap .ct small{display:block}
      <button class="va-secondary" id="homeMindMap" type="button" hidden>Mind map</button><button class="va-secondary" id="myReport" type="button" hidden>My learning report</button><button class="va-secondary va-install" id="install" type="button" hidden>Install app</button></div>
     <p class="va-hero-note">Works offline · Drag to rotate · Tap a part to name it</p>
    </div>
-   <figure class="va-plate" aria-label="Interactive 3D living human heart showing four chambers, one-way valves, double circulation and cardiac conduction">
+   <figure class="va-plate" aria-label="Human heart and lungs, beating live with blood flowing through the double circulation">
     <div class="va-plate-frame va-circ-frame" id="vaHomeStage">
-     <div id="heroCirc" aria-hidden="true"></div>
-     <canvas id="vaHomeCanvas" aria-label="Interactive 3D beating human heart at 72 BPM with double circulation and valve action"></canvas>
-     <div class="va-specimen-hud" aria-hidden="true">
-      <div class="va-hud-badge">
-       <span class="va-heart-row"><i class="va-bpm-dot"></i> <b id="vaBpmVal">72</b> BPM · <span class="va-flow-rate" id="vaFlowRate">~5.0 L/min</span></span>
-       <span id="vaHomePhase">DIASTOLE · VENTRICULAR FILLING</span>
-       <span class="va-hud-legend"><i class="dx"></i>O₂-poor (Right) <i class="ox"></i>O₂-rich (Left)</span>
-      </div>
-      <canvas id="vaEcgCanvas" width="144" height="38"></canvas>
-     </div>
-     <div class="va-specimen-controls" role="group" aria-label="3D heart controls">
-      <button type="button" class="on" data-hc="sound" title="Toggle realistic Lub-Dub heartbeat sound">🔊 Lub-Dub</button>
-      <button type="button" data-hc="cut" title="See inside the 4 chambers and 4 one-way valves">Cut-away</button>
-      <button type="button" class="on" data-hc="flow" title="Toggle oxygen-poor blue and oxygen-rich red blood flow">Blood flow</button>
-      <button type="button" data-hc="elec" title="Toggle SA node to Purkinje electrical conduction system">Conduction</button>
-      <button type="button" data-hc="rate" title="Switch between resting 72 BPM and active 120 BPM">72 BPM</button>
-     </div>
+     <video id="heroHeart" class="va-heart-video" autoplay muted loop playsinline preload="auto" poster="assets/home/heart-circulation-poster.webp" width="1000" height="1000" aria-label="Realistic 3D model of the human heart and lungs beating at 72 beats per minute, with oxygen-poor blue blood and oxygen-rich red blood flowing through the arteries and veins"><source src="assets/home/heart-circulation.webm" type="video/webm"><source src="assets/home/heart-circulation.mp4" type="video/mp4"></video>
+     <div class="va-hero-hud" aria-hidden="true"><span class="va-hud-live"><i></i><b>72 BPM</b> · ~5 L/min · live</span><span class="va-hud-key"><u class="dx"></u>O₂-poor <u class="ox"></u>O₂-rich</span></div>
     </div>
-    <figcaption><span><b>Living human heart · 4 chambers &amp; valves</b>Class X · Double circulation · Drag to rotate</span><button type="button" class="va-plate-open" id="heroOpenModel">Open 3D heart lab <svg class="va-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></figcaption>
+    <figcaption><span><b>Heart, lungs &amp; double circulation</b>Class X · Life Processes · Anatomy: BodyParts3D / Z-Anatomy (CC BY-SA)</span><button type="button" class="va-plate-open" id="heroOpenModel">Open the 3D heart lab <svg class="va-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></figcaption>
    </figure>
   </section>
   <section class="va-course-section" id="course-selector" aria-labelledby="vaCourseTitle">
@@ -9833,7 +9818,6 @@ paintSet();sync();
 <script src="assets/va-mindmap-core.js"></script>
 <script src="assets/va-deep-maps.js"></script>
 <script src="assets/va-a11y.js"></script>
-<script src="assets/va-hero-circ.js"></script>
 <script src="assets/va-mindmap.js"></script>
 <script src="assets/va-deepmap.js"></script>
 <script src="assets/va-cinema.js"></script>
