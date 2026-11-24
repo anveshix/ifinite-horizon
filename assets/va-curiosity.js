@@ -161,6 +161,14 @@ const LINKS={
  "ix1/microscope":["cell","Cell Lab","कोशिका प्रयोगशाला","Spotlight organelles and see cell structures in 3D.",{cellType:1}],
  "ix1/scale":["cell","Cell Lab","कोशिका प्रयोगशाला","Compare cell structures across Animal, Plant & Bacterial cells.",{cellType:2}],
  /* Class IX Ch 2: Tissues & Human Joints */
+ /* Class IX gap-fill topics (CBSE 2026–27) */
+ "ix1/discovery":["cell","Cell Lab","कोशिका प्रयोगशाला","Explore the cell types that Hooke and Leeuwenhoek first observed.",{cellType:0}],
+ "ix1/cancer":["cell","Cell Lab","कोशिका प्रयोगशाला","Compare controlled mitosis with uncontrolled division.",{sub:"division"}],
+ "ix2/msk":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Flex joints and study bones, cartilage, tendons and ligaments.",{mode:3}],
+ "ix3/fragment":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare asexual methods: fission, budding and fragmentation.",{mode:2}],
+ "ix3/spore":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare asexual methods: fission, budding and spores.",{mode:1}],
+ "ix3/health":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Review the human reproductive system before studying reproductive health.",{sub:"human"}],
+ "ix4/specimens":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","Review the five kingdoms before identifying specimens.",{sub:"kingdoms"}],
  "ix2/tissues":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Inspect Parenchyma, Collenchyma, Sclerenchyma, Muscle & Neuron under 3D zoom.",{tissue:0}],
  "ix2/xylem":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Watch unidirectional Xylem water flow and bidirectional Phloem transport.",{tissue:3,transp:4}],
  "ix2/growth":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Compare Onion Root Tip intact Jar A vs tip-cut Jar B apical meristem growth!",{sub:"meristem"}],
