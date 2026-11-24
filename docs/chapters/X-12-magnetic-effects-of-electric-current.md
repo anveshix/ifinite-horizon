@@ -52,3 +52,4 @@ mindmap
 - Force on a conductor (Fleming's left-hand rule)
 - Domestic electric circuits
 - Electric motor & generator (Reading Material)
+- AC vs DC and frequency

@@ -33,19 +33,20 @@ Chapter 1 does not appear in the syllabus tables (the PDF lists chapters 2–13)
 | IX | 10 | 6 | [Force and Laws of Motion](chapters/IX-10-force-and-laws-of-motion.md) | Motion, force, work & sound | 13 | 5 | 5 | 25 | 2 | 19 | 1 |
 | IX | 11 | 7 | [Work, Energy and Simple Machines](chapters/IX-11-work-energy-and-simple-machines.md) | Motion, force, work & sound | 13 | 6 | 6 | 32 | 2 | 24 | 2 |
 | IX | 12 | 10 | [Sound](chapters/IX-12-sound.md) | Motion, force, work & sound | 11 | 7 | 7 | 33 | 3 | 25 | 1 |
-| X | 1 | — | [Chemical Reactions and Equations](chapters/X-01-chemical-reactions-and-equations.md) | Unit I · Chemical Substances – Nature and Behaviour (25 marks) | — | 10 | 3 | 11 | 5 | — | 1 |
+| X | 1 | — | [Chemical Reactions and Equations](chapters/X-01-chemical-reactions-and-equations.md) | Unit I · Chemical Substances – Nature and Behaviour (25 marks) | — | 10 | 3 | 11 | 6 | — | 1 |
 | X | 2 | — | [Acids, Bases and Salts](chapters/X-02-acids-bases-and-salts.md) | Unit I · Chemical Substances – Nature and Behaviour (25 marks) | — | 11 | 4 | 13 | 5 | — | 2 |
 | X | 3 | — | [Metals and Non-metals](chapters/X-03-metals-and-non-metals.md) | Unit I · Chemical Substances – Nature and Behaviour (25 marks) | — | 5 | 4 | 6 | 5 | — | 1 |
 | X | 4 | — | [Carbon and its Compounds](chapters/X-04-carbon-and-its-compounds.md) | Unit I · Chemical Substances – Nature and Behaviour (25 marks) | — | 10 | 6 | 12 | 7 | — | 2 |
-| X | 5 | — | [Life Processes](chapters/X-05-life-processes.md) | Unit II · World of Living (25 marks) | — | 2 | 2 | 4 | 5 | — | 2 |
+| X | 5 | — | [Life Processes](chapters/X-05-life-processes.md) | Unit II · World of Living (25 marks) | — | 2 | 2 | 4 | 7 | — | 2 |
 | X | 6 | — | [Control and Coordination](chapters/X-06-control-and-coordination.md) | Unit II · World of Living (25 marks) | — | 5 | 3 | 5 | 6 | — | — |
-| X | 7 | — | [How do Organisms Reproduce?](chapters/X-07-how-do-organisms-reproduce.md) | Unit II · World of Living (25 marks) | — | 4 | 3 | 6 | 5 | — | 2 |
+| X | 7 | — | [How do Organisms Reproduce?](chapters/X-07-how-do-organisms-reproduce.md) | Unit II · World of Living (25 marks) | — | 4 | 3 | 6 | 8 | — | 2 |
 | X | 8 | — | [Heredity](chapters/X-08-heredity.md) | Unit II · World of Living (25 marks) | — | 11 | 2 | 11 | 4 | — | — |
 | X | 9 | — | [Light – Reflection and Refraction](chapters/X-09-light-reflection-and-refraction.md) | Unit III · Natural Phenomena (12 marks) | — | 14 | 4 | 16 | 4 | — | 2 |
 | X | 10 | — | [The Human Eye and the Colourful World](chapters/X-10-the-human-eye-and-the-colourful-world.md) | Unit III · Natural Phenomena (12 marks) | — | 7 | 3 | 8 | 4 | — | 1 |
 | X | 11 | — | [Electricity](chapters/X-11-electricity.md) | Unit IV · Effects of Current (13 marks) | — | 10 | 5 | 12 | 4 | — | 2 |
-| X | 12 | — | [Magnetic Effects of Electric Current](chapters/X-12-magnetic-effects-of-electric-current.md) | Unit IV · Effects of Current (13 marks) | — | 12 | 3 | 12 | 7 | — | — |
+| X | 12 | — | [Magnetic Effects of Electric Current](chapters/X-12-magnetic-effects-of-electric-current.md) | Unit IV · Effects of Current (13 marks) | — | 12 | 3 | 12 | 8 | — | — |
 | X | 13 | — | [Our Environment](chapters/X-13-our-environment.md) | Unit V · Natural Resources (5 marks) | — | 5 | 1 | 5 | 4 | — | — |
+| X | 14 | — | [Periodic Classification of Elements](chapters/X-14-periodic-classification-of-elements.md) | Unit I · Chemical Substances – Nature and Behaviour (25 marks) | — | 5 | 1 | 5 | 3 | — | — |
 
 ## Audit findings (Class IX app registry vs CBSE PDF)
 
@@ -69,7 +70,8 @@ Chapter 1 does not appear in the syllabus tables (the PDF lists chapters 2–13)
 ## Audit findings (Class X app registry vs CBSE PDF)
 
 - **Formative-only (not in year-end exam), per the PDF:** Periodic Classification of Elements; Evolution (Acquired and Inherited Traits … Human Evolution); Motor, Electromagnetic Induction, Electric Generator. **Heredity itself (Mendel, sex determination) is assessed.** NCERT information in boxes is also not assessed.
-- **Gap — Periodic Classification of Elements** is in the syllabus (formative) but has no chapter in the app registry; see `docs/chapters/X-periodic-classification-of-elements.md`.
+- **Periodic Classification of Elements** (formative-only) is now built as app chapter 14 with three interactive scenes (triads and octaves, Mendeleev, modern table).
+- **Class X practicals:** the Virtual practical lab now shows all 14 CBSE Class X experiments when Class X is selected (Class IX still shows its 13).
 - **Removed as not listed in the PDF:** Class X deep maps no longer carry extra textbook items (e.g. rancidity, atmospheric refraction, hormone details, Exam-focus lists). Existing app lessons are unchanged.
 - **Chapter grouping:** the PDF has no Class X chapter numbers/periods; app chapters 1–13 map to the PDF topics by title. Practicals 1–14 are mapped to chapters by topic (e.g. 6 and 7 → Life Processes; 12 and 14 → Reproduction).
 - **Atmospheric refraction / colour of sun at sunrise-sunset** is explicitly excluded in the PDF.

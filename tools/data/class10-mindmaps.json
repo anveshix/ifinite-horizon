@@ -1,5 +1,5 @@
 {
-"course": "Class X · Science (086) · CBSE 2026–27 syllabus — branches transcribed from Science_SecP1_2026-27.pdf; chapter grouping follows the app’s 13-chapter structure (the PDF is topic-based and gives no chapter numbers or periods).",
+"course": "Class X · Science (086) · CBSE 2026–27 syllabus — branches transcribed from Science_SecP1_2026-27.pdf; chapter grouping follows the app’s 14-chapter structure (the PDF is topic-based and gives no chapter numbers or periods).",
 "chapters": [
 {
 "no": 1,
@@ -496,6 +496,26 @@
 }
 ],
 "pdfUnit": "Unit V · Natural Resources (5 marks)"
+},
+{
+"no": 14,
+"title": "Periodic Classification of Elements",
+"hi": "तत्वों का आवर्त वर्गीकरण",
+"unit": "Chemistry",
+"pdfUnit": "Unit I · Chemical Substances – Nature and Behaviour (25 marks)",
+"branches": [
+{
+"n": "Periodic Classification of Elements",
+"i": [
+"Döbereiner’s Triads",
+"Newlands’ Law of Octaves",
+"Mendeleev’s Periodic Table",
+"Modern Periodic Table and the Modern",
+"Metallic and Non-metallic Properties"
+],
+"scope": "formative"
+}
+]
 }
 ]
 }

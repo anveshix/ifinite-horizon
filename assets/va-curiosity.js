@@ -131,6 +131,17 @@ const LINKS={
  "ch12/magnet":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Flip current direction to swap North and South poles on the solenoid.",{dir:-1}],
  "ch12/flhr":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Inspect Fleming's Left-Hand Rule motor force F = BIL on the 3D spinning armature!",{I:3,sub:"flhr"}],
  "ch12/motor":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Spin the 3D DC Electric Motor with split-ring commutator and reverse current!",{I:4,sub:"motor"}],
+ /* Class X gap-fill topics (CBSE 2026–27) */
+ "ch1/precip":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Mix two salt solutions and look for the insoluble product — a precipitate!",{rxn:2,sub:"series"}],
+ "ch5/photo":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Follow water up the xylem to the leaf where stomata and chloroplasts make food.",{tissue:3,transp:4}],
+ "ch5/hetero":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","See how heterotrophs depend on producers as energy moves through a food web.",{ddt:8}],
+ "ch7/spore":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare asexual methods: budding, fission and spore formation in 3D.",{mode:2}],
+ "ch7/seed":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Follow pollination and fertilisation to the seed, then study the embryo parts.",{mode:0}],
+ "ch7/family":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Review the human reproductive system before studying reproductive health.",{sub:"human"}],
+ "ch12/ac":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Move the magnet back and forth: the galvanometer needle swings both ways like AC.",{speed:3}],
+ "ch14/triads":["atom","Atom Lab","परमाणु प्रयोगशाला","Build elements and compare Li, Na, K shells and valency (formative topic).",{Z:11}],
+ "ch14/mendeleev":["atom","Atom Lab","परमाणु प्रयोगशाला","Check valency of elements in the same group while studying Mendeleev’s table.",{Z:17}],
+ "ch14/modern":["atom","Atom Lab","परमाणु प्रयोगशाला","Fill shells for Z = 1–20 and relate valence electrons to the modern periodic table.",{Z:6}],
  "ch12/induction":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Move the magnet to deflect Faraday's galvanometer needle live!",{speed:3}],
  "ch12/domestic":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Toggle 220V Domestic AC mode to see Live/Neutral/Earth wires & MCB trip!",{sub:"domestic"}],
  /* Class X Ch 13: Our Environment */
