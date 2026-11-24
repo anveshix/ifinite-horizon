@@ -416,6 +416,58 @@ body.noen .chap .ct small{display:block}
 #leaders{pointer-events:none}
 </style>
 
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/atkinson-hyperlegible-next-latin-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/atkinson-hyperlegible-next-latin-700-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/bricolage-grotesque-latin-wght-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/noto-sans-devanagari-devanagari-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/noto-sans-devanagari-devanagari-600-normal.woff2">
+<!-- all stylesheets live in <head> so the first paint is already fully styled (no flash of unstyled/overlapping text) -->
+<link rel="stylesheet" href="assets/va-cell-content.css">
+<link rel="stylesheet" href="assets/va-tissues-content.css">
+<link rel="stylesheet" href="assets/va-skin.css">
+<link rel="stylesheet" href="assets/va-home.css">
+<link rel="stylesheet" href="assets/va-teacher.css">
+<link rel="stylesheet" href="assets/va-simulator.css">
+<link rel="stylesheet" href="assets/va-mindmap.css">
+<link rel="stylesheet" href="assets/va-deepmap.css">
+<link rel="stylesheet" href="assets/va-iks.css">
+<style id="space-first-layout">
+/* Space-first atlas: keep the stage dominant and put controls on a compact footprint. */
+:root{--ws:.94}
+#app{grid-template-columns:minmax(190px,calc(228px*var(--ws))) minmax(0,1fr) minmax(260px,calc(300px*var(--ws)))}
+.brand{padding:11px 12px 8px}.brand b{font-size:calc(17px*var(--fs))}
+#search{margin:0 10px 8px;padding:7px 9px}
+.unit{margin:10px 7px 4px}.chap summary{gap:8px;padding:6px 7px}.chap .no{width:23px;height:23px}.tp{padding:5px 8px}
+#panel{padding:12px 13px 16px}#ttl{font-size:calc(20px*var(--fs));margin:3px 0 5px}#meta{gap:4px;margin-bottom:8px}
+#steps li{gap:8px;padding:6px 7px;margin-bottom:2px}#steps li p{font-size:calc(13.5px*var(--fs))}#steps li .n{width:21px;height:21px}
+.ctrl{gap:5px;margin:7px 0}.btn{padding:5px 9px;min-height:32px}.btn.prim{min-width:78px}
+#tools{gap:4px;margin:7px 0}.ib{padding:4px 8px;font-size:calc(12px*var(--fs))}
+#stagebar{left:7px;right:7px;top:7px;gap:4px}.ib,#crumb{border-radius:7px}#crumb{padding:4px 8px;font-size:calc(12px*var(--fs))}
+#hud{right:8px;bottom:8px;padding:6px 8px;min-width:120px}#hud .big{font-size:calc(18px*var(--fs))}
+.edge{width:18px;height:62px}
+@media(min-width:1181px){body.navhide #app{grid-template-columns:minmax(0,1fr) minmax(260px,calc(300px*var(--ws)))}body.panelhide #app{grid-template-columns:minmax(190px,calc(228px*var(--ws))) minmax(0,1fr)}}
+@media(max-width:1180px){#app{grid-template-columns:minmax(0,1fr) minmax(260px,300px)}#side{width:min(280px,86vw)}#panel{padding:11px 12px 14px}}
+@media(max-width:760px){#app{grid-template-columns:minmax(0,1fr);grid-template-rows:64svh minmax(0,1fr)}body.panelhide #app{grid-template-rows:1fr}#panel{padding:10px 11px 14px}#ttl{font-size:calc(18px*var(--fs))}.ctrl{margin:5px 0}.edge.r{width:64px;height:20px}.edge.r:hover{width:64px;height:23px}}
+@media(max-width:420px){#app{grid-template-rows:66svh minmax(0,1fr)}#stagebar{left:5px;right:5px;top:5px;gap:3px}.ib{padding:4px 6px;font-size:calc(11px*var(--fs))}#hud{max-width:58%}}
+/* Denser selector and label controls leave more of the 2D image exposed. */
+#v2d{padding-left:clamp(6px,1vw,14px);padding-right:clamp(6px,1vw,14px)}
+#v2dHead{gap:5px}#v2dHead select{padding:4px 6px;font-size:calc(12px*var(--fs))}
+#v2dChips{gap:4px}#v2dChips button{padding:3px 7px;font-size:calc(11px*var(--fs))}
+#v2dDesc{font-size:calc(11.5px*var(--fs));line-height:1.35;max-height:2.7em}
+#v2dLegend{gap:4px;max-height:29%}
+@media(max-width:640px){#v2dHead{gap:4px}#v2dHead h2{font-size:calc(14px*var(--fs))}#v2dChips{padding-bottom:1px}}
+/* Compact home and educator chrome while preserving comfortable tap targets. */
+#home .hw.va-home{padding-bottom:14px}
+.va-masthead{min-height:70px}.va-hero{padding-top:clamp(34px,5vw,66px);padding-bottom:clamp(34px,4vw,56px);gap:clamp(24px,5vw,70px)}
+.va-hero-lede{margin-top:18px;line-height:1.55}.va-hero-actions{margin-top:20px}.va-hero-actions button{min-height:42px}
+#homeStats{gap:6px;margin:12px 0}.hact{gap:7px;margin-bottom:18px}#homeGrid{gap:10px}
+@media(max-width:700px){.va-masthead{min-height:62px}.va-hero{padding-top:34px;padding-bottom:28px;gap:20px}.va-hero-actions{margin-top:17px}}
+.va-teacher .teacher-main{padding-top:22px;padding-bottom:28px}.va-teacher .teacher-masthead{min-height:68px}
+.va-teacher .teacher-import-card,.va-teacher .teacher-report-card{padding:18px}
+@media(prefers-reduced-motion:reduce){#side{transition:none}}
+</style>
+<link rel="stylesheet" href="assets/va-polish.css">
+<link rel="stylesheet" href="assets/va-design.css">
 </head>
 <body>
 <noscript><p style="padding:24px">Infinite Horizons needs JavaScript and WebGL. Please open it in Chrome, Edge or Firefox.</p></noscript>
@@ -8551,9 +8603,7 @@ three/build/three.module.js:
    *)
 */
 </script>
-<link rel="stylesheet" href="assets/va-cell-content.css">
 <script src="assets/va-cell-content.js"></script>
-<link rel="stylesheet" href="assets/va-tissues-content.css">
 <script src="assets/va-tissues-content.js"></script>
 <script>
 /* Class X chapter map (every NCERT sub-topic) */
@@ -8784,13 +8834,6 @@ addEventListener("keydown",e=>{if(e.key==="Escape"){["vlab","vcg"].forEach(i=>{c
 paintSet();sync();
 })();
 </script>
-<link rel="stylesheet" href="assets/va-skin.css">
-<link rel="stylesheet" href="assets/va-home.css">
-<link rel="stylesheet" href="assets/va-teacher.css">
-<link rel="stylesheet" href="assets/va-simulator.css">
-<link rel="stylesheet" href="assets/va-mindmap.css">
-<link rel="stylesheet" href="assets/va-deepmap.css">
-<link rel="stylesheet" href="assets/va-iks.css">
 <script src="public/2d/conditions.js"></script>
 <script src="assets/va-2d.js"></script>
 <script src="assets/va-simulator-core.js"></script>
@@ -8817,41 +8860,6 @@ paintSet();sync();
 <script src="modules/iks-science/services/admin-service.js"></script>
 <script src="assets/va-iks.js"></script>
 <script defer src="assets/va-visits.js"></script>
-<style id="space-first-layout">
-/* Space-first atlas: keep the stage dominant and put controls on a compact footprint. */
-:root{--ws:.94}
-#app{grid-template-columns:minmax(190px,calc(228px*var(--ws))) minmax(0,1fr) minmax(260px,calc(300px*var(--ws)))}
-.brand{padding:11px 12px 8px}.brand b{font-size:calc(17px*var(--fs))}
-#search{margin:0 10px 8px;padding:7px 9px}
-.unit{margin:10px 7px 4px}.chap summary{gap:8px;padding:6px 7px}.chap .no{width:23px;height:23px}.tp{padding:5px 8px}
-#panel{padding:12px 13px 16px}#ttl{font-size:calc(20px*var(--fs));margin:3px 0 5px}#meta{gap:4px;margin-bottom:8px}
-#steps li{gap:8px;padding:6px 7px;margin-bottom:2px}#steps li p{font-size:calc(13.5px*var(--fs))}#steps li .n{width:21px;height:21px}
-.ctrl{gap:5px;margin:7px 0}.btn{padding:5px 9px;min-height:32px}.btn.prim{min-width:78px}
-#tools{gap:4px;margin:7px 0}.ib{padding:4px 8px;font-size:calc(12px*var(--fs))}
-#stagebar{left:7px;right:7px;top:7px;gap:4px}.ib,#crumb{border-radius:7px}#crumb{padding:4px 8px;font-size:calc(12px*var(--fs))}
-#hud{right:8px;bottom:8px;padding:6px 8px;min-width:120px}#hud .big{font-size:calc(18px*var(--fs))}
-.edge{width:18px;height:62px}
-@media(min-width:1181px){body.navhide #app{grid-template-columns:minmax(0,1fr) minmax(260px,calc(300px*var(--ws)))}body.panelhide #app{grid-template-columns:minmax(190px,calc(228px*var(--ws))) minmax(0,1fr)}}
-@media(max-width:1180px){#app{grid-template-columns:minmax(0,1fr) minmax(260px,300px)}#side{width:min(280px,86vw)}#panel{padding:11px 12px 14px}}
-@media(max-width:760px){#app{grid-template-columns:minmax(0,1fr);grid-template-rows:64svh minmax(0,1fr)}body.panelhide #app{grid-template-rows:1fr}#panel{padding:10px 11px 14px}#ttl{font-size:calc(18px*var(--fs))}.ctrl{margin:5px 0}.edge.r{width:64px;height:20px}.edge.r:hover{width:64px;height:23px}}
-@media(max-width:420px){#app{grid-template-rows:66svh minmax(0,1fr)}#stagebar{left:5px;right:5px;top:5px;gap:3px}.ib{padding:4px 6px;font-size:calc(11px*var(--fs))}#hud{max-width:58%}}
-/* Denser selector and label controls leave more of the 2D image exposed. */
-#v2d{padding-left:clamp(6px,1vw,14px);padding-right:clamp(6px,1vw,14px)}
-#v2dHead{gap:5px}#v2dHead select{padding:4px 6px;font-size:calc(12px*var(--fs))}
-#v2dChips{gap:4px}#v2dChips button{padding:3px 7px;font-size:calc(11px*var(--fs))}
-#v2dDesc{font-size:calc(11.5px*var(--fs));line-height:1.35;max-height:2.7em}
-#v2dLegend{gap:4px;max-height:29%}
-@media(max-width:640px){#v2dHead{gap:4px}#v2dHead h2{font-size:calc(14px*var(--fs))}#v2dChips{padding-bottom:1px}}
-/* Compact home and educator chrome while preserving comfortable tap targets. */
-#home .hw.va-home{padding-bottom:14px}
-.va-masthead{min-height:70px}.va-hero{padding-top:clamp(34px,5vw,66px);padding-bottom:clamp(34px,4vw,56px);gap:clamp(24px,5vw,70px)}
-.va-hero-lede{margin-top:18px;line-height:1.55}.va-hero-actions{margin-top:20px}.va-hero-actions button{min-height:42px}
-#homeStats{gap:6px;margin:12px 0}.hact{gap:7px;margin-bottom:18px}#homeGrid{gap:10px}
-@media(max-width:700px){.va-masthead{min-height:62px}.va-hero{padding-top:34px;padding-bottom:28px;gap:20px}.va-hero-actions{margin-top:17px}}
-.va-teacher .teacher-main{padding-top:22px;padding-bottom:28px}.va-teacher .teacher-masthead{min-height:68px}
-.va-teacher .teacher-import-card,.va-teacher .teacher-report-card{padding:18px}
-@media(prefers-reduced-motion:reduce){#side{transition:none}}
-</style>
 <script>
 /* Home hero: open the featured model through the same chapter card the grid renders. */
 document.addEventListener("click",function(e){
@@ -8860,8 +8868,6 @@ document.addEventListener("click",function(e){
   if(c)c.click();else{var g=document.getElementById("homeGo");if(g)g.click()}
 });
 </script>
-<link rel="stylesheet" href="assets/va-polish.css">
-<link rel="stylesheet" href="assets/va-design.css">
 <script defer src="assets/va-polish.js"></script>
 </body>
 </html>
