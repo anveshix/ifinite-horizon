@@ -508,22 +508,16 @@ body.noen .chap .ct small{display:block}
   <section class="va-hero" aria-labelledby="vaHeroTitle">
    <div class="va-hero-copy">
     <p class="va-hero-tag">CBSE 2026–27 &nbsp;·&nbsp; Class IX and X Science &nbsp;·&nbsp; English and हिंदी</p>
-    <h1 id="vaHeroTitle">See how science works from every side.</h1>
-    <p class="va-hero-lede">Turn real 3D models of the syllabus in your hands, follow each process step by step, then check what you understood.</p>
+    <h1 id="vaHeroTitle">Interactive 3D science for Class IX and X</h1>
+    <p class="va-hero-lede">Explore every chapter as a live 3D model, follow it step by step, then check yourself with quizzes, virtual labs and a mind map — in English and हिंदी.</p>
     <div class="va-dynamic-copy" id="homeSub"></div>
     <div class="va-hero-actions"><button class="va-primary" id="homeGo" type="button">Start learning <svg class="va-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button><button class="va-secondary" id="homeSimulator" type="button">Open simulator lab</button>
      <button class="va-secondary" id="homeMindMap" type="button" hidden>Mind map</button><button class="va-secondary" id="myReport" type="button" hidden>My learning report</button><button class="va-secondary va-install" id="install" type="button" hidden>Install app</button></div>
-    <p class="va-hero-note">Drag to rotate · tap a part to name it · works offline</p>
+    <p class="va-hero-note">Works offline · Drag to rotate · Tap a part to name it</p>
    </div>
-   <figure class="va-plate" aria-label="Preview of the 3D human heart model">
-    <div class="va-plate-frame">
-     <video id="heroHeart" class="va-heart-video" autoplay muted loop playsinline preload="auto" poster="assets/home/heart.webp" width="960" height="720" aria-label="3D model of the human heart beating at 72 beats per minute, with labelled parts"><source src="assets/home/heart-beat.webm" type="video/webm"><source src="assets/home/heart-beat.mp4" type="video/mp4"><img src="assets/home/heart.webp" width="960" height="720" alt="3D model of the human heart with labelled parts"></video>
-     <span class="va-bpm" aria-hidden="true"><i>♥</i> 72 bpm · live</span>
-     <span class="va-callout" style="--x:48%;--y:17%"><b>Aorta</b></span>
-     <span class="va-callout l" style="--x:37%;--y:42%"><b>Right atrium</b></span>
-     <span class="va-callout" style="--x:61%;--y:65%"><b>Left ventricle</b></span>
-    </div>
-    <figcaption><span><b>Human heart</b>Class X · Life Processes</span><button type="button" class="va-plate-open" id="heroOpenModel">Open this model <svg class="va-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></figcaption>
+   <figure class="va-plate" aria-label="Live model of the human circulatory system">
+    <div class="va-plate-frame va-circ-frame"><div id="heroCirc"></div><span class="va-bpm" aria-hidden="true"><i>♥</i> 72 beats/min · live</span><span class="va-key va-key-frame" aria-hidden="true"><u class="ox"></u>Oxygen-rich <u class="dx"></u>Oxygen-poor</span></div>
+    <figcaption><span><b>Human circulatory system</b>Class X · Life Processes</span><button type="button" class="va-plate-open" id="heroOpenModel">Open the 3D model <svg class="va-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></figcaption>
    </figure>
   </section>
   <section class="va-course-section" id="course-selector" aria-labelledby="vaCourseTitle">
@@ -9319,7 +9313,7 @@ const tabHTML=TABS.map(([k,a,b])=>`<button role="tab" data-set="${k}" aria-selec
 $$(".settabs").forEach(t=>t.innerHTML=tabHTML);
 const NOTE={x:"",ix:"<b>Compulsory Science (086) · 2026–27</b> · Current Class IX course",ix25:"<b>CBSE Science (086) · Class IX 2025–26</b> · Historical syllabus track · Unit I: 25 marks overall · Chapter-by-chapter integration in progress",adv:"<b>Advanced Science · Optional</b> · 10 chapters · marks and periods are not stated in the source PDF"};
 function paintSet(){const s=A()&&A().set?A().set():"x";$$(".settabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.set===s?"true":"false"));$("#sidelinks").classList.toggle("on",s==="ix");$("#setnote").innerHTML=NOTE[s];
- const hs=$("#homeSub");if(hs)hs.innerHTML={x:`${bi("Class X and Class IX, chapter by chapter, as living 3D models — drag, take apart, predict, then watch it happen. You are viewing Class X; switch class on the left.","कक्षा 10 और कक्षा 9 के सभी अध्याय जीवंत 3D मॉडल में। अभी कक्षा 10 खुली है; बाईं ओर से कक्षा बदलें।","span")}`,ix:`${bi("Class IX Compulsory Science (086), 2026–27 — every chapter as a living 3D model. Class X is one tap away on the left.","कक्षा 9 अनिवार्य विज्ञान (086), 2026–27 — हर अध्याय जीवंत 3D मॉडल में। कक्षा 10 बाईं ओर है।","span")}`,ix25:`${bi("CBSE Class IX Science (086), 2025–26: a separate historical syllabus track, integrated chapter by chapter.","कक्षा 9 विज्ञान (086), 2025–26: अलग पुराना पाठ्यक्रम।","span")}`,adv:`${bi("Class IX Advanced Science (Optional): 10 extension chapters, kept separate from the compulsory course.","कक्षा 9 उन्नत विज्ञान (वैकल्पिक): 10 विस्तार अध्याय।","span")}`}[s];
+ const hs=$("#homeSub");if(hs)hs.innerHTML={x:`${bi("Viewing Class X. Switch class below.","आप कक्षा 10 देख रहे हैं। नीचे से कक्षा बदलें।","span")}`,ix:`${bi("Viewing Class IX · 2026–27. Switch class below.","आप कक्षा 9 (2026–27) देख रहे हैं। नीचे से कक्षा बदलें।","span")}`,ix25:`${bi("Class IX · 2025–26 (archive).","कक्षा 9 · 2025–26 (अभिलेख)।","span")}`,adv:`${bi("Viewing IX Advanced (optional).","आप कक्षा 9 उन्नत (वैकल्पिक) देख रहे हैं।","span")}`}[s];
  const gb=$("#homeGo");const pf=$("#perfFull");if(pf&&A())pf.textContent="Full test ("+A().keys().length+")"}
 function pick(s){A().setSet(s);paintSet();const t=$("#toc");t&&(t.scrollTop=0)}
 document.addEventListener("click",e=>{const b=e.target.closest(".settabs button");if(b)pick(b.dataset.set)});
@@ -9416,6 +9410,7 @@ paintSet();sync();
 <script src="assets/va-mindmap-core.js"></script>
 <script src="assets/va-deep-maps.js"></script>
 <script src="assets/va-a11y.js"></script>
+<script src="assets/va-hero-circ.js"></script>
 <script src="assets/va-mindmap.js"></script>
 <script src="assets/va-deepmap.js"></script>
 <script src="assets/va-cinema.js"></script>
