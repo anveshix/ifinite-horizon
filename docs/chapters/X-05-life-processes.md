@@ -1,81 +1,27 @@
 # Class X · Ch 5 — Life Processes
 
-*Biology* · जैव प्रक्रम
+*Unit II · World of Living (25 marks)* · जैव प्रक्रम
 
 ```mermaid
 mindmap
   root((Ch 5 Life Processes))
-    What are life processes
-      Maintenance of life: nutrition, respiration, transport, excretion
-      Energy sources, ATP
-    Nutrition
-      Autotrophic: photosynthesis, chlorophyll, light, CO2, water, stomata, light and dark reaction, starch test
-      Heterotrophic nutrition: holozoic Amoeba , saprotrophic fungi , parasitic Cuscuta, tapeworm
-      Amoeba: pseudopodia
-      Human alimentary canal: mouth, salivary amylase, oesophagus, stomach HCl pepsin mucus, small intestine bile trypsin lipase villi, liver, pancreas, large intestine
-      Dental caries
-    Respiration
-      Aerobic vs anaerobic: yeast, muscles lactic acid
-      ATP, glycolysis in cytoplasm, Krebs in mitochondria
-      Plants: stomata, lenticels, roots
-      Humans: nasal passage, trachea, bronchi, alveoli, diaphragm, ribs, haemoglobin, breathing rate
-      Gaseous exchange in alveoli
-    Transport in humans
-      Heart: four chambers, double circulation, valves
-      Blood: RBC, WBC, platelets, plasma
-      Blood vessels: arteries, veins, capillaries
-      Blood pressure, clotting, lymph
-      Heart: oxygenated and deoxygenated flow, pulmonary and systemic circulation
-    Transport in plants
-      Xylem: water, minerals, root pressure, transpiration pull
-      Phloem: translocation of food using ATP
-    Excretion
-      Human: kidneys, ureters, bladder, urethra
-      Nephron: glomerulus, Bowman's capsule, tubule, filtration, reabsorption, secretion
-      Dialysis, artificial kidney
-      Plants: gum, resins, latex, leaves, bark, transpiration
+    Life processes
+      ‘Living Being’
+      Basic concept of nutrition, respiration, transport and excretion in plants and animals
+    Practicals CBSE list of experiments
+      Practical 6: Preparing a temporary mount of a leaf peel to show stomata.
+      Practical 7: Experimentally show that carbon dioxide is given out during respiration.
 ```
 
-## What are life processes
+## Life processes _(CBSE key concept)_
 
-- Maintenance of life: nutrition, respiration, transport, excretion
-- Energy sources; ATP
+- ‘Living Being’
+- Basic concept of nutrition, respiration, transport and excretion in plants and animals
 
-## Nutrition
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Autotrophic: photosynthesis; chlorophyll, light, CO2, water; stomata; light and dark reaction; starch test
-- Heterotrophic nutrition: holozoic (Amoeba), saprotrophic (fungi), parasitic (Cuscuta, tapeworm)
-- Amoeba: pseudopodia
-- Human alimentary canal: mouth, salivary amylase, oesophagus, stomach HCl pepsin mucus, small intestine bile trypsin lipase villi, liver, pancreas, large intestine
-- Dental caries
-
-## Respiration
-
-- Aerobic vs anaerobic: yeast, muscles lactic acid
-- ATP; glycolysis in cytoplasm; Krebs in mitochondria
-- Plants: stomata; lenticels; roots
-- Humans: nasal passage, trachea, bronchi, alveoli, diaphragm, ribs; haemoglobin; breathing rate
-- Gaseous exchange in alveoli
-
-## Transport in humans
-
-- Heart: four chambers; double circulation; valves
-- Blood: RBC, WBC, platelets, plasma
-- Blood vessels: arteries, veins, capillaries
-- Blood pressure; clotting; lymph
-- Heart: oxygenated and deoxygenated flow; pulmonary and systemic circulation
-
-## Transport in plants
-
-- Xylem: water, minerals; root pressure, transpiration pull
-- Phloem: translocation of food using ATP
-
-## Excretion
-
-- Human: kidneys, ureters, bladder, urethra
-- Nephron: glomerulus, Bowman's capsule, tubule; filtration, reabsorption, secretion
-- Dialysis; artificial kidney
-- Plants: gum, resins, latex, leaves, bark; transpiration
+- Practical 6: Preparing a temporary mount of a leaf peel to show stomata.
+- Practical 7: Experimentally show that carbon dioxide is given out during respiration.
 
 ## Visual lessons in the app
 

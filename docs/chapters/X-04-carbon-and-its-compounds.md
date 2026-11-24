@@ -1,91 +1,59 @@
 # Class X · Ch 4 — Carbon and its Compounds
 
-*Chemistry* · कार्बन एवं उसके यौगिक
+*Unit I · Chemical Substances – Nature and Behaviour (25 marks)* · कार्बन एवं उसके यौगिक
 
 ```mermaid
 mindmap
   root((Ch 4 Carbon and its Compounds))
-    Bonding in carbon
-      Tetravalency, covalent bond: sharing electrons
-      Single, double and triple bonds
-      Electron dot structure of H2, O2, N2, CH4, C2H4
-      Properties of covalent compounds: low melting and boiling point, poor conductors
-    Versatile nature
-      Catenation
-      Tetravalency
-      Chains, branches, rings
-      Saturated vs unsaturated: alkane, alkene, alkyne
-      Isomerism: butane and isobutane
-    Allotropes
-      Diamond: rigid 3D lattice, hardest
-      Graphite: layers, conducts
-      Fullerene C-60: football shape
-    Homologous series and nomenclature
-      CH2 difference, gradation of properties
-      Functional groups: halo, alcohol, aldehyde, ketone, carboxylic acid
-      IUPAC naming: prefix, word root, suffix
-      Alkane, alkene, alkyne names
-    Chemical properties
-      Combustion: CO2 + H2O + heat + light, sooty flame in unsaturated compounds
-      Oxidation: alkaline KMnO4, acidified K2Cr2O7
-      Addition: hydrogenation with Ni catalyst, vegetable oil to fat
-      Substitution: methane with chlorine in sunlight
-    Ethanol and ethanoic acid
-      Ethanol: reactions with sodium, dehydration with conc. H2SO4 to ethene, uses, harmful effects of alcohol, denatured alcohol
-      Ethanoic acid acetic acid : glacial acetic acid, esterification, saponification, with carbonates and NaOH
-      Ester: sweet smell
-    Soaps and detergents
-      Soap = sodium or potassium salt of long-chain fatty acid
-      Micelle formation: hydrophobic tail, hydrophilic head, cleansing action
-      Hard water: scum with soap, detergents work in hard water
+    Covalent bonds
+      Formation and properties of covalent compounds
+    Carbon compounds
+      Versatile nature of carbon
+      Hydrocarbons – saturated and unsaturated
+      Homologous series
+    Nomenclature
+      Nomenclature of alkanes, alkenes, alkyne and carbon compounds containing functional groups halogens, alcohol, ketones, aldehydes
+    Chemical properties of carbon compounds
+      Combustion
+      Oxidation
+      Addition and substitution reaction
+    Ethanol, ethanoic acid, soaps
+      Ethanol and Ethanoic acid only properties and uses
+      Soaps and detergents
+    Practicals CBSE list of experiments
+      Practical 8: Study of the following properties of acetic acid ethanoic acid : Odour, solubility in water, effect on litmus, reaction with Sodium Hydrogen Carbonate
+      Practical 9: Study of the comparative cleaning capacity of a sample of soap in soft and hard water.
 ```
 
-## Bonding in carbon
+## Covalent bonds _(CBSE key concept)_
 
-- Tetravalency; covalent bond: sharing electrons
-- Single, double and triple bonds
-- Electron dot structure of H2, O2, N2, CH4, C2H4
-- Properties of covalent compounds: low melting and boiling point, poor conductors
+- Formation and properties of covalent compounds
 
-## Versatile nature
+## Carbon compounds _(CBSE key concept)_
 
-- Catenation
-- Tetravalency
-- Chains, branches, rings
-- Saturated vs unsaturated: alkane, alkene, alkyne
-- Isomerism: butane and isobutane
+- Versatile nature of carbon
+- Hydrocarbons – saturated and unsaturated
+- Homologous series
 
-## Allotropes
+## Nomenclature _(CBSE key concept)_
 
-- Diamond: rigid 3D lattice, hardest
-- Graphite: layers, conducts
-- Fullerene C-60: football shape
+- Nomenclature of alkanes, alkenes, alkyne and carbon compounds containing functional groups (halogens, alcohol, ketones, aldehydes)
 
-## Homologous series and nomenclature
+## Chemical properties of carbon compounds _(CBSE key concept)_
 
-- CH2 difference; gradation of properties
-- Functional groups: halo, alcohol, aldehyde, ketone, carboxylic acid
-- IUPAC naming: prefix, word root, suffix
-- Alkane, alkene, alkyne names
+- Combustion
+- Oxidation
+- Addition and substitution reaction
 
-## Chemical properties
+## Ethanol, ethanoic acid, soaps _(CBSE key concept)_
 
-- Combustion: CO2 + H2O + heat + light; sooty flame in unsaturated compounds
-- Oxidation: alkaline KMnO4, acidified K2Cr2O7
-- Addition: hydrogenation with Ni catalyst; vegetable oil to fat
-- Substitution: methane with chlorine in sunlight
+- Ethanol and Ethanoic acid (only properties and uses)
+- Soaps and detergents
 
-## Ethanol and ethanoic acid
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Ethanol: reactions with sodium; dehydration with conc. H2SO4 to ethene; uses; harmful effects of alcohol; denatured alcohol
-- Ethanoic acid (acetic acid): glacial acetic acid; esterification, saponification; with carbonates and NaOH
-- Ester: sweet smell
-
-## Soaps and detergents
-
-- Soap = sodium or potassium salt of long-chain fatty acid
-- Micelle formation: hydrophobic tail, hydrophilic head; cleansing action
-- Hard water: scum with soap; detergents work in hard water
+- Practical 8: Study of the following properties of acetic acid (ethanoic acid): Odour; solubility in water; effect on litmus; reaction with Sodium Hydrogen Carbonate
+- Practical 9: Study of the comparative cleaning capacity of a sample of soap in soft and hard water.
 
 ## Visual lessons in the app
 

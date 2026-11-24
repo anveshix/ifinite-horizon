@@ -1,67 +1,55 @@
 # Class X · Ch 11 — Electricity
 
-*Physics* · विद्युत
+*Unit IV · Effects of Current (13 marks)* · विद्युत
 
 ```mermaid
 mindmap
   root((Ch 11 Electricity))
-    Basic quantities
-      Charge Q, current I = Q/t, ampere
-      Potential difference V = W/Q, volt
-      Electric circuit diagram symbols
-      Ammeter in series, voltmeter in parallel
-    Ohm's law
-      V = IR, V-I graph straight line
-      Resistance: ohm
+    Current and potential difference
+      Electric current, potential difference and electric current
+      Ohm’s law
     Resistance
-      Factors: length, area, material, temperature
-      R = rho l / A, resistivity: metals, alloys, insulators
-      Alloys used in heating elements, high resistivity
+      Resistance
+      Resistivity
+      Factors on which the resistance of a conductor depends
     Combination of resistors
-      Series: Rs = R1 + R2 + R3, same current
-      Parallel: 1/Rp = 1/R1 + 1/R2 + 1/R3, same voltage
-      Domestic circuits in parallel
-    Heating effect
-      Joule's law: H = I2 R t
-      Applications: electric heater, iron, bulb, fuse
-    Electric power
-      P = VI = I2R = V2/R, watt
-      Energy: kilowatt-hour, 1 kWh = 3.6 x 10^6 J
+      Series combination of resistors
+      Parallel combination of resistors and its applications in daily life
+    Heating effect and power
+      Heating effect of electric current and its applications in daily life
+      Electric power
+      Interrelation between P, V, I and R
+    Practicals CBSE list of experiments
+      Practical 4: Studying the dependence of potential difference V across a resistor on the current I passing through it and determine its resistance. Also plotting a graph between V and I.
+      Practical 5: Determination of the equivalent resistance of two resistors when connected in series and parallel.
 ```
 
-## Basic quantities
+## Current and potential difference _(CBSE key concept)_
 
-- Charge Q; current I = Q/t; ampere
-- Potential difference V = W/Q; volt
-- Electric circuit diagram symbols
-- Ammeter in series; voltmeter in parallel
+- Electric current, potential difference and electric current
+- Ohm’s law
 
-## Ohm's law
+## Resistance _(CBSE key concept)_
 
-- V = IR; V-I graph straight line
-- Resistance: ohm
+- Resistance
+- Resistivity
+- Factors on which the resistance of a conductor depends
 
-## Resistance
+## Combination of resistors _(CBSE key concept)_
 
-- Factors: length, area, material, temperature
-- R = rho l / A; resistivity: metals, alloys, insulators
-- Alloys used in heating elements, high resistivity
+- Series combination of resistors
+- Parallel combination of resistors and its applications in daily life
 
-## Combination of resistors
+## Heating effect and power _(CBSE key concept)_
 
-- Series: Rs = R1 + R2 + R3; same current
-- Parallel: 1/Rp = 1/R1 + 1/R2 + 1/R3; same voltage
-- Domestic circuits in parallel
+- Heating effect of electric current and its applications in daily life
+- Electric power
+- Interrelation between P, V, I and R
 
-## Heating effect
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Joule's law: H = I2 R t
-- Applications: electric heater, iron, bulb, fuse
-
-## Electric power
-
-- P = VI = I2R = V2/R; watt
-- Energy: kilowatt-hour; 1 kWh = 3.6 x 10^6 J
+- Practical 4: Studying the dependence of potential difference (V) across a resistor on the current (I) passing through it and determine its resistance. Also plotting a graph between V and I.
+- Practical 5: Determination of the equivalent resistance of two resistors when connected in series and parallel.
 
 ## Visual lessons in the app
 

@@ -1,77 +1,39 @@
 # Class X · Ch 3 — Metals and Non-metals
 
-*Chemistry* · धातु एवं अधातु
+*Unit I · Chemical Substances – Nature and Behaviour (25 marks)* · धातु एवं अधातु
 
 ```mermaid
 mindmap
   root((Ch 3 Metals and Non-metals))
-    Physical properties
-      Metals: lustre, malleable, ductile, conductors, sonorous, hard, exceptions Na, K, Hg, Ga
-      Non-metals: brittle, non-lustrous, exceptions graphite, iodine, diamond
-    Chemical properties
-      Reaction with oxygen: amphoteric oxides Al2O3, ZnO
-      Reaction with water, steam and dilute acids
-      Reaction with solutions of other metal salts
-      Reactivity series: K Na Ca Mg Al Zn Fe Pb H Cu Hg Ag Au
-    Ionic compounds
-      Metal + non-metal gives ionic bond: transfer of electrons
-      NaCl, MgCl2, CaO formation
-      Properties: high melting point, soluble in water, conduct in molten and aqueous state, hard and brittle crystals
-    Occurrence and extraction
-      Minerals and ores, gangue
-      Low reactivity: Hg from cinnabar, Cu from Cu2S
-      Medium reactivity: roasting, calcination, reduction with carbon, thermit reaction
-      High reactivity: electrolysis of molten chloride
-      Refining: electrolytic refining of copper
-    Corrosion and prevention
-      Rusting of iron
-      Painting, oiling, galvanising, chrome plating, anodising, alloying
-      Alloys: brass, bronze, solder, steel, stainless steel, amalgam
-    Exam focus
-      Reactivity series questions
-      Electron dot structures of ionic compounds
-      Extraction flow chart by reactivity
-      Activities with sodium, magnesium, aluminium
+    Metals and non-metals
+      Properties of metals and non-metals
+      Reactivity series
+    Compounds and extraction
+      Formation and properties of ionic compounds
+      Basic metallurgical processes
+    Corrosion
+      Corrosion and its prevention
+    Practicals CBSE list of experiments
+      Practical 3: Observing the action of Zn, Fe, Cu and Al metals on the following salt solutions: ZnSO4 aq , FeSO4 aq , CuSO4 aq , Al2 SO4 3 aq . Arranging Zn, Fe, Cu and Al metals in the decreasing order of reactivity based on the above result.
 ```
 
-## Physical properties
+## Metals and non-metals _(CBSE key concept)_
 
-- Metals: lustre, malleable, ductile, conductors, sonorous, hard; exceptions Na, K, Hg, Ga
-- Non-metals: brittle, non-lustrous; exceptions graphite, iodine, diamond
+- Properties of metals and non-metals
+- Reactivity series
 
-## Chemical properties
+## Compounds and extraction _(CBSE key concept)_
 
-- Reaction with oxygen: amphoteric oxides Al2O3, ZnO
-- Reaction with water, steam and dilute acids
-- Reaction with solutions of other metal salts
-- Reactivity series: K Na Ca Mg Al Zn Fe Pb H Cu Hg Ag Au
+- Formation and properties of ionic compounds
+- Basic metallurgical processes
 
-## Ionic compounds
+## Corrosion _(CBSE key concept)_
 
-- Metal + non-metal gives ionic bond: transfer of electrons
-- NaCl, MgCl2, CaO formation
-- Properties: high melting point, soluble in water, conduct in molten and aqueous state, hard and brittle crystals
+- Corrosion and its prevention
 
-## Occurrence and extraction
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Minerals and ores; gangue
-- Low reactivity: Hg from cinnabar; Cu from Cu2S
-- Medium reactivity: roasting, calcination, reduction with carbon; thermit reaction
-- High reactivity: electrolysis of molten chloride
-- Refining: electrolytic refining of copper
-
-## Corrosion and prevention
-
-- Rusting of iron
-- Painting, oiling, galvanising, chrome plating, anodising, alloying
-- Alloys: brass, bronze, solder, steel, stainless steel, amalgam
-
-## Exam focus
-
-- Reactivity series questions
-- Electron dot structures of ionic compounds
-- Extraction flow chart by reactivity
-- Activities with sodium, magnesium, aluminium
+- Practical 3: Observing the action of Zn, Fe, Cu and Al metals on the following salt solutions: ZnSO4 (aq), FeSO4 (aq), CuSO4 (aq), Al2(SO4)3 (aq). Arranging Zn, Fe, Cu and Al (metals) in the decreasing order of reactivity based on the above result.
 
 ## Visual lessons in the app
 

@@ -1,75 +1,35 @@
 # Class X · Ch 7 — How do Organisms Reproduce?
 
-*Biology* · जीव जनन कैसे करते हैं
+*Unit II · World of Living (25 marks)* · जीव जनन कैसे करते हैं
 
 ```mermaid
 mindmap
   root((Ch 7 How do Organisms Reproduce?))
-    Importance of reproduction
-      Variation: DNA copying, survival
-      Basic: DNA copying
-      Reproduction leads to inheritance
-    Asexual reproduction
-      Fission: binary in Amoeba, multiple in Plasmodium
-      Fragmentation: Spirogyra
-      Regeneration: Planaria, Hydra
-      Budding: Hydra, yeast
-      Vegetative propagation: roots, stems, leaves, cutting, layering, grafting, tissue culture
-      Spore formation: Rhizopus
-    Sexual reproduction in plants
-      Flower: sepal, petal, stamen, pistil
-      Unisexual and bisexual
-      Pollination: self and cross, pollen tube, fertilisation, zygote to embryo, ovary to fruit, ovule to seed
-      Germination
-    Human reproduction
-      Puberty, secondary sexual characters
-      Male: testes, scrotum, vas deferens, urethra, sperms, prostate, seminal vesicle
-      Female: ovary, oviduct, uterus, cervix, vagina
-      Menstrual cycle, fertilisation, implantation, placenta, embryo to foetus
-      Gestation and birth
-    Reproductive health
-      Contraception: barrier, oral pills, IUCD, surgical
-      Sexually transmitted diseases: gonorrhoea, syphilis, warts, HIV-AIDS
-      Female foeticide and declining sex ratio
-      Population and family planning
+    Reproduction
+      Reproduction in animals and plants asexual and sexual
+    Health and family planning
+      Reproductive health – need and methods of family planning
+      Safe sex vs HIV/AIDS
+      Child bearing and women’s health
+    Practicals CBSE list of experiments
+      Practical 12: Studying a binary fission in Amoeba, and b budding in yeast and Hydra with the help of prepared slides.
+      Practical 14: Identification of the different parts of an embryo of a dicot seed pea, gram or red kidney bean .
 ```
 
-## Importance of reproduction
+## Reproduction _(CBSE key concept)_
 
-- Variation: DNA copying; survival
-- Basic: DNA copying
-- Reproduction leads to inheritance
+- Reproduction in animals and plants (asexual and sexual)
 
-## Asexual reproduction
+## Health and family planning _(CBSE key concept)_
 
-- Fission: binary in Amoeba, multiple in Plasmodium
-- Fragmentation: Spirogyra
-- Regeneration: Planaria, Hydra
-- Budding: Hydra, yeast
-- Vegetative propagation: roots, stems, leaves; cutting, layering, grafting; tissue culture
-- Spore formation: Rhizopus
+- Reproductive health – need and methods of family planning
+- Safe sex vs HIV/AIDS
+- Child bearing and women’s health
 
-## Sexual reproduction in plants
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Flower: sepal, petal, stamen, pistil
-- Unisexual and bisexual
-- Pollination: self and cross; pollen tube, fertilisation; zygote to embryo; ovary to fruit; ovule to seed
-- Germination
-
-## Human reproduction
-
-- Puberty; secondary sexual characters
-- Male: testes, scrotum, vas deferens, urethra, sperms, prostate, seminal vesicle
-- Female: ovary, oviduct, uterus, cervix, vagina
-- Menstrual cycle; fertilisation; implantation; placenta; embryo to foetus
-- Gestation and birth
-
-## Reproductive health
-
-- Contraception: barrier, oral pills, IUCD, surgical
-- Sexually transmitted diseases: gonorrhoea, syphilis, warts, HIV-AIDS
-- Female foeticide and declining sex ratio
-- Population and family planning
+- Practical 12: Studying (a) binary fission in Amoeba, and (b) budding in yeast and Hydra with the help of prepared slides.
+- Practical 14: Identification of the different parts of an embryo of a dicot seed (pea, gram or red kidney bean).
 
 ## Visual lessons in the app
 

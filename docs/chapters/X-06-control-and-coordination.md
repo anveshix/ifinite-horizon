@@ -1,65 +1,33 @@
 # Class X · Ch 6 — Control and Coordination
 
-*Biology* · नियंत्रण एवं समन्वय
+*Unit II · World of Living (25 marks)* · नियंत्रण एवं समन्वय
 
 ```mermaid
 mindmap
   root((Ch 6 Control and Coordination))
-    Nervous system in animals
-      Receptors and effectors
-      Neuron: dendrite, cell body, axon, nerve impulse chemical and electrical
-      Synapse: neurotransmitter
-      Reflex action, reflex arc: receptor, sensory neuron, spinal cord, motor neuron, effector
-    Human brain
-      Fore-brain: cerebrum, hypothalamus
-      Mid-brain
-      Hind-brain: cerebellum, pons, medulla
-      Spinal cord and cranium, meninges
-      Protection: cerebrospinal fluid
-    Coordination in plants
-      Tropic movements: phototropism, geotropism, hydrotropism, chemotropism
-      Nastic movement: touch-me-not Mimosa
-      Plant hormones: auxin, gibberellin, cytokinin, abscisic acid ABA
-    Hormones in animals
-      Endocrine glands: pituitary, thyroid, parathyroid, thymus, pancreas, adrenal, testes, ovary
-      Thyroxine and iodised salt, goitre
-      Growth hormone, dwarfism and gigantism
-      Insulin and diabetes
-      Adrenaline: fight or flight
-      Feedback mechanism
-      Pineal, hypothalamus
+    Control and co-ordination in plants
+      Tropic movements in plants
+      Introduction of plant hormones
+    Control and co-ordination in animals
+      Nervous system
+      Voluntary, involuntary and reflex action
+    Chemical co-ordination
+      Animal hormones
 ```
 
-## Nervous system in animals
+## Control and co-ordination in plants _(CBSE key concept)_
 
-- Receptors and effectors
-- Neuron: dendrite, cell body, axon; nerve impulse chemical and electrical
-- Synapse: neurotransmitter
-- Reflex action; reflex arc: receptor, sensory neuron, spinal cord, motor neuron, effector
+- Tropic movements in plants
+- Introduction of plant hormones
 
-## Human brain
+## Control and co-ordination in animals _(CBSE key concept)_
 
-- Fore-brain: cerebrum, hypothalamus
-- Mid-brain
-- Hind-brain: cerebellum, pons, medulla
-- Spinal cord and cranium; meninges
-- Protection: cerebrospinal fluid
+- Nervous system
+- Voluntary, involuntary and reflex action
 
-## Coordination in plants
+## Chemical co-ordination _(CBSE key concept)_
 
-- Tropic movements: phototropism, geotropism, hydrotropism, chemotropism
-- Nastic movement: touch-me-not (Mimosa)
-- Plant hormones: auxin, gibberellin, cytokinin, abscisic acid (ABA)
-
-## Hormones in animals
-
-- Endocrine glands: pituitary, thyroid, parathyroid, thymus, pancreas, adrenal, testes, ovary
-- Thyroxine and iodised salt; goitre
-- Growth hormone; dwarfism and gigantism
-- Insulin and diabetes
-- Adrenaline: fight or flight
-- Feedback mechanism
-- Pineal; hypothalamus
+- Animal hormones
 
 ## Visual lessons in the app
 

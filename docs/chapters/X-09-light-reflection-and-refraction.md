@@ -1,77 +1,59 @@
 # Class X · Ch 9 — Light – Reflection and Refraction
 
-*Physics* · प्रकाश – परावर्तन तथा अपवर्तन
+*Unit III · Natural Phenomena (12 marks)* · प्रकाश – परावर्तन तथा अपवर्तन
 
 ```mermaid
 mindmap
   root((Ch 9 Light – Reflection and Refraction))
-    Reflection
-      Laws: angle of incidence = angle of reflection, incident ray, reflected ray, normal in one plane
-      Plane mirror image: virtual, erect, same size, laterally inverted
-    Spherical mirrors
-      Concave and convex, pole, centre of curvature, radius, principal axis, focus, aperture
-      f = R/2
-      Ray diagrams: six positions of concave mirror
-      Image of convex mirror
-      Sign convention New Cartesian
-      Mirror formula 1/v + 1/u = 1/f
-      Magnification m = -v/u = h'/h
-      Uses: headlights, shaving, rear view, dentist
-    Refraction of light
-      Rays bend at interface, speed changes
-      Laws: Snell's law sin i / sin r = n
-      Refractive index n = c/v, optical density
-      Glass slab: lateral displacement, emergent ray parallel
+    Reflection of light by curved surfaces
+      Images formed by spherical mirrors
+      Centre of curvature
+      Principal axis
+      Principal focus
+      Focal length
+      Mirror formula derivation not required
+      Magnification
+    Refraction
+      Laws of refraction
+      Refractive index
     Spherical lenses
-      Convex and concave, optical centre, focus, focal length
-      Ray diagrams for convex lens, six cases, concave lens
-      Lens formula 1/v - 1/u = 1/f
-      Magnification m = v/u = h'/h
-      Power P = 1/f in metres, unit dioptre, lens combination P = P1 + P2
-    Exam focus
-      Numericals on mirror and lens formula
-      Ray diagrams
-      Sign convention
-      Refractive index of media
+      Refraction of light by spherical lens
+      Image formed by spherical lenses
+      Lens formula derivation not required
+      Magnification
+      Power of a lens
+    Practicals CBSE list of experiments
+      Practical 10: Determination of the focal length of: a Concave mirror b Convex lens by obtaining the image of a distant object.
+      Practical 11: Tracing the path of a ray of light passing through a rectangular glass slab for different angles of incidence. Measure the angle of incidence, angle of refraction, angle of emergence and interpret the result.
 ```
 
-## Reflection
+## Reflection of light by curved surfaces _(CBSE key concept)_
 
-- Laws: angle of incidence = angle of reflection; incident ray, reflected ray, normal in one plane
-- Plane mirror image: virtual, erect, same size, laterally inverted
+- Images formed by spherical mirrors
+- Centre of curvature
+- Principal axis
+- Principal focus
+- Focal length
+- Mirror formula (derivation not required)
+- Magnification
 
-## Spherical mirrors
+## Refraction _(CBSE key concept)_
 
-- Concave and convex; pole, centre of curvature, radius, principal axis, focus, aperture
-- f = R/2
-- Ray diagrams: six positions of concave mirror
-- Image of convex mirror
-- Sign convention (New Cartesian)
-- Mirror formula 1/v + 1/u = 1/f
-- Magnification m = -v/u = h'/h
-- Uses: headlights, shaving, rear view, dentist
+- Laws of refraction
+- Refractive index
 
-## Refraction of light
+## Spherical lenses _(CBSE key concept)_
 
-- Rays bend at interface; speed changes
-- Laws: Snell's law sin i / sin r = n
-- Refractive index n = c/v; optical density
-- Glass slab: lateral displacement, emergent ray parallel
+- Refraction of light by spherical lens
+- Image formed by spherical lenses
+- Lens formula (derivation not required)
+- Magnification
+- Power of a lens
 
-## Spherical lenses
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Convex and concave; optical centre, focus, focal length
-- Ray diagrams for convex lens, six cases; concave lens
-- Lens formula 1/v - 1/u = 1/f
-- Magnification m = v/u = h'/h
-- Power P = 1/f in metres; unit dioptre; lens combination P = P1 + P2
-
-## Exam focus
-
-- Numericals on mirror and lens formula
-- Ray diagrams
-- Sign convention
-- Refractive index of media
+- Practical 10: Determination of the focal length of: (a) Concave mirror (b) Convex lens by obtaining the image of a distant object.
+- Practical 11: Tracing the path of a ray of light passing through a rectangular glass slab for different angles of incidence. Measure the angle of incidence, angle of refraction, angle of emergence and interpret the result.
 
 ## Visual lessons in the app
 
