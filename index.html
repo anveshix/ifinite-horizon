@@ -9270,7 +9270,10 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
  try{rdr=new qr({canvas:cv,antialias:!0,alpha:!0,powerPreference:"high-performance"})}catch{return}
  let fb=fe("#heroCirc");if(fb)fb.hidden=!0;
  rdr.toneMapping=ao;rdr.toneMappingExposure=1.22;rdr.outputColorSpace=qt;
- const sc=new Ne;sc.environment=cb;
+ const sc=new Ne;
+ /* Dedicated PMREM environment & bump texture on rdr's own WebGL context (never share Vt's WebGLTextures) */
+ try{const hPmrem=new or(rdr);sc.environment=hPmrem.fromScene(new za,.04).texture;hPmrem.dispose()}catch{}
+ const hBump=(()=>{let n=new fi(hb());n.wrapS=n.wrapT=Br;n.repeat.set(3,3);return n})();
  const cam=new bn(35,1,.1,40);cam.position.set(.34,.22,3.35);
  const ctrl=new Ba(cam,cv);ctrl.enableDamping=!0;ctrl.dampingFactor=.07;ctrl.enablePan=!1;ctrl.minDistance=2.0;ctrl.maxDistance=5.6;ctrl.target.set(.02,.04,0);
  ctrl.autoRotate=!hf;ctrl.autoRotateSpeed=.42;
@@ -9300,7 +9303,7 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
  /* sculpted anatomical fallback heart (shown immediately while GLB streams) */
  const procHeart=new J;heartRoot.add(procHeart);
  const phChambers=[],phVessels=[],phWallMats=[],phVesselMats=[],phValvesAv=[],phValvesSl=[],phLungs=[],phCorMats=[];
- const mkHMat=(col,o={})=>{let m=new un({color:col,map:hTex,bumpMap:$t,bumpScale:.38,roughness:.36,clearcoat:.78,clearcoatRoughness:.22,sheen:.42,sheenColor:new we(0xffc2c5),side:vt,transparent:!0,opacity:1,...o});return m};
+ const mkHMat=(col,o={})=>{let m=new un({color:col,map:hTex,bumpMap:hBump,bumpScale:.38,roughness:.36,clearcoat:.78,clearcoatRoughness:.22,sheen:.42,sheenColor:new we(0xffc2c5),side:vt,transparent:!0,opacity:1,...o});return m};
  {
   const mkConeVentricle=(rad,htV,skewX)=>{
    const g=new it(rad,36,28),p=g.attributes.position;
@@ -9397,7 +9400,7 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
   for(const id in d){
    const p=d[id],bb=hbBox(p.position);glbBB[id]=bb;
    const bone=/^(sternum|clavicle|rib)/.test(id),land=id==="diaphragm";
-   const isCh=glbCh.includes(id),isVlv=/^valve/.test(id),isPivot=isCh||isVlv||glbPulseVessels.includes(id);
+   const isCh=glbCh.includes(id),isVlv=/^valve/.test(id),isCor=/^coronary/.test(id),isPivot=isCh||isVlv||isCor||glbPulseVessels.includes(id);
    let pos=p.position;
    if(isPivot){pos=new Float32Array(p.position);const cc=bb.c;for(let i=0;i<pos.length;i+=3){pos[i]-=cc.x;pos[i+1]-=cc.y;pos[i+2]-=cc.z}}
    const g=new zt;g.setAttribute("position",new dn(pos,3));p.normal&&g.setAttribute("normal",new dn(new Float32Array(p.normal),3));p.index&&g.setIndex(new dn(p.index,1));
@@ -9405,7 +9408,7 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
    for(let i=0,j=0;i<pos.length;i+=3,j+=2){let dx=isPivot?pos[i]:pos[i]-cc.x,dz=isPivot?pos[i+2]:pos[i+2]-cc.z,py=isPivot?pos[i+1]:pos[i+1]-cc.y;uv[j]=.5+Math.atan2(dz,dx)/(Math.PI*2);uv[j+1]=.5+py/dy}
    g.setAttribute("uv",new dn(uv,2));
    const lung=/^lung/.test(id),cor=/^coronary/.test(id),air=/^(trachea|bronchus)/.test(id);
-   const mat=new un({color:hbCol(id),map:bone||lung||isVlv||air?null:hTex,bumpMap:bone||isVlv||air?null:$t,bumpScale:bone||isVlv?0:.35,roughness:isVlv?.35:lung?.65:.34,clearcoat:isVlv?.45:lung?.18:.76,clearcoatRoughness:.24,sheen:lung?.75:.42,sheenColor:new we(0xffd0d4),emissive:cor?0x580a12:isVlv?0x2b1e10:0x000000,emissiveIntensity:cor?.4:isVlv?.18:0,side:vt,transparent:!0,opacity:1});
+   const mat=new un({color:hbCol(id),map:bone||lung||isVlv||air?null:hTex,bumpMap:bone||isVlv||air?null:hBump,bumpScale:bone||isVlv?0:.35,roughness:isVlv?.35:lung?.65:.34,clearcoat:isVlv?.45:lung?.18:.76,clearcoatRoughness:.24,sheen:lung?.75:.42,sheenColor:new we(0xffd0d4),emissive:cor?0x580a12:isVlv?0x2b1e10:0x000000,emissiveIntensity:cor?.4:isVlv?.18:0,side:vt,transparent:!0,opacity:1});
    const m=new N(g,mat);m.userData.part=id;m.frustumCulled=!1;
    if(isPivot)m.position.copy(bb.c);
    if(bone||land)m.visible=!1;
@@ -9448,9 +9451,11 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
    .then(r=>{X9.ds.heart.data=r;X9.ds.heart.state="ready";buildGlbHeart();if(Se&&Se.__tp&&Se.__tp.key==="ch5/heart3d")window.__atlas?.rebuild?.("ch5/heart3d")})
    .catch(()=>{X9.ds.heart.state="idle"});
  }
+ let lastW=0,lastH_=0;
  const resizeHome=()=>{
   let w=stage.clientWidth,h=stage.clientHeight;
   if(w<4||h<4)return;
+  lastW=w;lastH_=h;
   cam.aspect=w/h;cam.updateProjectionMatrix();
   rdr.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
   rdr.setSize(w,h,!1);
@@ -9461,6 +9466,7 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
   requestAnimationFrame(homeTick);
   let hEl=fe("#home");
   if(!hEl||hEl.hidden||document.hidden||window.__vaPause){lastH=performance.now();return}
+  if(stage.clientWidth!==lastW||stage.clientHeight!==lastH_)resizeHome();
   let now=performance.now(),dt=Math.min(.05,(now-lastH)/1e3);lastH=now;ht+=dt;
   if(!glbBuilt&&X9.ds.heart.state==="ready")buildGlbHeart();
   const freq=bpm/60,ph=(ht*freq)%1,bump=(a,b)=>ph<a||ph>b?0:Math.sin((ph-a)/(b-a)*Math.PI);
@@ -9469,22 +9475,24 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
   if(hit(.16)){s1Pulse=1;ringAge=0;playLub()}
   if(hit(.45)){s2Pulse=1;ringAge=Math.min(ringAge,.35);playDub()}
   lastPh=ph;
-  s1Pulse=Math.max(0,s1Pulse-dt*5.5);s2Pulse=Math.max(0,s2Pulse-dt*7.2);ringAge=Math.min(1,ringAge+dt*1.7);
+  s1Pulse=Math.max(0,s1Pulse-dt*5.0);s2Pulse=Math.max(0,s2Pulse-dt*6.6);ringAge=Math.min(1,ringAge+dt*1.7);
   const at_=bump(0,.16),rv_=bump(.145,.425),lv_=bump(.18,.46),vt_=Math.max(rv_,lv_);
   flowT+=dt*(bpm/72)*(.48+1.85*vt_);
   drawEcg(ph);
   let pTxt=at_>.2?"ATRIAL SYSTOLE · P-WAVE":vt_>.15?"VENTRICULAR SYSTOLE · LUB (QRS)":"DIASTOLE · DUB (RELAX & FILL)";
   if(phaseEl&&pTxt!==lastPhase){phaseEl.textContent=pTxt;lastPhase=pTxt}
   if(bpmEl)bpmEl.textContent=String(Math.round(bpm+Math.sin(ht*.4)));
-  stage.style.setProperty("--va-beat",(lv_*.7+s1Pulse*.5+s2Pulse*.3).toFixed(3));
-  /* Real mechanical cardiac impulse + damped lub-dub pump vibration */
-  if(hf){heartRoot.position.set(0,0,0)}else{
-   let v1=Math.sin(ht*84)*s1Pulse,v2=Math.sin(ht*110)*s2Pulse;
-   heartRoot.position.set(.026*lv_+.017*v1+.01*v2,-.042*lv_+.013*Math.cos(ht*96)*s1Pulse,.085*lv_+.032*s1Pulse+.016*v1+.012*v2);
+  stage.style.setProperty("--va-beat",(lv_*.75+s1Pulse*.55+s2Pulse*.35).toFixed(3));
+  /* Real mechanical cardiac impulse + unmistakable lub-dub pump vibration */
+  const vMul=hf?.35:1;
+  {
+   let v1=Math.sin(ht*78)*s1Pulse,v2=Math.sin(ht*102)*s2Pulse;
+   heartRoot.position.set(vMul*(.045*lv_+.036*v1+.022*v2),vMul*(-.065*lv_+.026*Math.cos(ht*92)*s1Pulse+.016*Math.cos(ht*116)*s2Pulse),vMul*(.15*lv_+.055*s1Pulse+.03*v1+.018*v2));
+   heartRoot.rotation.set(vMul*(.055*lv_+.028*s1Pulse),vMul*(.068*lv_),vMul*(.034*Math.sin(ht*86)*s1Pulse+.022*Math.sin(ht*104)*s2Pulse));
   }
   /* Expanding heartbeat pressure wave halo */
-  pulseRing.scale.setScalar(.86+ringAge*.72);
-  pulseRingMat.opacity=ringAge<1?Math.pow(1-ringAge,1.8)*.36:0;
+  pulseRing.scale.setScalar(.86+ringAge*.76);
+  pulseRingMat.opacity=ringAge<1?Math.pow(1-ringAge,1.75)*.42:0;
   /* Vivid oxygenated (red) & deoxygenated (blue) double-circulation blood cells */
   rbc.visible=!!flowOn;
   if(flowOn){
@@ -9510,14 +9518,15 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
    elecNodes.his.material.opacity=hisOn;
    elecNodes.rvB.material.opacity=rvBOn;elecNodes.lvB.material.opacity=lvBOn;
   }
-  /* Animate chambers, 4 valves, coronary pulse, translucent great vessels & 15/min breathing */
-  const breath=1+.048*Math.sin(ht*Math.PI*.5),sy=vt_>.08;
+  /* Animate chambers (preload swell -> systolic squeeze), 4 valves, coronary pulse, translucent great vessels & 15/min breathing */
+  const breath=1+.048*Math.sin(ht*Math.PI*.5),sy=vt_>.08,fill=.045*at_;
   if(glbBuilt){
-   glbM["right-atrium"]?.scale.setScalar(1-.12*at_);
-   glbM["left-atrium"]?.scale.setScalar(1-.12*at_);
-   glbM["right-ventricle"]?.scale.set(1-.135*rv_,1-.085*rv_,1-.135*rv_);
-   glbM["left-ventricle"]?.scale.set(1-.145*lv_,1-.09*lv_,1-.145*lv_);
-   for(const id of glbPulseVessels)glbM[id]?.scale.setScalar(1+.065*lv_);
+   glbM["right-atrium"]?.scale.setScalar(1-.14*at_);
+   glbM["left-atrium"]?.scale.setScalar(1-.14*at_);
+   glbM["right-ventricle"]?.scale.set(1+fill-.155*rv_,1+fill*.5-.09*rv_,1+fill-.155*rv_);
+   glbM["left-ventricle"]?.scale.set(1+fill-.165*lv_,1+fill*.5-.095*lv_,1+fill-.165*lv_);
+   for(const id of ["coronary-right","coronary-circumflex","coronary-lad"])glbM[id]?.scale.setScalar(1+fill-.11*lv_);
+   for(const id of glbPulseVessels)glbM[id]?.scale.setScalar(1+.1*lv_);
    glbAvValves.forEach(v=>{v.scale.set(sy?.74:1.08,sy?.66:1.06,sy?.74:1.08);v.rotation.x=sy?.16:-.2});
    glbSlValves.forEach(v=>{v.scale.set(sy?1.14:.74,sy?1.16:.68,sy?1.14:.74);v.rotation.x=sy?-.18:.12});
    for(const id in glbMt){
@@ -9536,10 +9545,10 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
    glbHeart.rotation.y=.062*lv_;
   }else{
    phChambers.forEach(o=>{
-    let s=o.t==="a"?1-.12*at_:o.t==="rv"?1-.13*rv_:1-.145*lv_;
+    let s=o.t==="a"?1-.14*at_:o.t==="rv"?1+fill-.155*rv_:1+fill-.165*lv_;
     o.m.scale.setScalar(s);
    });
-   phVessels.forEach(v=>v.scale.setScalar(1+.065*lv_));
+   phVessels.forEach(v=>v.scale.setScalar(1+.095*lv_));
    phValvesAv.forEach(v=>{v.scale.setScalar(sy?.62:1.12);v.rotation.x=sy?.28:-.22});
    phValvesSl.forEach(v=>{v.scale.setScalar(sy?1.14:.6);v.rotation.x=sy?-.22:.16});
    phLungs.forEach(l=>{l.scale.x=.8*breath;l.material.opacity=cutOn?.04:.14});
