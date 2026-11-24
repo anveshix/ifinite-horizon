@@ -371,3 +371,10 @@ body.light #cl .cl-lv u{background:var(--p-copper-bright)}
 body.light #cl .cl-snd,body.light #cl .cl-x{background:#fff;border-color:var(--p-line2)}
 body.light #cl .cl-snd[aria-pressed="true"]{border-color:var(--p-deep);background:var(--p-raise)}
 #cl :focus-visible{outline-color:var(--p-copper)}
+
+/* Touch targets: phones/tablets get at least 44 × 44 px hit areas for the main controls (WCAG 2.5.5 / Apple HIG). */
+@media (pointer:coarse){
+ body .ib,body #stagebar button,body #tools .btn,body .btn,body .settabs button,body .vseg button,body .va-secondary,body #toc summary,body #toc a.tp,body .opt,body #testbtn,body #predbtn,body #install,body #search{min-height:44px!important}
+ body .ib,body #menu,body #thome,body #thi,body #ptog,body #size,body #tmode,body #tsnd,body #full{min-width:44px!important}
+ body #stagebar{gap:6px;flex-wrap:wrap}
+}
