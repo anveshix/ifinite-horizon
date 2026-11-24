@@ -515,21 +515,26 @@ body.noen .chap .ct small{display:block}
      <button class="va-secondary" id="homeMindMap" type="button" hidden>Mind map</button><button class="va-secondary" id="myReport" type="button" hidden>My learning report</button><button class="va-secondary va-install" id="install" type="button" hidden>Install app</button></div>
     <p class="va-hero-note">Works offline · Drag to rotate · Tap a part to name it</p>
    </div>
-   <figure class="va-plate" aria-label="Interactive 3D model of a human body and beating heart under laser inspection">
+   <figure class="va-plate" aria-label="Interactive 3D living human heart showing four chambers, one-way valves, double circulation and cardiac conduction">
     <div class="va-plate-frame va-circ-frame" id="vaHomeStage">
      <div id="heroCirc" aria-hidden="true"></div>
-     <canvas id="vaHomeCanvas" aria-label="Interactive 3D human body and beating heart with laser scan"></canvas>
+     <canvas id="vaHomeCanvas" aria-label="Interactive 3D beating human heart at 72 BPM with double circulation and valve action"></canvas>
      <div class="va-specimen-hud" aria-hidden="true">
-      <div class="va-hud-badge"><span class="va-laser-row"><i class="va-bpm-dot"></i> <b id="vaBpmVal">72</b> BPM · <span class="va-laser-tag">LASER 532 nm</span></span><span id="vaHomePhase">DIASTOLE · BODY + HEART</span></div>
-      <canvas id="vaEcgCanvas" width="144" height="34"></canvas>
+      <div class="va-hud-badge">
+       <span class="va-heart-row"><i class="va-bpm-dot"></i> <b id="vaBpmVal">72</b> BPM · <span class="va-flow-rate" id="vaFlowRate">~5.0 L/min</span></span>
+       <span id="vaHomePhase">DIASTOLE · VENTRICULAR FILLING</span>
+       <span class="va-hud-legend"><i class="dx"></i>O₂-poor (Right) <i class="ox"></i>O₂-rich (Left)</span>
+      </div>
+      <canvas id="vaEcgCanvas" width="144" height="38"></canvas>
      </div>
-     <div class="va-specimen-controls" role="group" aria-label="3D inspection controls">
-      <button type="button" class="on" data-hc="laser" title="Toggle laser light scanner">Laser light</button>
-      <button type="button" class="on" data-hc="body" title="Toggle human body and vascular system">Human body</button>
-      <button type="button" data-hc="xray" title="Toggle X-ray internal view">X-ray view</button>
+     <div class="va-specimen-controls" role="group" aria-label="3D heart controls">
+      <button type="button" data-hc="cut" title="See inside the 4 chambers and 4 one-way valves">Cut-away</button>
+      <button type="button" class="on" data-hc="flow" title="Toggle oxygen-poor blue and oxygen-rich red blood flow">Blood flow</button>
+      <button type="button" data-hc="elec" title="Toggle SA node to Purkinje electrical conduction system">Conduction</button>
+      <button type="button" data-hc="rate" title="Switch between resting 72 BPM and active 120 BPM">72 BPM</button>
      </div>
     </div>
-    <figcaption><span><b>Human body &amp; heart · laser scan</b>Class X · Double circulation · Drag to rotate</span><button type="button" class="va-plate-open" id="heroOpenModel">Open 3D heart lab <svg class="va-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></figcaption>
+    <figcaption><span><b>Living human heart · 4 chambers &amp; valves</b>Class X · Double circulation · Drag to rotate</span><button type="button" class="va-plate-open" id="heroOpenModel">Open 3D heart lab <svg class="va-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></figcaption>
    </figure>
   </section>
   <section class="va-course-section" id="course-selector" aria-labelledby="vaCourseTitle">
@@ -9169,43 +9174,45 @@ Median ${e.toFixed(0)} fps \u2014 ${i[0]}
 ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").focus();gf(`infinite-horizons-${fe("#stN").value.replace(/[^\w\u0900-\u097F]+/g,"-")}.txt`,r())},i.querySelector(".x").onclick=()=>Qe.send("CLOSE")}var Yn={list:Er.get("va.class",[])};function gh(n){let e=n.match(/VA1\.[A-Za-z0-9_-]+\.[a-z0-9]{4}/g)||[],t=0,i=0;return e.forEach(s=>{try{let r=$x(s),a=`${r.name}|${r.cls}|${r.roll}`.toLowerCase(),o=Yn.list.findIndex(l=>l.id===a);r.id=a,o<0?(Yn.list.push(r),t++):Yn.list[o].t<=r.t&&(Yn.list[o]=r,t++)}catch{i++}}),Er.set("va.class",Yn.list),{found:e.length,added:t,bad:i}}function Mr(n=""){let e=Yn.list.slice().sort((h,d)=>(h.cls+h.roll.padStart(4,"0")+h.name).localeCompare(d.cls+d.roll.padStart(4,"0")+d.name)),t=e.map(mh),i=e.length,s=gi.map((h,d)=>{let p=e.filter(f=>f.quiz[d]);return{tp:Zn[d],open:e.filter(f=>f.v[d]==="1").length,tried:p.length,avg:p.length?p.reduce((f,m)=>f+m.quiz[d][0]/m.quiz[d][1],0)/p.length:null}}),r=s.filter(h=>h.avg!=null&&h.avg<.75).sort((h,d)=>h.avg-d.avg).slice(0,5),a=s.filter(h=>i&&!h.open),o=h=>h.length?Math.round(h.reduce((d,p)=>d+p,0)/h.length):0;fe("#tSum").innerHTML=i?`<span><b>${i}</b> students</span><span><b>${o(t.map(h=>h.seen))}/${gi.length}</b> avg models explored</span><span><b>${o(t.filter(h=>h.avg!=null).map(h=>h.avg))}%</b> avg quiz score</span><span><b>${a.length}</b> models nobody opened</span>${window.__curiosity&&window.__curiosity.classSummary?window.__curiosity.classSummary(e):""}`:"<span>No reports yet \u2014 paste codes above. \u0905\u092D\u0940 \u0915\u094B\u0908 \u0930\u093F\u092A\u094B\u0930\u094D\u091F \u0928\u0939\u0940\u0902\u0964</span>",fe("#tWeak").innerHTML=r.length?`<b>Needs re-teaching (\u0915\u092E\u091C\u093C\u094B\u0930 \u0935\u093F\u0937\u092F):</b> ${r.map(h=>`<a href="#${h.tp.key}">Ch ${h.tp.ch.no} \xB7 ${pi(h.tp.title)} <em>${Math.round(h.avg*100)}%</em></a>`).join("")}`:"";let l=h=>`<td class="hm" style="background:rgba(59,140,237,${h/100*.85+.05})">${h}</td>`;fe("#tTable").innerHTML=i?`<table><tr><th>Name</th><th>Class</th><th>Roll</th><th>Explored</th><th>Quizzes \u2605</th><th>Avg quiz</th>${Hi.map(h=>`<th title="${pi(h.title)}">Ch${h.no}</th>`).join("")}<th title="Curiosity Lab XP">\u{1F9EA} XP</th><th title="Curiosity Lab questions answered correctly">\u{1F9EA} %</th><th>Updated</th><th></th></tr>${e.map((h,d)=>`<tr><td>${pi(h.name)}</td><td>${pi(h.cls)}</td><td>${pi(h.roll)}</td><td>${t[d].seen}/${gi.length}</td><td>${t[d].passed}</td><td>${t[d].avg??"\u2014"}${t[d].avg!=null?"%":""}</td>${t[d].ch.map(l).join("")}<td>${h.cl?h.cl.xp:"\u2014"}</td><td>${h.cl&&h.cl.ans?Math.round(100*h.cl.cor/h.cl.ans)+"%":"\u2014"}</td><td>${h.t?new Date(h.t).toLocaleDateString():""}</td><td><button class="lnk" data-del="${pi(h.id)}">remove</button></td></tr>`).join("")}</table>`:"",fe("#tTable").querySelectorAll("[data-del]").forEach(h=>h.onclick=()=>{Yn.list=Yn.list.filter(d=>d.id!==h.dataset.del),Er.set("va.class",Yn.list),Mr()}),fe("#tMsg").textContent=n}function Zx(){let n=[["Name","Class","Roll","Explored","QuizzesPassed","AvgQuizPct",...Hi.map(e=>`Ch${e.no}ExploredPct`),"CuriosityXP","CuriosityLabAccuracyPct","Updated"]];return Yn.list.forEach(e=>{let t=mh(e);n.push([e.name,e.cls,e.roll,t.seen,t.passed,t.avg??"",...t.ch,e.cl?e.cl.xp:"",e.cl&&e.cl.ans?Math.round(100*e.cl.cor/e.cl.ans):"",e.t?new Date(e.t).toISOString().slice(0,10):""])}),n.map(e=>e.map(t=>`"${String(t).replace(/"/g,'""')}"`).join(",")).join(`
 `)}fe("#tAdd").onclick=()=>{if(!fe("#tIn").value.trim())return Mr("Paste the codes first \xB7 \u092A\u0939\u0932\u0947 \u0915\u094B\u0921 \u091A\u093F\u092A\u0915\u093E\u090F\u0901");let n=gh(fe("#tIn").value);fe("#tIn").value="",Mr(`${n.found} code(s) found \xB7 ${n.added} added/updated${n.bad?` \xB7 ${n.bad} damaged (ask the student to copy again)`:""}`)};fe("#tFiles").onchange=async n=>{let e="";for(let i of n.target.files)e+=await i.text()+`
 `;let t=gh(e);n.target.value="",Mr(`${t.found} code(s) found in files \xB7 ${t.added} added/updated${t.bad?` \xB7 ${t.bad} damaged`:""}`)};fe("#tCsv").onclick=()=>gf("infinite-horizons-class-report.csv","\uFEFF"+Zx());fe("#tPrint").onclick=()=>print();fe("#tClear").onclick=()=>{confirm("Remove all student reports from this browser? / \u0938\u092D\u0940 \u0930\u093F\u092A\u094B\u0930\u094D\u091F \u0939\u091F\u093E\u090F\u0901?")&&(Yn.list=[],Er.set("va.class",[]),Mr())};fe("#tClose").onclick=()=>Qe.send("HOME");fe("#myReport").onclick=()=>Qe.send("REPORT");fe("#teacherBtn").onclick=()=>Qe.send("TEACHER");Object.assign(window.__atlas,{makeCode:(n,e,t)=>yf({n,c:e,r:t}),addCodes:n=>gh(n),classSize:()=>Yn.list.length,teacher:()=>Qe.send("TEACHER"),myReport:()=>(Qe.matches("home")||Qe.send("HOME"),Qe.send("REPORT"))});fh();ts.init();{let n=(location.hash||"").slice(1);dh(Ts(n)?n:"ch5/heart"),n==="teacher"?Qe.send("TEACHER"):Ts(n)?Qe.send("TOPIC",{key:n}):Qe.send("HOME")}function initHomeBodyHeart(){
- let cv=fe("#vaHomeCanvas"),stage=fe("#vaHomeStage"),openBtn=fe("#heroOpenModel")||fe("#vaSpecimenOpen"),ecgCv=fe("#vaEcgCanvas"),phaseEl=fe("#vaHomePhase"),bpmEl=fe("#vaBpmVal");
+ let cv=fe("#vaHomeCanvas"),stage=fe("#vaHomeStage"),openBtn=fe("#heroOpenModel")||fe("#vaSpecimenOpen"),ecgCv=fe("#vaEcgCanvas"),phaseEl=fe("#vaHomePhase"),bpmEl=fe("#vaBpmVal"),flowEl=fe("#vaFlowRate"),dotEl=stage?.querySelector?.(".va-bpm-dot");
  if(!cv||!stage)return;
  openBtn&&(openBtn.onclick=()=>Qe.send("TOPIC",{key:"ch5/heart3d"}));
- let showLaser=1,showBody=1,xray=0,ptrX=0,ptrY=0;
+ let cutOn=0,flowOn=1,elecOn=0,bpm=72;
  stage.querySelectorAll(".va-specimen-controls button").forEach(b=>{
   b.addEventListener("pointerdown",e=>e.stopPropagation());
   b.addEventListener("click",e=>{
    e.stopPropagation();
    let k=b.dataset.hc;
-   if(k==="laser")showLaser=showLaser?0:1,b.classList.toggle("on",!!showLaser);
-   if(k==="body")showBody=showBody?0:1,b.classList.toggle("on",!!showBody);
-   if(k==="xray")xray=xray?0:1,b.classList.toggle("on",!!xray);
+   if(k==="cut")cutOn=cutOn?0:1,b.classList.toggle("on",!!cutOn);
+   if(k==="flow")flowOn=flowOn?0:1,b.classList.toggle("on",!!flowOn);
+   if(k==="elec")elecOn=elecOn?0:1,b.classList.toggle("on",!!elecOn);
+   if(k==="rate"){
+    bpm=bpm===72?120:72;
+    b.textContent=bpm+" BPM";
+    b.classList.toggle("on",bpm>72);
+    if(flowEl)flowEl.textContent=bpm>72?"~8.3 L/min":"~5.0 L/min";
+    if(dotEl)dotEl.style.animationDuration=(60/bpm).toFixed(4)+"s";
+   }
   });
  });
- stage.addEventListener("pointermove",e=>{
-  let r=stage.getBoundingClientRect();
-  ptrX=((e.clientX-r.left)/Math.max(1,r.width))*2-1;
-  ptrY=-(((e.clientY-r.top)/Math.max(1,r.height))*2-1);
- });
- let ecgCtx=ecgCv?.getContext?.("2d"),ecgPts=new Float32Array(72);
+ let ecgCtx=ecgCv?.getContext?.("2d"),ecgPts=new Float32Array(78);
  const drawEcg=(ph)=>{
   if(!ecgCtx||!ecgCv)return;
   let w=ecgCv.width,h=ecgCv.height;
   for(let i=ecgPts.length-1;i>0;i--)ecgPts[i]=ecgPts[i-1];
   let y=0;
-  if(ph>.06&&ph<.16)y=.22*Math.sin((ph-.06)/.1*Math.PI);
-  else if(ph>=.18&&ph<.21)y=-.2;
-  else if(ph>=.21&&ph<.25)y=1.0*Math.sin((ph-.21)/.04*Math.PI);
-  else if(ph>=.25&&ph<.29)y=-.34*Math.sin((ph-.25)/.04*Math.PI);
+  if(ph>.04&&ph<.14)y=.24*Math.sin((ph-.04)/.1*Math.PI);
+  else if(ph>=.16&&ph<.19)y=-.22;
+  else if(ph>=.19&&ph<.23)y=1.0*Math.sin((ph-.19)/.04*Math.PI);
+  else if(ph>=.23&&ph<.27)y=-.34*Math.sin((ph-.23)/.04*Math.PI);
   else if(ph>=.34&&ph<.5)y=.3*Math.sin((ph-.34)/.16*Math.PI);
   ecgPts[0]=y;
   ecgCtx.clearRect(0,0,w,h);
-  ecgCtx.strokeStyle="rgba(94,252,228,0.16)";ecgCtx.lineWidth=1;
-  ecgCtx.beginPath();ecgCtx.moveTo(0,h*.62);ecgCtx.lineTo(w,h*.62);ecgCtx.stroke();
-  ecgCtx.strokeStyle="#5efce4";ecgCtx.lineWidth=1.7;ecgCtx.beginPath();
+  ecgCtx.strokeStyle="rgba(255,255,255,0.12)";ecgCtx.lineWidth=1;
+  ecgCtx.beginPath();ecgCtx.moveTo(0,h*.63);ecgCtx.lineTo(w,h*.63);ecgCtx.stroke();
+  ecgCtx.strokeStyle=bpm>72?"#ff867c":"#6cf5b8";ecgCtx.lineWidth=1.8;ecgCtx.beginPath();
   for(let i=0;i<ecgPts.length;i++){
-   let px=w-(i/(ecgPts.length-1))*w,py=h*.62-ecgPts[i]*(h*.44);
+   let px=w-(i/(ecgPts.length-1))*w,py=h*.63-ecgPts[i]*(h*.46);
    i===0?ecgCtx.moveTo(px,py):ecgCtx.lineTo(px,py);
   }
   ecgCtx.stroke();
@@ -9213,154 +9220,180 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
  let rdr;
  try{rdr=new qr({canvas:cv,antialias:!0,alpha:!0,powerPreference:"high-performance"})}catch{return}
  let fb=fe("#heroCirc");if(fb)fb.hidden=!0;
- rdr.toneMapping=ao;rdr.toneMappingExposure=1.18;rdr.outputColorSpace=qt;
+ rdr.toneMapping=ao;rdr.toneMappingExposure=1.2;rdr.outputColorSpace=qt;
  const sc=new Ne;sc.environment=cb;
- const cam=new bn(36,1,.1,40);cam.position.set(.45,.28,3.85);
- const ctrl=new Ba(cam,cv);ctrl.enableDamping=!0;ctrl.dampingFactor=.07;ctrl.enablePan=!1;ctrl.minDistance=2.1;ctrl.maxDistance=6.2;ctrl.target.set(0,.02,0);
- ctrl.autoRotate=!hf;ctrl.autoRotateSpeed=.65;
- sc.add(new ro(0xd6f4ff,0x0b1a20,.72));
- const kL=new dr(0xfff2e6,1.45);kL.position.set(3.5,5,4.2);sc.add(kL);
- const rL=new dr(0x4bf8e0,1.05);rL.position.set(-4,2.5,-3);sc.add(rL);
- const bL=new dr(0xff3b58,.65);bL.position.set(1.2,-3,2.5);sc.add(bL);
- /* procedural cardiac myocardium striation & capillary texture */
+ const cam=new bn(35,1,.1,40);cam.position.set(.34,.22,3.35);
+ const ctrl=new Ba(cam,cv);ctrl.enableDamping=!0;ctrl.dampingFactor=.07;ctrl.enablePan=!1;ctrl.minDistance=2.0;ctrl.maxDistance=5.6;ctrl.target.set(.02,.04,0);
+ ctrl.autoRotate=!hf;ctrl.autoRotateSpeed=.42;
+ sc.add(new ro(0xe4f0ff,0x14192c,.82));
+ const kL=new dr(0xfff4ea,1.55);kL.position.set(3.2,4.6,4.0);sc.add(kL);
+ const rL=new dr(0x7cb4ff,.95);rL.position.set(-3.6,2.2,-3.0);sc.add(rL);
+ const bL=new dr(0xff4a5e,.72);bL.position.set(.6,-2.6,2.2);sc.add(bL);
+ /* striated myocardium + epicardial capillary texture */
  const mkHeartTex=()=>{
   let c2=document.createElement("canvas");c2.width=c2.height=256;let g=c2.getContext("2d");
-  g.fillStyle="#b8383d";g.fillRect(0,0,256,256);
-  for(let i=0;i<160;i++){
-   g.strokeStyle=`rgba(${130+Math.floor(Math.sin(i)*35)},${28+Math.floor((i%5)*7)},${38+Math.floor((i%4)*8)},0.22)`;
-   g.lineWidth=1+i%3;g.beginPath();g.moveTo(0,i*1.6);g.bezierCurveTo(85,i*1.6+Math.sin(i*.4)*14,170,i*1.6-Math.cos(i*.3)*14,256,i*1.6);g.stroke();
+  g.fillStyle="#bc343c";g.fillRect(0,0,256,256);
+  for(let i=0;i<180;i++){
+   g.strokeStyle=`rgba(${125+Math.floor(Math.sin(i*.7)*32)},${26+Math.floor((i%5)*6)},${36+Math.floor((i%4)*7)},0.24)`;
+   g.lineWidth=1+i%2;g.beginPath();g.moveTo(0,i*1.45);g.bezierCurveTo(85,i*1.45+Math.sin(i*.35)*12,170,i*1.45-Math.cos(i*.28)*12,256,i*1.45);g.stroke();
   }
-  for(let i=0;i<22;i++){
-   let x=Math.random()*256,y=Math.random()*256;
-   g.strokeStyle="rgba(235,62,74,0.34)";g.lineWidth=1.1;g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+28,y+18,x+52,y+42);g.stroke();
+  for(let i=0;i<24;i++){
+   let x=(i*47)%256,y=(i*73)%256;
+   g.strokeStyle="rgba(245,68,78,0.34)";g.lineWidth=1.1;g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+24,y+16,x+48,y+36);g.stroke();
   }
   let tx=new fi(c2);tx.colorSpace=qt;return tx;
  };
  const hTex=mkHeartTex();
- /* sculpted human upper-body shell + arms + spine */
- const bodyGrp=new J;sc.add(bodyGrp);
- const mkTorso=()=>{
-  const nu=44,nv=44,pos=[],uvs=[],idx=[];
-  const prof=u=>{
-   if(u<.56){
-    let s=u/.56,waist=Math.sin(s*Math.PI);
-    let rx=.64+.31*Math.pow(s,.72)-.12*Math.sin(s*Math.PI*1.35)+.08*(s>.72?(s-.72)/.28:0);
-    let rz=.36+.12*Math.sin(s*Math.PI)+.04*(s>.55?1:0);
-    if(s>.84){let k=(s-.84)/.16;rx=wt(rx,.23,k*k);rz=wt(rz,.21,k*k)}
-    return{y:wt(-1.55,.78,s),rx,rz,zOff:s>.55?.03*Math.sin((s-.55)/.45*Math.PI):0};
-   }
-   if(u<.68){
-    let s=(u-.56)/.12;
-    return{y:wt(.78,1.08,s),rx:wt(.23,.21,s),rz:wt(.21,.22,s),zOff:wt(.02,.04,s)};
-   }
-   let s=(u-.68)/.32,a=s*Math.PI;
-   return{y:wt(1.08,1.76,s),rx:.32*Math.sin(a*.92+.15)+.05,rz:.38*Math.sin(a*.92+.15)+.05,zOff:.05+.05*Math.sin(s*Math.PI)};
-  };
-  for(let i=0;i<=nu;i++){
-   let p=prof(i/nu);
-   for(let j=0;j<=nv;j++){
-    let th=j/nv*Math.PI*2,ct=Math.cos(th),st=Math.sin(th);
-    let pec=(i/nu>.28&&i/nu<.52&&st>0)?.035*st*Math.sin((i/nu-.28)/.24*Math.PI):0;
-    pos.push(p.rx*ct,p.y,p.rz*st+p.zOff+pec);uvs.push(j/nv,i/nu);
-   }
-  }
-  for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){let a=i*(nv+1)+j,b=a+nv+1;idx.push(a,b,a+1,b,b+1,a+1)}
-  let g=new zt;g.setAttribute("position",new dn(new Float32Array(pos),3));g.setAttribute("uv",new dn(new Float32Array(uvs),2));g.setIndex(idx);g.computeVertexNormals();return g;
- };
- const shellMat=new un({color:0x66e6eb,roughness:.14,metalness:.05,clearcoat:1,clearcoatRoughness:.08,emissive:0x0a3944,emissiveIntensity:.38,transparent:!0,opacity:.14,depthWrite:!1,side:vt});
- bodyGrp.add(new N(mkTorso(),shellMat));
- const mkArm=s=>{
-  let pts=[c(s*.76,.62,-.02),c(s*.97,.42,.0),c(s*1.08,-.05,.04),c(s*1.16,-.55,.1),c(s*1.21,-1.05,.16)];
-  return new N(new hn(new It(pts),32,.155,14,!1),shellMat);
- };
- bodyGrp.add(mkArm(1),mkArm(-1));
- for(let i=0;i<7;i++){
-  let y=-1.15+i*.32,r=.68+.12*Math.sin((i/6)*Math.PI);
-  let rg=new N(new Ca(r-.012,r,64),new bt({color:0x36f5dc,transparent:!0,opacity:.13,blending:di,depthWrite:!1,side:vt}));
-  rg.rotation.x=Math.PI/2;rg.position.y=y;rg.scale.set(1,.58,1);bodyGrp.add(rg);
- }
- /* spine column inside torso */
- const spM=new un({color:0x8dbec4,roughness:.55,transparent:!0,opacity:.26,depthWrite:!1});
- for(let i=0;i<14;i++){
-  let v=new N(new Xe(.07,.075,.085,12),spM);v.position.set(0,-1.18+i*.155,-.22+.03*Math.sin(i*.4));bodyGrp.add(v);
- }
- /* full-body systemic arteries & veins connected to heart */
- const artMat=new un({color:0xe8323e,emissive:0x520810,emissiveIntensity:.45,roughness:.28,clearcoat:.85,transparent:!0,opacity:.88});
- const veinMat=new un({color:0x3c82f2,emissive:0x0a255e,emissiveIntensity:.42,roughness:.3,clearcoat:.78,transparent:!0,opacity:.82});
- const sysCurves=[];
- const addVessel=(pts,r,mat,track)=>{
-  let crv=new It(pts);bodyGrp.add(new N(new hn(crv,36,r,10,!1),mat));
-  if(track)sysCurves.push({crv,isArt:mat===artMat});
- };
- addVessel([c(.04,.34,.02),c(.03,.54,.02),c(.12,.82,.04),c(.15,1.22,.06),c(.09,1.52,.05)],.028,artMat,1);
- addVessel([c(.01,.34,.02),c(-.02,.54,.02),c(-.12,.82,.04),c(-.15,1.22,.06),c(-.09,1.52,.05)],.026,artMat,1);
- addVessel([c(.06,.34,.01),c(.42,.56,.0),c(.84,.48,.0),c(1.02,.02,.04),c(1.13,-.68,.11)],.025,artMat,1);
- addVessel([c(-.02,.34,.01),c(-.42,.56,.0),c(-.84,.48,.0),c(-1.02,.02,.04),c(-1.13,-.68,.11)],.025,artMat,1);
- addVessel([c(.02,.22,-.04),c(.01,-.18,-.08),c(0,-.75,-.06),c(.01,-1.18,-.02)],.042,artMat,1);
- addVessel([c(.01,-1.18,-.02),c(.21,-1.52,.02)],.027,artMat,0);
- addVessel([c(.01,-1.18,-.02),c(-.21,-1.52,.02)],.027,artMat,0);
- addVessel([c(.12,1.5,.08),c(.19,1.18,.07),c(.16,.8,.05),c(-.03,.52,.03),c(-.08,.24,.04)],.025,veinMat,1);
- addVessel([c(-.12,1.5,.08),c(-.19,1.18,.07),c(-.16,.8,.05),c(-.08,.52,.03),c(-.08,.24,.04)],.025,veinMat,1);
- addVessel([c(1.17,-.68,.14),c(1.06,.02,.07),c(.86,.52,.03),c(.42,.58,.04),c(-.08,.28,.04)],.024,veinMat,1);
- addVessel([c(-1.17,-.68,.14),c(-1.06,.02,.07),c(-.86,.52,.03),c(-.42,.58,.04),c(-.08,.28,.04)],.024,veinMat,1);
- addVessel([c(-.18,-1.5,.03),c(-.06,-1.16,0),c(-.06,-.6,-.02),c(-.08,-.05,.02),c(-.08,.12,.04)],.038,veinMat,1);
- addVessel([c(.18,-1.5,.03),c(-.06,-1.16,0)],.025,veinMat,0);
- /* animated blood cells flowing through full body */
- const NC=160,rbc=new Wn(new it(.019,7,6),new bt({color:0xffffff}),NC);rbc.frustumCulled=!1;bodyGrp.add(rbc);
- const rbcOff=Array.from({length:NC},(_,i)=>[i%sysCurves.length,Math.random(),.75+Math.random()*.5]);
- const m4h=new gt,cTmp=new we;for(let i=0;i<NC;i++)rbc.setColorAt(i,cTmp.setHex(0xffffff));
- /* heart root (instant procedural heart + seamless BodyParts3D GLB upgrade) */
  const heartRoot=new J;sc.add(heartRoot);
+ /* sculpted anatomical fallback heart (shown immediately while GLB streams) */
  const procHeart=new J;heartRoot.add(procHeart);
- const phChambers=[],phLungs=[],phBones=[],phMats=[];
- const mkHMat=(col,o={})=>{let m=new un({color:col,map:hTex,bumpMap:$t,bumpScale:.4,roughness:.36,clearcoat:.78,clearcoatRoughness:.22,sheen:.45,sheenColor:new we(0xffb8ba),side:vt,transparent:!0,opacity:1,...o});phMats.push(m);return m};
+ const phChambers=[],phVessels=[],phValvesAv=[],phValvesSl=[],phLungs=[],phWallMats=[],phCorMats=[];
+ const mkHMat=(col,o={})=>{let m=new un({color:col,map:hTex,bumpMap:$t,bumpScale:.38,roughness:.36,clearcoat:.78,clearcoatRoughness:.22,sheen:.42,sheenColor:new we(0xffc2c5),side:vt,transparent:!0,opacity:1,...o});return m};
  {
-  const lv=new N(new it(.24,36,28),mkHMat(0xc9353c));lv.scale.set(.86,1.38,.82);lv.position.set(.12,-.08,.03);lv.rotation.z=-.38;procHeart.add(lv);phChambers.push({m:lv,t:"v"});
-  const rv=new N(new it(.21,32,24),mkHMat(0x526bd6));rv.scale.set(.82,1.18,.84);rv.position.set(-.08,-.05,.09);rv.rotation.z=.22;procHeart.add(rv);phChambers.push({m:rv,t:"v"});
-  const ra=new N(new it(.15,28,22),mkHMat(0x4b63cb));ra.scale.set(.95,1.05,.9);ra.position.set(-.18,.14,.05);procHeart.add(ra);phChambers.push({m:ra,t:"a"});
-  const la=new N(new it(.14,28,22),mkHMat(0xd13c43));la.scale.set(1.0,.95,.9);la.position.set(.11,.17,-.04);procHeart.add(la);phChambers.push({m:la,t:"a"});
-  const aoM=mkHMat(0xd9383e),paM=mkHMat(0x5570df),vcM=mkHMat(0x4864cf),corM=mkHMat(0xff424c,{emissive:0x55080e,emissiveIntensity:.35});
-  procHeart.add(new N(new hn(new It([c(.06,.1,.02),c(.08,.36,.04),c(.03,.46,0),c(-.03,.36,-.08),c(-.01,.05,-.12)]),28,.062,12,!1),aoM));
-  procHeart.add(new N(new hn(new It([c(-.04,.1,.09),c(-.02,.32,.07),c(.05,.38,.01)]),20,.05,10,!1),paM));
-  procHeart.add(new N(new hn(new It([c(.05,.38,.01),c(.32,.34,-.03)]),14,.035,8,!1),paM));
-  procHeart.add(new N(new hn(new It([c(.05,.38,.01),c(-.3,.34,-.03)]),14,.035,8,!1),paM));
-  procHeart.add(new N(new hn(new It([c(-.18,.22,.04),c(-.16,.52,.04)]),14,.045,10,!1),vcM));
-  procHeart.add(new N(new hn(new It([c(-.18,.04,.04),c(-.15,-.34,.02)]),14,.045,10,!1),vcM));
-  procHeart.add(new N(new hn(new It([c(.05,.18,.11),c(.08,.02,.17),c(.12,-.16,.15),c(.19,-.3,.08)]),22,.014,8,!1),corM));
-  procHeart.add(new N(new hn(new It([c(-.06,.16,.11),c(-.12,.0,.15),c(-.04,-.18,.16)]),18,.012,8,!1),corM));
-  const lngM=new un({color:0xe89ca2,roughness:.62,clearcoat:.25,sheen:.75,sheenColor:new we(0xffd4d8),transparent:!0,opacity:.26,depthWrite:!1,side:vt});phMats.push(lngM);
-  const ll=new N(new it(.34,24,18),lngM);ll.scale.set(.82,1.52,.78);ll.position.set(.46,.08,-.02);procHeart.add(ll);phLungs.push(ll);
-  const rl2=new N(new it(.36,24,18),lngM);rl2.scale.set(.86,1.56,.8);rl2.position.set(-.45,.08,-.02);procHeart.add(rl2);phLungs.push(rl2);
-  const rbM=new un({color:0xe6dbc4,roughness:.55,transparent:!0,opacity:.22,depthWrite:!1,side:vt});phMats.push(rbM);
-  for(let k=0;k<6;k++){
-   let y=-.28+k*.14,w=.58+.08*Math.sin(k/5*Math.PI);
-   for(let s of[-1,1]){
-    let rb=new N(new hn(new It([c(s*.08,y+.04,.27),c(s*w*.78,y,.18),c(s*w,y-.03,-.02),c(s*.18,y-.01,-.22)]),18,.017,6,!1),rbM);
-    procHeart.add(rb);phBones.push(rb);
+  const mkConeVentricle=(rad,htV,skewX)=>{
+   const g=new it(rad,36,28),p=g.attributes.position;
+   for(let i=0;i<p.count;i++){
+    let x=p.getX(i),y=p.getY(i),z=p.getZ(i),yn=y/rad;
+    let taper=yn>=0?1-.12*yn:Math.max(.18,1+.68*yn);
+    p.setXYZ(i,x*taper+skewX*Math.max(0,-yn)*.28,y*(htV/rad),z*taper*(yn<0?.86:1));
    }
-  }
+   g.computeVertexNormals();return g;
+  };
+  const lvM=mkHMat(0xcf323b),rvM=mkHMat(0x4168d8),laM=mkHMat(0xd63b44),raM=mkHMat(0x496fd8);
+  phWallMats.push(lvM,rvM,laM,raM);
+  const lv=new N(mkConeVentricle(.34,.56,.18),lvM);lv.position.set(.14,-.14,-.02);lv.rotation.z=-.24;procHeart.add(lv);phChambers.push({m:lv,t:"lv"});
+  const rv=new N(mkConeVentricle(.31,.48,.14),rvM);rv.position.set(-.11,-.1,.09);rv.rotation.z=-.12;procHeart.add(rv);phChambers.push({m:rv,t:"rv"});
+  const ra=new N(new it(.21,28,22),raM);ra.scale.set(1.05,1.12,.92);ra.position.set(-.28,.24,.04);procHeart.add(ra);phChambers.push({m:ra,t:"a"});
+  const la=new N(new it(.2,28,22),laM);la.scale.set(1.08,.98,.94);la.position.set(.2,.26,-.08);procHeart.add(la);phChambers.push({m:la,t:"a"});
+  const aoM=mkHMat(0xd8363f),paM=mkHMat(0x466cd8),vcM=mkHMat(0x3b5ec7),pvM=mkHMat(0xd43e48),corM=mkHMat(0xff424c,{emissive:0x5e0a12,emissiveIntensity:.38});
+  phWallMats.push(aoM,paM,vcM,pvM);phCorMats.push(corM);
+  const ao=new N(new hn(new It([c(.08,.18,.02),c(.12,.52,.04),c(.03,.72,-.04),c(-.11,.56,-.16),c(-.09,.04,-.22),c(-.06,-.65,-.16)]),34,.095,14,!1),aoM);
+  procHeart.add(ao);phVessels.push(ao);
+  /* 3 aortic arch branches (head & arms) */
+  procHeart.add(new N(new hn(new It([c(.09,.69,0),c(.12,.88,0)]),10,.034,8,!1),aoM));
+  procHeart.add(new N(new hn(new It([c(.01,.72,-.03),c(0,.91,-.04)]),10,.03,8,!1),aoM));
+  procHeart.add(new N(new hn(new It([c(-.06,.68,-.08),c(-.11,.87,-.1)]),10,.03,8,!1),aoM));
+  const pt=new N(new hn(new It([c(-.06,.16,.14),c(-.02,.46,.1),c(.06,.56,0)]),22,.082,12,!1),paM);
+  procHeart.add(pt);phVessels.push(pt);
+  procHeart.add(new N(new hn(new It([c(.06,.56,0),c(.46,.5,-.08)]),16,.056,10,!1),paM));
+  procHeart.add(new N(new hn(new It([c(.06,.56,0),c(-.42,.5,-.06)]),16,.056,10,!1),paM));
+  procHeart.add(new N(new hn(new It([c(-.28,.34,.04),c(-.26,.82,.04)]),14,.072,10,!1),vcM));
+  procHeart.add(new N(new hn(new It([c(-.26,.1,.02),c(-.22,-.58,-.02)]),16,.075,10,!1),vcM));
+  procHeart.add(new N(new hn(new It([c(.54,.3,-.1),c(.28,.28,-.1)]),12,.042,8,!1),pvM));
+  procHeart.add(new N(new hn(new It([c(-.5,.32,-.1),c(.12,.26,-.12)]),14,.042,8,!1),pvM));
+  /* coronary arteries feeding the heart muscle */
+  procHeart.add(new N(new hn(new It([c(.03,.24,.18),c(.02,.04,.27),c(.09,-.2,.26),c(.2,-.44,.16)]),24,.02,8,!1),corM));
+  procHeart.add(new N(new hn(new It([c(-.09,.24,.16),c(-.18,.02,.24),c(-.08,-.22,.24)]),20,.017,8,!1),corM));
+  procHeart.add(new N(new hn(new It([c(.08,.22,.14),c(.28,.12,.14),c(.38,-.06,.04)]),18,.015,8,!1),corM));
+  /* 4 schematic one-way valves visible inside cut-away */
+  const vMat=new un({color:0xf6ead2,roughness:.35,clearcoat:.5,emissive:0x302210,emissiveIntensity:.18,side:vt});
+  const mkValve=(px,py,pz)=>{let g=new J;g.position.set(px,py,pz);let d=new N(new Ca(.02,.08,18),vMat);d.rotation.x=Math.PI/2;g.add(d);procHeart.add(g);return g};
+  phValvesAv.push(mkValve(-.18,.08,.07),mkValve(.16,.09,-.03));
+  phValvesSl.push(mkValve(-.05,.24,.12),mkValve(.09,.24,.03));
+  /* subtle breathing lungs flanking the heart */
+  const lngM=new un({color:0xeb9da3,roughness:.65,clearcoat:.2,sheen:.7,sheenColor:new we(0xffd6da),transparent:!0,opacity:.13,depthWrite:!1,side:vt});
+  const ll=new N(new it(.52,24,18),lngM);ll.scale.set(.78,1.38,.74);ll.position.set(.86,.08,-.12);procHeart.add(ll);phLungs.push(ll);
+  const rl2=new N(new it(.54,24,18),lngM);rl2.scale.set(.82,1.42,.76);rl2.position.set(-.84,.08,-.12);procHeart.add(rl2);phLungs.push(rl2);
  }
- /* BodyParts3D GLB upgrade container */
+ /* BodyParts3D 64-part GLB anatomical heart + exact double circulation */
  const glbHeart=new J;glbHeart.visible=!1;heartRoot.add(glbHeart);
- const glbM={},glbMt={},glbCh=["right-atrium","right-ventricle","left-atrium","left-ventricle"];
+ const glbM={},glbMt={},glbBB={},glbCh=["right-atrium","right-ventricle","left-atrium","left-ventricle"];
+ const glbPulseVessels=["ascending-aorta","aortic-arch","pulmonary-trunk"];
+ const glbAvValves=[],glbSlValves=[];
  const hbBox=a=>{let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];for(let i=0;i<a.length;i+=3)for(let k=0;k<3;k++){let v=a[i+k];if(v<mn[k])mn[k]=v;if(v>mx[k])mx[k]=v}return{mn,mx,c:c((mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2)}};
- const hbCol=id=>/^(pulmonary-vein|left-|ascending|aortic|thoracic|abdominal)/.test(id)?0xd43840:/^(superior|inferior|pulmonary-(trunk|artery)|right-)/.test(id)?0x4e6bd8:/^coronary/.test(id)?0xe23842:/^valve/.test(id)?0xecd6c4:/^lung/.test(id)?0xe69ca2:/^(trachea|bronchus)/.test(id)?0xcfbec6:/^(sternum|clavicle|rib)/.test(id)?0xe4d9c0:0xc86464;
+ const hbAxis=(a,k=8)=>{let mn=1e9,mx=-1e9;for(let i=1;i<a.length;i+=3){mn=Math.min(mn,a[i]);mx=Math.max(mx,a[i])}let pts=[];for(let b=0;b<k;b++){let y0=mn+(mx-mn)*b/k,y1=mn+(mx-mn)*(b+1)/k,sx=0,sy=0,sz=0,n=0;for(let i=0;i<a.length;i+=3)if(a[i+1]>=y0&&a[i+1]<=y1){sx+=a[i];sy+=a[i+1];sz+=a[i+2];n++}n&&pts.push(c(sx/n,sy/n,sz/n))}return pts.length>=2?pts:[hbBox(a).c]};
+ const hbOrient=(pts,near)=>pts.length<2||pts[0].distanceToSquared(near)<=pts[pts.length-1].distanceToSquared(near)?pts:pts.slice().reverse();
+ const hbCol=id=>/^(pulmonary-vein|left-|ascending|aortic|thoracic|abdominal|brachio)/.test(id)?0xd4353f:/^(superior|inferior|pulmonary-(trunk|artery)|right-)/.test(id)?0x426bd9:/^coronary/.test(id)?0xff3d4a:/^valve/.test(id)?0xf5e8d0:/^lung/.test(id)?0xe89ea4:/^(trachea|bronchus)/.test(id)?0xd2c4cb:0xc85c62;
+ const OX_HEX=0xff4252,DX_HEX=0x4b86ff;
+ const mkSpline=pts=>{
+  let sm=new It(pts).getPoints(pts.length*6),cum=[0];
+  for(let i=1;i<sm.length;i++)cum.push(cum[i-1]+sm[i].distanceTo(sm[i-1]));
+  let L=cum[cum.length-1]||1;
+  return{P(u){u=Math.max(0,Math.min(1,u))*L;let lo=0,hi=cum.length-1;while(hi-lo>1){let m=(lo+hi)>>1;cum[m]<=u?lo=m:hi=m}return sm[lo].clone().lerp(sm[hi],(u-cum[lo])/(cum[hi]-cum[lo]||1))}};
+ };
+ /* initial procedural circulation paths (replaced cleanly when BodyParts3D GLB loads) */
+ let flowPaths=[
+  {sp:mkSpline([c(-.24,-.56,-.02),c(-.26,.08,.03),c(-.26,.25,.04),c(-.11,-.08,.09),c(-.03,.42,.08),c(.42,.48,-.06),c(.84,.12,-.1),c(.54,.28,-.1),c(.2,.25,-.08),c(.13,-.12,-.02),c(.1,.48,.03),c(-.04,.64,-.1),c(-.07,-.45,-.14)]),uLungIn:.4,uLungOut:.58,uBody:.88},
+  {sp:mkSpline([c(-.26,.78,.04),c(-.27,.34,.04),c(-.26,.22,.04),c(-.11,-.08,.09),c(-.03,.42,.08),c(-.42,.48,-.06),c(-.84,.12,-.1),c(-.5,.3,-.1),c(.2,.25,-.08),c(.13,-.12,-.02),c(.1,.48,.03),c(.03,.68,-.04),c(-.08,.56,-.16),c(-.07,-.56,-.14)]),uLungIn:.4,uLungOut:.58,uBody:.88}
+ ];
+ const NF=168,rbc=new Wn(new it(.022,8,6),new bt({color:0xffffff}),NF);rbc.frustumCulled=!1;heartRoot.add(rbc);
+ const rbcOff=Array.from({length:NF},(_,i)=>[i,Math.random(),.82+Math.random()*.36,(Math.random()-.5)*.045,(Math.random()-.5)*.045]);
+ const m4h=new gt,cTmp=new we,cBlue=new we(DX_HEX),cRed=new we(OX_HEX);
+ for(let i=0;i<NF;i++)rbc.setColorAt(i,cTmp.setHex(0xffffff));
+ /* 3D Electrical Conduction System (SA node -> AV node -> Bundle of His -> Purkinje fibers) */
+ const elecGrp=new J;heartRoot.add(elecGrp);
+ const elecNodes={};
+ const buildConduction=(pts)=>{
+  while(elecGrp.children.length)elecGrp.remove(elecGrp.children[0]);
+  const mkE=(col)=>new bt({color:col,transparent:!0,opacity:.85,blending:di,depthWrite:!1});
+  const mkNode=(pos,r,col)=>{let m=new N(new it(r,14,12),mkE(col));m.position.copy(pos);elecGrp.add(m);return m};
+  const mkTract=(arr,r,col)=>{let m=new N(new hn(new It(arr),22,r,8,!1),mkE(col));elecGrp.add(m);return m};
+  elecNodes.sa=mkNode(pts.sa,.048,0xffe066);
+  elecNodes.atria=[
+   mkTract([pts.sa,pts.raMid,pts.av],.014,0xffd152),
+   mkTract([pts.sa,pts.laTop,pts.laMid],.013,0xffd152)
+  ];
+  elecNodes.av=mkNode(pts.av,.044,0xffaa44);
+  elecNodes.his=mkTract([pts.av,pts.septTop],.017,0x64f0ff);
+  elecNodes.rvB=mkTract([pts.septTop,pts.septMid,pts.rvApex,pts.rvWall],.014,0x64f0ff);
+  elecNodes.lvB=mkTract([pts.septTop,pts.septMid,pts.lvApex,pts.lvWall],.015,0x64f0ff);
+ };
+ buildConduction({
+  sa:c(-.29,.35,.08),raMid:c(-.24,.22,.09),laTop:c(0,.32,.01),laMid:c(.22,.26,-.04),
+  av:c(-.06,.12,.05),septTop:c(0,.03,.05),septMid:c(.04,-.18,.04),
+  rvApex:c(-.1,-.32,.11),rvWall:c(-.2,-.12,.14),lvApex:c(.18,-.36,0),lvWall:c(.28,-.1,.04)
+ });
  let glbBuilt=0;
  const buildGlbHeart=()=>{
   if(glbBuilt||X9.ds.heart.state!=="ready"||!X9.ds.heart.data?.parts)return;
-  glbBuilt=1;const d=X9.ds.heart.data.parts,Sc=10.8,C0=[.02,1.3,.03];
+  glbBuilt=1;const d=X9.ds.heart.data.parts,Sc=17.8,C0=[.024,1.300,.025];
   glbHeart.scale.setScalar(Sc);glbHeart.position.set(-C0[0]*Sc,-C0[1]*Sc,-C0[2]*Sc);
+  const toLocal=v=>v.clone().multiplyScalar(Sc).add(glbHeart.position);
   for(const id in d){
-   const p=d[id],bb=hbBox(p.position);let pos=p.position;const isCh=glbCh.includes(id);
-   if(isCh){pos=new Float32Array(p.position);const cc=bb.c;for(let i=0;i<pos.length;i+=3){pos[i]-=cc.x;pos[i+1]-=cc.y;pos[i+2]-=cc.z}}
+   const p=d[id],bb=hbBox(p.position);glbBB[id]=bb;
+   const bone=/^(sternum|clavicle|rib)/.test(id),land=id==="diaphragm";
+   const isCh=glbCh.includes(id),isVlv=/^valve/.test(id),isPivot=isCh||isVlv||glbPulseVessels.includes(id);
+   let pos=p.position;
+   if(isPivot){pos=new Float32Array(p.position);const cc=bb.c;for(let i=0;i<pos.length;i+=3){pos[i]-=cc.x;pos[i+1]-=cc.y;pos[i+2]-=cc.z}}
    const g=new zt;g.setAttribute("position",new dn(pos,3));p.normal&&g.setAttribute("normal",new dn(new Float32Array(p.normal),3));p.index&&g.setIndex(new dn(p.index,1));
    const uv=new Float32Array((pos.length/3)*2),cc=bb.c,dy=Math.max(1e-4,bb.mx[1]-bb.mn[1]);
-   for(let i=0,j=0;i<pos.length;i+=3,j+=2){let dx=isCh?pos[i]:pos[i]-cc.x,dz=isCh?pos[i+2]:pos[i+2]-cc.z,py=isCh?pos[i+1]:pos[i+1]-cc.y;uv[j]=.5+Math.atan2(dz,dx)/(Math.PI*2);uv[j+1]=.5+py/dy}
+   for(let i=0,j=0;i<pos.length;i+=3,j+=2){let dx=isPivot?pos[i]:pos[i]-cc.x,dz=isPivot?pos[i+2]:pos[i+2]-cc.z,py=isPivot?pos[i+1]:pos[i+1]-cc.y;uv[j]=.5+Math.atan2(dz,dx)/(Math.PI*2);uv[j+1]=.5+py/dy}
    g.setAttribute("uv",new dn(uv,2));
-   const lung=/^lung/.test(id),bone=/^(sternum|clavicle|rib)/.test(id),cor=/^coronary/.test(id);
-   const mat=new un({color:hbCol(id),map:bone||lung?null:hTex,bumpMap:bone?null:$t,bumpScale:bone?0:.35,roughness:bone?.55:lung?.65:.34,clearcoat:bone?.12:lung?.2:.76,clearcoatRoughness:.25,sheen:lung?.75:.45,sheenColor:new we(0xffcccc),emissive:cor?0x500a10:0x000000,emissiveIntensity:cor?.3:0,side:vt,transparent:!0,opacity:1});
-   const m=new N(g,mat);m.userData.part=id;m.frustumCulled=!1;if(isCh)m.position.copy(bb.c);
+   const lung=/^lung/.test(id),cor=/^coronary/.test(id),air=/^(trachea|bronchus)/.test(id);
+   const mat=new un({color:hbCol(id),map:bone||lung||isVlv||air?null:hTex,bumpMap:bone||isVlv||air?null:$t,bumpScale:bone||isVlv?0:.35,roughness:isVlv?.35:lung?.65:.34,clearcoat:isVlv?.45:lung?.18:.76,clearcoatRoughness:.24,sheen:lung?.75:.42,sheenColor:new we(0xffd0d4),emissive:cor?0x580a12:isVlv?0x2b1e10:0x000000,emissiveIntensity:cor?.38:isVlv?.16:0,side:vt,transparent:!0,opacity:1});
+   const m=new N(g,mat);m.userData.part=id;m.frustumCulled=!1;
+   if(isPivot)m.position.copy(bb.c);
+   if(bone||land)m.visible=!1;
    glbHeart.add(m);glbM[id]=m;glbMt[id]=mat;
+   if(/^valve-(tricuspid|mitral)/.test(id))glbAvValves.push(m);
+   else if(/^valve-(pulm|aortic)/.test(id))glbSlValves.push(m);
+  }
+  /* build anatomical double-circulation blood splines straight through BodyParts3D vessels & chambers */
+  const has=k=>!!d[k]&&!!glbBB[k];
+  if(has("inferior-vena-cava")&&has("aortic-arch")&&has("lung-l-upper")&&has("lung-r-upper")){
+   const ax=id=>hbAxis(d[id].position,8),ct=id=>glbBB[id].c.clone();
+   const lungC=s=>{let ks=Object.keys(glbBB).filter(k=>k.startsWith("lung-"+s)),v=c();ks.forEach(k=>v.add(glbBB[k].c));return v.multiplyScalar(1/ks.length)};
+   const ivc=hbOrient(ax("inferior-vena-cava"),c(0,1.0,0)),svc=hbOrient(ax("superior-vena-cava"),c(0,1.6,0));
+   const trunk=hbOrient(ax("pulmonary-trunk"),ct("right-ventricle"));
+   const asc=hbOrient(ax("ascending-aorta"),ct("left-ventricle")),arch=hbOrient(ax("aortic-arch"),asc[asc.length-1]),thor=hbOrient(ax("thoracic-aorta"),arch[arch.length-1]),abd=hbOrient(ax("abdominal-aorta"),thor[thor.length-1]);
+   const paL=hbOrient(ax("pulmonary-artery-l"),trunk[trunk.length-1]),paR=hbOrient(ax("pulmonary-artery-r"),trunk[trunk.length-1]);
+   const pvL=hbOrient(ax("pulmonary-vein-l1"),lungC("l")),pvR=hbOrient(ax("pulmonary-vein-r1"),lungC("r"));
+   const mkGPath=(first,pa,lg,pv)=>{
+    const segs=[first,[ct("right-atrium")],[ct("right-ventricle")],trunk,pa,[lg],pv,[ct("left-atrium")],[ct("left-ventricle")],asc,arch,thor,abd,[abd[abd.length-1].clone().lerp(ivc[0],.5),ivc[0]]];
+    const pts=[];segs.forEach(a=>a.forEach(p=>pts.push(toLocal(p))));
+    return{sp:mkSpline(pts),uLungIn:.34,uLungOut:.48,uBody:.88};
+   };
+   flowPaths=[mkGPath(ivc,paL,lungC("l"),pvL),mkGPath(ivc,paR,lungC("r"),pvR),mkGPath(svc,paL,lungC("l"),pvL),mkGPath(svc,paR,lungC("r"),pvR)];
+   /* re-anchor conduction system to BodyParts3D chambers & septum */
+   const raC=glbBB["right-atrium"],laC=glbBB["left-atrium"],rvC=glbBB["right-ventricle"],lvC=glbBB["left-ventricle"];
+   const saW=toLocal(c(raC.mn[0]+(raC.mx[0]-raC.mn[0])*.25,raC.mx[1]-.012,raC.c.z+.012));
+   const raM=toLocal(raC.c),laT=toLocal(c(laC.c.x,laC.mx[1]-.01,laC.c.z)),laM=toLocal(laC.c);
+   const avW=toLocal(raC.c.clone().lerp(laC.c,.42).add(c(0,-.018,.006)));
+   const septT=toLocal(rvC.c.clone().lerp(lvC.c,.5).add(c(0,.022,0)));
+   const septM=toLocal(rvC.c.clone().lerp(lvC.c,.5).add(c(0,-.022,0)));
+   const rvA=toLocal(c(rvC.c.x,rvC.mn[1]+.012,rvC.c.z+.015)),rvW=toLocal(c(rvC.mn[0]+.008,rvC.c.y,rvC.c.z+.02));
+   const lvA=toLocal(c(lvC.mx[0]-.018,lvC.mn[1]+.01,lvC.c.z)),lvW=toLocal(c(lvC.mx[0]-.006,lvC.c.y,lvC.c.z+.01));
+   buildConduction({sa:saW,raMid:raM,laTop:laT,laMid:laM,av:avW,septTop:septT,septMid:septM,rvApex:rvA,rvWall:rvW,lvApex:lvA,lvWall:lvW});
   }
   procHeart.visible=!1;glbHeart.visible=!0;
  };
@@ -9372,25 +9405,6 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
    .then(r=>{X9.ds.heart.data=r;X9.ds.heart.state="ready";buildGlbHeart()})
    .catch(()=>{X9.ds.heart.state="idle"});
  }
- /* Medical Laser Light Scanner */
- const laserGrp=new J;sc.add(laserGrp);
- const pod=new J;laserGrp.add(pod);
- pod.add(new N(new Xe(.055,.075,.22,16),new un({color:0x1b2c33,metalness:.85,roughness:.25})));
- const lensOrb=new N(new it(.042,16,12),new bt({color:0x5efce4}));lensOrb.position.y=-.11;pod.add(lensOrb);
- const fanGeo1=new zt,fanPos1=new Float32Array(9);fanGeo1.setAttribute("position",new dn(fanPos1,3));
- const fanMat=new bt({color:0x36ffe2,transparent:!0,opacity:.17,blending:di,depthWrite:!1,side:vt});
- const fan1=new N(fanGeo1,fanMat);laserGrp.add(fan1);
- const fanGeo2=new zt,fanPos2=new Float32Array(9);fanGeo2.setAttribute("position",new dn(fanPos2,3));
- const fan2=new N(fanGeo2,new bt({color:0x5efce4,transparent:!0,opacity:.1,blending:di,depthWrite:!1,side:vt}));laserGrp.add(fan2);
- const coreRay=new N(new Xe(.007,.007,1,8),new bt({color:0xa8fff4,transparent:!0,opacity:.75,blending:di,depthWrite:!1}));laserGrp.add(coreRay);
- const scanRing=new N(new Ca(.44,.49,64),new bt({color:0x4effe6,transparent:!0,opacity:.68,blending:di,depthWrite:!1,side:vt}));
- scanRing.rotation.x=Math.PI/2;laserGrp.add(scanRing);
- const scanHalo=new N(new Ca(.38,.58,64),new bt({color:0x22e8cc,transparent:!0,opacity:.16,blending:di,depthWrite:!1,side:vt}));
- scanHalo.rotation.x=Math.PI/2;laserGrp.add(scanHalo);
- const reticle=new N(new Ca(.24,.265,48),new bt({color:0xff4c70,transparent:!0,opacity:.45,blending:di,depthWrite:!1,side:vt}));
- reticle.position.set(.04,.02,.42);laserGrp.add(reticle);
- const lSpot=new La(0x2effe0,2.8,4.6);laserGrp.add(lSpot);
- const rSpot=new La(0xff2e63,1.5,3.2);laserGrp.add(rSpot);
  const resizeHome=()=>{
   let w=stage.clientWidth,h=stage.clientHeight;
   if(w<4||h<4)return;
@@ -9399,79 +9413,82 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
   rdr.setSize(w,h,!1);
  };
  new ResizeObserver(resizeHome).observe(stage);resizeHome();
- let lastH=performance.now(),ht=0,lastPhase="";
+ let lastH=performance.now(),ht=0,flowT=0,lastPhase="";
  const homeTick=()=>{
   requestAnimationFrame(homeTick);
   let hEl=fe("#home");
   if(!hEl||hEl.hidden||document.hidden||window.__vaPause){lastH=performance.now();return}
   let now=performance.now(),dt=Math.min(.05,(now-lastH)/1e3);lastH=now;ht+=dt;
   if(!glbBuilt&&X9.ds.heart.state==="ready")buildGlbHeart();
-  const ph=(ht*1.2)%1,bump=(a,b)=>ph<a||ph>b?0:Math.sin((ph-a)/(b-a)*Math.PI);
-  const at_=bump(0,.16),vt_=bump(.16,.44);
+  const freq=bpm/60,ph=(ht*freq)%1,bump=(a,b)=>ph<a||ph>b?0:Math.sin((ph-a)/(b-a)*Math.PI);
+  /* Mayo Clinic physiology: atria squeeze (P), then right ventricle slightly before left ventricle (QRS), then diastole */
+  const at_=bump(0,.16),rv_=bump(.145,.425),lv_=bump(.18,.46),vt_=Math.max(rv_,lv_);
+  flowT+=dt*(bpm/72)*(.42+1.25*vt_);
   drawEcg(ph);
-  let pTxt=at_>.2?"ATRIAL SYSTOLE · P-WAVE":vt_>.15?"VENTRICULAR SYSTOLE · QRS":"DIASTOLE · VENTRICULAR FILLING";
+  let pTxt=at_>.2?"ATRIAL SYSTOLE · P-WAVE":vt_>.15?"VENTRICULAR SYSTOLE · LUB (QRS)":"DIASTOLE · DUB (RELAX & FILL)";
   if(phaseEl&&pTxt!==lastPhase){phaseEl.textContent=pTxt;lastPhase=pTxt}
-  if(bpmEl)bpmEl.textContent=String(Math.round(72+Math.sin(ht*.4)));
-  /* body & vascular visibility */
-  bodyGrp.visible=!!showBody;
-  shellMat.opacity=xray?.06:.14;
-  /* animate full-body blood flow particles */
-  if(showBody){
-   for(let i=0;i<NC;i++){
-    let [ci,u0,spd]=rbcOff[i],sc_=sysCurves[ci],u=(u0+ht*.18*spd)%1,pt=sc_.crv.getPointAt(u);
-    let pul=1+.28*vt_;
-    m4h.makeScale(pul,pul,pul);m4h.setPosition(pt.x,pt.y,pt.z);rbc.setMatrixAt(i,m4h);
-    rbc.setColorAt(i,cTmp.setHex(sc_.isArt?0xff5b66:0x5aaeff));
+  if(bpmEl)bpmEl.textContent=String(Math.round(bpm+Math.sin(ht*.4)));
+  /* double-circulation red/blue blood cells (turning red inside lungs) */
+  rbc.visible=!!flowOn;
+  if(flowOn){
+   for(let i=0;i<NF;i++){
+    let [idx,u0,spd,ox,oz]=rbcOff[i],fp=flowPaths[idx%flowPaths.length],u=(u0+flowT*.15*spd)%1,pt=fp.sp.P(u);
+    let pul=1+.25*lv_;
+    m4h.makeScale(pul,pul,pul);m4h.setPosition(pt.x+ox,pt.y,pt.z+oz);rbc.setMatrixAt(i,m4h);
+    if(u<fp.uLungIn)cTmp.copy(cBlue);
+    else if(u<fp.uLungOut)cTmp.copy(cBlue).lerp(cRed,(u-fp.uLungIn)/(fp.uLungOut-fp.uLungIn));
+    else if(u<fp.uBody)cTmp.copy(cRed);
+    else cTmp.copy(cRed).lerp(cBlue,(u-fp.uBody)/(1-fp.uBody));
+    rbc.setColorAt(i,cTmp);
    }
    rbc.instanceMatrix.needsUpdate=!0;rbc.instanceColor&&(rbc.instanceColor.needsUpdate=!0);
   }
-  /* animate heart (GLB or instant procedural) */
-  if(glbBuilt){
-   for(const id of glbCh){let a=/atrium/.test(id)?at_:vt_;glbM[id]?.scale.setScalar(1-.095*a)}
-   for(const id in glbMt){
-    let lung=/^lung/.test(id),bone=/^(sternum|clavicle|rib)/.test(id),land=id==="diaphragm",cor=/^coronary/.test(id);
-    let o=1;
-    if(lung)o=xray?.08:.24*(1+.06*Math.sin(ht*1.1));
-    else if(bone)o=xray?.08:.22;
-    else if(land)o=.12;
-    else if(xray)o=.36;
-    glbMt[id].opacity=o;glbMt[id].transparent=o<.999;glbMt[id].depthWrite=o>.6;
-    if(cor)glbMt[id].emissiveIntensity=.35+.5*vt_;
-   }
-   glbHeart.rotation.y=.025*vt_;
-  }else{
-   phChambers.forEach(o=>o.m.scale.set(o.t==="v"?.84*(1-.09*vt_):1-.09*at_,(o.t==="v"?1.28:1)*(1-.07*vt_),.83*(1-.09*vt_)));
-   phLungs.forEach(l=>l.scale.x=.84+.03*Math.sin(ht*1.1));
-   phLungs.forEach(l=>l.material.opacity=xray?.09:.24);
-   phBones.forEach(b=>b.material.opacity=xray?.07:.22);
-   phChambers.forEach(o=>{o.m.material.opacity=xray?.38:1;o.m.material.depthWrite=!xray});
-   procHeart.rotation.y=.025*vt_;
+  /* 3D electrical conduction wiring synced to ECG */
+  elecGrp.visible=!!elecOn;
+  if(elecOn){
+   const saOn=ph<.13?1:.22,atrOn=ph<.16?1:.18,avOn=(ph>=.11&&ph<.21)?1:.2,hisOn=(ph>=.17&&ph<.32)?1:.18,rvBOn=(ph>=.18&&ph<.36)?1:.18,lvBOn=(ph>=.2&&ph<.38)?1:.18;
+   elecNodes.sa.material.opacity=saOn;elecNodes.sa.scale.setScalar(1+.38*(saOn>.5?1:0));
+   elecNodes.atria.forEach(m=>m.material.opacity=atrOn);
+   elecNodes.av.material.opacity=avOn;elecNodes.av.scale.setScalar(1+.32*(avOn>.5?1:0));
+   elecNodes.his.material.opacity=hisOn;
+   elecNodes.rvB.material.opacity=rvBOn;elecNodes.lvB.material.opacity=lvBOn;
   }
-  /* animate sweeping medical laser light */
-  laserGrp.visible=!!showLaser;
-  if(showLaser){
-   let scanY=Math.sin(ht*1.35)*.56+ptrY*.18;
-   let podPos=c(1.38+ptrX*.25,scanY*.45+.26,1.45),tgt=c(.04,scanY,.04);
-   pod.position.copy(podPos);pod.lookAt(tgt);pod.rotateX(Math.PI/2);
-   fanPos1[0]=podPos.x;fanPos1[1]=podPos.y;fanPos1[2]=podPos.z;
-   fanPos1[3]=-.42;fanPos1[4]=scanY;fanPos1[5]=-.24;
-   fanPos1[6]=.46;fanPos1[7]=scanY;fanPos1[8]=.28;
-   fanGeo1.attributes.position.needsUpdate=!0;
-   fanPos2[0]=podPos.x;fanPos2[1]=podPos.y;fanPos2[2]=podPos.z;
-   fanPos2[3]=.04;fanPos2[4]=scanY-.28;fanPos2[5]=-.25;
-   fanPos2[6]=.04;fanPos2[7]=scanY+.28;fanPos2[8]=.25;
-   fanGeo2.attributes.position.needsUpdate=!0;
-   let dist=podPos.distanceTo(tgt);
-   coreRay.position.copy(podPos).add(tgt).multiplyScalar(.5);
-   coreRay.scale.set(1,dist,1);
-   coreRay.quaternion.setFromUnitVectors(c(0,1,0),tgt.clone().sub(podPos).normalize());
-   scanRing.position.set(.04,scanY,.02);scanHalo.position.set(.04,scanY,.02);
-   let rS=1+.045*vt_;scanRing.scale.setScalar(rS);scanHalo.scale.setScalar(rS);
-   reticle.position.set(.04,scanY*.55,.46);reticle.rotation.z=ht*.8;reticle.scale.setScalar(1+.08*vt_);
-   lSpot.position.set(.45,scanY+.1,.95);lSpot.intensity=2.4+1.5*vt_;
-   rSpot.position.set(-.35,-.15,.85);rSpot.intensity=1.2+1.1*vt_;
-   fanMat.opacity=.13+.08*vt_;
-  }else{lSpot.intensity=0;rSpot.intensity=0}
+  /* animate heart chambers, 4 one-way valves, coronary pulse & gentle 15/min breathing */
+  const breath=1+.045*Math.sin(ht*Math.PI*.5),sy=vt_>.08;
+  if(glbBuilt){
+   glbM["right-atrium"]?.scale.setScalar(1-.1*at_);
+   glbM["left-atrium"]?.scale.setScalar(1-.1*at_);
+   glbM["right-ventricle"]?.scale.set(1-.105*rv_,1-.065*rv_,1-.105*rv_);
+   glbM["left-ventricle"]?.scale.set(1-.11*lv_,1-.07*lv_,1-.11*lv_);
+   for(const id of glbPulseVessels)glbM[id]?.scale.setScalar(1+.048*lv_);
+   glbAvValves.forEach(v=>{v.scale.set(sy?.76:1.06,sy?.68:1.05,sy?.76:1.06);v.rotation.x=sy?.14:-.18});
+   glbSlValves.forEach(v=>{v.scale.set(sy?1.12:.76,sy?1.14:.7,sy?1.12:.76);v.rotation.x=sy?-.16:.1});
+   for(const id in glbMt){
+    let lung=/^lung/.test(id),cor=/^coronary/.test(id),air=/^(trachea|bronchus)/.test(id),vlv=/^valve/.test(id);
+    let o=1;
+    if(lung)o=cutOn?.04:.13;
+    else if(air)o=cutOn?.04:.12;
+    else if(vlv)o=1;
+    else if(cutOn)o=cor?.85:/atrium|ventricle/.test(id)?.24:.38;
+    glbMt[id].opacity=o;glbMt[id].transparent=o<.999;glbMt[id].depthWrite=o>.6;
+    if(cor)glbMt[id].emissiveIntensity=.35+.55*lv_;
+    if(vlv)glbMt[id].emissiveIntensity=cutOn?.36:.16;
+   }
+   ["lung-l-upper","lung-l-lower","lung-r-upper","lung-r-middle","lung-r-lower"].forEach(id=>glbM[id]?.scale.setScalar(breath));
+   glbHeart.rotation.y=.04*lv_;
+  }else{
+   phChambers.forEach(o=>{
+    let s=o.t==="a"?1-.1*at_:o.t==="rv"?1-.1*rv_:1-.11*lv_;
+    o.m.scale.setScalar(s);
+   });
+   phVessels.forEach(v=>v.scale.setScalar(1+.045*lv_));
+   phValvesAv.forEach(v=>{v.scale.setScalar(sy?.65:1.1);v.rotation.x=sy?.25:-.2});
+   phValvesSl.forEach(v=>{v.scale.setScalar(sy?1.12:.62);v.rotation.x=sy?-.2:.15});
+   phLungs.forEach(l=>{l.scale.x=.8*breath;l.material.opacity=cutOn?.04:.13});
+   phWallMats.forEach(m=>{m.opacity=cutOn?.26:1;m.depthWrite=!cutOn});
+   phCorMats.forEach(m=>{m.emissiveIntensity=.35+.55*lv_;m.opacity=cutOn?.85:1});
+   procHeart.rotation.y=.04*lv_;
+  }
   ctrl.update();rdr.render(sc,cam);
  };
  requestAnimationFrame(homeTick);

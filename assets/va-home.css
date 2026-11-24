@@ -163,23 +163,27 @@ body.light #home .hc:hover,#home .hc:hover{border-color:var(--c);box-shadow:0 12
 .va-brand .va-logo{width:40px;height:40px;border-radius:11px}
 .va-brand-copy b{font-size:20px}
 
-/* Live 3D body & laser heart hero */
-.va-circ-frame{aspect-ratio:520/560;background:radial-gradient(circle at 50% 44%,#13333c 0%,#0b1d24 58%,#061015 100%);max-width:520px;margin-inline:auto;border:1px solid #2b4e54;box-shadow:0 22px 48px -18px rgba(10,30,36,.35)}
-.va-circ-frame::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(128,220,210,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(128,220,210,.05) 1px,transparent 1px);background-size:28px 28px}
+/* Live 3D living human heart hero */
+.va-circ-frame{aspect-ratio:520/560;background:radial-gradient(circle at 50% 44%,#1b253d 0%,#0d1322 62%,#060911 100%);max-width:520px;margin-inline:auto;border:1px solid #263452;box-shadow:0 24px 54px -18px rgba(8,14,32,.42)}
+.va-circ-frame::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 50% 48%,rgba(214,56,68,.12),transparent 58%)}
 .va-circ-frame #heroCirc{position:absolute;inset:0;z-index:0}.va-circ-frame svg{width:100%;height:100%;display:block}
 #vaHomeCanvas{position:relative;z-index:1;display:block;width:100%;height:100%;cursor:grab;touch-action:none}
 #vaHomeCanvas:active{cursor:grabbing}
 .va-specimen-hud{position:absolute;top:12px;left:12px;right:12px;z-index:3;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;pointer-events:none}
-.va-hud-badge{display:flex;flex-direction:column;gap:3px;padding:6px 10px;border:1px solid rgba(88,236,214,.28);border-radius:8px;background:rgba(7,20,25,.72);backdrop-filter:blur(6px);font:600 10.5px/1.25 var(--va-text,system-ui,sans-serif);letter-spacing:.35px;color:#cdeae4}
-.va-laser-row{display:inline-flex;align-items:center;gap:6px}
-.va-bpm-dot{width:7px;height:7px;border-radius:50%;background:#ff4e6a;box-shadow:0 0 10px rgba(255,78,106,.9);animation:vaBeatDot .8333s ease-in-out infinite}
-.va-laser-tag{color:#5efce4;font-weight:700;letter-spacing:.6px}
-#vaHomePhase{color:#b7d1cb;font-size:10px}
-#vaEcgCanvas{display:block;width:136px;height:34px;border:1px solid rgba(88,236,214,.26);border-radius:8px;background:rgba(7,20,25,.76);backdrop-filter:blur(6px)}
+.va-hud-badge{display:flex;flex-direction:column;gap:3px;padding:7px 11px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(10,15,28,.76);backdrop-filter:blur(8px);font:600 10.5px/1.25 var(--va-text,system-ui,sans-serif);letter-spacing:.25px;color:#e6edf9}
+.va-heart-row,.va-laser-row{display:inline-flex;align-items:center;gap:6px;font-size:11.5px}
+.va-bpm-dot{width:8px;height:8px;border-radius:50%;background:#ff4659;box-shadow:0 0 10px rgba(255,70,89,.9);animation:vaBeatDot .8333s ease-in-out infinite}
+.va-flow-rate{color:#9ec5ff;font-weight:600}
+#vaHomePhase{color:#ffd27d;font-size:10px;letter-spacing:.35px}
+.va-hud-legend{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#b8c7e0;margin-top:1px}
+.va-hud-legend i{display:inline-block;width:7px;height:7px;border-radius:50%}
+.va-hud-legend .dx{background:#4b86ff}
+.va-hud-legend .ox{background:#ff4252;margin-left:4px}
+#vaEcgCanvas{display:block;width:144px;height:38px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(10,15,28,.78);backdrop-filter:blur(8px)}
 .va-specimen-controls{position:absolute;left:12px;right:12px;bottom:12px;z-index:3;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;pointer-events:none}
-.va-specimen-controls button{pointer-events:auto;border:1px solid rgba(155,215,208,.28);border-radius:999px;padding:6px 12px;background:rgba(9,24,29,.82);color:#c8ded9;font:600 11.5px/1.2 var(--va-text,system-ui,sans-serif);cursor:pointer;backdrop-filter:blur(6px);transition:border-color .15s,background .15s,color .15s,box-shadow .15s}
-.va-specimen-controls button:hover{border-color:rgba(94,252,228,.75);color:#fff}
-.va-specimen-controls button.on{border-color:#5efce4;background:rgba(16,66,68,.92);color:#e9fffb;box-shadow:0 0 14px rgba(52,245,218,.24)}
+.va-specimen-controls button{pointer-events:auto;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 12px;background:rgba(12,18,34,.84);color:#d6e1f2;font:600 11.5px/1.2 var(--va-text,system-ui,sans-serif);cursor:pointer;backdrop-filter:blur(8px);transition:border-color .15s,background .15s,color .15s,box-shadow .15s}
+.va-specimen-controls button:hover{border-color:rgba(255,130,145,.8);color:#fff}
+.va-specimen-controls button.on{border-color:#ff6a78;background:rgba(122,26,38,.88);color:#fff;box-shadow:0 0 16px rgba(255,74,92,.28)}
 .va-bpm{position:absolute;left:14px;top:14px;z-index:3;display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:rgba(15,26,58,.9);color:#fff;font:600 12.5px/1 var(--va-text,system-ui,sans-serif);letter-spacing:.01em}
 .va-bpm i{font-style:normal;color:#ff6b78;display:inline-block;animation:vaBeatDot .8333s ease-in-out infinite}
 @keyframes vaBeatDot{0%{transform:scale(1)}8%{transform:scale(1.45)}18%{transform:scale(1)}30%{transform:scale(1.28)}46%,100%{transform:scale(1)}}
