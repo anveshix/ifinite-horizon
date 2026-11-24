@@ -56,3 +56,5 @@ mindmap
 - Indicators (litmus, turmeric)
 - Neutralisation
 - Important salts
+- pH in everyday life
+- Chemicals from salt: NaOH, bleaching powder, soda, PoP
