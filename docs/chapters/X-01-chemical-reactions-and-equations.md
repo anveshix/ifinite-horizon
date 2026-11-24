@@ -48,3 +48,4 @@ mindmap
 - Combination & decomposition
 - Oxidation and reduction
 - Corrosion and rancidity
+- Double displacement & precipitation

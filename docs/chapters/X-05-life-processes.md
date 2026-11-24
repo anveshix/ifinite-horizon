@@ -30,3 +30,5 @@ mindmap
 - Breathing & alveoli
 - Nephron & urine formation
 - Transport in plants
+- Photosynthesis & stomata
+- Heterotrophic nutrition

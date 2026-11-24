@@ -33,6 +33,7 @@
 | X | 11 | Electricity | Physics |
 | X | 12 | Magnetic Effects of Electric Current | Physics |
 | X | 13 | Our Environment | Environment |
+| X | 14 | Periodic Classification of Elements | Chemistry |
 
 ---
 
@@ -520,6 +521,7 @@ mindmap
       Combination & decomposition
       Oxidation and reduction
       Corrosion and rancidity
+      Double displacement & precipitation
 ```
 
 ### X · Ch 2 — Acids, Bases and Salts
@@ -633,6 +635,8 @@ mindmap
       Breathing & alveoli
       Nephron & urine formation
       Transport in plants
+      Photosynthesis & stomata
+      Heterotrophic nutrition
 ```
 
 ### X · Ch 6 — Control and Coordination
@@ -681,6 +685,9 @@ mindmap
       Budding in Hydra
       Vegetative propagation
       Flower & fertilisation
+      Spore formation in bread mould
+      Dicot seed: embryo parts
+      Family planning, HIV/AIDS & women’s health
 ```
 
 ### X · Ch 8 — Heredity
@@ -830,6 +837,7 @@ mindmap
       Force on a conductor Fleming's left-hand rule
       Domestic electric circuits
       Electric motor & generator Reading Material
+      AC vs DC and frequency
 ```
 
 ### X · Ch 13 — Our Environment
@@ -852,4 +860,23 @@ mindmap
       Biodegradable vs non-biodegradable
 ```
 
-<!-- 12 Class IX + 13 Class X chapters -->
+### X · Ch 14 — Periodic Classification of Elements
+
+*Chemistry* · तत्वों का आवर्त वर्गीकरण
+
+```mermaid
+mindmap
+  root((Ch 14 Periodic Classification of Elements))
+    Periodic Classification of Elements
+      Döbereiner’s Triads
+      Newlands’ Law of Octaves
+      Mendeleev’s Periodic Table
+      Modern Periodic Table and the Modern
+      Metallic and Non-metallic Properties
+    Visual lessons in Infinite Horizons
+      Döbereiner’s triads & Newlands’ octaves
+      Mendeleev’s periodic table
+      Modern periodic table & properties
+```
+
+<!-- 12 Class IX + 14 Class X chapters -->

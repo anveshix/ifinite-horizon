@@ -38,3 +38,6 @@ mindmap
 - Budding in Hydra
 - Vegetative propagation
 - Flower & fertilisation
+- Spore formation in bread mould
+- Dicot seed: embryo parts
+- Family planning, HIV/AIDS & women’s health
