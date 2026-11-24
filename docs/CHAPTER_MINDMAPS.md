@@ -46,16 +46,13 @@
 mindmap
   root((Ch 1 Cell))
     Key concepts
-      Microscopy: cell size, field of view, magnification and resolution
-      Discovery of the cell and development of cell theory
-      Unicellular and multicellular organisation, cell as structural and functional unit
-      Plant, animal and bacterial cells: similarities and differences
-      Prokaryotic and eukaryotic cells, nucleoid versus membrane-bound nucleus
-      Plasma membrane and cell wall, selective permeability and exchange
-      Diffusion and osmosis, water movement in dilute and concentrated solutions
-      Organelle structure and coordinated functions: nucleus, mitochondria, chloroplasts, ER, Golgi, ribosomes, lysosomes and vacuoles
-      Cell division: mitosis for growth/repair, meiosis for gametes and variation
-      Textbook enrichment: membrane models, cell culture, cancer and synthetic biology not separate chapter marks
+      Discovery of cell
+      Plant and animal cells
+      Prokaryotic and eukaryotic cells
+      Cell as a structural and functional unit of life, structure and function of key organelles nucleus, mitochondria, chloroplast, endoplasmic reticulum, vacuoles, plasma membrane, cell wall
+      Permeability of cell membranes
+      Cellular division and cancer
+      Recent advancement in cell biology
     Visual lessons
       Plant, animal & bacterial cell
       Diffusion & osmosis
@@ -71,8 +68,8 @@ mindmap
     Practicals
       4
     Review notes
-      Source mapping: supplied NCERT Exploration calls this ‘Cell: The Building Block of Life’, Chapter 2 printed pp. 8–27 , the current app course remains Class IX 2026–27 Chapter 1.
-      NCERT-only enrichment including fluid-mosaic detail, cell culture, cancer and synthetic biology is not presented as separate exam outcomes or chapter marks.
+      Source mapping: supplied NCERT Exploration calls this ‘Cell: The Building Block of Life’, Chapter 2 printed pp. 8–27 , the current app course remains Class IX 2026–27 Chapter 1 CBSE syllabus chapter 2 .
+      Key concepts follow the CBSE Science 086 Class IX 2026–27 syllabus PDF CBSE chapter 2 . Microscopy-scale and extra organelle detail e.g. Golgi, ribosomes, lysosomes are labelled enrichment and are not presented as separate exam outcomes or chapter marks.
 ```
 
 **Learning outcomes**
@@ -98,16 +95,16 @@ mindmap
 mindmap
   root((Ch 2 Tissues))
     Key concepts
-      Tissue as an organised group of cells, division of labour and levels of organisation
-      Plant and animal tissue diversity, structure relates to function
-      Meristematic tissue and apical meristem syllabus emphasis , differentiation into permanent tissue
-      Simple permanent tissues: parenchyma, collenchyma and sclerenchyma
-      Protective tissue: epidermis, cuticle, root hairs and stomata
-      Complex conducting tissues: xylem and phloem, cooperating cell types and transport
-      Animal tissues: epithelial, connective, muscular and nervous
-      Musculoskeletal system: bones, muscles, cartilage, tendons, ligaments and types of joints
-      Practical 5: investigate onion-root growth and apical meristem, record measurements and represent data in a graph
-      Source enrichment: lateral/intercalary meristems, tissue systems, epithelial subtypes, annual rings, totipotency and plant tissue culture
+      Tissues: Introduction and importance
+      Level of organisation in the living organisms
+      Plant and animal tissues
+      Types of plant tissues
+      Meristematic tissues types and function of each
+      Permanent tissues types, structure and function of each
+      Animal tissues
+      Overview epithelial, connective, muscular and nervous tissues — types, structure and function of each
+      Elementary idea of musculoskeletal system
+      Care of musculoskeletal system: injuries, postural care, nutrition and exercise
     Visual lessons
       Plant & animal tissue atlas
       Bones, muscles & joints
