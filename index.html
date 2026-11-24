@@ -517,7 +517,7 @@ body.noen .chap .ct small{display:block}
    </div>
    <figure class="va-plate" aria-label="Preview of the 3D human heart model">
     <div class="va-plate-frame">
-     <img src="assets/home/heart.webp" width="960" height="720" alt="3D model of the human heart with labelled parts" decoding="async" fetchpriority="high">
+     <video id="heroHeart" class="va-heart-video" autoplay muted loop playsinline preload="auto" poster="assets/home/heart.webp" width="960" height="720" aria-label="3D model of the human heart beating at 72 beats per minute, with labelled parts"><source src="assets/home/heart-beat.webm" type="video/webm"><source src="assets/home/heart-beat.mp4" type="video/mp4"><img src="assets/home/heart.webp" width="960" height="720" alt="3D model of the human heart with labelled parts"></video>
      <span class="va-bpm" aria-hidden="true"><i>♥</i> 72 bpm · live</span>
      <span class="va-callout" style="--x:48%;--y:17%"><b>Aorta</b></span>
      <span class="va-callout l" style="--x:37%;--y:42%"><b>Right atrium</b></span>
@@ -6592,7 +6592,7 @@ function Mheart(){
   onPick(o){const id=o.userData.part,i=HINFO[id]||HINFO[hKind(id)];note(i[0],i[1],i[2],i[3]);sel=id;hl.clear();hl.add(id)},
   apply(s,k,t){const dt=min(.1,max(0,t-lastT));lastT=t;if(s!==lastS){lastS=s;fly(stageCam[s])}
    /* heartbeat: atria then ventricles contract */
-   const ph=(t*1.1)%1,bump=(a,b)=>ph<a||ph>b?0:Math.sin((ph-a)/(b-a)*PI);const at_=beatOn?bump(0,.16):0,vt_=beatOn?bump(.16,.46):0;
+   const ph=(t*1.2)%1,bump=(a,b)=>ph<a||ph>b?0:Math.sin((ph-a)/(b-a)*PI);const at_=beatOn?bump(0,.16):0,vt_=beatOn?bump(.16,.46):0;
    for(const id of chambers){const a=/atrium/.test(id)?at_:vt_;M[id].scale.setScalar(1-.09*a)}
    const open=(id,o)=>{Mt[id].opacity=o};
    /* valves: schematic — AV valves open in diastole, semilunar valves open in ventricular systole */
