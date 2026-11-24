@@ -378,3 +378,6 @@ body.light #cl .cl-snd[aria-pressed="true"]{border-color:var(--p-deep);backgroun
  body .ib,body #menu,body #thome,body #thi,body #ptog,body #size,body #tmode,body #tsnd,body #full{min-width:44px!important}
  body #stagebar{gap:6px;flex-wrap:wrap}
 }
+
+/* "More" menu: open to the right of its button on wide screens so it is never hidden under the chapter sidebar. */
+@media (min-width:900px){body #more .pop{left:0;right:auto;max-width:calc(100vw - 24px)}}
