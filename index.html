@@ -9350,7 +9350,7 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
  const glbPulseVessels=["ascending-aorta","aortic-arch","pulmonary-trunk"];
  const glbAvValves=[],glbSlValves=[];
  const hbBox=a=>{let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];for(let i=0;i<a.length;i+=3)for(let k=0;k<3;k++){let v=a[i+k];if(v<mn[k])mn[k]=v;if(v>mx[k])mx[k]=v}return{mn,mx,c:c((mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2)}};
- const hbAxis=(a,k=8)=>{let mn=1e9,mx=-1e9;for(let i=1;i<a.length;i+=3){mn=Math.min(mn,a[i]);mx=Math.max(mx,a[i])}let pts=[];for(let b=0;b<k;b++){let y0=mn+(mx-mn)*b/k,y1=mn+(mx-mn)*(b+1)/k,sx=0,sy=0,sz=0,n=0;for(let i=0;i<a.length;i+=3)if(a[i+1]>=y0&&a[i+1]<=y1){sx+=a[i];sy+=a[i+1];sz+=a[i+2];n++}n&&pts.push(c(sx/n,sy/n,sz/n))}return pts.length>=2?pts:[hbBox(a).c]};
+ const hbAxis=(arr,nb=10)=>{const N=arr.length/3;let mx=0,my=0,mz=0;for(let i=0;i<arr.length;i+=3){mx+=arr[i];my+=arr[i+1];mz+=arr[i+2]}mx/=N;my/=N;mz/=N;let a=0,b=0,cc=0,d=0,e=0,f=0;for(let i=0;i<arr.length;i+=3){let x=arr[i]-mx,y=arr[i+1]-my,z=arr[i+2]-mz;a+=x*x;b+=x*y;cc+=x*z;d+=y*y;e+=y*z;f+=z*z}let v=[1,.7,.4];for(let k=0;k<20;k++){let w=[a*v[0]+b*v[1]+cc*v[2],b*v[0]+d*v[1]+e*v[2],cc*v[0]+e*v[1]+f*v[2]],l=Math.hypot(...w)||1;v=[w[0]/l,w[1]/l,w[2]/l]}let lo=1e9,hi=-1e9;const pr=new Float32Array(N);for(let i=0;i<N;i++){pr[i]=(arr[i*3]-mx)*v[0]+(arr[i*3+1]-my)*v[1]+(arr[i*3+2]-mz)*v[2];lo=Math.min(lo,pr[i]);hi=Math.max(hi,pr[i])}const S=new Float32Array(nb*3),C=new Int32Array(nb);for(let i=0;i<N;i++){let j=Math.min(nb-1,Math.floor((pr[i]-lo)/(hi-lo+1e-9)*nb));S[j*3]+=arr[i*3];S[j*3+1]+=arr[i*3+1];S[j*3+2]+=arr[i*3+2];C[j]++}const out=[];for(let j=0;j<nb;j++)if(C[j])out.push(c(S[j*3]/C[j],S[j*3+1]/C[j],S[j*3+2]/C[j]));return out.length>=2?out:[hbBox(arr).c]};
  const hbOrient=(pts,near)=>pts.length<2||pts[0].distanceToSquared(near)<=pts[pts.length-1].distanceToSquared(near)?pts:pts.slice().reverse();
  const hbCol=id=>/^(pulmonary-vein|left-|ascending|aortic|thoracic|abdominal|brachio)/.test(id)?0xdc323e:/^(superior|inferior|pulmonary-(trunk|artery)|right-)/.test(id)?0x3a6be2:/^coronary/.test(id)?0xff3b48:/^valve/.test(id)?0xf6ebd4:/^lung/.test(id)?0xe89ea4:/^(trachea|bronchus)/.test(id)?0xd2c4cb:0xc85c62;
  const OX_HEX=0xff3044,DX_HEX=0x4594ff;
@@ -9445,7 +9445,7 @@ ${r()}`}).catch(()=>{})),fe("#stFile").onclick=()=>{if(!a())return fe("#stN").fo
   X9.ds.heart.state="loading";
   import(new URL("assets/va-assets.js",document.baseURI).href)
    .then(m=>m.loadMeshes("heart/heart_lo.glb"))
-   .then(r=>{X9.ds.heart.data=r;X9.ds.heart.state="ready";buildGlbHeart()})
+   .then(r=>{X9.ds.heart.data=r;X9.ds.heart.state="ready";buildGlbHeart();if(Se&&Se.__tp&&Se.__tp.key==="ch5/heart3d")window.__atlas?.rebuild?.("ch5/heart3d")})
    .catch(()=>{X9.ds.heart.state="idle"});
  }
  const resizeHome=()=>{
