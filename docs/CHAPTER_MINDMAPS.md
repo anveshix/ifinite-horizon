@@ -46,16 +46,13 @@
 mindmap
   root((Ch 1 Cell))
     Key concepts
-      Microscopy: cell size, field of view, magnification and resolution
-      Discovery of the cell and development of cell theory
-      Unicellular and multicellular organisation, cell as structural and functional unit
-      Plant, animal and bacterial cells: similarities and differences
-      Prokaryotic and eukaryotic cells, nucleoid versus membrane-bound nucleus
-      Plasma membrane and cell wall, selective permeability and exchange
-      Diffusion and osmosis, water movement in dilute and concentrated solutions
-      Organelle structure and coordinated functions: nucleus, mitochondria, chloroplasts, ER, Golgi, ribosomes, lysosomes and vacuoles
-      Cell division: mitosis for growth/repair, meiosis for gametes and variation
-      Textbook enrichment: membrane models, cell culture, cancer and synthetic biology not separate chapter marks
+      Discovery of cell
+      Plant and animal cells
+      Prokaryotic and eukaryotic cells
+      Cell as a structural and functional unit of life, structure and function of key organelles nucleus, mitochondria, chloroplast, endoplasmic reticulum, vacuoles, plasma membrane, cell wall
+      Permeability of cell membranes
+      Cellular division and cancer
+      Recent advancement in cell biology
     Visual lessons
       Plant, animal & bacterial cell
       Diffusion & osmosis
@@ -71,8 +68,8 @@ mindmap
     Practicals
       4
     Review notes
-      Source mapping: supplied NCERT Exploration calls this ‘Cell: The Building Block of Life’, Chapter 2 printed pp. 8–27 , the current app course remains Class IX 2026–27 Chapter 1.
-      NCERT-only enrichment including fluid-mosaic detail, cell culture, cancer and synthetic biology is not presented as separate exam outcomes or chapter marks.
+      Source mapping: supplied NCERT Exploration calls this ‘Cell: The Building Block of Life’, Chapter 2 printed pp. 8–27 , the current app course remains Class IX 2026–27 Chapter 1 CBSE syllabus chapter 2 .
+      Key concepts follow the CBSE Science 086 Class IX 2026–27 syllabus PDF CBSE chapter 2 . Microscopy-scale and extra organelle detail e.g. Golgi, ribosomes, lysosomes are labelled enrichment and are not presented as separate exam outcomes or chapter marks.
 ```
 
 **Learning outcomes**
@@ -98,16 +95,16 @@ mindmap
 mindmap
   root((Ch 2 Tissues))
     Key concepts
-      Tissue as an organised group of cells, division of labour and levels of organisation
-      Plant and animal tissue diversity, structure relates to function
-      Meristematic tissue and apical meristem syllabus emphasis , differentiation into permanent tissue
-      Simple permanent tissues: parenchyma, collenchyma and sclerenchyma
-      Protective tissue: epidermis, cuticle, root hairs and stomata
-      Complex conducting tissues: xylem and phloem, cooperating cell types and transport
-      Animal tissues: epithelial, connective, muscular and nervous
-      Musculoskeletal system: bones, muscles, cartilage, tendons, ligaments and types of joints
-      Practical 5: investigate onion-root growth and apical meristem, record measurements and represent data in a graph
-      Source enrichment: lateral/intercalary meristems, tissue systems, epithelial subtypes, annual rings, totipotency and plant tissue culture
+      Tissues: Introduction and importance
+      Level of organisation in the living organisms
+      Plant and animal tissues
+      Types of plant tissues
+      Meristematic tissues types and function of each
+      Permanent tissues types, structure and function of each
+      Animal tissues
+      Overview epithelial, connective, muscular and nervous tissues — types, structure and function of each
+      Elementary idea of musculoskeletal system
+      Care of musculoskeletal system: injuries, postural care, nutrition and exercise
     Visual lessons
       Plant & animal tissue atlas
       Bones, muscles & joints
@@ -128,7 +125,7 @@ mindmap
       5
     Review notes
       Source mapping: supplied NCERT Exploration ‘Tissues in Action’ is printed Chapter 3 pp. 28–47 , the current app course remains Class IX 2026–27 Chapter 2.
-      Current course emphasis is apical meristem. Lateral/intercalary meristem and additional plant tissue-system detail appear in the source chapter and are identified as enrichment, not silently promoted to separate exam requirements.
+      Current course emphasis is apical meristem CBSE: meristematic tissues, types and function, chapter 3 in the syllabus . Source-only lateral/intercalary meristem and additional plant tissue-system detail appear in the source chapter and are identified as enrichment, not silently promoted to separate exam requirements.
       Do not collect or compare students’ body-weight, age, sex or health data, the textbook’s optional body-composition activity is excluded from the required lesson.
       World of living 27 marks is the unit allocation only, not a Tissues chapter mark value.
 ```
@@ -503,36 +500,20 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 1 Chemical Reactions and Equations))
-    Chemical equation
-      Word equation to skeletal to balanced
-      Law of conservation of mass, balancing by hit and trial
-      State symbols s l g aq , conditions above arrow
-      Observable changes: colour, gas, precipitate, temperature, state
-    Types of reactions
-      Combination: CaO + H2O, burning of Mg, 2H2 + O2
-      Decomposition: thermal CaCO3, FeSO4 , electrolytic water , photolytic AgCl, AgBr
-      Displacement: Fe + CuSO4, Zn + CuSO4
-      Double displacement: BaCl2 + Na2SO4 precipitation
-      Exothermic vs endothermic: respiration, quicklime slaking, Ba OH 2 + NH4Cl
-    Oxidation and reduction
-      Gain of oxygen or loss of hydrogen = oxidation
-      Loss of oxygen or gain of hydrogen = reduction
-      Redox: both occur together, oxidising and reducing agent
-      CuO + H2 to Cu + H2O
-    Everyday effects
-      Corrosion: rusting of iron needs air and moisture, green coating on copper, black on silver
-      Rancidity: oxidation of fats and oils, prevention by antioxidants, nitrogen flushing, airtight containers, refrigeration
-    Activities
-      Burning magnesium ribbon
-      Iron nail in copper sulphate solution
-      Heating lead nitrate, ferrous sulphate crystals
-      Electrolysis of water 2:1 gases
-      Silver chloride in sunlight
-    Exam focus
-      Balancing equations
-      Identify reaction type
-      Observations with colour changes
-      Corrosion and rancidity prevention
+    Chemical reactions and equations
+      Chemical reactions
+      Chemical equation
+      Balanced chemical equation
+    Types of chemical reactions
+      Combination
+      Decomposition
+      Displacement
+      Double displacement
+      Precipitation
+      Endothermic exothermic reactions
+      Oxidation and reduction
+    Practicals CBSE list of experiments
+      Practical 2: Performing and observing the following reactions and classifying them into: Combination, Decomposition, Displacement, Double displacement reaction — Action of water on quicklime, Action of heat on ferrous sulphate crystals, Iron nails kept in copper sulphate solution, Reaction between sodium sulphate and barium chloride solutions
     Visual lessons in Infinite Horizons
       Iron nail in copper sulphate
       Balancing a chemical equation
@@ -548,39 +529,23 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 2 Acids, Bases and Salts))
-    Indicators
-      Litmus: acid blue to red, base red to blue
-      Phenolphthalein: colourless in acid, pink in base
-      Methyl orange: red in acid, yellow in base
-      Olfactory indicators: onion, vanilla, clove
-      Turmeric, China rose, red cabbage
-    Reactions
-      Acid + metal gives salt + hydrogen, pop test
-      Acid + metal carbonate or hydrogencarbonate gives salt + CO2 + water, lime water test
-      Acid + base gives salt + water: neutralisation
-      Metal oxide + acid, non-metal oxide + base
-      Base + metal: Zn + NaOH gives sodium zincate + H2
-    Acids and bases in water
-      H+ H3O+ from acids, OH- from bases
-      Dilution is exothermic: add acid to water
-      Strong vs weak acids and bases
-      Conductivity activity: glucose and alcohol do not conduct
+    Acids and bases
+      Definitions in terms of furnishing of H⁺ and OH⁻ ions
+      Identification using indicators
+      Chemical properties, examples and uses
+      Neutralization
     pH scale
-      0 to 14, pH 7 neutral
-      pH paper and universal indicator
-      Strength of H+ ions: lower pH stronger acid
-      pH in digestion: stomach HCl
-      Tooth decay below pH 5.5, antacids, toothpaste
-      pH of soil, nettle sting, bee sting
-      Self-defence in nature
-    Salts family
-      Family of salts and pH of salts
-      Common salt: NaCl, chlor-alkali process gives NaOH, Cl2, H2
-      Bleaching powder CaOCl2: Cl2 + slaked lime, disinfectant, bleaching
-      Baking soda NaHCO3: NaCl + H2O + CO2 + NH3, antacid, baking powder, soda-acid extinguisher
-      Washing soda Na2CO3.10H2O: recrystallisation of sodium carbonate
-      Plaster of Paris CaSO4.1/2H2O, gypsum CaSO4.2H2O, setting
-      Water of crystallisation: CuSO4.5H2O blue to white
+      Concept of pH scale definition relating to logarithm not required
+      Importance of pH in everyday life
+    Preparation and uses of
+      Sodium Hydroxide
+      Bleaching Powder
+      Baking soda
+      Washing soda
+      Plaster of Paris
+    Practicals CBSE list of experiments
+      Practical 1A: Finding the pH of the following samples by using pH paper/universal indicator: Dilute Hydrochloric Acid, Dilute NaOH solution, Dilute Ethanoic Acid solution, Lemon juice, Water, Dilute Hydrogen Carbonate solution
+      Practical 1B: Studying the properties of acids and bases HCl & NaOH on the basis of their reaction with: Litmus solution Blue/Red , Zinc metal, Solid sodium carbonate
     Visual lessons in Infinite Horizons
       pH scale & universal indicator
       Acids & bases with metals, carbonates, oxides
@@ -596,33 +561,16 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 3 Metals and Non-metals))
-    Physical properties
-      Metals: lustre, malleable, ductile, conductors, sonorous, hard, exceptions Na, K, Hg, Ga
-      Non-metals: brittle, non-lustrous, exceptions graphite, iodine, diamond
-    Chemical properties
-      Reaction with oxygen: amphoteric oxides Al2O3, ZnO
-      Reaction with water, steam and dilute acids
-      Reaction with solutions of other metal salts
-      Reactivity series: K Na Ca Mg Al Zn Fe Pb H Cu Hg Ag Au
-    Ionic compounds
-      Metal + non-metal gives ionic bond: transfer of electrons
-      NaCl, MgCl2, CaO formation
-      Properties: high melting point, soluble in water, conduct in molten and aqueous state, hard and brittle crystals
-    Occurrence and extraction
-      Minerals and ores, gangue
-      Low reactivity: Hg from cinnabar, Cu from Cu2S
-      Medium reactivity: roasting, calcination, reduction with carbon, thermit reaction
-      High reactivity: electrolysis of molten chloride
-      Refining: electrolytic refining of copper
-    Corrosion and prevention
-      Rusting of iron
-      Painting, oiling, galvanising, chrome plating, anodising, alloying
-      Alloys: brass, bronze, solder, steel, stainless steel, amalgam
-    Exam focus
-      Reactivity series questions
-      Electron dot structures of ionic compounds
-      Extraction flow chart by reactivity
-      Activities with sodium, magnesium, aluminium
+    Metals and non-metals
+      Properties of metals and non-metals
+      Reactivity series
+    Compounds and extraction
+      Formation and properties of ionic compounds
+      Basic metallurgical processes
+    Corrosion
+      Corrosion and its prevention
+    Practicals CBSE list of experiments
+      Practical 3: Observing the action of Zn, Fe, Cu and Al metals on the following salt solutions: ZnSO4 aq , FeSO4 aq , CuSO4 aq , Al2 SO4 3 aq . Arranging Zn, Fe, Cu and Al metals in the decreasing order of reactivity based on the above result.
     Visual lessons in Infinite Horizons
       Physical properties: metals vs non-metals
       Ionic bond: forming NaCl
@@ -638,39 +586,24 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 4 Carbon and its Compounds))
-    Bonding in carbon
-      Tetravalency, covalent bond: sharing electrons
-      Single, double and triple bonds
-      Electron dot structure of H2, O2, N2, CH4, C2H4
-      Properties of covalent compounds: low melting and boiling point, poor conductors
-    Versatile nature
-      Catenation
-      Tetravalency
-      Chains, branches, rings
-      Saturated vs unsaturated: alkane, alkene, alkyne
-      Isomerism: butane and isobutane
-    Allotropes
-      Diamond: rigid 3D lattice, hardest
-      Graphite: layers, conducts
-      Fullerene C-60: football shape
-    Homologous series and nomenclature
-      CH2 difference, gradation of properties
-      Functional groups: halo, alcohol, aldehyde, ketone, carboxylic acid
-      IUPAC naming: prefix, word root, suffix
-      Alkane, alkene, alkyne names
-    Chemical properties
-      Combustion: CO2 + H2O + heat + light, sooty flame in unsaturated compounds
-      Oxidation: alkaline KMnO4, acidified K2Cr2O7
-      Addition: hydrogenation with Ni catalyst, vegetable oil to fat
-      Substitution: methane with chlorine in sunlight
-    Ethanol and ethanoic acid
-      Ethanol: reactions with sodium, dehydration with conc. H2SO4 to ethene, uses, harmful effects of alcohol, denatured alcohol
-      Ethanoic acid acetic acid : glacial acetic acid, esterification, saponification, with carbonates and NaOH
-      Ester: sweet smell
-    Soaps and detergents
-      Soap = sodium or potassium salt of long-chain fatty acid
-      Micelle formation: hydrophobic tail, hydrophilic head, cleansing action
-      Hard water: scum with soap, detergents work in hard water
+    Covalent bonds
+      Formation and properties of covalent compounds
+    Carbon compounds
+      Versatile nature of carbon
+      Hydrocarbons – saturated and unsaturated
+      Homologous series
+    Nomenclature
+      Nomenclature of alkanes, alkenes, alkyne and carbon compounds containing functional groups halogens, alcohol, ketones, aldehydes
+    Chemical properties of carbon compounds
+      Combustion
+      Oxidation
+      Addition and substitution reaction
+    Ethanol, ethanoic acid, soaps
+      Ethanol and Ethanoic acid only properties and uses
+      Soaps and detergents
+    Practicals CBSE list of experiments
+      Practical 8: Study of the following properties of acetic acid ethanoic acid : Odour, solubility in water, effect on litmus, reaction with Sodium Hydrogen Carbonate
+      Practical 9: Study of the comparative cleaning capacity of a sample of soap in soft and hard water.
     Visual lessons in Infinite Horizons
       Covalent bonding: sharing electrons
       Allotropes of carbon
@@ -688,35 +621,12 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 5 Life Processes))
-    What are life processes
-      Maintenance of life: nutrition, respiration, transport, excretion
-      Energy sources, ATP
-    Nutrition
-      Autotrophic: photosynthesis, chlorophyll, light, CO2, water, stomata, light and dark reaction, starch test
-      Heterotrophic nutrition: holozoic Amoeba , saprotrophic fungi , parasitic Cuscuta, tapeworm
-      Amoeba: pseudopodia
-      Human alimentary canal: mouth, salivary amylase, oesophagus, stomach HCl pepsin mucus, small intestine bile trypsin lipase villi, liver, pancreas, large intestine
-      Dental caries
-    Respiration
-      Aerobic vs anaerobic: yeast, muscles lactic acid
-      ATP, glycolysis in cytoplasm, Krebs in mitochondria
-      Plants: stomata, lenticels, roots
-      Humans: nasal passage, trachea, bronchi, alveoli, diaphragm, ribs, haemoglobin, breathing rate
-      Gaseous exchange in alveoli
-    Transport in humans
-      Heart: four chambers, double circulation, valves
-      Blood: RBC, WBC, platelets, plasma
-      Blood vessels: arteries, veins, capillaries
-      Blood pressure, clotting, lymph
-      Heart: oxygenated and deoxygenated flow, pulmonary and systemic circulation
-    Transport in plants
-      Xylem: water, minerals, root pressure, transpiration pull
-      Phloem: translocation of food using ATP
-    Excretion
-      Human: kidneys, ureters, bladder, urethra
-      Nephron: glomerulus, Bowman's capsule, tubule, filtration, reabsorption, secretion
-      Dialysis, artificial kidney
-      Plants: gum, resins, latex, leaves, bark, transpiration
+    Life processes
+      ‘Living Being’
+      Basic concept of nutrition, respiration, transport and excretion in plants and animals
+    Practicals CBSE list of experiments
+      Practical 6: Preparing a temporary mount of a leaf peel to show stomata.
+      Practical 7: Experimentally show that carbon dioxide is given out during respiration.
     Visual lessons in Infinite Horizons
       Heart & double circulation
       Human digestive system
@@ -732,29 +642,14 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 6 Control and Coordination))
-    Nervous system in animals
-      Receptors and effectors
-      Neuron: dendrite, cell body, axon, nerve impulse chemical and electrical
-      Synapse: neurotransmitter
-      Reflex action, reflex arc: receptor, sensory neuron, spinal cord, motor neuron, effector
-    Human brain
-      Fore-brain: cerebrum, hypothalamus
-      Mid-brain
-      Hind-brain: cerebellum, pons, medulla
-      Spinal cord and cranium, meninges
-      Protection: cerebrospinal fluid
-    Coordination in plants
-      Tropic movements: phototropism, geotropism, hydrotropism, chemotropism
-      Nastic movement: touch-me-not Mimosa
-      Plant hormones: auxin, gibberellin, cytokinin, abscisic acid ABA
-    Hormones in animals
-      Endocrine glands: pituitary, thyroid, parathyroid, thymus, pancreas, adrenal, testes, ovary
-      Thyroxine and iodised salt, goitre
-      Growth hormone, dwarfism and gigantism
-      Insulin and diabetes
-      Adrenaline: fight or flight
-      Feedback mechanism
-      Pineal, hypothalamus
+    Control and co-ordination in plants
+      Tropic movements in plants
+      Introduction of plant hormones
+    Control and co-ordination in animals
+      Nervous system
+      Voluntary, involuntary and reflex action
+    Chemical co-ordination
+      Animal hormones
     Visual lessons in Infinite Horizons
       Reflex arc
       Neuron & nerve impulse
@@ -771,33 +666,15 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 7 How do Organisms Reproduce?))
-    Importance of reproduction
-      Variation: DNA copying, survival
-      Basic: DNA copying
-      Reproduction leads to inheritance
-    Asexual reproduction
-      Fission: binary in Amoeba, multiple in Plasmodium
-      Fragmentation: Spirogyra
-      Regeneration: Planaria, Hydra
-      Budding: Hydra, yeast
-      Vegetative propagation: roots, stems, leaves, cutting, layering, grafting, tissue culture
-      Spore formation: Rhizopus
-    Sexual reproduction in plants
-      Flower: sepal, petal, stamen, pistil
-      Unisexual and bisexual
-      Pollination: self and cross, pollen tube, fertilisation, zygote to embryo, ovary to fruit, ovule to seed
-      Germination
-    Human reproduction
-      Puberty, secondary sexual characters
-      Male: testes, scrotum, vas deferens, urethra, sperms, prostate, seminal vesicle
-      Female: ovary, oviduct, uterus, cervix, vagina
-      Menstrual cycle, fertilisation, implantation, placenta, embryo to foetus
-      Gestation and birth
-    Reproductive health
-      Contraception: barrier, oral pills, IUCD, surgical
-      Sexually transmitted diseases: gonorrhoea, syphilis, warts, HIV-AIDS
-      Female foeticide and declining sex ratio
-      Population and family planning
+    Reproduction
+      Reproduction in animals and plants asexual and sexual
+    Health and family planning
+      Reproductive health – need and methods of family planning
+      Safe sex vs HIV/AIDS
+      Child bearing and women’s health
+    Practicals CBSE list of experiments
+      Practical 12: Studying a binary fission in Amoeba, and b budding in yeast and Hydra with the help of prepared slides.
+      Practical 14: Identification of the different parts of an embryo of a dicot seed pea, gram or red kidney bean .
     Visual lessons in Infinite Horizons
       Human reproduction: fertilisation to placenta
       Binary fission in Amoeba
@@ -813,30 +690,19 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 8 Heredity))
-    Accumulation of variation
-      Variation during reproduction
-      Inherited traits
-      Survival value of variation
-    Mendel's contributions
-      Pea plant Pisum sativum
-      Monohybrid cross: 3:1 phenotypic, 1:2:1 genotypic
-      Dihybrid cross: 9:3:3:1
-      Dominant and recessive traits
-      Law of dominance, segregation and independent assortment
-    How traits are expressed
-      DNA to protein to trait
-      Genes on chromosomes
-      Gene and chromosome
-    Sex determination
-      Humans: 22 pairs autosomes + XX or XY
-      Father's sperm decides sex of child
-      Environment: turtles temperature, snails sex change
-    Evolution reading material
+    Heredity
+      Heredity
+      Mendel’s contribution – Laws for inheritance of traits
+      Sex determination
+      Brief introduction
+    Evolution
+      Acquired and Inherited Traits
       Speciation
-      Natural selection
-      Genetic drift
-      Fossils and evolution, homologous and analogous organs
-      Evolution and classification, Darwin, Human evolution
+      Evolution and Classification
+      Tracing Evolutionary Relationships
+      Fossils
+      Evolution by Stages
+      Human Evolution
     Visual lessons in Infinite Horizons
       Mendel's monohybrid cross
       Independent inheritance dihybrid
@@ -851,34 +717,26 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 9 Light – Reflection and Refraction))
-    Reflection
-      Laws: angle of incidence = angle of reflection, incident ray, reflected ray, normal in one plane
-      Plane mirror image: virtual, erect, same size, laterally inverted
-    Spherical mirrors
-      Concave and convex, pole, centre of curvature, radius, principal axis, focus, aperture
-      f = R/2
-      Ray diagrams: six positions of concave mirror
-      Image of convex mirror
-      Sign convention New Cartesian
-      Mirror formula 1/v + 1/u = 1/f
-      Magnification m = -v/u = h'/h
-      Uses: headlights, shaving, rear view, dentist
-    Refraction of light
-      Rays bend at interface, speed changes
-      Laws: Snell's law sin i / sin r = n
-      Refractive index n = c/v, optical density
-      Glass slab: lateral displacement, emergent ray parallel
+    Reflection of light by curved surfaces
+      Images formed by spherical mirrors
+      Centre of curvature
+      Principal axis
+      Principal focus
+      Focal length
+      Mirror formula derivation not required
+      Magnification
+    Refraction
+      Laws of refraction
+      Refractive index
     Spherical lenses
-      Convex and concave, optical centre, focus, focal length
-      Ray diagrams for convex lens, six cases, concave lens
-      Lens formula 1/v - 1/u = 1/f
-      Magnification m = v/u = h'/h
-      Power P = 1/f in metres, unit dioptre, lens combination P = P1 + P2
-    Exam focus
-      Numericals on mirror and lens formula
-      Ray diagrams
-      Sign convention
-      Refractive index of media
+      Refraction of light by spherical lens
+      Image formed by spherical lenses
+      Lens formula derivation not required
+      Magnification
+      Power of a lens
+    Practicals CBSE list of experiments
+      Practical 10: Determination of the focal length of: a Concave mirror b Convex lens by obtaining the image of a distant object.
+      Practical 11: Tracing the path of a ray of light passing through a rectangular glass slab for different angles of incidence. Measure the angle of incidence, angle of refraction, angle of emergence and interpret the result.
     Visual lessons in Infinite Horizons
       Laws of reflection plane mirror
       Image formation: mirrors & lenses
@@ -893,31 +751,17 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 10 The Human Eye and the Colourful World))
-    Human eye
-      Cornea, iris, pupil, lens, ciliary muscles, retina, rods and cones, optic nerve, aqueous and vitreous humour
-      Image formed on retina real and inverted
-      Power of accommodation
-      Far point 25 cm near point, far point infinity
-    Defects of vision and correction
-      Myopia: near-sighted, concave lens
-      Hypermetropia: far-sighted, convex lens
-      Presbyopia: bifocal lens
-      Cataract: surgery
-    Refraction by prism and dispersion
-      Angle of deviation, prism angle
-      Dispersion: VIBGYOR, Newton
-      Rainbow: water drops, dispersion, internal reflection, refraction
-      Recombination with second prism
-    Atmospheric refraction
-      Twinkling of stars
-      Advance sunrise and delayed sunset by about 2 minutes
-      Planets do not twinkle
-    Scattering of light
-      Tyndall effect
-      Blue colour of sky
-      Reddening of sun at sunrise and sunset
-      Danger signal red light
-      Colour of clouds and deep sea
+    Human eye and optical applications
+      Functioning of a lens in human eye
+      Defects of vision and their corrections
+      Applications of spherical mirrors and lenses
+    Prism, dispersion and scattering
+      Refraction of light through a prism
+      Dispersion of light
+      Scattering of light
+      Applications in daily life excluding colour of the sun at sunrise and sunset
+    Practicals CBSE list of experiments
+      Practical 13: Tracing the path of the rays of light through a glass prism.
     Visual lessons in Infinite Horizons
       Structure of the human eye
       Accommodation & defects of vision
@@ -932,28 +776,23 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 11 Electricity))
-    Basic quantities
-      Charge Q, current I = Q/t, ampere
-      Potential difference V = W/Q, volt
-      Electric circuit diagram symbols
-      Ammeter in series, voltmeter in parallel
-    Ohm's law
-      V = IR, V-I graph straight line
-      Resistance: ohm
+    Current and potential difference
+      Electric current, potential difference and electric current
+      Ohm’s law
     Resistance
-      Factors: length, area, material, temperature
-      R = rho l / A, resistivity: metals, alloys, insulators
-      Alloys used in heating elements, high resistivity
+      Resistance
+      Resistivity
+      Factors on which the resistance of a conductor depends
     Combination of resistors
-      Series: Rs = R1 + R2 + R3, same current
-      Parallel: 1/Rp = 1/R1 + 1/R2 + 1/R3, same voltage
-      Domestic circuits in parallel
-    Heating effect
-      Joule's law: H = I2 R t
-      Applications: electric heater, iron, bulb, fuse
-    Electric power
-      P = VI = I2R = V2/R, watt
-      Energy: kilowatt-hour, 1 kWh = 3.6 x 10^6 J
+      Series combination of resistors
+      Parallel combination of resistors and its applications in daily life
+    Heating effect and power
+      Heating effect of electric current and its applications in daily life
+      Electric power
+      Interrelation between P, V, I and R
+    Practicals CBSE list of experiments
+      Practical 4: Studying the dependence of potential difference V across a resistor on the current I passing through it and determine its resistance. Also plotting a graph between V and I.
+      Practical 5: Determination of the equivalent resistance of two resistors when connected in series and parallel.
     Visual lessons in Infinite Horizons
       Ohm's law circuit
       Factors affecting resistance
@@ -968,32 +807,21 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 12 Magnetic Effects of Electric Current))
-    Magnetic field and field lines
-      Oersted experiment
-      Bar magnet: field lines from N to S outside, closed loops, do not intersect, crowded near poles
-      Compass needle
-    Field due to current
-      Straight conductor: right-hand thumb rule, concentric circles
-      Circular loop: field at the centre, depends on current, number of turns, radius
-      Solenoid: field like bar magnet, electromagnet, core of soft iron
-    Force on a conductor
-      Current-carrying conductor in a field experiences force
-      Fleming's left-hand rule: thumb force, forefinger field, middle finger current
-      Maximum when perpendicular
-    Applications
-      Electric motor: split ring commutator, brushes, armature
-      Loudspeaker, microphone, MRI
-      Galvanometer
-      DC and AC concepts
-    Electromagnetic induction
-      Faraday, moving magnet near coil induces current
-      Fleming's right-hand rule
-      Electric generator: AC, slip rings, DC with commutator
-      AC: 50 Hz, reverses direction every 1/100 s
-    Domestic electric circuits
-      Live red , neutral black , earth green
-      Main supply 220 V, 50 Hz, fuse, earth wire, overloading, short circuit
-      MCB
+    Magnetic effects of current
+      Magnetic field, field lines
+      Field due to a current carrying conductor
+      Field due to current carrying coil or solenoid
+      Force on current carrying conductor
+      Fleming’s Left Hand Rule
+    Direct and alternating current
+      Direct current
+      Alternating current: frequency of AC
+      Advantage of AC over DC
+      Domestic electric circuits
+    Motor, Electromagnetic Induction, Electric Generator
+      Motor
+      Electromagnetic Induction
+      Electric Generator
     Visual lessons in Infinite Horizons
       Bar magnet: field lines
       Field around a straight wire
@@ -1011,23 +839,12 @@ mindmap
 ```mermaid
 mindmap
   root((Ch 13 Our Environment))
-    Ecosystem
-      Biotic and abiotic
-      Producers, consumers, decomposers
-      Natural vs artificial ecosystem: forest, pond, garden, crop field
-    Food chains and webs
-      Food chain: grass to deer to lion, trophic levels
-      Food web: interlinked chains
-      Energy flow: 10 per cent law
-      Biological magnification: pesticides, DDT, accumulation of non-biodegradable chemicals
-    Ozone layer
-      O3 absorbs UV
-      Chlorofluorocarbons CFCs deplete ozone, refrigerators, aerosols
-      UNEP 1987 CFC reduction
-    Garbage disposal
-      Biodegradable: paper, food waste, dead plants
-      Non-biodegradable: plastics, glass, metals, DDT
-      Waste management, recycling, landfills, reduce reuse recycle
+    Our environment
+      Eco-system
+      Environmental problems
+      Ozone depletion
+      Waste production and their solutions
+      Biodegradable and non-biodegradable substances
     Visual lessons in Infinite Horizons
       Energy flow & 10% law
       Food web
