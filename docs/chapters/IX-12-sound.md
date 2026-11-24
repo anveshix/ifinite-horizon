@@ -1,80 +1,105 @@
-# Class IX · Ch 12 — Sound
+# Class IX · Ch 12 (CBSE ch 10, 11 periods) — Sound
 
 *Motion, force, work & sound* · ध्वनि का उत्पादन व संचरण, तरंग गुण, प्रतिध्वनि व अनुरणन।
 
 ```mermaid
 mindmap
   root((Ch 12 Sound))
-    Production
-      Vibrating bodies produce sound
-    Propagation
-      Longitudinal wave: compressions and rarefactions
-      Needs a medium, no sound in vacuum
-    Wave graph and quantities
-      Wavelength, frequency, time period, amplitude
-      v = f λ
-      Intensity and speed
-    Perception
-      Pitch ↔ frequency
-      Loudness ↔ amplitude/intensity
-    Different media
-      Speed is greatest in solids, least in gases
-    Reflection
-      Echo
-      Reverberation
-      Echolocation: bats, dolphins, SONAR
-    Practical
-      Practical 10 see app practical overlay
+    Key concepts CBSE syllabus
+      Production of sound
+      Propagation of sound as a longitudinal wave through a medium
+      Graphical representation of sound wave
+      Characteristics of sound wave: wavelength, frequency, time period, amplitude, intensity, speed
+      Human perception of sound pitch, loudness
+      Propagation of sound in different media solid, liquid
+      Reflection of sound echo, reverberation , echolocation
+    C-2.7 · Origin and properties of sound
+      Demonstrate the production of sound in multiple ways through vibration of strings, membranes, air columns using materials in surroundings
+      Explain that sound is produced by vibrations
+      Demonstrate that sound can travel through different mediums air, solid and liquid
+      Describe that sound needs a medium for propagation
+      Explain that sound travels as a longitudinal wave
+      Describe the characteristics of sound waves wavelength, frequency, time period, amplitude, intensity and speed
+      Analyse graphs representing sound
+      Write relationship between time period and frequency of sound wave
+      Derive mathematical expression for speed of sound
+      Calculate speed of sound using its mathematical expression
+      Explain human perception of sound in terms of audible range, loudness and pitch of sound
+      Describe reflection of sound, and apply it to echo and reverberations in surroundings
+      Explain the use of sound waves for echolocation
+    C-5.3 · Science in other subjects sport, music, dance
+      Describe music in terms of characteristics of sound waves, such as loudness and pitch
+    C-6.1 · Contributions of India
+      Name historical buildings designed for echoes, such as whispering gallery of Gol Gumbaz
+      Display awareness about Sir C.V. Raman
+    C-8.1 · Models and creativity
+      Analyse real-life events and phenomena, and identify the key factors that influence their behaviour
+      Develop a model to represent real-life event
+      Use models to manipulate variables and predict results
+    C-8.2 · Scientific inquiry
+      Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of scientific concepts, theories, laws, and principles
+      Predict about the outcome of an experiment or investigation based on their hypotheses
+      Identify the variables that are relevant to a scientific investigation and determine how to control or manipulate them
+      Accurately use scientific instruments and equipment to collect data
+      Represent data in multiple modes, including tables, graphs and visual representations, and interpret and draw inferences from the data
+      Communicate their findings using scientific terminology and effectively communicate their conclusions to others
+    Practicals CBSE list of experiments
+      Practical 10: Determination of speed of a pulse propagated through a stretched string/ slinky helical spring .
 ```
 
-## Production
+## Key concepts (CBSE syllabus) _(CBSE key concept)_
 
-- Vibrating bodies produce sound
+- Production of sound
+- Propagation of sound (as a longitudinal wave through a medium)
+- Graphical representation of sound wave
+- Characteristics of sound wave: wavelength, frequency, time period, amplitude, intensity, speed
+- Human perception of sound (pitch, loudness)
+- Propagation of sound in different media (solid, liquid)
+- Reflection of sound (echo, reverberation), echolocation
 
-## Propagation
+## C-2.7 · Origin and properties of sound _(CBSE learning outcomes)_
 
-- Longitudinal wave: compressions and rarefactions
-- Needs a medium; no sound in vacuum
+- Demonstrate the production of sound in multiple ways (through vibration of strings, membranes, air columns) using materials in surroundings
+- Explain that sound is produced by vibrations
+- Demonstrate that sound can travel through different mediums (air, solid and liquid)
+- Describe that sound needs a medium for propagation
+- Explain that sound travels as a longitudinal wave
+- Describe the characteristics of sound waves (wavelength, frequency, time period, amplitude, intensity and speed)
+- Analyse graphs representing sound
+- Write relationship between time period and frequency of sound wave
+- Derive mathematical expression for speed of sound
+- Calculate speed of sound using its mathematical expression
+- Explain human perception of sound in terms of audible range, loudness and pitch of sound
+- Describe reflection of sound, and apply it to echo and reverberations in surroundings
+- Explain the use of sound waves for echolocation
 
-## Wave graph and quantities
+## C-5.3 · Science in other subjects (sport, music, dance) _(CBSE learning outcomes)_
 
-- Wavelength, frequency, time period, amplitude
-- v = f λ
-- Intensity and speed
+- Describe music in terms of characteristics of sound waves, such as loudness and pitch
 
-## Perception
+## C-6.1 · Contributions of India _(CBSE learning outcomes)_
 
-- Pitch ↔ frequency
-- Loudness ↔ amplitude/intensity
+- Name historical buildings designed for echoes, such as whispering gallery of Gol Gumbaz
+- Display awareness about Sir C.V. Raman
 
-## Different media
+## C-8.1 · Models and creativity _(CBSE learning outcomes)_
 
-- Speed is greatest in solids, least in gases
+- Analyse real-life events and phenomena, and identify the key factors that influence their behaviour
+- Develop a model to represent real-life event
+- Use models to manipulate variables and predict results
 
-## Reflection
+## C-8.2 · Scientific inquiry _(CBSE learning outcomes)_
 
-- Echo
-- Reverberation
-- Echolocation: bats, dolphins, SONAR
+- Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of scientific concepts, theories, laws, and principles
+- Predict about the outcome of an experiment or investigation based on their hypotheses
+- Identify the variables that are relevant to a scientific investigation and determine how to control or manipulate them
+- Accurately use scientific instruments and equipment to collect data
+- Represent data in multiple modes, including tables, graphs and visual representations, and interpret and draw inferences from the data
+- Communicate their findings using scientific terminology and effectively communicate their conclusions to others
 
-## Practical
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Practical 10 (see app practical overlay)
-
-## Learning outcomes
-
-- Demonstrate sound production with strings, membranes and air columns
-- Explain that sound needs a medium and travels as a longitudinal wave (air, solid, liquid)
-- Describe and graph wavelength, frequency, period, amplitude, intensity, speed; analyse graphs
-- Relate time period and frequency; derive and use the speed-of-sound expression
-- Explain audible range, pitch and loudness
-- Reflection, echo, reverberation, echolocation; music through loudness and pitch
-- Gol Gumbaz whispering gallery; Sir C. V. Raman
-- Develop models, vary factors and communicate conclusions (practical 10)
-
-## Practicals
-
-- Practical 10
+- Practical 10: Determination of speed of a pulse propagated through a stretched string/ slinky (helical spring).
 
 ## Visual lessons in the app
 

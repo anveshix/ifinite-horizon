@@ -1,119 +1,87 @@
-# Class IX · Ch 2 — Tissues
+# Class IX · Ch 2 (CBSE ch 3, 13 periods) — Tissues
 
 *World of living* · पादप व जंतु ऊतक, संगठन के स्तर और अस्थि-पेशी तंत्र।
 
 ```mermaid
 mindmap
   root((Ch 2 Tissues))
-    What is a tissue
-      Organised group of similar cells doing a particular function
-      Division of labour, levels of organisation
-      Structure is related to function
-    Meristematic tissue
-      Dividing cells, dense cytoplasm, thin wall, no vacuole
-      Apical meristem at root and shoot tips: increases length
-      Cells differentiate into permanent tissue
-    Simple permanent tissues
-      Parenchyma: living, thin wall, storage, chlorenchyma, aerenchyma
-      Collenchyma: unevenly thickened corners, flexibility
-      Sclerenchyma: dead, lignified, hard — husk, nut shells
-    Protective tissue
-      Epidermis: protective layer, waxy cuticle reduces water loss
-      Root hairs absorb water
-      Stomata: guard cells, gas exchange and transpiration
-    Complex tissues
-      Xylem: tracheids, vessels — water and minerals upward
-      Phloem: sieve tubes, companion cells — food transport
-      Cooperating cell types
-    Animal tissues
-      Epithelial: skin, lining, tight packing, protection, absorption
-      Connective: blood, bone, cartilage, tendon, ligament, areolar, adipose
-      Muscular: striated voluntary , unstriated involuntary , cardiac
-      Nervous: neurons carry impulses
-    Musculoskeletal system
-      Bones, muscles, cartilage, tendons, ligaments
-      Joints: hinge, ball-and-socket, pivot, gliding, fixed
-      Tendon joins muscle to bone, ligament joins bone to bone
-    Practical
-      Practical 5: onion-root growth, apical meristem, record and graph measurements
-    Enrichment not separate marks (enrichment)
-      Lateral/intercalary meristems, annual rings, totipotency, plant tissue culture
+    Key concepts CBSE syllabus
+      Tissues: Introduction and importance
+      Level of organisation in the living organisms
+      Plant and animal tissues
+      Types of plant tissues
+      Meristematic tissues types and function of each
+      Permanent tissues types, structure and function of each
+      Animal tissues
+      Overview epithelial, connective, muscular and nervous tissues — types, structure and function of each
+      Elementary idea of musculoskeletal system
+      Care of musculoskeletal system: injuries, postural care, nutrition and exercise
+    C-4.2 · Levels of organisation
+      Differentiate between plant and animal tissues, meristematic and permanent tissues, simple and complex tissues, parenchyma, collenchyma and sclerenchyma, xylem and phloem, striated smooth and cardiac muscles
+      Different types of joints
+      Relate the structure of the different types of tissues with their functions
+      Explain the role of various types of tissues in plants and animals
+      Describe the level of organisation in a multicellular organism
+    C-5.3 · Science in other subjects sport, music, dance
+      Establish the correlation between different tissues for fitness, for example, role of muscles, cartilage and bones in facilitating movement
+    C-6.1 · Contributions of India
+      Explain the importance of yoga exercises for physical agility and in maintaining the correct posture
+      Discuss significant contributions of India, for example, Professor Sipra Guha Mukherjee and Professor S.C. Maheshwari for their significant contribution in the plant cell and tissue culture research in India
+    C-7.1 · Current understanding
+      Discuss the techniques and medical recommendations in recovery from muscular injuries
+    C-8.2 · Scientific inquiry
+      Carry out an experiment to understand the growth in plant due to apical meristem
+      Represent data in multiple modes, including appropriate figures, tables, graphs, or digital formats, interpret and draw inferences from the data
+      Analyse results and present findings using scientific terms
+      Communicate findings and conclusions effectively, such as those from experiments, activities, or projects, both orally and in written form
+    Practicals CBSE list of experiments
+      Practical 5: To study and identify tissues in plants Parenchyma, Collenchyma and Sclerenchyma and animals striped, smooth and cardiac muscle fibers from prepared slides. Draw their labeled diagrams.
 ```
 
-## What is a tissue
+## Key concepts (CBSE syllabus) _(CBSE key concept)_
 
-- Organised group of similar cells doing a particular function
-- Division of labour; levels of organisation
-- Structure is related to function
+- Tissues: Introduction and importance
+- Level of organisation in the living organisms
+- Plant and animal tissues
+- Types of plant tissues
+- Meristematic tissues (types and function of each)
+- Permanent tissues (types, structure and function of each)
+- Animal tissues
+- Overview (epithelial, connective, muscular and nervous tissues — types, structure and function of each)
+- Elementary idea of musculoskeletal system
+- Care of musculoskeletal system: injuries, postural care, nutrition and exercise
 
-## Meristematic tissue
+## C-4.2 · Levels of organisation _(CBSE learning outcomes)_
 
-- Dividing cells; dense cytoplasm, thin wall, no vacuole
-- Apical meristem at root and shoot tips: increases length
-- Cells differentiate into permanent tissue
+- Differentiate between plant and animal tissues; meristematic and permanent tissues; simple and complex tissues; parenchyma, collenchyma and sclerenchyma; xylem and phloem; striated smooth and cardiac muscles
+- Different types of joints
+- Relate the structure of the different types of tissues with their functions
+- Explain the role of various types of tissues in plants and animals
+- Describe the level of organisation in a multicellular organism
 
-## Simple permanent tissues
+## C-5.3 · Science in other subjects (sport, music, dance) _(CBSE learning outcomes)_
 
-- Parenchyma: living, thin wall, storage; chlorenchyma; aerenchyma
-- Collenchyma: unevenly thickened corners, flexibility
-- Sclerenchyma: dead, lignified, hard — husk, nut shells
+- Establish the correlation between different tissues for fitness, for example, role of muscles, cartilage and bones in facilitating movement
 
-## Protective tissue
+## C-6.1 · Contributions of India _(CBSE learning outcomes)_
 
-- Epidermis: protective layer; waxy cuticle reduces water loss
-- Root hairs absorb water
-- Stomata: guard cells, gas exchange and transpiration
+- Explain the importance of yoga exercises for physical agility and in maintaining the correct posture
+- Discuss significant contributions of India, for example, Professor Sipra Guha Mukherjee and Professor S.C. Maheshwari for their significant contribution in the plant cell and tissue culture research in India
 
-## Complex tissues
+## C-7.1 · Current understanding _(CBSE learning outcomes)_
 
-- Xylem: tracheids, vessels — water and minerals upward
-- Phloem: sieve tubes, companion cells — food transport
-- Cooperating cell types
+- Discuss the techniques and medical recommendations in recovery from muscular injuries
 
-## Animal tissues
+## C-8.2 · Scientific inquiry _(CBSE learning outcomes)_
 
-- Epithelial: skin, lining; tight packing, protection, absorption
-- Connective: blood, bone, cartilage, tendon, ligament, areolar, adipose
-- Muscular: striated (voluntary), unstriated (involuntary), cardiac
-- Nervous: neurons carry impulses
+- Carry out an experiment to understand the growth in plant due to apical meristem
+- Represent data in multiple modes, including appropriate figures, tables, graphs, or digital formats, interpret and draw inferences from the data
+- Analyse results and present findings using scientific terms
+- Communicate findings and conclusions effectively, such as those from experiments, activities, or projects, both orally and in written form
 
-## Musculoskeletal system
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Bones, muscles, cartilage, tendons, ligaments
-- Joints: hinge, ball-and-socket, pivot, gliding, fixed
-- Tendon joins muscle to bone; ligament joins bone to bone
-
-## Practical
-
-- Practical 5: onion-root growth, apical meristem; record and graph measurements
-
-## Enrichment (not separate marks) _(enrichment, not separate marks)_
-
-- Lateral/intercalary meristems, annual rings, totipotency, plant tissue culture
-
-## Learning outcomes
-
-- Differentiate plant and animal tissues; meristematic and permanent; simple and complex
-- Identify parenchyma, collenchyma, sclerenchyma; xylem and phloem
-- Differentiate striated, smooth and cardiac muscle
-- Identify different types of joints
-- Relate tissue structure to function; describe organisation of a multicellular organism
-- Correlate muscle, cartilage and bone in movement and fitness
-- Explain yoga’s importance for agility and correct posture
-- Indian contributors: Professors Sipra Guha Mukherjee and S. C. Maheshwari (plant tissue culture)
-- Discuss techniques and medical recommendations for recovery from muscular injuries
-- Experiment: plant growth due to the apical meristem; represent data in tables/graphs
-
-## Activities
-
-- Measure onion-root length in two labelled jars for days 1–3; after the day-3 reading, trim about 1 cm from roots in Jar B under teacher supervision, then continue measurements through day 7.
-- Plot your own intact-root and tip-cut-root measurements against day; mark when the cut was made and interpret only the data collected.
-- Use the plant-tissue 3D atlas and 2D diagrams to compare simple support tissues, conducting tissue and animal tissues.
-- Compare joint models without forcing or testing anyone’s range of motion; relate tendons, ligaments and cartilage to their functions.
-
-## Practicals
-
-- Practical 5
+- Practical 5: To study and identify tissues in plants (Parenchyma, Collenchyma and Sclerenchyma) and animals (striped, smooth and cardiac muscle fibers) from prepared slides. Draw their labeled diagrams.
 
 ## Visual lessons in the app
 
@@ -127,10 +95,3 @@ mindmap
 - Connective tissue
 - Muscular & nervous tissue
 - Onion-root apical-growth investigation
-
-## Review notes
-
-- Source mapping: supplied NCERT Exploration ‘Tissues in Action’ is printed Chapter 3 (pp. 28–47); the current app course remains Class IX 2026–27 Chapter 2.
-- Current course emphasis is apical meristem. Lateral/intercalary meristem and additional plant tissue-system detail appear in the source chapter and are identified as enrichment, not silently promoted to separate exam requirements.
-- Do not collect or compare students’ body-weight, age, sex or health data; the textbook’s optional body-composition activity is excluded from the required lesson.
-- World of living 27 marks is the unit allocation only, not a Tissues chapter mark value.

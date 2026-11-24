@@ -13,3 +13,4 @@
 @media(max-width:860px){.dm-map{grid-template-columns:1fr;gap:12px}.dm-root{position:static;aspect-ratio:auto;border-radius:16px;order:-1}.dm-l{order:0}.dm-r{order:1}.dm-body{padding:12px}}
 @media print{body>*:not(#vaDeepMap){display:none!important}.va-dm{position:static;display:block;background:#fff}.dm-head{background:#fff;color:#000}.dm-tools{display:none}.dm-body{overflow:visible}.dm-branch{break-inside:avoid}.dm-branch:not([open])>ul{display:block}}
 @media(prefers-reduced-motion:no-preference){.dm-branch{transition:box-shadow .15s}.dm-branch:hover{box-shadow:0 4px 14px rgba(20,27,48,.14)}}
+.dm-kc{color:#1f5c50;background:#e1f3ee}.dm-lo{color:#2f4a86;background:#e6ecfa}.dm-prac{color:#6b3d86;background:#f1e8f7}

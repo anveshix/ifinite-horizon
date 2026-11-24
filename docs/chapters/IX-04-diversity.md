@@ -1,82 +1,59 @@
-# Class IX · Ch 4 — Diversity
+# Class IX · Ch 4 (CBSE ch 12, 12 periods) — Diversity
 
 *World of living* · वर्गीकरण क्यों: पाँच जगत, द्विनाम पद्धति, वायरस और पारिस्थितिक भूमिकाएँ।
 
 ```mermaid
 mindmap
   root((Ch 4 Diversity))
-    Why classify
-      Easier study of the vast diversity of organisms
-      Shows relationships and evolutionary links
-    Five kingdoms
-      Monera: bacteria, no nucleus
-      Protista: unicellular eukaryotes
-      Fungi: heterotrophic, cell wall chitin
-      Plantae: autotrophic, cell wall
-      Animalia: heterotrophic, no cell wall
-    Major divisions
-      Plant and animal divisions per prescribed textbook not enumerated in the syllabus PDF, confirm with teacher/textbook
-    Binomial nomenclature
-      Two-part name: Genus + species Linnaeus
-      Italicised/underlined, genus capitalised
-      Universal scientific naming, example Homo sapiens
-    Viruses
-      Acellular entities, need a host cell to reproduce
-      Not placed in the five kingdoms
-    Practical
-      Practical 8 see app practical overlay
+    Key concepts CBSE syllabus
+      Importance of classification
+      Five kingdoms and their key features with examples
+      Major division of animals and plants
+      Binomial nomenclature
+      Acellular entities: viruses
+    C-4.1 · Classification into five kingdoms
+      Distinguish organisms based on certain characteristics, such as number of cells present, cellular organisation and mode of nutrition
+      Classify various organisms in groups, such as five kingdoms, on the basis of their cellular organisation and ecological role
+      Describe the significance and rules of binomial nomenclature
+      Apply binomial nomenclature on some common organisms in their surroundings
+    C-2.8 · Interconnected systems on Earth
+      Analyse the interactions between members of different groups of organisms, such as lichens
+      Discuss ecological role of diverse organisms
+    C-7.1 · Current understanding
+      Recognise three domains of classification of organisms on molecular basis
+    Practicals CBSE list of experiments
+      Practical 8: To study the Specimens/virtual specimens/slides/models for identification – a Spirogyra, mushroom, moss, fern, pine cone b Amoeba, Hydra, tapeworm, Ascaris, earthworm, butterfly, snail, starfish
 ```
 
-## Why classify
+## Key concepts (CBSE syllabus) _(CBSE key concept)_
 
-- Easier study of the vast diversity of organisms
-- Shows relationships and evolutionary links
+- Importance of classification
+- Five kingdoms and their key features with examples
+- Major division of animals and plants
+- Binomial nomenclature
+- Acellular entities: viruses
 
-## Five kingdoms
+## C-4.1 · Classification into five kingdoms _(CBSE learning outcomes)_
 
-- Monera: bacteria, no nucleus
-- Protista: unicellular eukaryotes
-- Fungi: heterotrophic, cell wall (chitin)
-- Plantae: autotrophic, cell wall
-- Animalia: heterotrophic, no cell wall
+- Distinguish organisms based on certain characteristics, such as number of cells present, cellular organisation and mode of nutrition
+- Classify various organisms in groups, such as five kingdoms, on the basis of their cellular organisation and ecological role
+- Describe the significance and rules of binomial nomenclature
+- Apply binomial nomenclature on some common organisms in their surroundings
 
-## Major divisions _(confirm with textbook/teacher)_
+## C-2.8 · Interconnected systems on Earth _(CBSE learning outcomes)_
 
-- Plant and animal divisions per prescribed textbook (not enumerated in the syllabus PDF; confirm with teacher/textbook)
+- Analyse the interactions between members of different groups of organisms, such as lichens
+- Discuss ecological role of diverse organisms
 
-## Binomial nomenclature
+## C-7.1 · Current understanding _(CBSE learning outcomes)_
 
-- Two-part name: Genus + species (Linnaeus)
-- Italicised/underlined; genus capitalised
-- Universal scientific naming; example Homo sapiens
+- Recognise three domains of classification of organisms on molecular basis
 
-## Viruses
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Acellular entities; need a host cell to reproduce
-- Not placed in the five kingdoms
-
-## Practical
-
-- Practical 8 (see app practical overlay)
-
-## Learning outcomes
-
-- Distinguish organisms by number of cells, cellular organisation and mode of nutrition
-- Classify organisms into five kingdoms by cellular organisation and ecological role
-- Explain the significance and rules of binomial nomenclature; apply it to local organisms
-- Analyse interactions between groups of organisms, e.g. lichens
-- Discuss the ecological roles of diverse organisms
-- Recognise the three domains of classification on a molecular basis
-
-## Practicals
-
-- Practical 8
+- Practical 8: To study the Specimens/virtual specimens/slides/models for identification – (a) Spirogyra, mushroom, moss, fern, pine cone (b) Amoeba, Hydra, tapeworm, Ascaris, earthworm, butterfly, snail, starfish
 
 ## Visual lessons in the app
 
 - Five kingdoms & binomial names
 - Viruses, lichens & cell sizes
-
-## Review notes
-
-- Major divisions of plants and animals are not enumerated in the syllabus PDF: populate from the prescribed textbook / approved source (not invented here).

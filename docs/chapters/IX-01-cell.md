@@ -1,155 +1,113 @@
-# Class IX · Ch 1 — Cell
+# Class IX · Ch 1 (CBSE ch 2, 12 periods) — Cell
 
 *World of living* · जीवन की इकाई कोशिका: कोशिकांग, झिल्ली, परासरण, समसूत्री व अर्धसूत्री विभाजन।
 
 ```mermaid
 mindmap
   root((Ch 1 Cell))
-    Microscopy
-      Light microscope: eyepiece, objective, stage, mirror/lamp, focus knobs
-      Total magnification = eyepiece × objective
-      Field of view and cell-size estimate measure, then count across field
-      Magnification vs resolution: resolving power limits detail
-    Cell theory
-      Robert Hooke observed cork cells 1665 , Leeuwenhoek saw living cells
-      Schleiden and Schwann: all organisms are made of cells
-      Virchow: new cells arise from pre-existing cells
-      Cell = structural and functional unit of life
-    Organisation of life
-      Unicellular: Amoeba, Paramecium — one cell performs all functions
-      Multicellular: cells specialise division of labour
-      Cell → tissue → organ → organ system → organism
-    Types of cells
-      Plant: cell wall, large central vacuole, chloroplasts
-      Animal: no cell wall, small vacuoles, centrioles
-      Bacterial: no membrane-bound nucleus, nucleoid, cell wall
-      Prokaryotic nucleoid, no organelles vs eukaryotic true nucleus, organelles
-    Boundary of the cell
-      Plasma membrane: thin, flexible, selectively permeable
-      Cell wall plants, fungi, bacteria : rigid, protective, mostly cellulose in plants
-      Exchange of gases and solutes across the membrane
-    Diffusion and osmosis
-      Diffusion: movement from high to low concentration gases, solutes
-      Osmosis: diffusion of water through a selectively permeable membrane
-      Hypotonic: cell gains water, swells, plant cell becomes turgid
-      Isotonic: no net movement
-      Hypertonic: cell loses water, plasmolysis in plants
-      Activity: potato pieces in water vs concentrated solution
-    Organelles
-      Nucleus: chromosomes, DNA, controls cell activities
-      Mitochondria: aerobic respiration, ATP — 'powerhouse'
-      Chloroplasts plastids : photosynthesis, chlorophyll
-      ER rough with ribosomes, smooth : protein/lipid synthesis, transport
-      Golgi apparatus: modifies, packages, dispatches
-      Ribosomes: protein synthesis
-      Lysosomes: digestion, waste removal
-      Vacuoles: storage, turgidity
-    Cell division
-      Mitosis: one cell → two identical daughter cells, growth, repair
-      Meiosis: gamete formation, chromosome number halved, variation
-      Compare mitosis vs meiosis cells produced, chromosome number
-    Practical
-      Practical 4: prepare and observe onion peel and cheek-cell slides
-      Record labelled diagrams from your own observation
-    Enrichment not separate marks (enrichment)
-      Fluid-mosaic membrane model
-      Cell culture, cancer, synthetic biology
+    Key concepts CBSE syllabus
+      Discovery of cell
+      Plant and animal cells
+      Prokaryotic and eukaryotic cells
+      Cell as a structural and functional unit of life, structure and function of key organelles: nucleus, mitochondria, chloroplast, endoplasmic reticulum, vacuoles, plasma membrane, cell wall
+      Permeability of cell membranes
+      Cellular division and cancer
+      Recent advancement in cell biology
+    C-3.1 · Cellular components and function
+      Differentiate between plant and animal cell, prokaryote and eukaryote
+      Describe the structural and functional features of cells
+      Explain the role of cells in the structure and functions of organisms
+      Explain activities inside the cell and its interactions with the environment
+      Demonstrate osmosis in cells
+      Prepare slides to observe cell structure
+    C-3.2 · Life processes incl. reproduction
+      Differentiate between diffusion and osmosis
+    C-3.3 · Heredity and variation
+      Explain the role of cell division mitosis and meiosis in creating similarities and variations
+    C-4.2 · Levels of organisation
+      Identify and describe the role of biomolecules in the structure and function of cell
+    C-5.2 · Science in human life, society and ethics
+      Cite case study related to the use of science in human life, for example, Leigh Syndrome and mitochondrial dysfunction
+    C-5.3 · Science in other subjects sport, music, dance
+      Apply learning of a structure and function of muscles cells or joints in dance form and/or sports
+    C-6.1 · Contributions of India
+      Discuss significant contributions of India, for example, Professor Arun Kumar Sharma for his work on chromosomes and methods for its studies
+    C-7.1 · Current understanding
+      Recognise that the cell is a structural unit of life and functional unit of life processes
+    C-7.2 · Open questions
+      Pose questions, such as — Can we create artificial cell which behaves exactly like a natural living cell?
+    C-8.1 · Models and creativity
+      Exhibit creativity and design models using low cost or no-cost eco-friendly material to study structure and functions of cell and cell organelles
+    C-8.2 · Scientific inquiry
+      Carry out an experiment to understand the osmosis
+      Analyze result and present finding using scientific terms
+    Practicals CBSE list of experiments
+      Practical 4: Preparation of stained temporary mounts of a onion peel/ Rhoeo leaf b human cheek cells to record observations and draw their labeled diagrams.
 ```
 
-## Microscopy
+## Key concepts (CBSE syllabus) _(CBSE key concept)_
 
-- Light microscope: eyepiece, objective, stage, mirror/lamp, focus knobs
-- Total magnification = eyepiece × objective
-- Field of view and cell-size estimate (measure, then count across field)
-- Magnification vs resolution: resolving power limits detail
+- Discovery of cell
+- Plant and animal cells
+- Prokaryotic and eukaryotic cells
+- Cell as a structural and functional unit of life; structure and function of key organelles: nucleus, mitochondria, chloroplast, endoplasmic reticulum, vacuoles, plasma membrane, cell wall
+- Permeability of cell membranes
+- Cellular division and cancer
+- Recent advancement in cell biology
 
-## Cell theory
+## C-3.1 · Cellular components and function _(CBSE learning outcomes)_
 
-- Robert Hooke observed cork cells (1665); Leeuwenhoek saw living cells
-- Schleiden and Schwann: all organisms are made of cells
-- Virchow: new cells arise from pre-existing cells
-- Cell = structural and functional unit of life
+- Differentiate between plant and animal cell, prokaryote and eukaryote
+- Describe the structural and functional features of cells
+- Explain the role of cells in the structure and functions of organisms
+- Explain activities inside the cell and its interactions with the environment
+- Demonstrate osmosis in cells
+- Prepare slides to observe cell structure
 
-## Organisation of life
+## C-3.2 · Life processes (incl. reproduction) _(CBSE learning outcomes)_
 
-- Unicellular: Amoeba, Paramecium — one cell performs all functions
-- Multicellular: cells specialise (division of labour)
-- Cell → tissue → organ → organ system → organism
+- Differentiate between diffusion and osmosis
 
-## Types of cells
+## C-3.3 · Heredity and variation _(CBSE learning outcomes)_
 
-- Plant: cell wall, large central vacuole, chloroplasts
-- Animal: no cell wall, small vacuoles, centrioles
-- Bacterial: no membrane-bound nucleus; nucleoid; cell wall
-- Prokaryotic (nucleoid, no organelles) vs eukaryotic (true nucleus, organelles)
+- Explain the role of cell division mitosis and meiosis in creating similarities and variations
 
-## Boundary of the cell
+## C-4.2 · Levels of organisation _(CBSE learning outcomes)_
 
-- Plasma membrane: thin, flexible, selectively permeable
-- Cell wall (plants, fungi, bacteria): rigid, protective, mostly cellulose in plants
-- Exchange of gases and solutes across the membrane
+- Identify and describe the role of biomolecules in the structure and function of cell
 
-## Diffusion and osmosis
+## C-5.2 · Science in human life, society and ethics _(CBSE learning outcomes)_
 
-- Diffusion: movement from high to low concentration (gases, solutes)
-- Osmosis: diffusion of water through a selectively permeable membrane
-- Hypotonic: cell gains water, swells; plant cell becomes turgid
-- Isotonic: no net movement
-- Hypertonic: cell loses water; plasmolysis in plants
-- Activity: potato pieces in water vs concentrated solution
+- Cite case study related to the use of science in human life, for example, Leigh Syndrome and mitochondrial dysfunction
 
-## Organelles
+## C-5.3 · Science in other subjects (sport, music, dance) _(CBSE learning outcomes)_
 
-- Nucleus: chromosomes, DNA, controls cell activities
-- Mitochondria: aerobic respiration, ATP — 'powerhouse'
-- Chloroplasts (plastids): photosynthesis, chlorophyll
-- ER (rough with ribosomes, smooth): protein/lipid synthesis, transport
-- Golgi apparatus: modifies, packages, dispatches
-- Ribosomes: protein synthesis
-- Lysosomes: digestion, waste removal
-- Vacuoles: storage, turgidity
+- Apply learning of a structure and function of muscles cells or joints in dance form and/or sports
 
-## Cell division
+## C-6.1 · Contributions of India _(CBSE learning outcomes)_
 
-- Mitosis: one cell → two identical daughter cells; growth, repair
-- Meiosis: gamete formation; chromosome number halved; variation
-- Compare mitosis vs meiosis (cells produced, chromosome number)
+- Discuss significant contributions of India, for example, Professor Arun Kumar Sharma for his work on chromosomes and methods for its studies
 
-## Practical
+## C-7.1 · Current understanding _(CBSE learning outcomes)_
 
-- Practical 4: prepare and observe onion peel and cheek-cell slides
-- Record labelled diagrams from your own observation
+- Recognise that the cell is a structural unit of life and functional unit of life processes
 
-## Enrichment (not separate marks) _(enrichment, not separate marks)_
+## C-7.2 · Open questions _(CBSE learning outcomes)_
 
-- Fluid-mosaic membrane model
-- Cell culture, cancer, synthetic biology
+- Pose questions, such as — Can we create artificial cell which behaves exactly like a natural living cell?
 
-## Learning outcomes
+## C-8.1 · Models and creativity _(CBSE learning outcomes)_
 
-- Differentiate plant and animal cells; prokaryotic and eukaryotic cells
-- Describe structural and functional features of cells and their role in organisms
-- Explain activities inside a cell and its interaction with the environment
-- Demonstrate osmosis; differentiate diffusion and osmosis
-- Prepare slides to observe cell structure (practical 4)
-- Explain the role of mitosis and meiosis in creating similarities and variations
-- Identify the role of biomolecules in cell structure and function
-- Case study: Leigh syndrome and mitochondrial dysfunction
-- Apply muscle-cell / joint structure to dance and sports
-- Indian contribution: Professor Arun Kumar Sharma — chromosomes and methods for their study
-- Design low-cost, eco-friendly models of cells and organelles
-- Open question: can an artificial cell behave exactly like a natural living cell?
+- Exhibit creativity and design models using low cost or no-cost eco-friendly material to study structure and functions of cell and cell organelles
 
-## Activities
+## C-8.2 · Scientific inquiry _(CBSE learning outcomes)_
 
-- Use a light microscope to compare onion epidermis and cheek-cell mounts (Practical 4).
-- Estimate cell size from measured field diameter and a count across the field; record your own measurements.
-- Investigate osmosis with equal-sized potato pieces in water and concentrated solution; record actual before/after masses.
-- Compare plant, animal and bacterial cells using labelled diagrams and the interactive models.
+- Carry out an experiment to understand the osmosis
+- Analyze result and present finding using scientific terms
 
-## Practicals
+## Practicals (CBSE list of experiments) _(CBSE practical)_
 
-- Practical 4
+- Practical 4: Preparation of stained temporary mounts of (a) onion peel/ Rhoeo leaf (b) human cheek cells to record observations and draw their labeled diagrams.
 
 ## Visual lessons in the app
 
@@ -159,8 +117,3 @@ mindmap
 - How cells are studied · light microscope
 - Cell size, magnification & resolution
 - Cell organelles · detailed animal-cell exploration
-
-## Review notes
-
-- Source mapping: supplied NCERT Exploration calls this ‘Cell: The Building Block of Life’, Chapter 2 (printed pp. 8–27); the current app course remains Class IX 2026–27 Chapter 1.
-- NCERT-only enrichment (including fluid-mosaic detail, cell culture, cancer and synthetic biology) is not presented as separate exam outcomes or chapter marks.

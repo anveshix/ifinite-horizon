@@ -1,70 +1,81 @@
-# Class IX · Ch 8 — Earth as a System: Energy, Matter & Life
+# Class IX · Ch 8 (CBSE ch 13, 12 periods) — Earth as a System: Energy, Matter & Life
 
 *Earth as a system* · पृथ्वी के मंडल, सौर ऊर्जा, विभेदी तापन, पवन व जैव-भू-रासायनिक चक्र।
 
 ```mermaid
 mindmap
   root((Ch 8 Earth as a System: Energy, Matter & Life))
-    Earth as a system
-      Interconnected spheres: atmosphere, hydrosphere, lithosphere, biosphere
-    Solar energy
-      Solar radiation, electromagnetic spectrum
-      Speed of light ≈ 3 × 10⁸ m/s
-    Solar energy and Earth's surface
-      Differential heating of land and water
-      Roles of atmosphere and surface, albedo approximate textbook values
-    Winds
-      Differential warming creates pressure differences, hence winds
-    Biogeochemical cycles
-      Water cycle
-      Carbon cycle
-      Nitrogen cycle
-      Oxygen cycle
-    Human impact
-      Effects on the Earth system, sustainable choices
+    Key concepts CBSE syllabus
+      Earth as interconnected system
+      Nature of solar energy: solar radiation, electromagnetic spectrum, and speed of light
+      Solar energy interaction with the Earth's Surface and differential heating of the Earth the role of the atmosphere and the Earth's surface
+      Differential warming of the Earth causes winds
+      Biogeochemical cycles: water cycle, carbon cycle, nitrogen cycle, oxygen cycle
+      Human impact on Earth's system
+    C-2.8 · Interconnected systems on Earth
+      Explain the interconnectedness between different spheres of the Earth biosphere, geosphere, hydrosphere, cryosphere and atmosphere
+      Explain the nature of solar radiation
+      Explain that solar radiation is an electromagnetic waves having different frequencies
+      Explain how heat from the Sun warms the Earth's surface differently based on the shape, latitude and tilt of the Earth
+      Explain the interaction of solar radiation with the Earth's surface and relate the differential heating of the Earth's surface with the atmospheric phenomena, such as air movement, evaporation, etc., and describe phenomena like mountain, valley, sea and land breezes
+      Describe how the latitude and tilt of the Earth, and absorption and reflection of solar radiation by different surfaces cause differential heating of the Earth's surface
+      Identify various components of the Earth that interact with solar energy
+      Explain the role of the atmosphere in influencing weather and climate on the Earth
+      Identify the reflectivity of different materials through reliable scientific sources, such as the internet and books
+      Describe how elements like carbon, nitrogen, oxygen and water are recycled between biotic and abiotic environments
+      Explain biogeochemical cycles, and the roles of biogeochemical cycles in circulating matter and energy continuously between the non-living environment abiotic and living biotic organisms, making nutrients available, and maintaining environmental balance
+    C-6.1 · Contributions of India
+      Reflect the changing nature of Earth's environment through our traditional knowledge
+    C-7.2 · Open questions
+      Pose questions, such as — What will happen if there is no differential heating of the Earth?
+    C-8.1 · Models and creativity
+      Draw flow charts, concept maps for biogeochemical cycles, differential heating of the Earth's surface and Electromagnetic spectrum
+    C-8.2 · Scientific inquiry
+      Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of differential heating of the Earth and biogeochemical cycle
+      Predict the results of an experiment or investigation based on their hypotheses
+      Communicate findings and conclusions effectively, such as those from experiments, activities or projects, both orally and in written form
 ```
 
-## Earth as a system
+## Key concepts (CBSE syllabus) _(CBSE key concept)_
 
-- Interconnected spheres: atmosphere, hydrosphere, lithosphere, biosphere
+- Earth as interconnected system
+- Nature of solar energy: solar radiation, electromagnetic spectrum, and speed of light
+- Solar energy interaction with the Earth's Surface and differential heating of the Earth (the role of the atmosphere and the Earth's surface)
+- Differential warming of the Earth causes winds
+- Biogeochemical cycles: water cycle, carbon cycle, nitrogen cycle, oxygen cycle
+- Human impact on Earth's system
 
-## Solar energy
+## C-2.8 · Interconnected systems on Earth _(CBSE learning outcomes)_
 
-- Solar radiation, electromagnetic spectrum
-- Speed of light ≈ 3 × 10⁸ m/s
+- Explain the interconnectedness between different spheres of the Earth (biosphere, geosphere, hydrosphere, cryosphere and atmosphere)
+- Explain the nature of solar radiation
+- Explain that solar radiation is an electromagnetic waves having different frequencies
+- Explain how heat from the Sun warms the Earth's surface differently based on the shape, latitude and tilt of the Earth
+- Explain the interaction of solar radiation with the Earth's surface and relate the differential heating of the Earth's surface with the atmospheric phenomena, such as air movement, evaporation, etc., and describe phenomena like mountain, valley, sea and land breezes
+- Describe how the latitude and tilt of the Earth, and absorption and reflection of solar radiation by different surfaces cause differential heating of the Earth's surface
+- Identify various components of the Earth that interact with solar energy
+- Explain the role of the atmosphere in influencing weather and climate on the Earth
+- Identify the reflectivity of different materials through reliable scientific sources, such as the internet and books
+- Describe how elements like carbon, nitrogen, oxygen and water are recycled between biotic and abiotic environments
+- Explain biogeochemical cycles, and the roles of biogeochemical cycles in circulating matter and energy continuously between the non-living environment (abiotic) and living (biotic) organisms, making nutrients available, and maintaining environmental balance
 
-## Solar energy and Earth's surface
+## C-6.1 · Contributions of India _(CBSE learning outcomes)_
 
-- Differential heating of land and water
-- Roles of atmosphere and surface; albedo (approximate textbook values)
+- Reflect the changing nature of Earth's environment through our traditional knowledge
 
-## Winds
+## C-7.2 · Open questions _(CBSE learning outcomes)_
 
-- Differential warming creates pressure differences, hence winds
+- Pose questions, such as — What will happen if there is no differential heating of the Earth?
 
-## Biogeochemical cycles
+## C-8.1 · Models and creativity _(CBSE learning outcomes)_
 
-- Water cycle
-- Carbon cycle
-- Nitrogen cycle
-- Oxygen cycle
+- Draw flow charts, concept maps for biogeochemical cycles, differential heating of the Earth's surface and Electromagnetic spectrum
 
-## Human impact
+## C-8.2 · Scientific inquiry _(CBSE learning outcomes)_
 
-- Effects on the Earth system; sustainable choices
-
-## Learning outcomes
-
-- Explain interconnections among biosphere, geosphere, hydrosphere, cryosphere, atmosphere
-- Explain solar radiation as electromagnetic waves of different frequencies
-- Explain differential heating by shape, latitude, tilt, absorption and reflection (albedo)
-- Relate heating to air movement, evaporation, mountain/valley and sea/land breezes
-- Explain the atmosphere’s role in weather and climate; identify reflectivity of materials from reliable sources
-- Describe recycling of carbon, nitrogen, oxygen and water between biotic and abiotic environments
-- Explain how cycles circulate matter and energy and maintain balance
-- Reflect on changing conditions using traditional knowledge
-- Draw flowcharts / concept maps; form hypotheses and predict outcomes
-- Open question: what if Earth had no differential heating?
+- Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of differential heating of the Earth and biogeochemical cycle
+- Predict the results of an experiment or investigation based on their hypotheses
+- Communicate findings and conclusions effectively, such as those from experiments, activities or projects, both orally and in written form
 
 ## Visual lessons in the app
 
@@ -73,7 +84,3 @@ mindmap
 - Differential heating of Earth
 - Winds: sea, land, mountain, valley
 - Water, carbon, nitrogen & oxygen cycles
-
-## Review notes
-
-- Albedo and spectrum values are approximate textbook figures.

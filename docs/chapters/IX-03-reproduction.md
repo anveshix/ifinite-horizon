@@ -1,99 +1,97 @@
-# Class IX · Ch 3 — Reproduction
+# Class IX · Ch 3 (CBSE ch 11, 13 periods) — Reproduction
 
 *World of living* · पादपों व मनुष्यों में अलैंगिक व लैंगिक जनन; जनन स्वास्थ्य।
 
 ```mermaid
 mindmap
   root((Ch 3 Reproduction))
-    Why organisms reproduce
-      Continuity of species
-      Variation and survival
-      Sexual vs asexual forms
-    Asexual reproduction
-      Binary fission: Amoeba, bacteria
-      Budding: Hydra, yeast
-      Fragmentation: Spirogyra
-      Spore formation: Rhizopus
-      Vegetative propagation: cutting, layering, grafting
-    Flowering plants
-      Flower parts: sepals, petals, stamens, carpel
-      Pollination: self vs cross, agents wind, insects, water
-      Fertilisation → zygote → seed, ovary → fruit
-      Seed dispersal: wind, water, animals, explosion
-    Human reproduction neutral, age-appropriate
-      Male and female reproductive systems
-      Gametes: sperm and egg, fertilisation
-      Pregnancy and embryo development
-      Menstrual cycle
-    Reproductive health
-      Hygiene and awareness
-      Prevention of infection
-    Birth control
-      Methods and their importance
-      Population and health considerations
-    Practicals
-      Practical 6 and Practical 7 see app practical overlay
+    Key concepts CBSE syllabus
+      Introduction to different forms of reproduction — sexual and asexual
+      Types of asexual reproduction with examples
+      Sexual reproduction in flowering plants: flower and its parts, pollination, fertilisation, seed dispersal
+      Sexual reproduction in humans: male and female reproductive systems: structure and function, formation of gametes, sperm and egg, fertilisation, pregnancy and development of embryo, menstrual cycle
+      Reproductive health and hygiene
+      Introduction to birth control methods and importance
+    C-2.8 · Interconnected systems on Earth
+      Analyse the interactions between members of different groups of organisms, such as plants and pollinators
+    C-3.2 · Life processes incl. reproduction
+      Compare asexual and sexual reproduction
+      Describe male and female reproductive organs in plants and animals
+      Differentiate between ovule and seed, ovary and fruit
+      Explain pollination and fertilisation
+    C-3.3 · Heredity and variation
+      Explain how variations are introduced by sexual reproduction
+    C-4.3 · Organisms and their environment
+      Identify and explain the role of biotic and abiotic agents in seed dispersal and pollination
+    C-5.1 · Literature, arts and representation
+      Illustrate the structure of male and female reproductive units or systems in plants and animals
+    C-5.2 · Science in human life, society and ethics
+      Recognise the significance of contraceptive devices for population control and health including reproductive health
+    C-6.1 · Contributions of India
+      Describe the contribution of India to the understanding of human anatomy
+      Discuss significant contributions of India, for example, Professor Panchanan Maheshwari for laying the foundation of plant cell and tissue culture research in India
+    C-7.1 · Current understanding
+      Recognise the importance of improvements in medical field for assisted reproductive technologies
+    C-7.2 · Open questions
+      Pose questions, such as — How do heavy metals harm reproductive organs? Can extreme heat affect fertility?
+    Practicals CBSE list of experiments
+      Practical 6: To study a budding in yeast and Hydra b spore formation in bread mold with the help of prepared slides
+      Practical 7: To study and identify different parts of a typical bisexual flower. Draw labeled diagrams.
 ```
 
-## Why organisms reproduce
+## Key concepts (CBSE syllabus) _(CBSE key concept)_
 
-- Continuity of species
-- Variation and survival
-- Sexual vs asexual forms
+- Introduction to different forms of reproduction — sexual and asexual
+- Types of asexual reproduction with examples
+- Sexual reproduction in flowering plants: flower and its parts, pollination, fertilisation, seed dispersal
+- Sexual reproduction in humans: male and female reproductive systems: structure and function, formation of gametes, sperm and egg, fertilisation, pregnancy and development of embryo, menstrual cycle
+- Reproductive health and hygiene
+- Introduction to birth control methods and importance
 
-## Asexual reproduction
+## C-2.8 · Interconnected systems on Earth _(CBSE learning outcomes)_
 
-- Binary fission: Amoeba, bacteria
-- Budding: Hydra, yeast
-- Fragmentation: Spirogyra
-- Spore formation: Rhizopus
-- Vegetative propagation: cutting, layering, grafting
+- Analyse the interactions between members of different groups of organisms, such as plants and pollinators
 
-## Flowering plants
+## C-3.2 · Life processes (incl. reproduction) _(CBSE learning outcomes)_
 
-- Flower parts: sepals, petals, stamens, carpel
-- Pollination: self vs cross; agents wind, insects, water
-- Fertilisation → zygote → seed; ovary → fruit
-- Seed dispersal: wind, water, animals, explosion
-
-## Human reproduction (neutral, age-appropriate)
-
-- Male and female reproductive systems
-- Gametes: sperm and egg; fertilisation
-- Pregnancy and embryo development
-- Menstrual cycle
-
-## Reproductive health
-
-- Hygiene and awareness
-- Prevention of infection
-
-## Birth control
-
-- Methods and their importance
-- Population and health considerations
-
-## Practicals
-
-- Practical 6 and Practical 7 (see app practical overlay)
-
-## Learning outcomes
-
-- Analyse interactions between plants and pollinators
-- Compare sexual and asexual reproduction
+- Compare asexual and sexual reproduction
 - Describe male and female reproductive organs in plants and animals
-- Differentiate ovule and seed; ovary and fruit
-- Explain pollination and fertilisation; how sexual reproduction introduces variation
-- Identify biotic and abiotic agents in pollination and seed dispersal
-- Recognise the significance of contraceptive devices for population control and health
-- India’s contribution to understanding human anatomy; Professor Panchanan Maheshwari (plant embryology / tissue culture)
-- Recognise improvements in assisted reproductive technologies
-- Open questions: do heavy metals harm reproductive organs? can extreme heat affect fertility?
+- Differentiate between ovule and seed; ovary and fruit
+- Explain pollination and fertilisation
 
-## Practicals
+## C-3.3 · Heredity and variation _(CBSE learning outcomes)_
 
-- Practical 6
-- Practical 7
+- Explain how variations are introduced by sexual reproduction
+
+## C-4.3 · Organisms and their environment _(CBSE learning outcomes)_
+
+- Identify and explain the role of biotic and abiotic agents in seed dispersal and pollination
+
+## C-5.1 · Literature, arts and representation _(CBSE learning outcomes)_
+
+- Illustrate the structure of male and female reproductive units or systems in plants and animals
+
+## C-5.2 · Science in human life, society and ethics _(CBSE learning outcomes)_
+
+- Recognise the significance of contraceptive devices for population control and health including reproductive health
+
+## C-6.1 · Contributions of India _(CBSE learning outcomes)_
+
+- Describe the contribution of India to the understanding of human anatomy
+- Discuss significant contributions of India, for example, Professor Panchanan Maheshwari for laying the foundation of plant cell and tissue culture research in India
+
+## C-7.1 · Current understanding _(CBSE learning outcomes)_
+
+- Recognise the importance of improvements in medical field for assisted reproductive technologies
+
+## C-7.2 · Open questions _(CBSE learning outcomes)_
+
+- Pose questions, such as — How do heavy metals harm reproductive organs? Can extreme heat affect fertility?
+
+## Practicals (CBSE list of experiments) _(CBSE practical)_
+
+- Practical 6: To study (a) budding in yeast and Hydra (b) spore formation in bread mold with the help of prepared slides
+- Practical 7: To study and identify different parts of a typical bisexual flower. Draw labeled diagrams.
 
 ## Visual lessons in the app
 
@@ -103,7 +101,3 @@ mindmap
 - Flower, pollination & fertilisation
 - Seed dispersal agents
 - Human reproduction
-
-## Review notes
-
-- Human-reproduction content is kept neutral, non-graphic and age-appropriate.

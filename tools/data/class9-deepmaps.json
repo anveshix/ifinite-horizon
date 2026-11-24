@@ -1,94 +1,1070 @@
-{"course":"Class IX · Science (086) · CBSE 2026–27 — branches follow api/ai/curriculum.json keyConcepts (sourced from the CBSE 2026–27 PDF); sub-points are textbook-standard elaborations to be verified by a subject teacher.",
-"chapters":[
-{"no":1,"branches":[
-{"n":"Microscopy","i":["Light microscope: eyepiece, objective, stage, mirror/lamp, focus knobs","Total magnification = eyepiece × objective","Field of view and cell-size estimate (measure, then count across field)","Magnification vs resolution: resolving power limits detail"]},
-{"n":"Cell theory","i":["Robert Hooke observed cork cells (1665); Leeuwenhoek saw living cells","Schleiden and Schwann: all organisms are made of cells","Virchow: new cells arise from pre-existing cells","Cell = structural and functional unit of life"]},
-{"n":"Organisation of life","i":["Unicellular: Amoeba, Paramecium — one cell performs all functions","Multicellular: cells specialise (division of labour)","Cell → tissue → organ → organ system → organism"]},
-{"n":"Types of cells","i":["Plant: cell wall, large central vacuole, chloroplasts","Animal: no cell wall, small vacuoles, centrioles","Bacterial: no membrane-bound nucleus; nucleoid; cell wall","Prokaryotic (nucleoid, no organelles) vs eukaryotic (true nucleus, organelles)"]},
-{"n":"Boundary of the cell","i":["Plasma membrane: thin, flexible, selectively permeable","Cell wall (plants, fungi, bacteria): rigid, protective, mostly cellulose in plants","Exchange of gases and solutes across the membrane"]},
-{"n":"Diffusion and osmosis","i":["Diffusion: movement from high to low concentration (gases, solutes)","Osmosis: diffusion of water through a selectively permeable membrane","Hypotonic: cell gains water, swells; plant cell becomes turgid","Isotonic: no net movement","Hypertonic: cell loses water; plasmolysis in plants","Activity: potato pieces in water vs concentrated solution"]},
-{"n":"Organelles","i":["Nucleus: chromosomes, DNA, controls cell activities","Mitochondria: aerobic respiration, ATP — 'powerhouse'","Chloroplasts (plastids): photosynthesis, chlorophyll","ER (rough with ribosomes, smooth): protein/lipid synthesis, transport","Golgi apparatus: modifies, packages, dispatches","Ribosomes: protein synthesis","Lysosomes: digestion, waste removal","Vacuoles: storage, turgidity"]},
-{"n":"Cell division","i":["Mitosis: one cell → two identical daughter cells; growth, repair","Meiosis: gamete formation; chromosome number halved; variation","Compare mitosis vs meiosis (cells produced, chromosome number)"]},
-{"n":"Practical","i":["Practical 4: prepare and observe onion peel and cheek-cell slides","Record labelled diagrams from your own observation"]},
-{"n":"Enrichment (not separate marks)","i":["Fluid-mosaic membrane model","Cell culture, cancer, synthetic biology"],"scope":"enrichment"}]},
-{"no":2,"branches":[
-{"n":"What is a tissue","i":["Organised group of similar cells doing a particular function","Division of labour; levels of organisation","Structure is related to function"]},
-{"n":"Meristematic tissue","i":["Dividing cells; dense cytoplasm, thin wall, no vacuole","Apical meristem at root and shoot tips: increases length","Cells differentiate into permanent tissue"]},
-{"n":"Simple permanent tissues","i":["Parenchyma: living, thin wall, storage; chlorenchyma; aerenchyma","Collenchyma: unevenly thickened corners, flexibility","Sclerenchyma: dead, lignified, hard — husk, nut shells"]},
-{"n":"Protective tissue","i":["Epidermis: protective layer; waxy cuticle reduces water loss","Root hairs absorb water","Stomata: guard cells, gas exchange and transpiration"]},
-{"n":"Complex tissues","i":["Xylem: tracheids, vessels — water and minerals upward","Phloem: sieve tubes, companion cells — food transport","Cooperating cell types"]},
-{"n":"Animal tissues","i":["Epithelial: skin, lining; tight packing, protection, absorption","Connective: blood, bone, cartilage, tendon, ligament, areolar, adipose","Muscular: striated (voluntary), unstriated (involuntary), cardiac","Nervous: neurons carry impulses"]},
-{"n":"Musculoskeletal system","i":["Bones, muscles, cartilage, tendons, ligaments","Joints: hinge, ball-and-socket, pivot, gliding, fixed","Tendon joins muscle to bone; ligament joins bone to bone"]},
-{"n":"Practical","i":["Practical 5: onion-root growth, apical meristem; record and graph measurements"]},
-{"n":"Enrichment (not separate marks)","i":["Lateral/intercalary meristems, annual rings, totipotency, plant tissue culture"],"scope":"enrichment"}]},
-{"no":3,"branches":[
-{"n":"Why organisms reproduce","i":["Continuity of species","Variation and survival","Sexual vs asexual forms"]},
-{"n":"Asexual reproduction","i":["Binary fission: Amoeba, bacteria","Budding: Hydra, yeast","Fragmentation: Spirogyra","Spore formation: Rhizopus","Vegetative propagation: cutting, layering, grafting"]},
-{"n":"Flowering plants","i":["Flower parts: sepals, petals, stamens, carpel","Pollination: self vs cross; agents wind, insects, water","Fertilisation → zygote → seed; ovary → fruit","Seed dispersal: wind, water, animals, explosion"]},
-{"n":"Human reproduction (neutral, age-appropriate)","i":["Male and female reproductive systems","Gametes: sperm and egg; fertilisation","Pregnancy and embryo development","Menstrual cycle"]},
-{"n":"Reproductive health","i":["Hygiene and awareness","Prevention of infection"]},
-{"n":"Birth control","i":["Methods and their importance","Population and health considerations"]},
-{"n":"Practicals","i":["Practical 6 and Practical 7 (see app practical overlay)"]}]},
-{"no":4,"branches":[
-{"n":"Why classify","i":["Easier study of the vast diversity of organisms","Shows relationships and evolutionary links"]},
-{"n":"Five kingdoms","i":["Monera: bacteria, no nucleus","Protista: unicellular eukaryotes","Fungi: heterotrophic, cell wall (chitin)","Plantae: autotrophic, cell wall","Animalia: heterotrophic, no cell wall"]},
-{"n":"Major divisions","i":["Plant and animal divisions per prescribed textbook (not enumerated in the syllabus PDF; confirm with teacher/textbook)"],"scope":"verify"},
-{"n":"Binomial nomenclature","i":["Two-part name: Genus + species (Linnaeus)","Italicised/underlined; genus capitalised","Universal scientific naming; example Homo sapiens"]},
-{"n":"Viruses","i":["Acellular entities; need a host cell to reproduce","Not placed in the five kingdoms"]},
-{"n":"Practical","i":["Practical 8 (see app practical overlay)"]}]},
-{"no":5,"branches":[
-{"n":"Types of mixtures","i":["Homogeneous: same composition throughout","Heterogeneous: visible parts, non-uniform"]},
-{"n":"Solutions, suspensions, colloids","i":["Solution: particles < 1 nm, stable, no Tyndall effect","Suspension: particles visible, settle, filterable","Colloid: intermediate; Tyndall effect, does not settle"]},
-{"n":"Concentration","i":["Mass by mass % = (mass of solute / mass of solution) × 100","Mass by volume % = (mass of solute / volume of solution) × 100","Volume by volume % = (volume of solute / volume of solution) × 100"]},
-{"n":"Separation methods","i":["Crystallisation: pure solid from solution","Distillation: liquids with different boiling points","Paper chromatography: components of ink/dyes","Sublimation: camphor, ammonium chloride, NaCl mixture","Centrifugation: separate by density","Coagulation: clump colloidal particles"]},
-{"n":"Practicals","i":["Practicals 1 and 2 (see app practical overlay)"]}]},
-{"no":6,"branches":[
-{"n":"Atoms and elements","i":["Atom: basic unit of an element","Symbols of elements"]},
-{"n":"Subatomic particles","i":["Electron (−1), proton (+1), neutron (0)","Nucleus holds protons and neutrons; electrons around"]},
-{"n":"Atomic models","i":["Thomson: plum-pudding","Rutherford: nuclear model; alpha-scattering experiment","Bohr: electrons in fixed shells (syllabus model, not full quantum picture)"]},
-{"n":"Electron distribution","i":["Shells K, L, M, N hold 2, 8, 18, 32 (max)","Filling for the first 18 elements","Outer shell: valence electrons"]},
-{"n":"Valency","i":["Combining capacity of an atom","From outer-shell electrons gained, lost or shared"]},
-{"n":"Atomic number and mass number","i":["Atomic number Z = protons","Mass number A = protons + neutrons"]},
-{"n":"Isotopes and isobars","i":["Isotopes: same Z, different A (e.g. protium, deuterium)","Isobars: same A, different Z"]}]},
-{"no":7,"branches":[
-{"n":"Laws of chemical combination","i":["Conservation of mass: mass of reactants = mass of products","Constant proportion: a compound has fixed mass ratio of elements"]},
-{"n":"Dalton's atomic theory","i":["Matter is made of indivisible atoms","Atoms of one element are identical","Atoms combine in small whole-number ratios","Atoms are neither created nor destroyed in a reaction"]},
-{"n":"Molecules","i":["Molecules of elements: H2, O2, O3, P4, S8","Covalent compounds: shared electrons; low melting/boiling points; usually poor conductors","Ions and ionic compounds: cations and anions; high melting point; conduct when molten or dissolved"]},
-{"n":"Chemical formulae","i":["Write symbols, show valencies, criss-cross","Examples: NaCl, MgCl2, Al2O3, H2O"]},
-{"n":"Mass relations","i":["Molecular mass: sum of atomic masses","Formula-unit mass for ionic compounds"]},
-{"n":"Practical","i":["Practical 3 (see app practical overlay)"]}]},
-{"no":8,"branches":[
-{"n":"Earth as a system","i":["Interconnected spheres: atmosphere, hydrosphere, lithosphere, biosphere"]},
-{"n":"Solar energy","i":["Solar radiation, electromagnetic spectrum","Speed of light ≈ 3 × 10⁸ m/s"]},
-{"n":"Solar energy and Earth's surface","i":["Differential heating of land and water","Roles of atmosphere and surface; albedo (approximate textbook values)"]},
-{"n":"Winds","i":["Differential warming creates pressure differences, hence winds"]},
-{"n":"Biogeochemical cycles","i":["Water cycle","Carbon cycle","Nitrogen cycle","Oxygen cycle"]},
-{"n":"Human impact","i":["Effects on the Earth system; sustainable choices"]}]},
-{"no":9,"branches":[
-{"n":"Describing motion","i":["Distance vs displacement","Speed vs velocity","Acceleration; uniform and non-uniform"]},
-{"n":"Graphs","i":["Position–time graph: slope = velocity","Velocity–time graph: slope = acceleration; area = displacement"]},
-{"n":"Kinematic equations (graphical derivation)","i":["v = u + at","s = ut + ½at²","v² = u² + 2as"]},
-{"n":"Circular motion","i":["Uniform circular motion: constant speed, changing direction (elementary idea)"]},
-{"n":"Practical","i":["Practical 13 (see app practical overlay)"]}]},
-{"no":10,"branches":[
-{"n":"Force","i":["Balanced and unbalanced forces","Effects: change in speed, direction or shape"]},
-{"n":"Friction","i":["Opposes relative motion; static, sliding, rolling","Useful and harmful aspects"]},
-{"n":"Newton's first law","i":["Inertia; mass is its measure"]},
-{"n":"Newton's second law","i":["F = ma; momentum p = mv; F = rate of change of momentum"]},
-{"n":"Newton's third law","i":["Action and reaction are equal, opposite, on different bodies"]},
-{"n":"Practical","i":["Practical 12 (see app practical overlay)"]}]},
-{"no":11,"branches":[
-{"n":"Work","i":["W = F s cosθ for a constant force; unit joule","Zero when no displacement or force ⟂ displacement"]},
-{"n":"Energy","i":["Kinetic energy ½mv²","Potential energy mgh","Work–energy theorem: W = ΔKE","Conservation of energy; conversions"]},
-{"n":"Power","i":["P = W/t; unit watt"]},
-{"n":"Simple machines","i":["Lever, pulley, inclined plane","Mechanical advantage = load / effort"]},
-{"n":"Practicals","i":["Practicals 9 and 11 (see app practical overlay)"]}]},
-{"no":12,"branches":[
-{"n":"Production","i":["Vibrating bodies produce sound"]},
-{"n":"Propagation","i":["Longitudinal wave: compressions and rarefactions","Needs a medium; no sound in vacuum"]},
-{"n":"Wave graph and quantities","i":["Wavelength, frequency, time period, amplitude","v = f λ","Intensity and speed"]},
-{"n":"Perception","i":["Pitch ↔ frequency","Loudness ↔ amplitude/intensity"]},
-{"n":"Different media","i":["Speed is greatest in solids, least in gases"]},
-{"n":"Reflection","i":["Echo","Reverberation","Echolocation: bats, dolphins, SONAR"]},
-{"n":"Practical","i":["Practical 10 (see app practical overlay)"]}]}
-]}
+{
+"source": "CBSE Science (086) Class IX 2026-27 syllabus, ScienceSt_SecP1_2026-27.pdf (key concepts, learning outcomes, periods, practicals transcribed from the PDF; competency titles condensed from its CG/C statements). Class IX unit marks: World of Living 27, Matter 25, Motion/Force/Work/Sound 23, Earth as a system 5; theory 80 + internal assessment 20.",
+"practicals": {
+"1": "Preparation of: (a) a true solution of common salt, sugar and alum (b) a suspension of soil, chalk powder and fine sand in water (c) a colloidal solution of starch in water and egg albumin/milk in water; distinguish on the basis of transparency, filtration criterion, stability, Tyndall's effect",
+"2": "Separation of components of mixtures: (a) Oil and water – Separating Funnel (b) Colours in black ink – Paper Chromatography (c) Ammonium chloride and common salt – Sublimation (d) Muddy water using alum – Coagulation",
+"3": "Verification of the law of conservation of mass in a chemical reaction.",
+"4": "Preparation of stained temporary mounts of (a) onion peel/ Rhoeo leaf (b) human cheek cells to record observations and draw their labeled diagrams.",
+"5": "To study and identify tissues in plants (Parenchyma, Collenchyma and Sclerenchyma) and animals (striped, smooth and cardiac muscle fibers) from prepared slides. Draw their labeled diagrams.",
+"6": "To study (a) budding in yeast and Hydra (b) spore formation in bread mold with the help of prepared slides",
+"7": "To study and identify different parts of a typical bisexual flower. Draw labeled diagrams.",
+"8": "To study the Specimens/virtual specimens/slides/models for identification – (a) Spirogyra, mushroom, moss, fern, pine cone (b) Amoeba, Hydra, tapeworm, Ascaris, earthworm, butterfly, snail, starfish",
+"9": "Verification of law of conservation of energy using a simple pendulum.",
+"10": "Determination of speed of a pulse propagated through a stretched string/ slinky (helical spring).",
+"11": "Calculation of Mechanical Advantage of a lever using the formula M.A = Load /Effort.",
+"12": "Verification of Newton's Second Law of Motion using a trolley, pulley and hanging masses.",
+"13": "Plotting of distance-time and velocity time graphs using an inclined plane."
+},
+"compTitles": {
+"C-1.1": "Atomic structure, valency, classification",
+"C-1.2": "Nature and properties of chemical substances",
+"C-1.3": "Symbols and chemical representation",
+"C-2.1": "Newton's laws and motion in one dimension",
+"C-2.5": "Work and energy",
+"C-2.6": "Mechanical advantage, simple machines",
+"C-2.7": "Origin and properties of sound",
+"C-2.8": "Interconnected systems on Earth",
+"C-3.1": "Cellular components and function",
+"C-3.2": "Life processes (incl. reproduction)",
+"C-3.3": "Heredity and variation",
+"C-4.1": "Classification into five kingdoms",
+"C-4.2": "Levels of organisation",
+"C-4.3": "Organisms and their environment",
+"C-5.1": "Literature, arts and representation",
+"C-5.2": "Science in human life, society and ethics",
+"C-5.3": "Science in other subjects (sport, music, dance)",
+"C-6.1": "Contributions of India",
+"C-7.1": "Current understanding",
+"C-7.2": "Open questions",
+"C-8.1": "Models and creativity",
+"C-8.2": "Scientific inquiry"
+},
+"chapters": [
+{
+"no": 1,
+"cbse": 2,
+"periods": 12,
+"kc": [
+[
+"Discovery of cell"
+],
+[
+"Plant and animal cells"
+],
+[
+"Prokaryotic and eukaryotic cells"
+],
+[
+"Cell as a structural and functional unit of life; structure and function of key organelles",
+[
+"nucleus",
+"mitochondria",
+"chloroplast",
+"endoplasmic reticulum",
+"vacuoles",
+"plasma membrane",
+"cell wall"
+]
+],
+[
+"Permeability of cell membranes"
+],
+[
+"Cellular division and cancer"
+],
+[
+"Recent advancement in cell biology"
+]
+],
+"lo": [
+{
+"c": "C-3.1",
+"i": [
+"Differentiate between plant and animal cell, prokaryote and eukaryote",
+"Describe the structural and functional features of cells",
+"Explain the role of cells in the structure and functions of organisms",
+"Explain activities inside the cell and its interactions with the environment",
+"Demonstrate osmosis in cells",
+"Prepare slides to observe cell structure"
+]
+},
+{
+"c": "C-3.2",
+"i": [
+"Differentiate between diffusion and osmosis"
+]
+},
+{
+"c": "C-3.3",
+"i": [
+"Explain the role of cell division mitosis and meiosis in creating similarities and variations"
+]
+},
+{
+"c": "C-4.2",
+"i": [
+"Identify and describe the role of biomolecules in the structure and function of cell"
+]
+},
+{
+"c": "C-5.2",
+"i": [
+"Cite case study related to the use of science in human life, for example, Leigh Syndrome and mitochondrial dysfunction"
+]
+},
+{
+"c": "C-5.3",
+"i": [
+"Apply learning of a structure and function of muscles cells or joints in dance form and/or sports"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Discuss significant contributions of India, for example, Professor Arun Kumar Sharma for his work on chromosomes and methods for its studies"
+]
+},
+{
+"c": "C-7.1",
+"i": [
+"Recognise that the cell is a structural unit of life and functional unit of life processes"
+]
+},
+{
+"c": "C-7.2",
+"i": [
+"Pose questions, such as — Can we create artificial cell which behaves exactly like a natural living cell?"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Exhibit creativity and design models using low cost or no-cost eco-friendly material to study structure and functions of cell and cell organelles"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Carry out an experiment to understand the osmosis",
+"Analyze result and present finding using scientific terms"
+]
+}
+],
+"prac": [
+4
+]
+},
+{
+"no": 2,
+"cbse": 3,
+"periods": 13,
+"kc": [
+[
+"Tissues: Introduction and importance"
+],
+[
+"Level of organisation in the living organisms"
+],
+[
+"Plant and animal tissues"
+],
+[
+"Types of plant tissues"
+],
+[
+"Meristematic tissues (types and function of each)"
+],
+[
+"Permanent tissues (types, structure and function of each)"
+],
+[
+"Animal tissues"
+],
+[
+"Overview (epithelial, connective, muscular and nervous tissues — types, structure and function of each)"
+],
+[
+"Elementary idea of musculoskeletal system"
+],
+[
+"Care of musculoskeletal system: injuries, postural care, nutrition and exercise"
+]
+],
+"lo": [
+{
+"c": "C-4.2",
+"i": [
+"Differentiate between plant and animal tissues; meristematic and permanent tissues; simple and complex tissues; parenchyma, collenchyma and sclerenchyma; xylem and phloem; striated smooth and cardiac muscles",
+"Different types of joints",
+"Relate the structure of the different types of tissues with their functions",
+"Explain the role of various types of tissues in plants and animals",
+"Describe the level of organisation in a multicellular organism"
+]
+},
+{
+"c": "C-5.3",
+"i": [
+"Establish the correlation between different tissues for fitness, for example, role of muscles, cartilage and bones in facilitating movement"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Explain the importance of yoga exercises for physical agility and in maintaining the correct posture",
+"Discuss significant contributions of India, for example, Professor Sipra Guha Mukherjee and Professor S.C. Maheshwari for their significant contribution in the plant cell and tissue culture research in India"
+]
+},
+{
+"c": "C-7.1",
+"i": [
+"Discuss the techniques and medical recommendations in recovery from muscular injuries"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Carry out an experiment to understand the growth in plant due to apical meristem",
+"Represent data in multiple modes, including appropriate figures, tables, graphs, or digital formats, interpret and draw inferences from the data",
+"Analyse results and present findings using scientific terms",
+"Communicate findings and conclusions effectively, such as those from experiments, activities, or projects, both orally and in written form"
+]
+}
+],
+"prac": [
+5
+]
+},
+{
+"no": 3,
+"cbse": 11,
+"periods": 13,
+"kc": [
+[
+"Introduction to different forms of reproduction — sexual and asexual"
+],
+[
+"Types of asexual reproduction with examples"
+],
+[
+"Sexual reproduction in flowering plants",
+[
+"flower and its parts",
+"pollination",
+"fertilisation",
+"seed dispersal"
+]
+],
+[
+"Sexual reproduction in humans: male and female reproductive systems",
+[
+"structure and function",
+"formation of gametes, sperm and egg",
+"fertilisation",
+"pregnancy and development of embryo",
+"menstrual cycle"
+]
+],
+[
+"Reproductive health and hygiene"
+],
+[
+"Introduction to birth control methods and importance"
+]
+],
+"lo": [
+{
+"c": "C-2.8",
+"i": [
+"Analyse the interactions between members of different groups of organisms, such as plants and pollinators"
+]
+},
+{
+"c": "C-3.2",
+"i": [
+"Compare asexual and sexual reproduction",
+"Describe male and female reproductive organs in plants and animals",
+"Differentiate between ovule and seed; ovary and fruit",
+"Explain pollination and fertilisation"
+]
+},
+{
+"c": "C-3.3",
+"i": [
+"Explain how variations are introduced by sexual reproduction"
+]
+},
+{
+"c": "C-4.3",
+"i": [
+"Identify and explain the role of biotic and abiotic agents in seed dispersal and pollination"
+]
+},
+{
+"c": "C-5.1",
+"i": [
+"Illustrate the structure of male and female reproductive units or systems in plants and animals"
+]
+},
+{
+"c": "C-5.2",
+"i": [
+"Recognise the significance of contraceptive devices for population control and health including reproductive health"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Describe the contribution of India to the understanding of human anatomy",
+"Discuss significant contributions of India, for example, Professor Panchanan Maheshwari for laying the foundation of plant cell and tissue culture research in India"
+]
+},
+{
+"c": "C-7.1",
+"i": [
+"Recognise the importance of improvements in medical field for assisted reproductive technologies"
+]
+},
+{
+"c": "C-7.2",
+"i": [
+"Pose questions, such as — How do heavy metals harm reproductive organs? Can extreme heat affect fertility?"
+]
+}
+],
+"prac": [
+6,
+7
+]
+},
+{
+"no": 4,
+"cbse": 12,
+"periods": 12,
+"kc": [
+[
+"Importance of classification"
+],
+[
+"Five kingdoms and their key features with examples"
+],
+[
+"Major division of animals and plants"
+],
+[
+"Binomial nomenclature"
+],
+[
+"Acellular entities: viruses"
+]
+],
+"lo": [
+{
+"c": "C-4.1",
+"i": [
+"Distinguish organisms based on certain characteristics, such as number of cells present, cellular organisation and mode of nutrition",
+"Classify various organisms in groups, such as five kingdoms, on the basis of their cellular organisation and ecological role",
+"Describe the significance and rules of binomial nomenclature",
+"Apply binomial nomenclature on some common organisms in their surroundings"
+]
+},
+{
+"c": "C-2.8",
+"i": [
+"Analyse the interactions between members of different groups of organisms, such as lichens",
+"Discuss ecological role of diverse organisms"
+]
+},
+{
+"c": "C-7.1",
+"i": [
+"Recognise three domains of classification of organisms on molecular basis"
+]
+}
+],
+"prac": [
+8
+]
+},
+{
+"no": 5,
+"cbse": 5,
+"periods": 12,
+"kc": [
+[
+"Homogeneous and heterogeneous mixtures"
+],
+[
+"Solutions, suspensions, colloids and their properties"
+],
+[
+"Various ways to express concentration of solutions",
+[
+"mass by mass percentage of a solution",
+"mass by volume percentage of a solution",
+"volume by volume percentage of a solution"
+]
+],
+[
+"Separation techniques based on the physical properties of components",
+[
+"crystallisation",
+"distillation",
+"paper chromatography",
+"sublimation",
+"centrifugation",
+"coagulation"
+]
+]
+],
+"lo": [
+{
+"c": "C-1.2",
+"i": [
+"Differentiate between homogeneous and heterogeneous mixtures on the basis of their properties",
+"Demonstrate separation techniques, such as crystallisation, distillation, paper chromatography, sublimation, centrifugation and coagulation",
+"Classify mixtures as solutions, suspensions, or colloids based on their properties",
+"Explain the scientific principles behind different separation techniques",
+"Apply the knowledge of homogeneous and heterogeneous mixtures in daily life",
+"Define and calculate the concentration of solutions using mass by mass percentage, mass by volume percentage, volume by volume percentage",
+"Analyse graphs of solubility and explain how the solubility of substances changes with temperature",
+"Use scientific conventions and standard units to express concentrations",
+"Handle common laboratory chemicals and apparatus safely",
+"Relate separation techniques with practices observed in the local environment"
+]
+},
+{
+"c": "C-5.1",
+"i": [
+"Draw labelled diagrams or flow charts of separation techniques"
+]
+},
+{
+"c": "C-5.2",
+"i": [
+"Display awareness about the societal impact of chemistry in making life healthier, cleaner and sustainable"
+]
+},
+{
+"c": "C-5.3",
+"i": [
+"Correlate the phenomenon used in centrifugation to the spinning dance"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Describe the cultural practices, like traditional methods of distillation",
+"Display awareness about the contributions of Indian scientists, such as Dilip Mahalanabis"
+]
+},
+{
+"c": "C-7.1",
+"i": [
+"Demonstrate the use of small-scale or micro-scale experiments, such as crystallisation of copper sulfate, as an alternative to traditional methods"
+]
+},
+{
+"c": "C-7.2",
+"i": [
+"Poses question, such as — Can we create artificial blood that works just as real blood for all patients?"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Exhibit creativity and work collaboratively in groups to create models of apparatus used for separating mixtures, such as a paperfuge and a distillation unit, using eco-friendly materials"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of scientific concepts, and predict the results of an experiment or investigation based on their hypotheses",
+"Accurately use scientific instruments, apparatus and chemicals to collect data",
+"Analyse results and findings using scientific terms",
+"Represent findings in multiple modes, including appropriate figures, tables, graphs, or digital formats, and interpret and draw inferences from the findings",
+"Communicate findings and conclusions effectively, such as those from experiments, activities or projects, both orally and in written form"
+]
+}
+],
+"prac": [
+1,
+2
+]
+},
+{
+"no": 6,
+"cbse": 8,
+"periods": 14,
+"kc": [
+[
+"Atoms are the basic units of elements"
+],
+[
+"Atoms consist of subatomic particles"
+],
+[
+"Atomic Models",
+[
+"Thomson's Model",
+"Rutherford's Model",
+"Bohr's Model"
+]
+],
+[
+"Distributions of electrons in elements (up to 18 elements)"
+],
+[
+"Symbols"
+],
+[
+"Valency as the combining capacity"
+],
+[
+"Atomic number"
+],
+[
+"Mass number"
+],
+[
+"Isotopes"
+],
+[
+"Isobars"
+]
+],
+"lo": [
+{
+"c": "C-1.1",
+"i": [
+"Differentiate between subatomic particles (electrons, protons, and neutrons) based on their charge, and position in the atom",
+"Illustrate how electrons are distributed in different energy levels, such as K, L, M, N ... or by numbers n = 1, 2, 3, 4 ...",
+"Explain valence electrons, valency, atomic number, atomic mass, isotopes, and isobars",
+"Calculate the number of electrons, protons, and neutrons of an element using its atomic and mass numbers",
+"Interpret data, such as atomic mass, maximum number of electrons in a shell, and valency to classify elements accurately",
+"Use scientific conventions as per international standards, such as notations for electron, proton, neutron, unified atomic mass unit (u), and distribution of electrons in various shells, such as K, L, M, N …"
+]
+},
+{
+"c": "C-1.3",
+"i": [
+"Recognise and accurately apply the chemical symbols for the first eighteen elements according to IUPAC"
+]
+},
+{
+"c": "C-5.1",
+"i": [
+"Draw labelled diagrams of various atomic models, such as Thomson's model, Rutherford's model and Bohr's model",
+"Create and present a role play, stage play, or story of 'Journey Inside the Atom' to display awareness about the contributions of key scientists in the discovery and development of atomic structure"
+]
+},
+{
+"c": "C-5.2",
+"i": [
+"Display awareness about the role of Indian scientists and their contributions to atomic science for peaceful purposes and explore how their works influenced India's scientific development"
+]
+},
+{
+"c": "C-5.3",
+"i": [
+"Display awareness about the societal impact of science in making life healthier, like the use of various isotopes in medicines to treat different diseases, and atomic energy in power generation",
+"Design and develop games that utilise atomic number, mass number, and subatomic particle clues to accurately predict and identify elements"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Display awareness about the contributions of the ancient Indian philosopher, Acharya Kanad's idea of indivisible particles (Parmanu)"
+]
+},
+{
+"c": "C-7.1",
+"i": [
+"Describe the use of the atomic mass unit (u) to measure the mass of atoms as per IUPAC recommendations",
+"Describe scientific discoveries that explain how the structure of the atom has evolved over time through various atomic models proposed by different scientists"
+]
+},
+{
+"c": "C-7.2",
+"i": [
+"Pose question, such as — is it possible to completely understand everything that happens inside an atom?"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Exhibit creativity and work collaboratively in groups to design different models of atoms"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena by applying prior knowledge and understanding of scientific concepts, and predict the results of data based on the hypotheses",
+"Analyse results and present findings using scientific terms",
+"Correlate the results and conclusions of different models of atomic structure",
+"Represent data in multiple modes, including appropriate figures, tables, graphs or digital formats, and interpret and draw inferences from the data",
+"Communicate findings and conclusions effectively, such as those from experiments, activities or projects, both orally and in written form"
+]
+}
+],
+"prac": []
+},
+{
+"no": 7,
+"cbse": 9,
+"periods": 14,
+"kc": [
+[
+"Law of conservation of mass"
+],
+[
+"Law of constant proportion"
+],
+[
+"Dalton's Atomic theory"
+],
+[
+"Molecules of elements, Molecules of covalent compounds and their properties"
+],
+[
+"Ions, Ionic compounds and their properties"
+],
+[
+"Writing chemical formulae"
+],
+[
+"Molecular mass"
+],
+[
+"Formula unit mass"
+]
+],
+"lo": [
+{
+"c": "C-1.1",
+"i": [
+"Differentiate between chemical species based on their properties or characteristics, such as atoms and molecules, elements and compounds, ionic and covalent compounds, cations and anions, formula unit mass and molecular mass",
+"Plan and demonstrate activities to observe and verify the law of conservation of mass",
+"Explain the Dalton's atomic theory, the law of conservation of mass, the law of constant proportions, and formation of ionic and covalent compounds",
+"Calculate the charge on an ion, valency from the atomic number, the molecular and formula unit mass",
+"Use scientific conventions, symbols, and valency to write the chemical formulae of simple compounds",
+"Display awareness about the scientific discoveries, such as the contributions of Antoine Lavoisier, Joseph Proust, and John Dalton",
+"Handle common laboratory chemicals and apparatus safely"
+]
+},
+{
+"c": "C-5.1",
+"i": [
+"Draw diagrams of electron dot structures of atoms and molecules"
+]
+},
+{
+"c": "C-5.2",
+"i": [
+"Describe how atoms and molecules can lead to beneficial applications, such as medicine, energy and peaceful use of atomic science",
+"Relate atomic bonding to social bonding"
+]
+},
+{
+"c": "C-5.3",
+"i": [
+"Design educational games to write chemical formulae using symbols"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Display awareness about the contributions of Indian scientists in promoting the peaceful use of atomic energy and the traditional use of the red pigment 'cinnabar' obtained from rocks"
+]
+},
+{
+"c": "C-7.1",
+"i": [
+"Describe the basic concepts that matter are made of particles; elements combine in fixed ratios to form compounds; the law of conservation of mass; and different types of bonding (ionic and covalent)"
+]
+},
+{
+"c": "C-7.2",
+"i": [
+"Pose question, such as — Are there any chemical changes that do not obey the law of conservation of mass?"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Exhibit creativity and work collaboratively in groups to construct simple models of compounds"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena by applying prior knowledge and understanding of scientific concepts and laws, and predict the results of data based on the hypotheses",
+"Accurately use scientific instruments, apparatus and chemicals to collect data",
+"Analyse results and findings using scientific terms",
+"Represent data in multiple modes, including appropriate figures, tables, graphs or digital formats",
+"Communicate findings and conclusions effectively, such as those from experiments, activities or projects, both orally and in written form"
+]
+}
+],
+"prac": [
+3
+]
+},
+{
+"no": 8,
+"cbse": 13,
+"periods": 12,
+"kc": [
+[
+"Earth as interconnected system"
+],
+[
+"Nature of solar energy: solar radiation, electromagnetic spectrum, and speed of light"
+],
+[
+"Solar energy interaction with the Earth's Surface and differential heating of the Earth (the role of the atmosphere and the Earth's surface)"
+],
+[
+"Differential warming of the Earth causes winds"
+],
+[
+"Biogeochemical cycles",
+[
+"water cycle",
+"carbon cycle",
+"nitrogen cycle",
+"oxygen cycle"
+]
+],
+[
+"Human impact on Earth's system"
+]
+],
+"lo": [
+{
+"c": "C-2.8",
+"i": [
+"Explain the interconnectedness between different spheres of the Earth (biosphere, geosphere, hydrosphere, cryosphere and atmosphere)",
+"Explain the nature of solar radiation",
+"Explain that solar radiation is an electromagnetic waves having different frequencies",
+"Explain how heat from the Sun warms the Earth's surface differently based on the shape, latitude and tilt of the Earth",
+"Explain the interaction of solar radiation with the Earth's surface and relate the differential heating of the Earth's surface with the atmospheric phenomena, such as air movement, evaporation, etc., and describe phenomena like mountain, valley, sea and land breezes",
+"Describe how the latitude and tilt of the Earth, and absorption and reflection of solar radiation by different surfaces cause differential heating of the Earth's surface",
+"Identify various components of the Earth that interact with solar energy",
+"Explain the role of the atmosphere in influencing weather and climate on the Earth",
+"Identify the reflectivity of different materials through reliable scientific sources, such as the internet and books",
+"Describe how elements like carbon, nitrogen, oxygen and water are recycled between biotic and abiotic environments",
+"Explain biogeochemical cycles, and the roles of biogeochemical cycles in circulating matter and energy continuously between the non-living environment (abiotic) and living (biotic) organisms, making nutrients available, and maintaining environmental balance"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Reflect the changing nature of Earth's environment through our traditional knowledge"
+]
+},
+{
+"c": "C-7.2",
+"i": [
+"Pose questions, such as — What will happen if there is no differential heating of the Earth?"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Draw flow charts, concept maps for biogeochemical cycles, differential heating of the Earth's surface and Electromagnetic spectrum"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of differential heating of the Earth and biogeochemical cycle",
+"Predict the results of an experiment or investigation based on their hypotheses",
+"Communicate findings and conclusions effectively, such as those from experiments, activities or projects, both orally and in written form"
+]
+}
+],
+"prac": []
+},
+{
+"no": 9,
+"cbse": 4,
+"periods": 13,
+"kc": [
+[
+"Motion — displacement, velocity, acceleration"
+],
+[
+"Graphical representation of motion for an object moving in a straight line in one direction (with constant velocity, and constant acceleration)"
+],
+[
+"Kinematic equations for motion in a straight line with constant acceleration (by graphical method)"
+],
+[
+"Elementary idea of uniform circular motion"
+]
+],
+"lo": [
+{
+"c": "C-2.1",
+"i": [
+"Differentiate between distance travelled and displacement, and speed and velocity for objects moving in a straight line",
+"Define displacement, velocity, acceleration, and uniform circular motion",
+"Express displacement, velocity, acceleration in appropriate SI units",
+"Plot and interpret position-time graphs and velocity-time graphs to describe the motion of an object moving in a straight line in one direction (with constant velocity and constant acceleration)",
+"Calculate average velocity from position-time graph, displacement and average acceleration from velocity-time graph",
+"Derive kinematic equations for motion in a straight line with constant acceleration by graphical method",
+"Calculate values of unknown physical quantities from the given physical quantities, using kinematic equations",
+"Derive the expression of speed for uniform circular motion"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Analyse real-life events and phenomena, and identify the key factors that influence their behaviour"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of scientific concepts, theories, laws, and principles",
+"Predict about the outcome of an experiment or investigation based on their hypotheses",
+"Identify the variables that are relevant to a scientific investigation and determine how to control or manipulate them",
+"Accurately use scientific instruments and equipment to collect data",
+"Represent data in multiple modes, including tables, graphs and visual representations, and interpret and draw inferences from the data",
+"Communicate their findings using scientific terminology and effectively communicate their conclusions to others"
+]
+}
+],
+"prac": [
+13
+]
+},
+{
+"no": 10,
+"cbse": 6,
+"periods": 13,
+"kc": [
+[
+"Force; balanced and unbalanced forces"
+],
+[
+"Force of friction"
+],
+[
+"Newton's first law of motion"
+],
+[
+"Newton's second law of motion"
+],
+[
+"Newton's third law of motion"
+]
+],
+"lo": [
+{
+"c": "C-2.1",
+"i": [
+"Explain that force has magnitude as well as direction",
+"Identify situations in which balanced and unbalanced forces are acting on an object",
+"Explain the role of friction on the motion of objects",
+"Recognise that for an object moving with constant velocity, the net force is zero, whereas a change in velocity (acceleration) is caused by a force",
+"State and explain Newton's first law of motion",
+"State and explain Newton's second law in terms of mass and acceleration",
+"Calculate force using mathematical expression of Newton's second law of motion",
+"Define SI unit of force",
+"State and explain Newton's third law of motion",
+"Apply Newton's laws of motion to explain everyday life events"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Analyse real-life events and phenomena, and identify the key factors that influence their behaviour",
+"Develop a model to represent real-life event",
+"Use models to manipulate variables and predict results"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of scientific concepts, theories, laws, and principles",
+"Predict about the outcome of an experiment or investigation based on their hypotheses",
+"Identify the variables that are relevant to a scientific investigation and determine how to control or manipulate them",
+"Accurately use scientific instruments and equipment to collect data",
+"Represent data in multiple modes, including tables, graphs and visual representations, and interpret and draw inferences from the data",
+"Communicate their findings using scientific terminology and effectively communicate their conclusions to others"
+]
+}
+],
+"prac": [
+12
+]
+},
+{
+"no": 11,
+"cbse": 7,
+"periods": 13,
+"kc": [
+[
+"Concept of work; work done by a constant force"
+],
+[
+"Work-Energy theorem"
+],
+[
+"Mechanical energy, kinetic and potential energy, and conversion between potential energy and kinetic energy"
+],
+[
+"Conservation of energy"
+],
+[
+"Power"
+],
+[
+"Simple machines and their mechanical advantage (pulley, inclined plane, lever)"
+]
+],
+"lo": [
+{
+"c": "C-2.5",
+"i": [
+"Define work done by a constant force and its SI unit",
+"Calculate work done by a force using mathematical expression",
+"State work-energy theorem",
+"Explain the concept of energy and state its SI unit",
+"Name forms of energy and identify their interconversion in surroundings (elementary idea)",
+"Define kinetic energy of a moving object and derive its mathematical expression",
+"Define potential energy for an object raised to a height and derive its mathematical expression",
+"Calculate kinetic and potential energy using mathematical expressions",
+"Explain conversion between potential energy and kinetic energy (for the case of an object under free fall)",
+"State the law of conservation of energy",
+"Define power and its unit",
+"Calculate power using its mathematical expression"
+]
+},
+{
+"c": "C-2.6",
+"i": [
+"Identify different simple machines (pulley, inclined plane and lever)",
+"Define mechanical advantage and calculate its value for simple machine",
+"Demonstrate and explain mechanical advantage of simple machines"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Analyse real-life events and phenomena, and identify the key factors that influence their behaviour",
+"Develop a model to represent real-life event",
+"Use models to manipulate variables and predict results"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of scientific concepts, theories, laws, and principles",
+"Predict about the outcome of an experiment or investigation based on their hypotheses",
+"Identify the variables that are relevant to a scientific investigation and determine how to control or manipulate them",
+"Accurately use scientific instruments and equipment to collect data",
+"Represent data in multiple modes, including tables, graphs and visual representations, and interpret and draw inferences from the data",
+"Communicate their findings using scientific terminology and effectively communicate their conclusions to others"
+]
+}
+],
+"prac": [
+9,
+11
+]
+},
+{
+"no": 12,
+"cbse": 10,
+"periods": 11,
+"kc": [
+[
+"Production of sound"
+],
+[
+"Propagation of sound (as a longitudinal wave through a medium)"
+],
+[
+"Graphical representation of sound wave"
+],
+[
+"Characteristics of sound wave",
+[
+"wavelength",
+"frequency",
+"time period",
+"amplitude",
+"intensity",
+"speed"
+]
+],
+[
+"Human perception of sound (pitch, loudness)"
+],
+[
+"Propagation of sound in different media (solid, liquid)"
+],
+[
+"Reflection of sound (echo, reverberation), echolocation"
+]
+],
+"lo": [
+{
+"c": "C-2.7",
+"i": [
+"Demonstrate the production of sound in multiple ways (through vibration of strings, membranes, air columns) using materials in surroundings",
+"Explain that sound is produced by vibrations",
+"Demonstrate that sound can travel through different mediums (air, solid and liquid)",
+"Describe that sound needs a medium for propagation",
+"Explain that sound travels as a longitudinal wave",
+"Describe the characteristics of sound waves (wavelength, frequency, time period, amplitude, intensity and speed)",
+"Analyse graphs representing sound",
+"Write relationship between time period and frequency of sound wave",
+"Derive mathematical expression for speed of sound",
+"Calculate speed of sound using its mathematical expression",
+"Explain human perception of sound in terms of audible range, loudness and pitch of sound",
+"Describe reflection of sound, and apply it to echo and reverberations in surroundings",
+"Explain the use of sound waves for echolocation"
+]
+},
+{
+"c": "C-5.3",
+"i": [
+"Describe music in terms of characteristics of sound waves, such as loudness and pitch"
+]
+},
+{
+"c": "C-6.1",
+"i": [
+"Name historical buildings designed for echoes, such as whispering gallery of Gol Gumbaz",
+"Display awareness about Sir C.V. Raman"
+]
+},
+{
+"c": "C-8.1",
+"i": [
+"Analyse real-life events and phenomena, and identify the key factors that influence their behaviour",
+"Develop a model to represent real-life event",
+"Use models to manipulate variables and predict results"
+]
+},
+{
+"c": "C-8.2",
+"i": [
+"Formulate hypotheses about scientific phenomena based on prior knowledge and understanding of scientific concepts, theories, laws, and principles",
+"Predict about the outcome of an experiment or investigation based on their hypotheses",
+"Identify the variables that are relevant to a scientific investigation and determine how to control or manipulate them",
+"Accurately use scientific instruments and equipment to collect data",
+"Represent data in multiple modes, including tables, graphs and visual representations, and interpret and draw inferences from the data",
+"Communicate their findings using scientific terminology and effectively communicate their conclusions to others"
+]
+}
+],
+"prac": [
+10
+]
+}
+]
+}
