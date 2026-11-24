@@ -9,6 +9,4 @@ const btn=document.getElementById("cbmode");
 function apply(on){document.body.classList.toggle("va-cb",on);if(btn){btn.setAttribute("aria-pressed",String(on));btn.classList.toggle("on",on)}window.__vaColourSafe=on;window.dispatchEvent(new Event("va-colour-safe"))}
 apply(LS.get("va.cb")==="1");
 btn&&btn.addEventListener("click",()=>{const on=!document.body.classList.contains("va-cb");LS.set("va.cb",on?"1":"0");apply(on)});
-/* Hero heart video: respect reduced-motion (show the still poster) */
-const hv=document.getElementById("heroHeart");if(hv&&window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches){hv.removeAttribute("autoplay");hv.pause();hv.controls=true}
 })();

@@ -31,8 +31,8 @@ body.light #home{background:var(--va-paper)!important}
 .va-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(36px,6vw,76px) 0 clamp(40px,6vw,72px)}
 .va-hero-tag{display:flex;align-items:center;gap:10px;margin:0 0 20px;color:var(--va-mute);font-size:14px;font-weight:600}
 .va-hero-tag::before{content:"";width:5px;height:18px;border-radius:2px;background:var(--va-marker);flex:none}
-.va-hero h1{font-size:clamp(40px,5.6vw,72px);line-height:1.02;font-weight:700;letter-spacing:-.035em;text-wrap:balance;max-width:14ch}
-.va-hero-lede{max-width:52ch;margin:22px 0 0;color:var(--va-ink-2);font-size:clamp(17px,1.6vw,20px);line-height:1.6}
+.va-hero h1{font-size:clamp(30px,3.7vw,46px);line-height:1.12;font-weight:700;letter-spacing:-.022em;text-wrap:balance;max-width:20ch}
+.va-hero-lede{max-width:54ch;margin:16px 0 0;color:var(--va-ink-2);font-size:clamp(15.5px,1.25vw,17.5px);line-height:1.6}
 .va-dynamic-copy{max-width:52ch;margin-top:10px;color:var(--va-mute);font-size:14.5px;line-height:1.6}
 #homeSub .en,#homeSub .hi{display:block}
 #homeSub .hi{margin-top:2px}
@@ -163,9 +163,15 @@ body.light #home .hc:hover,#home .hc:hover{border-color:var(--c);box-shadow:0 12
 .va-brand .va-logo{width:40px;height:40px;border-radius:11px}
 .va-brand-copy b{font-size:20px}
 
-/* Live heart: the hero shows the real 3D heart model beating at a resting adult rate (72 beats/min), rendered from the app's own model. */
-.va-plate-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.va-bpm{position:absolute;left:14px;top:14px;z-index:3;display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:rgba(15,26,58,.88);color:#fff;font:600 13px/1 var(--va-text,system-ui,sans-serif);letter-spacing:.01em}
-.va-bpm i{font-style:normal;color:#ff5a6a;display:inline-block;animation:vaBeatDot .8333s ease-in-out infinite}
+/* Live circulatory system hero */
+.va-circ-frame{aspect-ratio:520/606;background:linear-gradient(165deg,#f4f7fd,#fbfcff 70%);max-width:520px;margin-inline:auto}
+.va-circ-frame #heroCirc{position:absolute;inset:0}.va-circ-frame svg{width:100%;height:100%;display:block}
+.va-bpm{position:absolute;left:14px;top:14px;z-index:3;display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:rgba(15,26,58,.9);color:#fff;font:600 12.5px/1 var(--va-text,system-ui,sans-serif);letter-spacing:.01em}
+.va-bpm i{font-style:normal;color:#ff6b78;display:inline-block;animation:vaBeatDot .8333s ease-in-out infinite}
 @keyframes vaBeatDot{0%{transform:scale(1)}8%{transform:scale(1.45)}18%{transform:scale(1)}30%{transform:scale(1.28)}46%,100%{transform:scale(1)}}
+.va-key{font-style:normal;display:inline-flex;gap:10px;align-items:center;margin-left:4px}.va-key u{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:baseline;text-decoration:none}.va-key .ox{background:#d4414a}.va-key .dx{background:#3566c8}
+.va-plate figcaption span{display:block}.va-plate figcaption b{display:block}
 @media (prefers-reduced-motion:reduce){.va-bpm i{animation:none}}
+.va-key-frame{position:absolute;right:14px;top:16px;z-index:3;font:600 12px/1 var(--va-text,system-ui,sans-serif);color:#3d4b55;background:rgba(255,255,255,.85);padding:5px 9px;border-radius:999px;border:1px solid #dfe5ee}
+.va-plate-open{white-space:nowrap}
+@media (max-width:560px){.va-key-frame{top:auto;bottom:10px;right:10px}.va-bpm{left:10px;top:10px}}
