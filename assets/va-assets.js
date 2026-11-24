@@ -1,4 +1,4 @@
-// Vigyan Atlas asset loader (ES module, loaded lazily by dynamic import).
+// Infinite Horizons asset loader (ES module, loaded lazily by dynamic import).
 // Loads a Draco-compressed GLB, decodes it with the vendored Three r160 loaders, and returns PLAIN typed arrays,
 // so the app's own bundled Three.js never has to share classes with this module.
 // Features: download progress, in-memory + Cache API caching, abort, clear errors for the caller's fallback path.

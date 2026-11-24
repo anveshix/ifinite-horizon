@@ -169,7 +169,7 @@ Same provenance route and same caveats as above (extracted from the nqwrc export
 | `rib-10-r` | skeletal | Tenth rib.r | rib | 700 |
 
 Procedural in this scene: blood particles, the link through the body capillaries, the flow path through the lungs, schematic valve opening and closing. The red / blue colouring is the NCERT convention for oxygenated / deoxygenated blood, not tissue colour. The mitral valve is represented by its posterior leaflet only and the tricuspid by two leaflets (the other leaflets are not in the source data under those names).
-# Asset Licence Register — Vigyan Atlas
+# Asset Licence Register — Infinite Horizons
 
 **Rule:** no 3D model, texture, image, audio, or code snippet is adopted into the app until it has one row here, the licence text has been read by a person, and the owner has cleared commercial use (if the app is ever sold/bundled, non-commercial assets are prohibited — see docs/AUDIT.md §11 Q2).
 

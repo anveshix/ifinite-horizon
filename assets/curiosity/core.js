@@ -2,7 +2,7 @@
    Syllabus map, lab registry with a strict contract, persistent progress store and the simulator→quiz event bus.
    Every other Curiosity Lab file imports from here, so the rules live in exactly one place. */
 
-/* ---------- NCERT alignment: only units that already exist in Vigyan Atlas (see docs/CLASS9_COVERAGE.md) ---------- */
+/* ---------- NCERT alignment: only units that already exist in Infinite Horizons (see docs/CLASS9_COVERAGE.md) ---------- */
 export const SYLLABUS = Object.freeze({
   /* Class X (NCERT, 2023-24 rationalised): app keys ch1…ch13 */
   "x/ch1":  { cls: 10, no: 1,  title: { en: "Chemical Reactions and Equations", hi: "रासायनिक अभिक्रियाएँ एवं समीकरण" } },

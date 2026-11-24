@@ -1,4 +1,4 @@
-/* Vigyan Atlas — Curiosity Lab launcher.
+/* Infinite Horizons — Curiosity Lab launcher.
    Adds a "🧪 Curiosity Lab" button to the stage bar and to Home (key K). Nothing heavy loads until the first tap:
    the lab shell, styles and (later) Three.js are fetched on demand, so the atlas itself starts exactly as fast as before.
    Code lives in assets/curiosity/ (core.js, shell.js, labs/, quiz/); contract and architecture: docs/CURIOSITY_LAB.md. */
@@ -131,6 +131,32 @@ const LINKS={
  "ch12/magnet":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Flip current direction to swap North and South poles on the solenoid.",{dir:-1}],
  "ch12/flhr":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Inspect Fleming's Left-Hand Rule motor force F = BIL on the 3D spinning armature!",{I:3,sub:"flhr"}],
  "ch12/motor":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Spin the 3D DC Electric Motor with split-ring commutator and reverse current!",{I:4,sub:"motor"}],
+ /* Class X gap-fill topics (CBSE 2026–27) */
+ "ch1/precip":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Mix two salt solutions and look for the insoluble product — a precipitate!",{rxn:2,sub:"series"}],
+ "ch5/photo":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Follow water up the xylem to the leaf where stomata and chloroplasts make food.",{tissue:3,transp:4}],
+ "ch5/hetero":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","See how heterotrophs depend on producers as energy moves through a food web.",{ddt:8}],
+ "ch7/spore":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare asexual methods: budding, fission and spore formation in 3D.",{mode:2}],
+ "ch7/seed":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Follow pollination and fertilisation to the seed, then study the embryo parts.",{mode:0}],
+ "ch7/family":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Review the human reproductive system before studying reproductive health.",{sub:"human"}],
+ "ch12/ac":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Move the magnet back and forth: the galvanometer needle swings both ways like AC.",{speed:3}],
+ "ch14/triads":["atom","Atom Lab","परमाणु प्रयोगशाला","Build elements and compare Li, Na, K shells and valency (formative topic).",{Z:11}],
+ "ch14/mendeleev":["atom","Atom Lab","परमाणु प्रयोगशाला","Check valency of elements in the same group while studying Mendeleev’s table.",{Z:17}],
+ "ch14/modern":["atom","Atom Lab","परमाणु प्रयोगशाला","Fill shells for Z = 1–20 and relate valence electrons to the modern periodic table.",{Z:6}],
+ /* Class X remaining sub-topics (CBSE 2026–27) */
+ "ch1/energy":["reactions","Reactions Lab","अभिक्रिया प्रयोगशाला","Compare heat released or absorbed in reactions.",{rxn:0,progress:90}],
+ "ch2/phlife":["ph","pH Lab","pH प्रयोगशाला","Slide through the pH scale to see everyday acids and bases.",{pH:2}],
+ "ch2/chemsalt":["ph","pH Lab","pH प्रयोगशाला","Mix acids and bases to form neutral, acidic or basic salt solutions.",{pH:7}],
+ "ch5/life":["heart","Heart Lab","हृदय प्रयोगशाला","Explore transport and gas exchange in the human body.",{sub:"alveoli"}],
+ "ch5/respire":["heart","Heart Lab","हृदय प्रयोगशाला","See how oxygen reaches cells for respiration.",{sub:"alveoli"}],
+ "ch5/plantexcr":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Follow water and wastes through plant tissues.",{tissue:3,transp:4}],
+ "ch7/copy":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Cross parents and see how DNA copies vary.",{cross:1}],
+ "ch7/regen":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare asexual methods: budding and regeneration.",{mode:2}],
+ "ch8/variation":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Cross parents and watch variation appear in offspring.",{cross:1}],
+ "ch8/acquired":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Compare inherited and acquired traits (formative topic).",{sub:"evolution"}],
+ "ch8/speciation":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","See how isolation leads to new species (formative topic).",{sub:"evolution"}],
+ "ch8/fossils":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Study fossils and evolution (formative topic).",{sub:"evolution"}],
+ "ch8/humanevo":["genetics","Genetics Lab","आनुवंशिकता प्रयोगशाला","Trace evolutionary relationships (formative topic).",{sub:"evolution"}],
+ "ch10/apps":["lens","Lens Lab","लेंस प्रयोगशाला","Change the lens and see where the image forms.",{type:1}],
  "ch12/induction":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Move the magnet to deflect Faraday's galvanometer needle live!",{speed:3}],
  "ch12/domestic":["magnet","Magnet Lab","चुंबक प्रयोगशाला","Toggle 220V Domestic AC mode to see Live/Neutral/Earth wires & MCB trip!",{sub:"domestic"}],
  /* Class X Ch 13: Our Environment */
@@ -150,6 +176,14 @@ const LINKS={
  "ix1/microscope":["cell","Cell Lab","कोशिका प्रयोगशाला","Spotlight organelles and see cell structures in 3D.",{cellType:1}],
  "ix1/scale":["cell","Cell Lab","कोशिका प्रयोगशाला","Compare cell structures across Animal, Plant & Bacterial cells.",{cellType:2}],
  /* Class IX Ch 2: Tissues & Human Joints */
+ /* Class IX gap-fill topics (CBSE 2026–27) */
+ "ix1/discovery":["cell","Cell Lab","कोशिका प्रयोगशाला","Explore the cell types that Hooke and Leeuwenhoek first observed.",{cellType:0}],
+ "ix1/cancer":["cell","Cell Lab","कोशिका प्रयोगशाला","Compare controlled mitosis with uncontrolled division.",{sub:"division"}],
+ "ix2/msk":["organs","Organs 3D Lab","अंग 3D प्रयोगशाला","Flex joints and study bones, cartilage, tendons and ligaments.",{mode:3}],
+ "ix3/fragment":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare asexual methods: fission, budding and fragmentation.",{mode:2}],
+ "ix3/spore":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Compare asexual methods: fission, budding and spores.",{mode:1}],
+ "ix3/health":["repro","Repro & Flower 3D Lab","जनन व पुष्प प्रयोगशाला","Review the human reproductive system before studying reproductive health.",{sub:"human"}],
+ "ix4/specimens":["ecology","Ecology 3D Lab","पारिस्थितिकी प्रयोगशाला","Review the five kingdoms before identifying specimens.",{sub:"kingdoms"}],
  "ix2/tissues":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Inspect Parenchyma, Collenchyma, Sclerenchyma, Muscle & Neuron under 3D zoom.",{tissue:0}],
  "ix2/xylem":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Watch unidirectional Xylem water flow and bidirectional Phloem transport.",{tissue:3,transp:4}],
  "ix2/growth":["tissues","Tissues Lab","ऊतक प्रयोगशाला","Compare Onion Root Tip intact Jar A vs tip-cut Jar B apical meristem growth!",{sub:"meristem"}],
@@ -212,13 +246,13 @@ const lcss=document.createElement("style");lcss.textContent=`
 @media (prefers-reduced-motion:reduce){#clLink{animation:none}}
 @media print{#clLink{display:none}}`;document.head.appendChild(lcss);
 const card=document.createElement("div");card.id="clLink";card.hidden=true;
-card.innerHTML=`<span class="ic" aria-hidden="true">🧪</span><div><b></b><small></small></div><button type="button" class="btn prim">Open lab →</button>`;
+card.innerHTML=`<div><b></b><small></small></div><button type="button" class="btn prim">Open lab →</button>`;
 const anchor=$("#info");if(anchor&&anchor.parentNode)anchor.parentNode.insertBefore(card,anchor.nextSibling);
 let shownKey=null;
 function syncCard(){const k=window.__atlas&&window.__atlas.key&&window.__atlas.key(),L=LINKS[k];
  if(!L){card.hidden=true;shownKey=null;return}
  if(shownKey===k&&!card.hidden)return;shownKey=k;
- card.querySelector("b").innerHTML=`Try it yourself in the ${esc(L[1])} <span class="hi" lang="hi">· ${esc(L[2])}</span>`;card.querySelector("small").textContent=L[3];
+ card.querySelector("b").innerHTML=`Try it yourself in the ${esc(L[1])} <span class="hi" lang="hi">${esc(L[2])}</span>`;card.querySelector("small").textContent=L[3];
  card.querySelector("button").onclick=()=>open(L[0],L[4]);card.hidden=false}
 setInterval(syncCard,600);addEventListener("hashchange",()=>setTimeout(syncCard,0));
 const ttl=$("#ttl");if(ttl)new MutationObserver(syncCard).observe(ttl,{childList:true,subtree:true,characterData:true});

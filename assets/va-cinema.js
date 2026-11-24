@@ -1,4 +1,4 @@
-/* Vigyan Atlas — Cinematic mode (stage 1: live 3D tour).
+/* Infinite Horizons — Cinematic mode (stage 1: live 3D tour).
    One tap turns any guided lesson into a presentation: side panels and toolbars hide, letterbox bars appear, the lesson plays itself step by step
    (camera flights + captions), with a large lower-third caption and a progress bar. Works on every topic that has steps. Esc / ✕ exits.
    Stage 2 (planned): pre-rendered video / 360° turntable clips per topic, declared in public/cinema/<chapter>/<topic>/manifest.json. */
@@ -38,7 +38,7 @@ body.cine #labels .lab{transform-origin:left top}
 @media (max-width:700px){#cine .ttl{display:none}body.cine #hud{font-size:calc(15px*var(--fs))!important}}
 @media print{#cine,#cineBtn{display:none}}`;
 document.head.appendChild(css);
-const btn=document.createElement("button");btn.type="button";btn.className="ib";btn.id="cineBtn";btn.textContent="🎬 Cinema";btn.title="Play this lesson as a cinematic presentation (C)";
+const btn=document.createElement("button");btn.type="button";btn.className="ib";btn.id="cineBtn";btn.textContent="Cinema";btn.title="Play this lesson as a cinematic presentation (C)";
 bar.insertBefore(btn,$("#tlab")||null);
 const el=document.createElement("div");el.id="cine";
 el.innerHTML=`<div class="lb t"></div><div class="lb b"></div><div class="ttl"><span id="cineT"></span><small id="cineS"></small></div>

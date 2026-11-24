@@ -523,7 +523,7 @@
       evidenceClass: 'T1',
       supportingReferences: [
         'CBSE Class IX Science (ix4 Diversity; ix8 Earth as a System)',
-        'Vigyan Atlas Jharkhand contextual scripts (assets/va-voice-data.js)',
+        'Infinite Horizons Jharkhand contextual scripts (assets/va-voice-data.js)',
         'Jharkhand sacred grove ecological surveys (' + PENDING + ')'
       ],
       conflictingInterpretations: 'Ecological outcomes vary strongly with grove area, grazing pressure, and surrounding land-use fragmentation.',

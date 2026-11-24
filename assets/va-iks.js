@@ -153,7 +153,7 @@
       sb.id = 'vaIksStageBtn';
       sb.className = 'sbtn';
       sb.title = 'Open IKS × Modern Science context for this chapter';
-      sb.textContent = '🪷 IKS';
+      sb.textContent = 'IKS';
       sb.addEventListener('click', function () {
         var chId = '';
         if (window.__atlas && typeof window.__atlas.state === 'function') {
@@ -455,7 +455,7 @@
 
       '<div class="va-iks-card">',
       '  <h4 style="margin:0 0 8px;color:#80c8be;">CBSE 2026–27 Curriculum Links (Class IX &amp; X Separate)</h4>',
-      '  <table class="va-iks-table"><thead><tr><th>Class</th><th>Vigyan Atlas Chapter</th><th>Scope Label</th><th>Prescribed Core vs IKS Enrichment</th></tr></thead><tbody>',
+      '  <table class="va-iks-table"><thead><tr><th>Class</th><th>Infinite Horizons Chapter</th><th>Scope Label</th><th>Prescribed Core vs IKS Enrichment</th></tr></thead><tbody>',
       mappings.map(function (m) {
         return '<tr><td><strong>Class ' + esc(m.classLevel) + '</strong></td><td><code>' + esc(m.chapterId) + '</code> · ' + esc(t(m.chapterTitle, m.chapterTitleHi)) + '</td><td>' + esc(m.scopeLabel) + '<br><small style="color:#ffd36b;">Non-compulsory</small></td><td><strong>Core:</strong> ' + esc(m.prescribedCore) + '<br><strong>IKS:</strong> ' + esc(m.iksEnrichment) + '</td></tr>';
       }).join(''),

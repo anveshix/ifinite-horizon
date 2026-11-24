@@ -12,8 +12,8 @@
     board: 'CBSE',
     subjectCode: 'Science (086)',
     portalUrl: 'https://cbseacademic.nic.in/',
-    curricularGoalReference: 'CG 6: India’s contribution to science (C6.1) — Vigyan Atlas CGR registry',
-    verificationStatus: 'Aligned with Vigyan Atlas verified 2026–27 repository registry (IXC, Hi, CGR, api/ai/curriculum.json). Direct external PDF download: ' + SCHEMA.PENDING_REF_LABEL,
+    curricularGoalReference: 'CG 6: India’s contribution to science (C6.1) — Infinite Horizons CGR registry',
+    verificationStatus: 'Aligned with Infinite Horizons verified 2026–27 repository registry (IXC, Hi, CGR, api/ai/curriculum.json). Direct external PDF download: ' + SCHEMA.PENDING_REF_LABEL,
     compulsoryExamDisclaimer: 'IKS historical discussions and enrichment modules are curriculum-linked references only and are NOT compulsory CBSE board examination content unless explicitly listed in the prescribed NCERT/CBSE syllabus.'
   };
 

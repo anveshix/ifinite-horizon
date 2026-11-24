@@ -1,4 +1,4 @@
-/* Vigyan Atlas — projector / classroom presentation mode for the standalone 2D viewers (Class IX & X, all subjects).
+/* Infinite Horizons — projector / classroom presentation mode for the standalone 2D viewers (Class IX & X, all subjects).
    Same behaviour and keys as the in-app 2D layer (assets/va-2d.js). Loaded by every public/2d/<class>/<subject>/viewer.html.
    Needs the page globals DATA (subtopic -> {title,desc,img,marks}) and the #mainImg / #imageWrap / #labels elements. */
 (()=>{"use strict";

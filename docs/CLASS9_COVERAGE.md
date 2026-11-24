@@ -1,4 +1,4 @@
-# Class IX coverage report — Vigyan Atlas v2.0
+# Class IX coverage report — Infinite Horizons v2.0
 
 Source: *Class IX Science 2026–27 — Complete Syllabus & 3D Model Brief* (Compulsory Science 086 + Science at Advanced Level, Optional).
 Machine-readable twin: [`class9-coverage.json`](class9-coverage.json) (generated from the running app).

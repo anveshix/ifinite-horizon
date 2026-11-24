@@ -1,0 +1,521 @@
+{
+"course": "Class X · Science (086) · CBSE 2026–27 syllabus — branches transcribed from Science_SecP1_2026-27.pdf; chapter grouping follows the app’s 14-chapter structure (the PDF is topic-based and gives no chapter numbers or periods).",
+"chapters": [
+{
+"no": 1,
+"title": "Chemical Reactions and Equations",
+"hi": "रासायनिक अभिक्रियाएँ एवं समीकरण",
+"unit": "Chemistry",
+"branches": [
+{
+"n": "Chemical reactions and equations",
+"i": [
+"Chemical reactions",
+"Chemical equation",
+"Balanced chemical equation"
+],
+"scope": "kc"
+},
+{
+"n": "Types of chemical reactions",
+"i": [
+"Combination",
+"Decomposition",
+"Displacement",
+"Double displacement",
+"Precipitation",
+"Endothermic exothermic reactions",
+"Oxidation and reduction"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 2: Performing and observing the following reactions and classifying them into: Combination, Decomposition, Displacement, Double displacement reaction — Action of water on quicklime; Action of heat on ferrous sulphate crystals; Iron nails kept in copper sulphate solution; Reaction between sodium sulphate and barium chloride solutions"
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit I · Chemical Substances – Nature and Behaviour (25 marks)"
+},
+{
+"no": 2,
+"title": "Acids, Bases and Salts",
+"hi": "अम्ल, क्षार तथा लवण",
+"unit": "Chemistry",
+"branches": [
+{
+"n": "Acids and bases",
+"i": [
+"Definitions in terms of furnishing of H⁺ and OH⁻ ions",
+"Identification using indicators",
+"Chemical properties, examples and uses",
+"Neutralization"
+],
+"scope": "kc"
+},
+{
+"n": "pH scale",
+"i": [
+"Concept of pH scale (definition relating to logarithm not required)",
+"Importance of pH in everyday life"
+],
+"scope": "kc"
+},
+{
+"n": "Preparation and uses of",
+"i": [
+"Sodium Hydroxide",
+"Bleaching Powder",
+"Baking soda",
+"Washing soda",
+"Plaster of Paris"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 1A: Finding the pH of the following samples by using pH paper/universal indicator: Dilute Hydrochloric Acid; Dilute NaOH solution; Dilute Ethanoic Acid solution; Lemon juice; Water; Dilute Hydrogen Carbonate solution",
+"Practical 1B: Studying the properties of acids and bases (HCl & NaOH) on the basis of their reaction with: Litmus solution (Blue/Red); Zinc metal; Solid sodium carbonate"
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit I · Chemical Substances – Nature and Behaviour (25 marks)"
+},
+{
+"no": 3,
+"title": "Metals and Non-metals",
+"hi": "धातु एवं अधातु",
+"unit": "Chemistry",
+"branches": [
+{
+"n": "Metals and non-metals",
+"i": [
+"Properties of metals and non-metals",
+"Reactivity series"
+],
+"scope": "kc"
+},
+{
+"n": "Compounds and extraction",
+"i": [
+"Formation and properties of ionic compounds",
+"Basic metallurgical processes"
+],
+"scope": "kc"
+},
+{
+"n": "Corrosion",
+"i": [
+"Corrosion and its prevention"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 3: Observing the action of Zn, Fe, Cu and Al metals on the following salt solutions: ZnSO4 (aq), FeSO4 (aq), CuSO4 (aq), Al2(SO4)3 (aq). Arranging Zn, Fe, Cu and Al (metals) in the decreasing order of reactivity based on the above result."
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit I · Chemical Substances – Nature and Behaviour (25 marks)"
+},
+{
+"no": 4,
+"title": "Carbon and its Compounds",
+"hi": "कार्बन एवं उसके यौगिक",
+"unit": "Chemistry",
+"branches": [
+{
+"n": "Covalent bonds",
+"i": [
+"Formation and properties of covalent compounds"
+],
+"scope": "kc"
+},
+{
+"n": "Carbon compounds",
+"i": [
+"Versatile nature of carbon",
+"Hydrocarbons – saturated and unsaturated",
+"Homologous series"
+],
+"scope": "kc"
+},
+{
+"n": "Nomenclature",
+"i": [
+"Nomenclature of alkanes, alkenes, alkyne and carbon compounds containing functional groups (halogens, alcohol, ketones, aldehydes)"
+],
+"scope": "kc"
+},
+{
+"n": "Chemical properties of carbon compounds",
+"i": [
+"Combustion",
+"Oxidation",
+"Addition and substitution reaction"
+],
+"scope": "kc"
+},
+{
+"n": "Ethanol, ethanoic acid, soaps",
+"i": [
+"Ethanol and Ethanoic acid (only properties and uses)",
+"Soaps and detergents"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 8: Study of the following properties of acetic acid (ethanoic acid): Odour; solubility in water; effect on litmus; reaction with Sodium Hydrogen Carbonate",
+"Practical 9: Study of the comparative cleaning capacity of a sample of soap in soft and hard water."
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit I · Chemical Substances – Nature and Behaviour (25 marks)"
+},
+{
+"no": 5,
+"title": "Life Processes",
+"hi": "जैव प्रक्रम",
+"unit": "Biology",
+"branches": [
+{
+"n": "Life processes",
+"i": [
+"‘Living Being’",
+"Basic concept of nutrition, respiration, transport and excretion in plants and animals"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 6: Preparing a temporary mount of a leaf peel to show stomata.",
+"Practical 7: Experimentally show that carbon dioxide is given out during respiration."
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit II · World of Living (25 marks)"
+},
+{
+"no": 6,
+"title": "Control and Coordination",
+"hi": "नियंत्रण एवं समन्वय",
+"unit": "Biology",
+"branches": [
+{
+"n": "Control and co-ordination in plants",
+"i": [
+"Tropic movements in plants",
+"Introduction of plant hormones"
+],
+"scope": "kc"
+},
+{
+"n": "Control and co-ordination in animals",
+"i": [
+"Nervous system",
+"Voluntary, involuntary and reflex action"
+],
+"scope": "kc"
+},
+{
+"n": "Chemical co-ordination",
+"i": [
+"Animal hormones"
+],
+"scope": "kc"
+}
+],
+"pdfUnit": "Unit II · World of Living (25 marks)"
+},
+{
+"no": 7,
+"title": "How do Organisms Reproduce?",
+"hi": "जीव जनन कैसे करते हैं",
+"unit": "Biology",
+"branches": [
+{
+"n": "Reproduction",
+"i": [
+"Reproduction in animals and plants (asexual and sexual)"
+],
+"scope": "kc"
+},
+{
+"n": "Health and family planning",
+"i": [
+"Reproductive health – need and methods of family planning",
+"Safe sex vs HIV/AIDS",
+"Child bearing and women’s health"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 12: Studying (a) binary fission in Amoeba, and (b) budding in yeast and Hydra with the help of prepared slides.",
+"Practical 14: Identification of the different parts of an embryo of a dicot seed (pea, gram or red kidney bean)."
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit II · World of Living (25 marks)"
+},
+{
+"no": 8,
+"title": "Heredity",
+"hi": "आनुवंशिकता",
+"unit": "Biology",
+"branches": [
+{
+"n": "Heredity",
+"i": [
+"Heredity",
+"Mendel’s contribution – Laws for inheritance of traits",
+"Sex determination",
+"Brief introduction"
+],
+"scope": "kc"
+},
+{
+"n": "Evolution",
+"i": [
+"Acquired and Inherited Traits",
+"Speciation",
+"Evolution and Classification",
+"Tracing Evolutionary Relationships",
+"Fossils",
+"Evolution by Stages",
+"Human Evolution"
+],
+"scope": "formative"
+}
+],
+"pdfUnit": "Unit II · World of Living (25 marks)"
+},
+{
+"no": 9,
+"title": "Light – Reflection and Refraction",
+"hi": "प्रकाश – परावर्तन तथा अपवर्तन",
+"unit": "Physics",
+"branches": [
+{
+"n": "Reflection of light by curved surfaces",
+"i": [
+"Images formed by spherical mirrors",
+"Centre of curvature",
+"Principal axis",
+"Principal focus",
+"Focal length",
+"Mirror formula (derivation not required)",
+"Magnification"
+],
+"scope": "kc"
+},
+{
+"n": "Refraction",
+"i": [
+"Laws of refraction",
+"Refractive index"
+],
+"scope": "kc"
+},
+{
+"n": "Spherical lenses",
+"i": [
+"Refraction of light by spherical lens",
+"Image formed by spherical lenses",
+"Lens formula (derivation not required)",
+"Magnification",
+"Power of a lens"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 10: Determination of the focal length of: (a) Concave mirror (b) Convex lens by obtaining the image of a distant object.",
+"Practical 11: Tracing the path of a ray of light passing through a rectangular glass slab for different angles of incidence. Measure the angle of incidence, angle of refraction, angle of emergence and interpret the result."
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit III · Natural Phenomena (12 marks)"
+},
+{
+"no": 10,
+"title": "The Human Eye and the Colourful World",
+"hi": "मानव नेत्र एवं रंग-बिरंगा संसार",
+"unit": "Physics",
+"branches": [
+{
+"n": "Human eye and optical applications",
+"i": [
+"Functioning of a lens in human eye",
+"Defects of vision and their corrections",
+"Applications of spherical mirrors and lenses"
+],
+"scope": "kc"
+},
+{
+"n": "Prism, dispersion and scattering",
+"i": [
+"Refraction of light through a prism",
+"Dispersion of light",
+"Scattering of light",
+"Applications in daily life (excluding colour of the sun at sunrise and sunset)"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 13: Tracing the path of the rays of light through a glass prism."
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit III · Natural Phenomena (12 marks)"
+},
+{
+"no": 11,
+"title": "Electricity",
+"hi": "विद्युत",
+"unit": "Physics",
+"branches": [
+{
+"n": "Current and potential difference",
+"i": [
+"Electric current, potential difference and electric current",
+"Ohm’s law"
+],
+"scope": "kc"
+},
+{
+"n": "Resistance",
+"i": [
+"Resistance",
+"Resistivity",
+"Factors on which the resistance of a conductor depends"
+],
+"scope": "kc"
+},
+{
+"n": "Combination of resistors",
+"i": [
+"Series combination of resistors",
+"Parallel combination of resistors and its applications in daily life"
+],
+"scope": "kc"
+},
+{
+"n": "Heating effect and power",
+"i": [
+"Heating effect of electric current and its applications in daily life",
+"Electric power",
+"Interrelation between P, V, I and R"
+],
+"scope": "kc"
+},
+{
+"n": "Practicals (CBSE list of experiments)",
+"i": [
+"Practical 4: Studying the dependence of potential difference (V) across a resistor on the current (I) passing through it and determine its resistance. Also plotting a graph between V and I.",
+"Practical 5: Determination of the equivalent resistance of two resistors when connected in series and parallel."
+],
+"scope": "prac"
+}
+],
+"pdfUnit": "Unit IV · Effects of Current (13 marks)"
+},
+{
+"no": 12,
+"title": "Magnetic Effects of Electric Current",
+"hi": "विद्युत धारा के चुंबकीय प्रभाव",
+"unit": "Physics",
+"branches": [
+{
+"n": "Magnetic effects of current",
+"i": [
+"Magnetic field, field lines",
+"Field due to a current carrying conductor",
+"Field due to current carrying coil or solenoid",
+"Force on current carrying conductor",
+"Fleming’s Left Hand Rule"
+],
+"scope": "kc"
+},
+{
+"n": "Direct and alternating current",
+"i": [
+"Direct current",
+"Alternating current: frequency of AC",
+"Advantage of AC over DC",
+"Domestic electric circuits"
+],
+"scope": "kc"
+},
+{
+"n": "Motor, Electromagnetic Induction, Electric Generator",
+"i": [
+"Motor",
+"Electromagnetic Induction",
+"Electric Generator"
+],
+"scope": "formative"
+}
+],
+"pdfUnit": "Unit IV · Effects of Current (13 marks)"
+},
+{
+"no": 13,
+"title": "Our Environment",
+"hi": "हमारा पर्यावरण",
+"unit": "Environment",
+"branches": [
+{
+"n": "Our environment",
+"i": [
+"Eco-system",
+"Environmental problems",
+"Ozone depletion",
+"Waste production and their solutions",
+"Biodegradable and non-biodegradable substances"
+],
+"scope": "kc"
+}
+],
+"pdfUnit": "Unit V · Natural Resources (5 marks)"
+},
+{
+"no": 14,
+"title": "Periodic Classification of Elements",
+"hi": "तत्वों का आवर्त वर्गीकरण",
+"unit": "Chemistry",
+"pdfUnit": "Unit I · Chemical Substances – Nature and Behaviour (25 marks)",
+"branches": [
+{
+"n": "Periodic Classification of Elements",
+"i": [
+"Döbereiner’s Triads",
+"Newlands’ Law of Octaves",
+"Mendeleev’s Periodic Table",
+"Modern Periodic Table and the Modern",
+"Metallic and Non-metallic Properties"
+],
+"scope": "formative"
+}
+]
+}
+]
+}

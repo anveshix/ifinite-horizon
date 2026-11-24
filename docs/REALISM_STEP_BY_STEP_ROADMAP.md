@@ -1,6 +1,6 @@
 # 🚀 Realism Enrichment Roadmap — Class IX & X Science Visuals
 
-**App:** Vigyan Atlas (this repo, branch `arena/eae64aa8-ifinite-horizon`)  
+**App:** Infinite Horizons (this repo, branch `arena/eae64aa8-ifinite-horizon`)  
 **Goal:** Every science subject (Physics, Chemistry, Biology) of Class IX and Class X should feel like "vastav mein virtually dekh pa raha hai" — with Biology ultra-realistic, like a doctor viewing inside the body during surgery.  
 **Style toggle per lesson:** Schematic (today) → Anime/animation (cel shading, outlines, motion lines) → Ultra-realistic (PBR tissue, surgical light, live cross-section slice, isolate organ).  
 **Baseline audit:** see `docs/VISUAL_AUDIT_REPORT.md`. Nothing was changed to produce this plan.

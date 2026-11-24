@@ -18,7 +18,7 @@ function build() {
   root.id = "cl"; root.hidden = true; root.setAttribute("role", "dialog"); root.setAttribute("aria-modal", "true"); root.setAttribute("aria-label", "Curiosity Lab");
   root.innerHTML = `
   <header class="cl-top">
-    <div class="cl-brand"><b>Curiosity Lab</b><small>जिज्ञासा प्रयोगशाला · 3D Simulator &amp; Visual Check</small></div>
+    <img class="va-logo" src="assets/brand/logo.svg" alt="" width="34" height="34"><div class="cl-brand"><b>Curiosity Lab</b><small>जिज्ञासा प्रयोगशाला · 3D Simulator &amp; Visual Check</small></div>
     <nav class="cl-tabs" role="tablist" aria-label="Curiosity Lab sections">
       <button type="button" role="tab" id="clTabSim" data-tab="sim" aria-selected="true">🧪 Simulator <span class="hi" lang="hi">प्रयोग</span></button>
       <button type="button" role="tab" id="clTabQuiz" data-tab="quiz" aria-selected="false">🎯 Knowledge check <span class="hi" lang="hi">जाँच</span></button>

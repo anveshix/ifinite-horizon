@@ -122,7 +122,7 @@
       '<style>body{font-family:Inter,Arial,sans-serif;max-width:780px;margin:24px auto;color:#17252a;line-height:1.5}h1,h2{color:#13252a}table{width:100%;border-collapse:collapse;margin:12px 0}th,td{border:1px solid #8fa3a0;padding:6px 8px;text-align:left;font-size:13px}.box{border:1px solid #bd6e3b;background:#fdf8f3;padding:10px 12px;border-radius:6px;margin:12px 0}@media print{button{display:none}}</style>',
       '</head><body>',
       '<button onclick="window.print()">Print / Save PDF</button>',
-      '<h1>Vigyan Atlas · IKS × Modern Science Worksheet</h1>',
+      '<h1>Infinite Horizons · IKS × Modern Science Worksheet</h1>',
       '<p><strong>Domain ' + esc(domain.id) + ':</strong> ' + esc(domain.title) + ' (' + esc(domain.titleHi) + ')<br>',
       '<strong>Scope:</strong> ' + esc(domain.scopeLabel) + ' (Enrichment — Not compulsory board content)</p>',
       '<div class="box"><strong>Scientific Guardrail:</strong> ' + esc(domain.guardrail) + '</div>',

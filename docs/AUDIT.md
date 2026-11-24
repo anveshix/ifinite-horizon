@@ -1,4 +1,4 @@
-# Phase 1 — Repository audit (Infinite Horizon / Vigyan Atlas v2.0)
+# Phase 1 — Repository audit (Infinite Horizon / Infinite Horizons v2.0)
 
 Audit date 2026-11-11. Nothing in the app was changed to produce this report.
 Measurements were taken in headless Chromium with **software rendering (SwiftShader)** on a scratch copy of `index.html` with a read-only probe added. They are valid for counts (draw calls, triangles, objects) and **not** for frame rate.

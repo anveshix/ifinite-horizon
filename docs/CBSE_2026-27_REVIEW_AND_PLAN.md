@@ -1,4 +1,4 @@
-# Vigyan Atlas: evidence-led review and improvement plan
+# Infinite Horizons: evidence-led review and improvement plan
 
 **Review date:** 2026-11-11  
 **Scope:** current repository snapshot on `arena/3453c426-ifinite-horizon`; Class IX and X Science (086), CBSE 2026–27.  
