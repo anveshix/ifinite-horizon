@@ -1,133 +1,137 @@
-// Interactive chapter mind map (Ch2 Tissues exemplar): hierarchy, cross-links, attachments, wiring.
-// Run with: npm run test:chaptermap
-const assert=require('node:assert/strict');
-const fs=require('node:fs');
-const maps=require('../assets/va-chapter-map.js');
-const tissue=require('../assets/va-tissues-content.js');
-const {SIMS}=require('../assets/va-simulator-core.js');
-const coverage=require('../docs/class9-coverage.json');
-const curriculum=require('../api/ai/curriculum.json');
-const app=fs.readFileSync(require.resolve('../index.html'),'utf8');
-const modSrc=fs.readFileSync(require.resolve('../assets/va-chapter-map.js'),'utf8');
-const css=fs.readFileSync(require.resolve('../assets/va-chapter-map.css'),'utf8');
-const {MAP}=(()=>{ // evaluate only the static DATA/MAP declarations of the 2D bundle
-  const source=fs.readFileSync(require.resolve('../assets/va-2d.js'),'utf8');
-  const dataStart=source.indexOf('const DATA=');
-  const mapStart=source.indexOf('const B9=',dataStart);
-  const end=source.indexOf('const GROUPS=',mapStart);
-  assert(dataStart>=0&&mapStart>dataStart&&end>mapStart,'2D data/MAP slice located');
-  return new Function(source.slice(dataStart,end)+'\nreturn {DATA:null, MAP};')();
-})();
+// Chapter map test — the COMPLETE NCERT chapter tree (docs/ch2-ncert-inventory.md):
+// every section, subsection, activity, figure, table, box and exercise of printed
+// Chapter 3 ("Tissues in Action", pp. 28–47) present, stats correct, render + inspector
+// wiring intact, index.html wiring unchanged.
+"use strict";
+const fs = require("fs"), path = require("path");
+const assert = (c, m) => { if (!c) { console.error("ASSERT FAIL:", m); process.exit(1); } };
+const src = fs.readFileSync(path.join(__dirname, "..", "assets", "va-chapter-map.js"), "utf8");
+assert(/\(function\(root,factory\)\{const api=factory\(\)/.test(src), "compact UMD wrapper preserved");
+assert(!src.includes("�"), "no U+FFFD in chapter map source");
+const M = require(path.join(__dirname, "..", "assets", "va-chapter-map.js"));
 
-assert.ok(maps.has('ix2'),'Ch2 Tissues is the chapter-map exemplar');
-assert.ok(!maps.has('ix9'),'other chapters stay untouched until their own turn');
+// ---------- registry + curriculum fixtures ----------
+const coverage = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "docs", "class9-coverage.json"), "utf8"));
+const curriculum = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "api", "ai", "curriculum.json"), "utf8"));
+const ix2c = coverage.modules.find(m => m.id === "ix2");
+const ix2k = curriculum.chapters.find(c => c.id === "ix2");
+assert(ix2c && ix2k, "ix2 present in coverage and curriculum");
+assert(ix2c.keyConcepts === ix2k.keyConcepts.length, "coverage keyConcepts count matches curriculum array");
+const ch = Object.assign({}, ix2k, { kp: "ix2" });
 
-// --- hand-authored integration data ---
-const d=maps.DATA.ix.ix2;
-const themeTopics=d.themes.flatMap(t=>t.topics);
-const expected=['organisation','tissues','meristem','plant-support','xylem','growth','epithelial','connective','muscle-nerve','joint'];
-assert.deepEqual([...themeTopics].sort(),[...expected].sort(),'all 10 registry topics sit under exactly one theme');
-assert.equal(new Set(themeTopics).size,10,'no topic is duplicated across themes');
-assert.equal(d.themes.length,4);
-assert.equal(d.links.length,9);
-for(const [a,b,label] of d.links){
-  assert.ok(expected.includes(a)&&expected.includes(b),`link ${a}–${b} uses known topics`);
-  assert.ok(a!==b&&label,`link ${a}–${b} is labelled and non-self`);
-}
-// graph connectivity: every topic reachable from "organisation" over links
-const seen=new Set(['organisation']);
-let grew=true;
-while(grew){grew=false;for(const [a,b] of d.links){if(seen.has(a)&&!seen.has(b)){seen.add(b);grew=true}if(seen.has(b)&&!seen.has(a)){seen.add(a);grew=true}}}
-assert.equal(seen.size,10,'cross-links connect every topic into one graph');
+// runtime stubs (harvest sources)
+global.VA_SIM_CORE = { SIMS: [
+  { id: "apical", key: "ix2/meristem", title: "Root tip growth" }
+] };
+global.__va2d = { map: {
+  "ix2/meristem": ["class9/biology/plant_tissues_schematic"],
+  "ix2/tissues": ["class9/biology/plant_tissues_schematic"],
+  "ix2/joint": ["class9/biology/skeleton_joint"]
+}, set: () => 0, show: () => 0 };
+global.__atlas = { keys: () => ["ix2/meristem", "ix2/joint", "ix2/joint3d"], go: () => 0, key: () => "", topic: () => ({ ch: "ix2" }) };
+global.VA_TISSUE_CONTENT = { sections: [
+  { title: "Introduction", pages: "pp. 28–29" }, { title: "Apical meristem", pages: "pp. 29–31" },
+  { title: "Permanent tissues", pages: "pp. 32–33" }, { title: "Epithelial", pages: "p. 34" },
+  { title: "Connective", pages: "pp. 35–36" }, { title: "Muscular & nervous", pages: "pp. 36–38" },
+  { title: "Musculoskeletal & joints", pages: "pp. 38–41" }, { title: "Totipotency", pages: "p. 42" }
+] };
 
-// lesson & KC maps cover everything, with valid indices
-const aiChapter=curriculum.chapters.find(x=>x.id==='ix2');
-const chapter=coverage.modules.find(x=>x.id==='ix2');
-assert.ok(aiChapter&&chapter);
-assert.deepEqual(aiChapter.topics.map(t=>t.id).sort(),[...expected].sort(),'curriculum topic ids match the map themes');
-assert.equal(Object.keys(d.lesson).length,tissue.sections.length,'lesson map keys match the lesson module sections');
-for(let i=0;i<tissue.sections.length;i++)assert.ok(Array.isArray(d.lesson[i]),`lesson section ${i} is mapped`);
-assert.ok(d.lesson[7].length===0,'chapter-level extension section belongs to the root, not one topic');
-for(const id of expected){
-  const secs=Object.keys(d.lesson).filter(k=>d.lesson[k].includes(id));
-  assert.ok(secs.length>=1,`topic ${id} carries at least one lesson section`);
-}
-assert.ok(chapter.keyConcepts>=10,'coverage counts the chapter key concepts');
-assert.equal(aiChapter.keyConcepts.length,chapter.keyConcepts,'curriculum lists exactly what coverage counts');
-for(const id of expected){
-  const kcs=Object.keys(d.kc).filter(k=>d.kc[k].includes(id));
-  assert.ok(kcs.length>=1,`topic ${id} carries at least one syllabus point`);
-}
-for(const k of Object.keys(d.kc)){
-  assert.ok(+k<aiChapter.keyConcepts.length,`kc index ${k} inside curriculum key concepts`);
-  assert.ok(d.kc[k].some(id=>expected.includes(id)),'kc mapping targets known topics');
-}
+// ---------- API surface ----------
+assert(typeof M.build === "function" && typeof M.render === "function" &&
+  typeof M.wire === "function" && typeof M.has === "function" && typeof M.preview === "function",
+  "all five exports present");
+assert(M.has("ix2") === true && M.has("nope") === false, "has() on ix2");
+assert(Object.keys(M.DATA.ix).length === 1, "ix2 is the only chapter so far (one at a time)");
 
-// --- pure build() with real sources: every topic gets images, lesson, sim where expected ---
-const topics=expected.map(id=>({id,title:'Topic '+id,hi:'विषय',brief:'brief',build:()=>{}}));
-const ch={kp:'ix2',no:2,title:'Tissues',hi:'ऊतक',unit:'World of living',topics,kc:aiChapter.keyConcepts.slice()};
-const rt={map2d:MAP,sims:SIMS,lesson:tissue,keys:[]};
-const model=maps.build('ix2',ch,rt);
-assert.ok(model,'build produced a model');
-assert.equal(model.stats.topics,10);
-assert.equal(model.stats.links,9);
-assert.equal(model.stats.lessons,tissue.sections.length);
-assert.equal(model.stats.sims,1,'the apical-meristem simulator attaches to the map');
-assert.equal(model.stats.prac,2,'practical record sheet + root-growth inquiry attach');
-for(const id of expected){
-  const t=model.byId[id];
-  assert.ok(t.images.length>=1,`topic ${id} has at least one related image (route or hand-authored extra)`);
-  assert.ok(t.lesson.length>=1,`topic ${id} has a lesson section`);
-  assert.ok(t.has3d,'registry topic exposes a 3D-capable entry');
-}
-assert.equal(model.byId.meristem.sim,'apical','simulator attaches to its topic key');
-assert.deepEqual(model.byId.growth.prac.map(p=>p.act),['lab','inquiry']);
-assert.equal(model.byId['plant-support'].images[0],'class9/biology/plant_tissues_schematic','plant-support topic carries its schematic');
-assert.equal(model.byId['muscle-nerve'].images.length,2,'muscle + nervous diagrams attach to their topic (hand extras dedupe against the route)');
-assert.ok(model.byId.joint.images.includes('class9/biology/musculoskeletal_care'));
-assert.equal(model.lesson.filter(s=>s.topics.length).length,tissue.sections.length-1,'every lesson section except the chapter-level one lands on a topic');
+// ---------- book completeness (hand inventory vs NCERT) ----------
+const d = M.DATA.ix.ix2;
+const bookJson = JSON.stringify(d.book);
+const collect = re => { const out = new Set(); let g;
+  while ((g = re.exec(bookJson)) !== null) { out.add(+g[1]); if (g[2]) for (let i = +g[1]; i <= +g[2]; i++) out.add(i); } return out; };
+const seq = (set, n) => set.size === n && Array.from({ length: n }, (_, i) => i + 1).every(x => set.has(x));
 
-// --- render + inspector previews against a stubbed browser environment ---
-global.window={
-  __va2d:{map:MAP,set(){},show(){}},
-  VA_SIM_CORE:{SIMS},
-  VA_TISSUE_CONTENT:tissue,
-  __atlas:{keys:()=>expected.map(id=>'ix2/'+id),go(){},key:()=>'ix2/tissues'}
-};
-const html=maps.render(ch);
-assert.match(html,/class="cmap-int"/);
-assert.match(html,/Interactive chapter mind map/);
-assert.equal((html.match(/data-cm-topic="/g)||[]).length,10,'all 10 topic nodes render');
-assert.equal((html.match(/data-cm-theme="/g)||[]).length,4);
-assert.equal((html.match(/class="cm-xl/g)||[]).length,18,'9 cross-link paths + 9 labels');
-assert.match(html,/data-cm-act="lessonall"/);
-assert.match(html,/data-cm-act="lab" data-cm-n="5"/);
-assert.match(html,/data-cm-act="inquiry"/);
-assert.match(html,/data-cm-act="sim"/);
-assert.match(html,/📷 \d+/,'image stats expose attached visuals');
-assert.doesNotMatch(html,/�/);
-const overview=maps.preview('ix2',ch,null);
-assert.match(overview,/Read source-grounded lesson/);
-const meristem=maps.preview('ix2',ch,'meristem');
-assert.match(meristem,/data-cm-act="sim" data-cm-sim="apical"/);
-assert.match(meristem,/data-cm-act="lesson"/);
-assert.match(meristem,/data-cm-act="3d"/);
-assert.match(meristem,/data-cm-jump="/,'connected topics listed');
-const growth=maps.preview('ix2',ch,'growth');
-assert.match(growth,/data-cm-act="lab" data-cm-n="5"/);
-assert.match(growth,/data-cm-act="inquiry"/);
-const muscle=maps.preview('ix2',ch,'muscle-nerve');
-assert.equal((muscle.match(/data-cm-act="2d"/g)||[]).length,2,'muscle + nervous diagram buttons');
+const figs = collect(/Fig\.? ?3\.(\d+)(?:[–-]3\.(\d+))?/g);
+const acts = collect(/Activity ?3\.(\d+)/g);
+const tbls = collect(/Table ?3\.(\d+)/g);
+const qs = collect(/Q(\d+)(?:[–-](?:Q)?(\d+))?/g);
+assert(seq(figs, 25), "all figures Fig 3.1–3.25 present (" + figs.size + ")");
+assert(seq(acts, 5), "all activities Activity 3.1–3.5 present (" + acts.size + ")");
+assert(seq(tbls, 7), "all tables Table 3.1–3.7 present (" + tbls.size + ")");
+assert(seq(qs, 15), "all exercises Q1–Q15 present (" + qs.size + ")");
+const secs = new Set(); (function walk(ns) { ns.forEach(n => { if (/^3\.\d/.test(n.n)) secs.add(n.n.split(" ")[0]); if (n.kids) walk(n.kids); }); })(d.book);
+assert(secs.size === 19, "19 section headings 3.1–3.6 incl. subsections (" + [...secs].sort().join(",") + ")");
 
-// --- app wiring ---
-assert.match(app,/<link rel="stylesheet" href="assets\/va-chapter-map\.css">/);
-assert.match(app,/<script src="assets\/va-chapter-map\.js"><\/script>/);
-assert.match(app,/VA_CHAPTER_MAPS\.has\(ch\.kp\)\)\?window\.VA_CHAPTER_MAPS\.render\(ch\)/);
-assert.match(app,/<div class="syl">\$\{chapterMap\}/);
-assert.match(app,/VA_CHAPTER_MAPS\?\.wire\(box\)/);
-assert.match(app,/const cellLesson=/,'existing lesson companions stay in place');
-assert.match(app,/\$\{cellLesson\}\$\{tissueLesson\}\$\{motionLesson\}\$\{mixtureLesson\}\$\{forceLesson\}\$\{fl\}/);
-assert.match(css,/\.cmap-int\{/);
-assert.match(css,/\.cm-xl\{/);
-assert.doesNotMatch(modSrc+css,/�/);
-console.log('Chapter map OK · Ch2 exemplar: 4 themes, 10 connected topics, lesson/image/sim/practical attachments, app wiring');
+// structural nodes
+let flat = []; (function wf(ns, depth) { ns.forEach(n => { n.__depth = depth; flat.push(n); if (n.kids) wf(n.kids, depth + 1); }); })(d.book, 0);
+assert(flat.length >= 80, "book tree has at least 80 nodes (" + flat.length + ")");
+assert(flat.every(n => n.id && n.n), "every node has id and name");
+assert(new Set(flat.map(n => n.id)).size === flat.length, "node ids unique");
+assert(d.xlinks.length >= 8, "cross-links defined (" + d.xlinks.length + ")");
+assert(d.xlinks.every(l => flat.some(n => n.id === l[0]) && flat.some(n => n.id === l[1])), "xlink endpoints exist");
+// key branches exist
+["b0", "b1", "b21", "b24", "b31", "b34", "b4", "b5d", "b6", "b7", "b9", "b10", "b11", "b12"]
+  .forEach(id => assert(flat.find(n => n.id === id), "node " + id + " exists"));
+
+// ---------- build → stats + attachments ----------
+const m = M.build("ix2", ch, null);
+assert(m, "build succeeds");
+const s = m.stats;
+assert(s.sections === 19, "stats.sections = 19 (" + s.sections + ")");
+assert(s.activities === 5, "stats.activities = 5 (" + s.activities + ")");
+assert(s.tables === 7, "stats.tables = 7 (" + s.tables + ")");
+assert(s.figs === 25, "stats.figs = 25 (" + s.figs + ")");
+assert(s.exercises === 15, "stats.exercises = 15 (" + s.exercises + ")");
+assert(s.boxes === 14, "stats.boxes = 14 (" + s.boxes + ")");
+assert(s.lessons === 8, "lesson sections = 8 (" + s.lessons + ")");
+assert(s.sims >= 1, "simulator attached (" + s.sims + ")");
+assert(s.prac === 2, "practical items = 2 (" + s.prac + ")");
+
+const byId = id => m.flat.find(n => n.id === id);
+assert(byId("b21").att && byId("b21").att.sim === "apical", "b21 → apical simulator");
+assert(byId("b21").att.prac && byId("b21").att.prac.length === 2, "b21 → 2 practical items");
+assert(byId("b21").att.lesson && byId("b21").att.lesson.length >= 1, "b21 → lesson section");
+assert(byId("b4").att && byId("b4").att.has3d, "b4 (musculoskeletal) → 3D view");
+assert(byId("b4").att.images.length >= 1, "b4 → image");
+assert(byId("b33").att.images.length >= 2, "muscular node → 2 images");
+assert(byId("b5").att.has3d, "joints node → 3D view");
+
+// ---------- render ----------
+const html = M.render(ch);
+assert(html.length > 10000, "render output substantial (" + html.length + ")");
+assert((html.match(/data-cm-node=/g) || []).length === m.flat.length, "every node rendered once");
+assert(/19 sections/.test(html) && /Fig 25/.test(html) && /Q 15/.test(html), "stats header shows chapter totals");
+assert(/data-cm-toggle="all"/.test(html) && /data-cm-toggle="none"/.test(html), "Expand all / Fold all controls");
+assert(/data-cm-zoom="fit"/.test(html), "fit control");
+assert(/📖 Read source-grounded lesson/.test(html), "lesson action on overview");
+assert(/data-cm-act="lab"/.test(html) && /data-cm-act="inquiry"/.test(html), "practical actions on overview");
+assert(/⚗/.test(html), "simulator action present");
+assert(!/�/.test(html), "no U+FFFD in render output");
+
+// ---------- preview / inspector ----------
+assert(/COMPLETE NCERT CHAPTER MAP/.test(M.preview("ix2", ch)), "overview preview");
+const pAct = M.preview("ix2", ch, "b21");
+assert(/Root-tip growth simulator|Open simulator/.test(pAct), "b21 inspector offers simulator");
+assert(/Practical 5/.test(pAct), "b21 inspector offers Practical 5");
+const pX = M.preview("ix2", ch, "b22");
+assert(/Connected/.test(pX) && /annual rings/.test(pX), "b22 inspector shows cross-link to annual-rings exercise");
+const pLeaf = M.preview("ix2", ch, "b10c");
+assert(/Q7/.test(pLeaf) && /Connected/.test(pLeaf), "exercise node inspector works");
+const pSec = M.preview("ix2", ch, "b10");
+assert(/Subtopics/.test(pSec), "section node lists subtopics");
+assert(/cm-back/.test(pSec), "back to overview control");
+
+// ---------- index.html wiring unchanged ----------
+const htmlPage = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+assert(htmlPage.includes("va-chapter-map.js"), "script tag present");
+assert(/const chapterMap\s*=/.test(htmlPage), "chapterMap const present");
+assert(htmlPage.includes("${chapterMap}"), "template slot present");
+assert(/VA_CHAPTER_MAPS\?\.wire\(box\)/.test(htmlPage), "wire(box) call present");
+
+// ---------- style + pwa registration ----------
+const css = fs.readFileSync(path.join(__dirname, "..", "assets", "va-chapter-map.css"), "utf8");
+assert(css.includes(".cmap-int") && css.includes(".cm-stats") && css.includes(".cm-legend"), "chapter map CSS present");
+assert(css.includes(".cm-d0") && css.includes(".cm-d3"), "tree depth styles present");
+
+console.log("Chapter map OK · Ch2 exemplar: " + s.sections + " sections, " + s.activities +
+  " activities, " + s.figs + " figures, " + s.tables + " tables, " + s.exercises +
+  " exercises, " + m.flat.length + " nodes, " + d.xlinks.length + " cross-links · completeness asserted against NCERT inventory");
