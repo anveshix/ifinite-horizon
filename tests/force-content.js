@@ -1,0 +1,48 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const content=require('../assets/va-force-content.js');
+const coverage=require('../docs/class9-coverage.json');
+const curriculum=require('../api/ai/curriculum.json');
+const app=fs.readFileSync(require.resolve('../index.html'),'utf8');
+const {normalize,filter}=require('../assets/va-mindmap-core.js');
+const chapter=coverage.modules.find(x=>x.id==='ix10');
+const aiChapter=curriculum.chapters.find(x=>x.id==='ix10');
+
+assert.match(content.source,/How Forces Affect Motion/);
+assert.match(content.source,/printed Chapter 6, pp\. 94–115/);
+assert.match(content.source,/app labels Force and Laws of Motion as Chapter 10/);
+assert.equal(content.sections.length,10);
+assert.ok(content.sections.every(x=>x.title&&x.hi&&x.en&&x.hiText&&x.pages&&x.points&&x.points.length));
+const lessonText=(content.sections.map(x=>x.en+' '+x.points.join(' ')).join(' ')).toLowerCase();
+for(const term of ['newton','friction','balanced','unbalanced','inertia','acceleration','momentum','tension','velocity','net force','spring balance','yoctonewton'])
+  assert.ok(lessonText.includes(term),`lesson covers ${term}`);
+assert.match(content.scope,/not automatic extra exam outcomes/);
+assert.match(content.scope,/massive objects/);
+assert.match(content.practical.aim,/acceleration/);
+assert.match(content.practical.source,/Activity 6\.3/);
+assert.ok(content.practical.safety.some(x=>/Catch the trolley/.test(x)));
+assert.equal(content.practical.safety.length,3);
+assert.ok(content.practical.procedure.some(x=>/straight line through the origin/.test(x)));
+assert.equal(content.practical.procedure.length,6);
+assert.equal(content.practical.table.length,4);
+assert.match(content.practical.extension,/wheels/);
+assert.equal(chapter.no,'10');
+assert.equal(chapter.periods,13);
+assert.equal(chapter.activities,4);
+assert.deepEqual(chapter.practicals,[12]);
+assert.match(chapter.unit,/23 marks/);
+for(const id of ['ix10/forces','ix10/trolley'])
+ assert.ok(chapter.models.includes(id),`coverage has route ${id}`);
+assert.ok(chapter.teacherValidationFlags.some(x=>/Chapter 6 \(pp\. 94–115\)/.test(x)));
+assert.ok(aiChapter.reviewFlags.some(x=>/Chapter 6/.test(x)));
+assert.ok(aiChapter.activities.some(x=>/Activity 6\.1/.test(x)));
+assert.ok(aiChapter.topics.length>=2);
+const routes=aiChapter.topics.map(x=>`ix10/${x.id}`);
+const mapped=normalize([{ch:{kp:'ix10',set:'ix',no:10,title:'Force and Laws of Motion',unit:'Motion, force, work & sound',topics:aiChapter.topics}}],routes);
+assert.equal(filter(mapped,'ix').find(x=>x.id==='ix10').models.length,aiChapter.topics.length,'mind map exposes the Force topic branches');
+assert.ok(filter(mapped,'ix').find(x=>x.id==='ix10').models.every(x=>x.available),'each mapped mind-map leaf has a real route');
+assert.match(app,/Force and Laws of Motion · source-grounded chapter companion/);
+assert.match(app,/VA_FORCE_CONTENT/);
+assert.match(app,/data-force-lab/);
+assert.match(fs.readFileSync(require.resolve('../assets/va-2d.js'),'utf8'),/"ix10\/forces":\[P9\+"newton_laws"/);
+console.log('Force chapter content OK · source mapping (book Ch 6 → app Ch 10), 10 bilingual sections, practical safety, routes and AI context checked');

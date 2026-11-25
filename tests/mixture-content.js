@@ -1,0 +1,46 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const content=require('../assets/va-mixture-content.js');
+const coverage=require('../docs/class9-coverage.json');
+const curriculum=require('../api/ai/curriculum.json');
+const app=fs.readFileSync(require.resolve('../index.html'),'utf8');
+const {normalize,filter}=require('../assets/va-mindmap-core.js');
+const chapter=coverage.modules.find(x=>x.id==='ix5');
+const aiChapter=curriculum.chapters.find(x=>x.id==='ix5');
+
+assert.match(content.source,/Exploring Mixtures and their Separation/);
+assert.match(content.source,/printed Chapter 5, pp\. 72–93/);
+assert.match(content.source,/no numbering offset/);
+assert.equal(content.sections.length,10);
+assert.ok(content.sections.every(x=>x.title&&x.hi&&x.en&&x.hiText&&x.pages&&x.points&&x.points.length));
+for(const term of ['homogeneous','heterogeneous','solute','solvent','concentration','solubility','saturated','crystallization','distillation','chromatography','immiscible','sublimation','centrifugation','coagulation','colloid','tyndall','emulsion','alloy'])
+  assert.ok((content.sections.map(x=>x.en+' '+x.points.join(' ')).join(' ')).toLowerCase().includes(term),`lesson covers ${term}`);
+assert.match(content.scope,/not automatic extra exam outcomes/);
+assert.match(content.practical.aim,/true solutions/);
+assert.match(content.practical.source,/Activity 5\.1/);
+assert.ok(content.practical.safety.some(x=>/Never look directly into a laser beam/.test(x)));
+assert.equal(content.practical.safety.length,3);
+assert.ok(content.practical.procedure.some(x=>/Tyndall effect/.test(x)));
+assert.equal(content.practical.procedure.length,6);
+assert.equal(content.practical.table.length,5);
+assert.match(content.practical.extension,/hazy city air/);
+assert.equal(chapter.no,'5');
+assert.equal(chapter.periods,12);
+assert.equal(chapter.activities,4);
+assert.deepEqual(chapter.practicals,[1,2]);
+assert.match(chapter.unit,/25 marks/);
+for(const id of ['ix5/types','ix5/lab','ix5/conc'])
+ assert.ok(chapter.models.includes(id),`coverage has route ${id}`);
+assert.ok(chapter.teacherValidationFlags.some(x=>/Chapter 5 \(pp\. 72–93\)/.test(x)));
+assert.ok(aiChapter.reviewFlags.some(x=>/Chapter 5/.test(x)));
+assert.ok(aiChapter.activities.some(x=>/Activity 5\.1/.test(x)));
+assert.ok(aiChapter.topics.length>=3);
+const routes=aiChapter.topics.map(x=>`ix5/${x.id}`);
+const mapped=normalize([{ch:{kp:'ix5',set:'ix',no:5,title:'Exploring Mixtures and their Separation',unit:'Matter',topics:aiChapter.topics}}],routes);
+assert.equal(filter(mapped,'ix').find(x=>x.id==='ix5').models.length,aiChapter.topics.length,'mind map exposes the Mixtures topic branches');
+assert.ok(filter(mapped,'ix').find(x=>x.id==='ix5').models.every(x=>x.available),'each mapped mind-map leaf has a real route');
+assert.match(app,/Mixtures · source-grounded chapter companion/);
+assert.match(app,/VA_MIXTURE_CONTENT/);
+assert.match(app,/data-mixture-lab/);
+assert.match(fs.readFileSync(require.resolve('../assets/va-2d.js'),'utf8'),/"ix5\/types":\[C9\+"tyndall"/);
+console.log('Mixtures chapter content OK · source mapping (no offset), 10 bilingual sections, practical safety, routes and AI context checked');

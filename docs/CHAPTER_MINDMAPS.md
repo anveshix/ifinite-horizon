@@ -232,9 +232,17 @@ mindmap
       Solution, colloid, suspension
       Separation techniques lab
       Concentration & solubility
+    Activities
+      Compare salt, chalk and milk mixtures by filtration, settling and a laser beam passed through each beaker, taking the book’s eye-safety warning seriously Activity 5.1 .
+      Plot or interpret solubility curves for two solutes and predict which deposits more solid when hot saturated solutions cool Activity 5.2 .
+      Separate the colours of a black sketch pen by paper chromatography with a pencil baseline and water kept below the spot Activity 5.5 .
+      Separate camphor from sand by gentle heating under an inverted cotton-plugged funnel and identify where the vapour deposits Activity 5.7 .
     Practicals
       1
       2
+    Review notes
+      Source mapping: supplied NCERT Exploration ‘Exploring Mixtures and their Separation’ is printed Chapter 5 pp. 72–93 , the current app course remains Class IX 2026–27 Chapter 5 with no numbering offset.
+      Indian-heritage and extension boxes Dilip Mahalanabis and ORS, panga and karkatch salts, Kannauj Deg-Bhapka distillation, the paperfuge , alloy composition details and Journey Beyond activities are labelled enrichment, not separate exam outcomes.
 ```
 
 **Learning outcomes**
@@ -382,8 +390,16 @@ mindmap
     Visual lessons
       1-D motion with live graphs
       Uniform circular motion
+    Activities
+      Analyse distance travelled and displacement for a ball thrown vertically upward, record when the displacement is zero while the distance keeps growing Activity 4.1 .
+      Estimate average acceleration from a vehicle’s change of speed over a stated time, such as 0–100 km h⁻¹ timings Activity 4.2 .
+      Plot a position–time graph from measured time–position readings on graph paper, choosing axes and a suitable scale Activity 4.3 .
+      Predict and then investigate a marble’s path when the ring carrying it in circular motion is lifted Activity 4.5 .
     Practicals
       13
+    Review notes
+      Source mapping: supplied NCERT Exploration ‘Describing Motion Around Us’ is printed Chapter 4 pp. 48–71 , the current app course remains Class IX 2026–27 Chapter 9.
+      Kinematic equations in the source apply only to constant acceleration, as the chapter states it considers only constant-acceleration cases, historical Indian worked examples Aryabhatiya, Ganitakaumudi , the scalar/vector preview and Journey Beyond activities are labelled enrichment, not separate exam outcomes.
 ```
 
 **Learning outcomes**
@@ -411,8 +427,16 @@ mindmap
     Visual lessons
       Forces, friction & Newton’s laws
       Trolley, pulley & hanging mass
+    Activities
+      Investigate how surface friction changes the glide of a rubber-band-launched stack of coins across wooden, laminated and marble surfaces Activity 6.1 .
+      Vary the hanging mass on a cart-and-pulley set-up and show that acceleration grows with the pulling force while the cart mass stays constant Activity 6.3 .
+      Double the cart mass at constant pulling force and show that the same force then produces a smaller acceleration Activity 6.4 .
+      Verify action-reaction pairs with a wheeled chair and a heavy table, then with two hooked spring balances read in opposite pulls Activities 6.5 and 6.6 .
     Practicals
       12
+    Review notes
+      Source mapping: supplied NCERT Exploration ‘How Forces Affect Motion’ is printed Chapter 6 pp. 94–115 , the current app course remains Class IX 2026–27 Chapter 10.
+      Galileo and Newton history boxes, the Chandrayaan-3 Vikram lander braking story, worked Examples 6.1–6.7, the Quest Continues investigations static versus kinetic versus rolling friction, magnet toy cars, capstan rope, reading the Principia and the closing scale-boundary note about massive objects, extreme speeds and atomic scales are labelled enrichment, not separate exam outcomes.
 ```
 
 **Learning outcomes**

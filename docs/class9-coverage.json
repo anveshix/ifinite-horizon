@@ -212,7 +212,7 @@
    "unit": "Matter · 25 marks",
    "keyConcepts": 4,
    "learningOutcomes": 13,
-   "activities": 0,
+   "activities": 4,
    "practicals": [
     1,
     2
@@ -222,7 +222,10 @@
     "ix5/lab",
     "ix5/conc"
    ],
-   "teacherValidationFlags": []
+   "teacherValidationFlags": [
+    "Source mapping: supplied NCERT Exploration ‘Exploring Mixtures and their Separation’ is printed as Chapter 5 (pp. 72–93); the current app course remains Class IX 2026–27 Chapter 5 with no numbering offset.",
+    "Indian-heritage and Journey Beyond extension boxes (Mahalanabis and ORS, panga and karkatch salts, Deg-Bhapka distillation, paperfuge) are enrichment, not separate exam outcomes."
+   ]
   },
   {
    "track": "compulsory_086",
@@ -299,7 +302,7 @@
    "unit": "Motion, force, work & sound · 23 marks",
    "keyConcepts": 4,
    "learningOutcomes": 6,
-   "activities": 0,
+   "activities": 4,
    "practicals": [
     13
    ],
@@ -307,7 +310,10 @@
     "ix9/line",
     "ix9/circular"
    ],
-   "teacherValidationFlags": []
+   "teacherValidationFlags": [
+    "Source mapping: supplied NCERT Exploration ‘Describing Motion Around Us’ is printed as Chapter 4 (pp. 48–71); the current app course remains Class IX 2026–27 Chapter 9 (CBSE syllabus chapter 4).",
+    "Kinematic equations apply only to constant acceleration, as the source states; historical Indian worked examples (Aryabhatiya, Ganitakaumudi) and Journey Beyond activities are enrichment, not separate exam outcomes."
+   ]
   },
   {
    "track": "compulsory_086",
@@ -319,7 +325,7 @@
    "unit": "Motion, force, work & sound · 23 marks",
    "keyConcepts": 5,
    "learningOutcomes": 6,
-   "activities": 0,
+   "activities": 4,
    "practicals": [
     12
    ],
@@ -327,7 +333,10 @@
     "ix10/forces",
     "ix10/trolley"
    ],
-   "teacherValidationFlags": []
+   "teacherValidationFlags": [
+    "Source mapping: supplied NCERT Exploration ‘How Forces Affect Motion’ is printed Chapter 6 (pp. 94–115); the current app course remains Class IX 2026–27 Chapter 10.",
+    "Galileo and Newton history boxes, the Chandrayaan-3 Vikram lander braking story, worked Examples 6.1–6.7, the Quest Continues investigations (static versus kinetic versus rolling friction, magnet toy cars, capstan rope, reading the Principia) and the closing scale-boundary note about massive objects, extreme speeds and atomic scales are labelled enrichment, not separate exam outcomes."
+   ]
   },
   {
    "track": "compulsory_086",
