@@ -17,7 +17,7 @@ Type: **Bricolage Grotesque** for headings, **Atkinson Hyperlegible Next** for t
 - `assets/va-design.css` — tokens, legacy-variable map (light and night), app shell, lesson panel, stage toolbar. Loaded last.
 - `assets/va-home.css` — home page.
 - `assets/va-pages.css` — stand-alone pages (`public/**`): light index pages and the night variant for the old viewers.
-- `assets/va-simulator.css`, `va-mindmap.css`, `va-teacher.css`, `va-iks.css`, `va-*-content.css` — overlays. Their palettes were migrated with `tools/retone-css.py`.
+- `assets/va-simulator.css`, `va-mindmap.css`, `va-teacher.css`, `va-*-content.css` — overlays. Their palettes were migrated with `tools/retone-css.py`.
 - `assets/curiosity/curiosity.css` reads the legacy variables, so it follows the tokens without changes.
 
 ## Rules

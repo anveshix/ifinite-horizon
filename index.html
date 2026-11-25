@@ -436,7 +436,6 @@ body.noen .chap .ct small{display:block}
 <link rel="stylesheet" href="assets/va-simulator.css">
 <link rel="stylesheet" href="assets/va-mindmap.css">
 <link rel="stylesheet" href="assets/va-deepmap.css">
-<link rel="stylesheet" href="assets/va-iks.css">
 <style id="space-first-layout">
 /* Space-first atlas: keep the stage dominant and put controls on a compact footprint. */
 :root{--ws:.94}
@@ -484,7 +483,6 @@ body.noen .chap .ct small{display:block}
   <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A1.5 1.5 0 0 0 5.8 21h12.4a1.5 1.5 0 0 0 1.3-2.5L14 9V3M7.5 15h9"/></symbol>
   <symbol id="i-map" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12h3c2 0 2-7 7-7M10 12h7M10 12c2 0 2 7 7 7"/></symbol>
   <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3"/></symbol>
-  <symbol id="i-lotus" viewBox="0 0 24 24"><path d="M12 5c2.5 2.5 3 5.500 0 9-3-3.500-2.500-6.500 0-9ZM12 14c-1-3-4-5-8-5 0 4 3 7 8 7 5 0 8-3 8-7-4 0-7 2-8 5ZM12 16v4"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.500 12.500 2.500 2.500 4.500-5.500"/></symbol>
   <symbol id="i-sheet" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Zm7 0v4h4M10 12h5M10 16h5"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/></symbol>
@@ -542,10 +540,8 @@ body.noen .chap .ct small{display:block}
     <button class="va-tool-card" type="button" data-va-tool="simulator"><svg class="va-tool-icon" aria-hidden="true"><use href="#i-flask"/></svg><span class="va-tool-copy"><b>Simulator lab</b><small>Class IX · change parameters and watch seven science models respond.</small></span></button>
     <button class="va-tool-card" type="button" data-va-tool="mindmap"><svg class="va-tool-icon" aria-hidden="true"><use href="#i-map"/></svg><span class="va-tool-copy"><b>Syllabus mind map</b><small>Browse units, chapters and concepts, with linked visuals.</small></span></button>
     <button class="va-tool-card" type="button" data-va-tool="curiosity"><svg class="va-tool-icon" aria-hidden="true"><use href="#i-spark"/></svg><span class="va-tool-copy"><b>Curiosity Lab</b><small>Try exploratory science activities and knowledge checks.</small></span></button>
-    <button class="va-tool-card" type="button" data-va-tool="iks"><svg class="va-tool-icon" aria-hidden="true"><use href="#i-lotus"/></svg><span class="va-tool-copy"><b>Indian knowledge systems</b><small>Eight domains compared with modern science, with evidence ratings.</small></span></button>
    </div></div>
    <div class="va-tools-group"><div class="va-tools-group-head"><h3>Check</h3><p>See what you understood and what to revisit.</p></div><div class="va-tools-grid">
-    <button class="va-tool-card" type="button" data-va-tool="checks"><svg class="va-tool-icon" aria-hidden="true"><use href="#i-check"/></svg><span class="va-tool-copy"><b>Topic checks</b><small>Open a chapter to use its prediction prompts and quizzes.</small></span></button>
     <button class="va-tool-card va-ai-tool" type="button" data-ai-tool="worksheet-builder" hidden><svg class="va-tool-icon" aria-hidden="true"><use href="#i-sheet"/></svg><span class="va-tool-copy"><span class="va-tool-meta">AI draft · Class IX</span><b>Quiz &amp; worksheet builder</b><small>Draft chapter-scoped questions and an answer key for review.</small></span></button>
     <button class="va-tool-card" type="button" data-va-tool="report"><svg class="va-tool-icon" aria-hidden="true"><use href="#i-chart"/></svg><span class="va-tool-copy"><b>My learning report</b><small>Review explored topics and quiz results saved on this device.</small></span></button>
    </div></div>
@@ -9845,16 +9841,6 @@ paintSet();sync();
 <script src="assets/va-curiosity.js"></script>
 <script src="assets/va-tools.js"></script>
 <script src="assets/va-ai-tools.js"></script>
-<script src="modules/iks-science/schemas/evidence-schema.js"></script>
-<script src="modules/iks-science/historical-sources/evidence-engine.js"></script>
-<script src="modules/iks-science/curriculum/cbse-mapping.js"></script>
-<script src="modules/iks-science/content/domains-data.js"></script>
-<script src="modules/iks-science/experiments/experiment-engine.js"></script>
-<script src="modules/iks-science/visualizations/viz-engine.js"></script>
-<script src="modules/iks-science/assessments/assessment-engine.js"></script>
-<script src="modules/iks-science/analytics/progress-service.js"></script>
-<script src="modules/iks-science/services/admin-service.js"></script>
-<script src="assets/va-iks.js"></script>
 <script defer src="assets/va-visits.js"></script>
 <script>
 /* Home hero: open the featured model through the same chapter card the grid renders. */

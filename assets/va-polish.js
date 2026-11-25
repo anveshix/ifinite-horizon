@@ -3,7 +3,7 @@
   "use strict";
 
   /* 1. Stage toolbar: keep the primary controls, move secondary tools into the "More" menu. */
-  var MOVE = ["vtBtn", "fnBtn", "cineBtn", "tlab", "resetv", "simOpenStage", "mindMapOpenStage", "vaIksStageBtn"];
+  var MOVE = ["vtBtn", "fnBtn", "cineBtn", "tlab", "resetv", "simOpenStage", "mindMapOpenStage"];
   function tidyToolbar() {
     var bar = document.getElementById("stagebar");
     var more = document.getElementById("more");
