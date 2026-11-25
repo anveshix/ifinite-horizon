@@ -51,4 +51,19 @@
 .cm-back .cm-a{font-weight:650}
 .cm-flash{outline:3px solid #e7b45a;outline-offset:2px;animation:cmflash 1.6s ease}
 @keyframes cmflash{0%,60%{background:#fff6e2}100%{background:transparent}}
+/* tree depth styling (chapter → sections → subsections → contents) */
+.cm-d0 rect:first-child{fill:#233e34;stroke:#1a2e27}
+.cm-d0 .cm-t{fill:#f4fbf7;font-size:14.5px}
+.cm-d0 .cm-s{fill:#bcd6cb}
+.cm-d0 .cm-m{fill:#9fbdb1}
+.cm-d1 .cm-t{font-size:13.5px}
+.cm-d2 .cm-t{font-size:12.5px}
+.cm-d3 rect:first-child{fill:#fbfaf6;stroke:#d5ddd8}
+.cm-d3 .cm-t{font-size:11.5px;fill:#33413a}
+.cm-d3 .cm-m{font-size:9px}
+.cm-stats-list{display:flex;flex-wrap:wrap;gap:4px 12px;margin:7px 0;font-size:.78em;font-weight:650;color:#40514a}
+.cm-stats-list span::before{content:"· ";color:#9db3a9}
+.cm-stats-list span:first-child::before{content:""}
+.cm-pick .cm-a.ghost{font-size:.76em;padding:5px 8px}
+.cm-pick>div.cm-actions{gap:4px}
 @media (max-width:900px){.cm-body{grid-template-columns:1fr}.cm-info,.cm-canvas{max-height:none}}
