@@ -429,6 +429,7 @@ body.noen .chap .ct small{display:block}
 <link rel="stylesheet" href="assets/va-motion-content.css">
 <link rel="stylesheet" href="assets/va-mixture-content.css">
 <link rel="stylesheet" href="assets/va-force-content.css">
+<link rel="stylesheet" href="assets/va-chapter-map.css">
 <link rel="stylesheet" href="assets/va-skin.css">
 <link rel="stylesheet" href="assets/va-home.css">
 <link rel="stylesheet" href="assets/va-teacher.css">
@@ -9574,6 +9575,7 @@ three/build/three.module.js:
 <script src="assets/va-motion-content.js"></script>
 <script src="assets/va-mixture-content.js"></script>
 <script src="assets/va-force-content.js"></script>
+<script src="assets/va-chapter-map.js"></script>
 <script>
 /* Class X chapter map (every NCERT sub-topic) */
 (()=>{"use strict";const $=s=>document.querySelector(s),A=()=>window.__atlas;const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -9750,7 +9752,8 @@ function drawSyl(key){
  const mixtureLesson=mixture?`<section class="mixture-lesson"><header><b>Mixtures · source-grounded chapter companion</b><small>${esc(mixture.source)}</small></header><div class="mixture-scope"><b>Scope boundary</b><p>${esc(mixture.scope)}</p></div>${mixture.sections.map((s,i)=>`<details class="mixture-section" ${i===0?"open":""}><summary><span>${esc(s.title)}</span><small>${esc(s.pages)}</small></summary><div class="mixture-section-body"><p>${esc(s.en)}</p><p class="hi" lang="hi">${esc(s.hiText)}</p>${s.points?.length?`<ul>${s.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}</div></details>`).join("")}<details class="mixture-practical"><summary>Practical 1 · prepare and compare mixtures <small>solutions · suspensions · colloids</small></summary><div class="mixture-section-body"><p><b>Aim:</b> ${esc(mixture.practical.aim)}</p><p>${esc(mixture.practical.source)}</p><p><b>Materials:</b> ${esc(mixture.practical.materials)}</p><h4>Safety first</h4><ul>${mixture.practical.safety.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><h4>Procedure</h4><ol>${mixture.practical.procedure.map(x=>`<li>${esc(x)}</li>`).join("")}</ol><p>${esc(mixture.practical.extension)}</p></div></details><div class="mixture-lab-actions"><button type="button" class="btn prim" data-mixture-lab="1">🧪 Open Practical 1 · compare mixtures</button><button type="button" class="btn" data-mixture-lab="2">⚗️ Open Practical 2 · separate components</button></div></section>`:"";
  const force=ch.kp==="ix10"?window.VA_FORCE_CONTENT:null;
  const forceLesson=force?`<section class="force-lesson"><header><b>Force and Laws of Motion · source-grounded chapter companion</b><small>${esc(force.source)}</small></header><div class="force-scope"><b>Scope boundary</b><p>${esc(force.scope)}</p></div>${force.sections.map((s,i)=>`<details class="force-section" ${i===0?"open":""}><summary><span>${esc(s.title)}</span><small>${esc(s.pages)}</small></summary><div class="force-section-body"><p>${esc(s.en)}</p><p class="hi" lang="hi">${esc(s.hiText)}</p>${s.points?.length?`<ul>${s.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}</div></details>`).join("")}<details class="force-practical"><summary>Practical 12 · verify Newton’s second law <small>F = ma · trolley, pulley &amp; hanging mass</small></summary><div class="force-section-body"><p><b>Aim:</b> ${esc(force.practical.aim)}</p><p>${esc(force.practical.source)}</p><p><b>Materials:</b> ${esc(force.practical.materials)}</p><h4>Safety first</h4><ul>${force.practical.safety.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><h4>Procedure</h4><ol>${force.practical.procedure.map(x=>`<li>${esc(x)}</li>`).join("")}</ol><p>${esc(force.practical.extension)}</p></div></details><div class="force-lab-actions"><button type="button" class="btn prim" data-force-lab="12">🧪 Open Practical 12 · verify Newton’s second law</button></div></section>`:"";
- box.innerHTML=`<div class="syl"><div class="mods"><h4>3D models in this module</h4>${mods}</div>
+ const chapterMap=(window.VA_CHAPTER_MAPS&&window.VA_CHAPTER_MAPS.has(ch.kp))?window.VA_CHAPTER_MAPS.render(ch):"";
+ box.innerHTML=`<div class="syl">${chapterMap}<div class="mods"><h4>3D models in this module</h4>${mods}</div>
   ${ch.set==="ix"?`<div class="src"><b>${ch.periods} periods</b> · ${esc(ch.unit)}</div>`:`<div class="src">Optional track${ch.pages?" · "+esc(ch.pages):""}</div>`}
   <details open><summary>Key concepts${ch.set==="adv"?" &amp; subtopics":""} (${(ch.kc||[]).length})</summary><div>${li(ch.kc)}</div></details>
   ${ch.lo&&ch.lo.length?`<details><summary>Learning outcomes (${ch.lo.length})</summary><div>${li(ch.lo)}</div></details>`:""}
@@ -9762,6 +9765,7 @@ function drawSyl(key){
  $$("#cmap [data-motion-lab]").forEach(b=>b.addEventListener("click",()=>openLab(+b.dataset.motionLab)));
  $$("#cmap [data-mixture-lab]").forEach(b=>b.addEventListener("click",()=>openLab(+b.dataset.mixtureLab)));
  $$("#cmap [data-force-lab]").forEach(b=>b.addEventListener("click",()=>openLab(+b.dataset.forceLab)));
+ window.VA_CHAPTER_MAPS?.wire(box);
  $$("#cmap [data-prac]").forEach(a=>a.onclick=e=>{e.preventDefault();openLab(+a.dataset.prac)})}
 const mapX=()=>window.__drawMapX&&window.__drawMapX;
 function sync(){const a=A();if(!a||!a.key)return;if(!keys.length)keys=a.keys();const key=a.key();if(!key||key===shown)return;shown=key;
