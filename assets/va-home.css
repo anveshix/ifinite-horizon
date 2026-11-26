@@ -43,7 +43,6 @@ body.light #home{background:var(--va-paper)!important}
 .va-primary:hover{background:var(--va-brand)}
 .va-secondary{background:#fff;color:var(--va-ink);border-color:var(--va-rule-2)!important}
 .va-secondary:hover{border-color:var(--va-ink)!important}
-#vaIksHeroBtn{display:none}
 .va-hero-note{margin:16px 0 0;color:var(--va-mute);font-size:14px}
 
 /* hero plate: the app's own vernacular — a model with labelled parts */
@@ -105,27 +104,6 @@ body.light #home{background:var(--va-paper)!important}
 .va-tool-copy small{color:var(--va-mute);font-size:14px;line-height:1.5}
 .va-tool-meta{color:var(--va-brand);font-size:12.5px;font-weight:700}
 
-/* IKS section (mounted by va-iks.js) */
-#home .va-iks-home-section{margin:0;padding:clamp(36px,5vw,60px) 0;border:0;border-top:1px solid var(--va-rule);border-radius:0;background:none;box-shadow:none;max-width:none}
-#home .va-iks-eyebrow{display:inline-block;margin:0 0 10px;padding:0;border:0;background:none;color:var(--va-brand);font:700 13.5px/1.3 var(--va-text);letter-spacing:0;text-transform:none}
-#home .va-iks-home-title{font-size:clamp(24px,3vw,34px);line-height:1.15;font-weight:700;letter-spacing:-.02em;max-width:26ch}
-#home .va-iks-home-title span{display:block;margin-top:4px;color:var(--va-mute);font-size:.7em;font-weight:600}
-#home .va-iks-home-sub{max-width:62ch;color:var(--va-ink-2);font-size:15.5px}
-#home .va-iks-scope-note{max-width:62ch;margin:14px 0 0;padding:12px 14px;border:0;border-left:4px solid var(--va-marker);border-radius:0 10px 10px 0;background:var(--va-wash);color:var(--va-ink-2);font-size:14px}
-#home .va-iks-home-actions{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 24px}
-#home .va-iks-btn{min-height:42px;padding:0 16px;border:1.5px solid var(--va-rule-2);border-radius:10px;background:#fff;color:var(--va-ink);font-size:14.5px;font-weight:700;cursor:pointer}
-#home .va-iks-btn:hover{border-color:var(--va-ink)}
-#home .va-iks-btn-primary{background:var(--va-ink);border-color:var(--va-ink);color:#fff}
-#home .va-iks-btn-primary:hover{background:var(--va-brand);border-color:var(--va-brand)}
-#home .va-iks-domain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px}
-#home .va-iks-domain-card{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-height:150px;padding:16px;border:1px solid var(--va-rule);border-radius:14px;background:#fff;color:var(--va-ink);text-align:left;cursor:pointer;font:inherit;transition:border-color .15s,transform .15s}
-#home .va-iks-domain-card:hover{border-color:var(--va-ink);transform:translateY(-2px)}
-#home .va-iks-domain-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-#home .va-iks-domain-icon{font-size:20px}
-#home .va-iks-pill{padding:2px 8px;border-radius:99px;background:var(--va-wash);color:var(--va-ink-2);font-size:12px;font-weight:600}
-#home .va-iks-domain-card h4{margin:0;font:700 16px/1.3 var(--va-display)}
-#home .va-iks-domain-hi{margin:3px 0 0;color:var(--va-mute);font-size:13.5px}
-#home .va-iks-domain-meta{color:var(--va-mute);font-size:12.5px}
 
 /* footer */
 .va-footer{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:flex-start;padding:26px 0 8px;border-top:1px solid var(--va-rule);color:var(--va-mute);font-size:13.5px}
@@ -149,7 +127,6 @@ body.light #home{background:var(--va-paper)!important}
   .va-callout b{font-size:12px;padding:4px 8px}
   .va-plate figcaption{flex-direction:column;align-items:flex-start}
 }
-@media(prefers-reduced-motion:reduce){#home{scroll-behavior:auto}#home .hc,#home .va-tool-card,#home .va-iks-domain-card{transition:none}#home .hc:hover,#home .va-iks-domain-card:hover{transform:none}}
 #home :focus-visible{outline:3px solid var(--va-brand);outline-offset:2px;border-radius:6px}
 .va-callout.l b{left:auto;right:22px}
 .va-callout.l b::before{left:auto;right:-14px}
@@ -207,3 +184,4 @@ body #vaHomeStage.va-circ-frame{aspect-ratio:1/1;max-width:540px;margin-inline:a
 #vaHomeStage .va-hud-key .dx{background:#4f7bff}#vaHomeStage .va-hud-key .ox{background:#ff4a5c}
 .va-plate figcaption span small{display:block}
 @media (prefers-reduced-motion:reduce){#vaHomeStage .va-hud-live i{animation:none}}
+@media(prefers-reduced-motion:reduce){#home{scroll-behavior:auto}#home .hc,#home .va-tool-card{transition:none}#home .hc:hover{transform:none}}

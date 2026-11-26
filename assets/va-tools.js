@@ -5,11 +5,10 @@
   if(!hub)return;
   const actions={
     lessons:"#homeGo",
-    checks:"#homeGo",
     simulator:"#homeSimulator",
     mindmap:"#homeMindMap",
     report:"#myReport",
-    teacher:"#teacherBtn",iks:"#vaIksHeroBtn",
+    teacher:"#teacherBtn",
     practicals:"#openLab",
     competency:"#openCg"
   };

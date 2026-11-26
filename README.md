@@ -14,8 +14,6 @@
 - **2D simulators** for physics, chemistry and biology topics, including guided experiments.
 - **Curiosity labs** — small interactive labs (atom, cell, electricity, optics, reactions and more) with built-in quizzes.
 - **Chapter mind maps** generated from the curriculum data.
-- **Teacher and student tools** — assessments, progress tracking and evidence-based experiment reports (in `modules/iks-science`).
-- **Curriculum mapping** — every topic is linked to its CBSE 2026–27 unit (see `docs/CURRICULUM_MAPPING.md`).
 - **Optional AI draft tools** — serverless endpoints in `api/ai/` that stay off unless configured.
 
 ## Tech stack
@@ -54,7 +52,6 @@ Optional AI tools: copy `.env.example` to `.env` (or set the same variables in V
 ├── index.html          # Main site entry point
 ├── public/             # Static site: 2D simulators, physics, chemistry, biology, realism demo
 ├── assets/             # Models (.glb), fonts, brand, curiosity labs and quiz code
-├── modules/            # Feature modules (iks-science: assessments, analytics, experiments)
 ├── api/ai/             # Optional serverless AI endpoints and curriculum data
 ├── lib/                # Shared helpers
 ├── tools/              # Build scripts for models, mind maps and curriculum data
